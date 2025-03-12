@@ -1,5 +1,5 @@
 {
-  "name": "Node_v22/pnpm",
+  "name": "Node22/bun",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
 
   "features": {
@@ -8,6 +8,9 @@
       "nodeGypDependencies": true
     },
     "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    },
+    "ghcr.io/prulloac/devcontainer-features/bun:1": {
       "version": "latest"
     },
     "ghcr.io/devcontainers-extra/features/pnpm": {
