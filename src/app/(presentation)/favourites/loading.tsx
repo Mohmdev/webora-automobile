@@ -1,4 +1,4 @@
-import { InventorySkeleton } from "@/components/inventory/inventory-skeleton";
+import { InventorySkeleton } from "@/components/inventory/inventory-skeleton"
 
 export default function FavouritesLoadingPage() {
   return (
@@ -6,5 +6,5 @@ export default function FavouritesLoadingPage() {
       <h1 className="text-3xl font-bold mb-6">Your Favourite Classifieds</h1>
       <InventorySkeleton />
     </div>
-  );
+  )
 }

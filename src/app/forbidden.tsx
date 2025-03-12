@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link"
 
 export default function Forbidden() {
   return (
@@ -7,5 +7,5 @@ export default function Forbidden() {
       <p>You are not authorized to access this resource.</p>
       <Link href="/">Return Home</Link>
     </div>
-  );
+  )
 }

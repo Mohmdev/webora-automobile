@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import { createCustomerAction } from "@/app/_actions/customer";
+import { createCustomerAction } from "@/app/_actions/customer"
 import {
   SubmitDetailsSchema,
   type SubmitDetailsSchemaType,
-} from "@/app/schemas/customer.schema";
-import { routes } from "@/config/routes";
+} from "@/app/schemas/customer.schema"
+import { routes } from "@/config/routes"
 import {
   type MultiStepFormComponentProps,
   MultiStepFormEnum,
-} from "@/config/types";
-import { toast } from "@/hooks/use-toast";
-import { formatDate } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
+} from "@/config/types"
+import { toast } from "@/hooks/use-toast"
+import { formatDate } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { Button } from "../ui/button"
+import { Checkbox } from "../ui/checkbox"
 import {
   Form,
   FormControl,
@@ -26,12 +26,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../ui/form"
+import { Input } from "../ui/input"
 
 export const SubmitDetails = (props: MultiStepFormComponentProps) => {
-  const { params, searchParams } = props;
-  const router = useRouter();
+  const { params, searchParams } = props
+  const router = useRouter()
   const form = useForm<SubmitDetailsSchemaType>({
     resolver: zodResolver(SubmitDetailsSchema),
     mode: "onBlur",
@@ -42,41 +42,41 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
       mobile: "",
       terms: "false",
     },
-  });
+  })
 
-  const [isPending, startTransition] = useTransition();
-  const [isPrevPending, startPrevTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
+  const [isPrevPending, startPrevTransition] = useTransition()
 
   const prevStep = () => {
     startPrevTransition(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const url = new URL(window.location.href);
-      url.searchParams.set("step", MultiStepFormEnum.SELECT_DATE.toString());
-      router.push(url.toString());
-    });
-  };
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      const url = new URL(window.location.href)
+      url.searchParams.set("step", MultiStepFormEnum.SELECT_DATE.toString())
+      router.push(url.toString())
+    })
+  }
 
   const onSubmitDetails: SubmitHandler<SubmitDetailsSchemaType> = (data) => {
     startTransition(async () => {
-      const valid = await form.trigger();
-      if (!valid) return;
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const valid = await form.trigger()
+      if (!valid) return
+      await new Promise((resolve) => setTimeout(resolve, 500))
 
       const handoverDate = decodeURIComponent(
         searchParams?.handoverDate as string,
-      );
+      )
 
       const handoverTime = decodeURIComponent(
         searchParams?.handoverTime as string,
-      );
+      )
 
-      const date = formatDate(handoverDate, handoverTime);
+      const date = formatDate(handoverDate, handoverTime)
 
       const { success, message } = await createCustomerAction({
         slug: params?.slug as string,
         date,
         ...data,
-      });
+      })
 
       if (!success) {
         toast({
@@ -85,8 +85,8 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
           type: "background",
           duration: 2500,
           variant: "destructive",
-        });
-        return;
+        })
+        return
       }
 
       toast({
@@ -94,13 +94,13 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
         description: message,
         type: "background",
         duration: 1000,
-      });
+      })
 
       setTimeout(() => {
-        router.push(routes.success(params?.slug as string));
-      }, 1000);
-    });
-  };
+        router.push(routes.success(params?.slug as string))
+      }, 1000)
+    })
+  }
 
   return (
     <Form {...form}>
@@ -225,5 +225,5 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
         </div>
       </form>
     </Form>
-  );
-};
+  )
+}

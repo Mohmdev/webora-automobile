@@ -1,11 +1,11 @@
-import { ClassifiedBadgeMap } from "@/config/constants";
-import type { ClassifiedWithImages } from "@/config/types";
-import { formatClassifiedStatus, formatColour, formatPrice } from "@/lib/utils";
-import { format } from "date-fns";
-import Image from "next/image";
-import { Badge } from "../ui/badge";
-import { TableCell, TableRow } from "../ui/table";
-import { ActionButtons } from "./action-buttons";
+import { ClassifiedBadgeMap } from "@/config/constants"
+import type { ClassifiedWithImages } from "@/config/types"
+import { formatClassifiedStatus, formatColour, formatPrice } from "@/lib/utils"
+import { format } from "date-fns"
+import Image from "next/image"
+import { Badge } from "../ui/badge"
+import { TableCell, TableRow } from "../ui/table"
+import { ActionButtons } from "./action-buttons"
 
 export const ClassifiedsTableRow = (classified: ClassifiedWithImages) => {
   return (
@@ -45,5 +45,5 @@ export const ClassifiedsTableRow = (classified: ClassifiedWithImages) => {
         <ActionButtons classified={classified} />
       </TableCell>
     </TableRow>
-  );
-};
+  )
+}

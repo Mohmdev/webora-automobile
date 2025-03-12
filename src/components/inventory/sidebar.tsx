@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import { routes } from "@/config/routes";
-import type { SidebarProps } from "@/config/types";
-import { env } from "@/env";
+import { routes } from "@/config/routes"
+import type { SidebarProps } from "@/config/types"
+import { env } from "@/env"
 import {
   cn,
   formatBodyType,
@@ -11,7 +11,7 @@ import {
   formatOdometerUnit,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils";
+} from "@/lib/utils"
 import {
   BodyType,
   Colour,
@@ -20,19 +20,19 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client";
-import { useRouter } from "next/navigation";
-import { parseAsString, useQueryStates } from "nuqs";
-import { type ChangeEvent, useEffect, useState } from "react";
-import { SearchInput } from "../shared/search-input";
-import { Select } from "../ui/select";
-import { RangeFilter } from "./range-filters";
-import { TaxonomyFilters } from "./taxonomy-filters";
+} from "@prisma/client"
+import { useRouter } from "next/navigation"
+import { parseAsString, useQueryStates } from "nuqs"
+import { type ChangeEvent, useEffect, useState } from "react"
+import { SearchInput } from "../shared/search-input"
+import { Select } from "../ui/select"
+import { RangeFilter } from "./range-filters"
+import { TaxonomyFilters } from "./taxonomy-filters"
 
 export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
-  const router = useRouter();
-  const [filterCount, setFilterCount] = useState(0);
-  const { _min, _max } = minMaxValues;
+  const router = useRouter()
+  const [filterCount, setFilterCount] = useState(0)
+  const { _min, _max } = minMaxValues
   const [queryStates, setQueryStates] = useQueryStates(
     {
       make: parseAsString.withDefault(""),
@@ -57,40 +57,40 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
     {
       shallow: false,
     },
-  );
+  )
 
   useEffect(() => {
     const filterCount = Object.entries(
       searchParams as Record<string, string>,
-    ).filter(([key, value]) => key !== "page" && value).length;
+    ).filter(([key, value]) => key !== "page" && value).length
 
-    setFilterCount(filterCount);
-  }, [searchParams]);
+    setFilterCount(filterCount)
+  }, [searchParams])
 
   const clearFilters = () => {
-    const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL);
-    window.location.replace(url.toString());
-    setFilterCount(0);
-  };
+    const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL)
+    window.location.replace(url.toString())
+    setFilterCount(0)
+  }
 
   const handleChange = async (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     setQueryStates({
       [name]: value || null,
-    });
+    })
 
     if (name === "make") {
       setQueryStates({
         model: null,
         modelVariant: null,
-      });
+      })
     }
 
-    router.refresh();
-  };
+    router.refresh()
+  }
 
   return (
     <div className="py-4 w-[21.25rem] bg-white border-r border-muted hidden lg:block">
@@ -252,5 +252,5 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}

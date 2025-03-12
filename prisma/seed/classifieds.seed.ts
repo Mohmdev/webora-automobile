@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker"
 import {
   BodyType,
   ClassifiedStatus,
@@ -10,8 +10,8 @@ import {
   type PrismaClient,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client";
-import slugify from "slugify";
+} from "@prisma/client"
+import slugify from "slugify"
 
 export async function seedClassifieds(prisma: PrismaClient) {
   const makes = await prisma.make.findMany({
@@ -22,33 +22,33 @@ export async function seedClassifieds(prisma: PrismaClient) {
         },
       },
     },
-  });
+  })
 
-  const classifiedsData: Prisma.ClassifiedCreateManyInput[] = [];
+  const classifiedsData: Prisma.ClassifiedCreateManyInput[] = []
 
   for (let i = 0; i < 25; i++) {
-    const make = faker.helpers.arrayElement(makes);
-    if (!make.models.length) continue;
-    const model = faker.helpers.arrayElement(make.models);
+    const make = faker.helpers.arrayElement(makes)
+    if (!make.models.length) continue
+    const model = faker.helpers.arrayElement(make.models)
 
     const variant = model.modelVariants.length
       ? faker.helpers.arrayElement(model.modelVariants)
-      : null;
+      : null
 
     const year = faker.date
       .between({
         from: new Date(1925, 0, 1),
         to: new Date(),
       })
-      .getFullYear();
+      .getFullYear()
 
     const title = [year, make.name, model.name, variant?.name]
       .filter(Boolean)
-      .join(" ");
+      .join(" ")
 
-    const vrm = faker.vehicle.vrm();
+    const vrm = faker.vehicle.vrm()
 
-    const baseSlug = slugify(`${title}-${vrm}`);
+    const baseSlug = slugify(`${title}-${vrm}`)
 
     classifiedsData.push({
       year,
@@ -72,13 +72,13 @@ export async function seedClassifieds(prisma: PrismaClient) {
       colour: faker.helpers.arrayElement(Object.values(Colour)),
       ulezCompliance: faker.helpers.arrayElement(Object.values(ULEZCompliance)),
       status: faker.helpers.arrayElement(Object.values(ClassifiedStatus)),
-    });
+    })
   }
 
   const result = await prisma.classified.createMany({
     data: classifiedsData,
     skipDuplicates: true, // prevent any duplicate errors from duplicate slugs
-  });
+  })
 
-  console.log(`Total of ${result.count} classifieds seeded 🌱`);
+  console.log(`Total of ${result.count} classifieds seeded 🌱`)
 }

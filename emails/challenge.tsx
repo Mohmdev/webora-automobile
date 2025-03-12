@@ -1,12 +1,12 @@
-import { Container, Heading, Section, Text } from "@react-email/components";
-import EmailLayout from "./layout";
+import { Container, Heading, Section, Text } from "@react-email/components"
+import EmailLayout from "./layout"
 const PropDefaults = {
   code: 123456,
-};
+}
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : process.env.NEXT_PUBLIC_APP_URL;
+  : process.env.NEXT_PUBLIC_APP_URL
 
 const ChallengeEmail = ({ data = PropDefaults }) => {
   return (
@@ -35,7 +35,7 @@ const ChallengeEmail = ({ data = PropDefaults }) => {
         </Section>
       </Container>
     </EmailLayout>
-  );
-};
+  )
+}
 
-export default ChallengeEmail;
+export default ChallengeEmail

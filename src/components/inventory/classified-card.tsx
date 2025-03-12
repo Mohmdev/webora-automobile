@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { routes } from "@/config/routes";
-import { type ClassifiedWithImages, MultiStepFormEnum } from "@/config/types";
+import { routes } from "@/config/routes"
+import { type ClassifiedWithImages, MultiStepFormEnum } from "@/config/types"
 import {
   formatColour,
   formatFuelType,
@@ -9,20 +9,20 @@ import {
   formatOdometerUnit,
   formatPrice,
   formatTransmission,
-} from "@/lib/utils";
-import { Cog, Fuel, GaugeCircle, Paintbrush2 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { HTMLParser } from "../shared/html-parser";
-import { Button } from "../ui/button";
-import { ImgixImage } from "../ui/imgix-image";
-import { FavouriteButton } from "./favourite-button";
+} from "@/lib/utils"
+import { Cog, Fuel, GaugeCircle, Paintbrush2 } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
+import { HTMLParser } from "../shared/html-parser"
+import { Button } from "../ui/button"
+import { ImgixImage } from "../ui/imgix-image"
+import { FavouriteButton } from "./favourite-button"
 
 interface ClassifiedCardProps {
-  classified: ClassifiedWithImages;
-  favourites: number[];
+  classified: ClassifiedWithImages
+  favourites: number[]
 }
 
 const getKeyClassifiedInfo = (classified: ClassifiedWithImages) => {
@@ -49,21 +49,21 @@ const getKeyClassifiedInfo = (classified: ClassifiedWithImages) => {
       icon: <Paintbrush2 className="w-4 h-4" />,
       value: classified?.colour ? formatColour(classified.colour) : null,
     },
-  ];
-};
+  ]
+}
 
 export const ClassifiedCard = (props: ClassifiedCardProps) => {
-  const { classified, favourites } = props;
+  const { classified, favourites } = props
 
-  const pathname = usePathname();
+  const pathname = usePathname()
   const [isFavourite, setIsFavourite] = useState(
     favourites.includes(classified.id),
-  );
-  const [isVisible, setIsVisible] = useState(true);
+  )
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    if (!isFavourite && pathname === routes.favourites) setIsVisible(false);
-  }, [isFavourite, pathname]);
+    if (!isFavourite && pathname === routes.favourites) setIsVisible(false)
+  }, [isFavourite, pathname])
 
   return (
     <AnimatePresence>
@@ -159,5 +159,5 @@ export const ClassifiedCard = (props: ClassifiedCardProps) => {
         </motion.div>
       )}
     </AnimatePresence>
-  );
-};
+  )
+}

@@ -1,14 +1,14 @@
-import { SignInSchema } from "@/app/schemas/auth.schema";
-import { SESSION_MAX_AGE } from "@/config/constants";
-import { routes } from "@/config/routes";
-import { bcryptPasswordCompare } from "@/lib/bcrypt";
-import { issueChallenge } from "@/lib/otp";
-import { prisma } from "@/lib/prisma";
-import type { AdapterUser } from "@auth/core/adapters";
-import CredentialsProvider from "@auth/core/providers/credentials";
-import ResendProvider from "@auth/core/providers/resend";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import type { NextAuthConfig, User } from "next-auth";
+import { SignInSchema } from "@/app/schemas/auth.schema"
+import { SESSION_MAX_AGE } from "@/config/constants"
+import { routes } from "@/config/routes"
+import { bcryptPasswordCompare } from "@/lib/bcrypt"
+import { issueChallenge } from "@/lib/otp"
+import { prisma } from "@/lib/prisma"
+import type { AdapterUser } from "@auth/core/adapters"
+import CredentialsProvider from "@auth/core/providers/credentials"
+import ResendProvider from "@auth/core/providers/resend"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import type { NextAuthConfig, User } from "next-auth"
 
 export const config = {
   adapter: PrismaAdapter(prisma),
@@ -32,35 +32,35 @@ export const config = {
       },
       authorize: async (credentials): Promise<User | null> => {
         try {
-          const validatedFields = SignInSchema.safeParse(credentials);
+          const validatedFields = SignInSchema.safeParse(credentials)
 
-          if (!validatedFields.success) return null;
+          if (!validatedFields.success) return null
 
           const user = await prisma.user.findUnique({
             where: { email: validatedFields.data.email },
             select: { id: true, email: true, hashedPassword: true },
-          });
+          })
 
-          if (!user) return null;
+          if (!user) return null
 
           const match = await bcryptPasswordCompare(
             validatedFields.data.password,
             user.hashedPassword,
-          );
+          )
 
-          if (!match) return null;
+          if (!match) return null
 
-          await issueChallenge(user.id, user.email);
+          await issueChallenge(user.id, user.email)
 
           const dbUser = await prisma.user.findUnique({
             where: { id: user.id },
             omit: { hashedPassword: true },
-          });
+          })
 
-          return { ...dbUser, requires2FA: true };
+          return { ...dbUser, requires2FA: true }
         } catch (error) {
-          console.log({ error });
-          return null;
+          console.log({ error })
+          return null
         }
       },
     }),
@@ -80,27 +80,27 @@ export const config = {
           userId: user.id as string,
           requires2FA: user.requires2FA as boolean,
         },
-      });
+      })
 
-      if (!session) return null;
+      if (!session) return null
 
-      if (user) token.requires2FA = user.requires2FA;
+      if (user) token.requires2FA = user.requires2FA
 
-      token.id = session.sessionToken;
-      token.exp = session.expires.getTime();
+      token.id = session.sessionToken
+      token.exp = session.expires.getTime()
 
-      return token;
+      return token
     },
 
     async session({ session, user }) {
       session.user = {
         id: session.userId,
         email: user.email,
-      } as AdapterUser;
-      return session;
+      } as AdapterUser
+      return session
     },
   },
   jwt: {
     encode: async ({ token }) => token?.id as string,
   },
-} as NextAuthConfig;
+} as NextAuthConfig

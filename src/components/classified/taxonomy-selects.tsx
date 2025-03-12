@@ -1,53 +1,53 @@
-"use client";
+"use client"
 
-import { endpoints } from "@/config/endpoints";
-import type { FilterOptions } from "@/config/types";
-import { api } from "@/lib/api-client";
-import { type ChangeEvent, useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { endpoints } from "@/config/endpoints"
+import type { FilterOptions } from "@/config/types"
+import { api } from "@/lib/api-client"
+import { type ChangeEvent, useEffect, useState } from "react"
+import { useFormContext } from "react-hook-form"
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Select } from "../ui/select";
+} from "../ui/form"
+import { Select } from "../ui/select"
 
 export const TaxonomySelects = () => {
-  const form = useFormContext();
-  const defaultMake = form.getValues("make") || null;
-  const defaultModel = form.getValues("model") || null;
+  const form = useFormContext()
+  const defaultMake = form.getValues("make") || null
+  const defaultModel = form.getValues("model") || null
 
-  const [make, setMake] = useState<string | null>(defaultMake);
-  const [makes, setMakes] = useState<FilterOptions<string, string>>([]);
+  const [make, setMake] = useState<string | null>(defaultMake)
+  const [makes, setMakes] = useState<FilterOptions<string, string>>([])
 
-  const [model, setModel] = useState<string | null>(defaultModel);
-  const [models, setModels] = useState<FilterOptions<string, string>>([]);
+  const [model, setModel] = useState<string | null>(defaultModel)
+  const [models, setModels] = useState<FilterOptions<string, string>>([])
 
   const [modelVariants, setModelVariants] = useState<
     FilterOptions<string, string>
-  >([]);
+  >([])
 
   useEffect(() => {
-    (async function fetchMakeOptions() {
-      const url = new URL(endpoints.taxonomy, window.location.href);
-      if (make) url.searchParams.append("make", make);
-      if (model) url.searchParams.append("model", model);
+    ;(async function fetchMakeOptions() {
+      const url = new URL(endpoints.taxonomy, window.location.href)
+      if (make) url.searchParams.append("make", make)
+      if (model) url.searchParams.append("model", model)
 
       const data = await api.get<{
-        makes: FilterOptions<string, string>;
-        models: FilterOptions<string, string>;
-        modelVariants: FilterOptions<string, string>;
-      }>(url.toString());
+        makes: FilterOptions<string, string>
+        models: FilterOptions<string, string>
+        modelVariants: FilterOptions<string, string>
+      }>(url.toString())
 
-      console.log({ data });
+      console.log({ data })
 
-      setMakes(data.makes);
-      setModels(data.models);
-      setModelVariants(data.modelVariants);
-    })();
-  }, [make, model]);
+      setMakes(data.makes)
+      setModels(data.models)
+      setModelVariants(data.modelVariants)
+    })()
+  }, [make, model])
 
   const handleChange = (
     e: ChangeEvent<HTMLSelectElement>,
@@ -55,15 +55,15 @@ export const TaxonomySelects = () => {
   ) => {
     switch (e.target.name) {
       case "make":
-        setMake(e.target.value);
-        break;
+        setMake(e.target.value)
+        break
       case "model":
-        setModel(e.target.value);
-        break;
+        setModel(e.target.value)
+        break
     }
 
-    return onChange(e);
-  };
+    return onChange(e)
+  }
 
   return (
     <>
@@ -122,5 +122,5 @@ export const TaxonomySelects = () => {
         )}
       />
     </>
-  );
-};
+  )
+}

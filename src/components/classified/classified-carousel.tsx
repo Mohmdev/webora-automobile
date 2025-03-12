@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import { imgixLoader } from "@/lib/imgix-loader";
-import type { Image as PrismaImage } from "@prisma/client";
-import FsLightbox from "fslightbox-react";
-import dynamic from "next/dynamic";
-import { useCallback, useState } from "react";
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/virtual";
-import { EffectFade, Navigation, Thumbs, Virtual } from "swiper/modules";
-import { SwiperSlide } from "swiper/react";
-import type { Swiper as SwiperType } from "swiper/types";
-import { SwiperButtons } from "../shared/swiper-button";
-import { ImgixImage } from "../ui/imgix-image";
-import { CarouselSkeleton } from "./carousel-skeleton";
+import { imgixLoader } from "@/lib/imgix-loader"
+import type { Image as PrismaImage } from "@prisma/client"
+import FsLightbox from "fslightbox-react"
+import dynamic from "next/dynamic"
+import { useCallback, useState } from "react"
+import "swiper/css"
+import "swiper/css/effect-fade"
+import "swiper/css/virtual"
+import { EffectFade, Navigation, Thumbs, Virtual } from "swiper/modules"
+import { SwiperSlide } from "swiper/react"
+import type { Swiper as SwiperType } from "swiper/types"
+import { SwiperButtons } from "../shared/swiper-button"
+import { ImgixImage } from "../ui/imgix-image"
+import { CarouselSkeleton } from "./carousel-skeleton"
 
 interface ClassifiedCarouselProps {
-  images: PrismaImage[];
+  images: PrismaImage[]
 }
 
 const Swiper = dynamic(() => import("swiper/react").then((mod) => mod.Swiper), {
   ssr: false,
   loading: () => <CarouselSkeleton />,
-});
+})
 
 const SwiperThumb = dynamic(
   () => import("swiper/react").then((mod) => mod.Swiper),
@@ -30,35 +30,35 @@ const SwiperThumb = dynamic(
     ssr: false,
     loading: () => null,
   },
-);
+)
 
 export const ClassifiedCarousel = ({ images }: ClassifiedCarouselProps) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
 
   const [lightboxController, setLightboxController] = useState({
     toggler: false,
     sourceIndex: 0,
-  });
+  })
 
   const setSwiper = (swiper: SwiperType) => {
-    setThumbsSwiper(swiper);
-  };
+    setThumbsSwiper(swiper)
+  }
 
   const handleSlideChange = useCallback((swiper: SwiperType) => {
-    setActiveIndex(swiper.activeIndex);
-  }, []);
+    setActiveIndex(swiper.activeIndex)
+  }, [])
 
   const handleImageClick = useCallback(() => {
     setLightboxController({
       toggler: !lightboxController.toggler,
       sourceIndex: activeIndex,
-    });
-  }, [lightboxController.toggler, activeIndex]);
+    })
+  }, [lightboxController.toggler, activeIndex])
 
   const sources = images.map((image) =>
     imgixLoader({ src: image.src, width: 2400, quality: 100 }),
-  );
+  )
 
   return (
     <>
@@ -137,5 +137,5 @@ export const ClassifiedCarousel = ({ images }: ClassifiedCarouselProps) => {
         ))}
       </SwiperThumb>
     </>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import type { ClassifiedAI } from "@/app/schemas/classified-ai.schema";
-import { Skeleton } from "@/components/ui/skeleton";
+import type { ClassifiedAI } from "@/app/schemas/classified-ai.schema"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   formatBodyType,
   formatColour,
@@ -8,8 +8,8 @@ import {
   formatOdometerUnit,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils";
-import type { Make } from "@prisma/client";
+} from "@/lib/utils"
+import type { Make } from "@prisma/client"
 import {
   CarFrontIcon,
   CarIcon,
@@ -20,13 +20,13 @@ import {
   PowerIcon,
   UsersIcon,
   XIcon,
-} from "lucide-react";
-import Image from "next/image";
+} from "lucide-react"
+import Image from "next/image"
 
 export type StreamableSkeletonProps = Partial<Omit<ClassifiedAI, "make">> & {
-  make?: Make;
-  done?: boolean;
-};
+  make?: Make
+  done?: boolean
+}
 
 export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
   const {
@@ -45,7 +45,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
     odoUnit,
     make,
     done,
-  } = props;
+  } = props
   return (
     <div className="flex flex-col container mx-auto py-12">
       <div className="flex flex-col md:flex-row">
@@ -217,5 +217,5 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

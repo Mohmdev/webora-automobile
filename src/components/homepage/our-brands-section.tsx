@@ -1,8 +1,8 @@
-import { routes } from "@/config/routes";
-import { prisma } from "@/lib/prisma";
-import { ClassifiedStatus } from "@prisma/client";
-import Image from "next/image";
-import Link from "next/link";
+import { routes } from "@/config/routes"
+import { prisma } from "@/lib/prisma"
+import { ClassifiedStatus } from "@prisma/client"
+import Image from "next/image"
+import Link from "next/link"
 
 export const OurBrandsSection = async () => {
   const brands = await prisma.make.findMany({
@@ -28,11 +28,11 @@ export const OurBrandsSection = async () => {
         mode: "insensitive",
       },
     },
-  });
+  })
 
   const count = await prisma.classified.count({
     where: { status: ClassifiedStatus.LIVE },
-  });
+  })
 
   return (
     <div className="py-16 sm:py-24 bg-white">
@@ -63,5 +63,5 @@ export const OurBrandsSection = async () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

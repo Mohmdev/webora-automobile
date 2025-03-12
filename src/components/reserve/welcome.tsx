@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
 import {
   type MultiStepFormComponentProps,
   MultiStepFormEnum,
-} from "@/config/types";
+} from "@/config/types"
 import {
   ArrowRightIcon,
   CircleCheckIcon,
@@ -11,26 +11,26 @@ import {
   Loader2,
   LockIcon,
   StarIcon,
-} from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { HTMLParser } from "../shared/html-parser";
-import { Button } from "../ui/button";
+} from "lucide-react"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { HTMLParser } from "../shared/html-parser"
+import { Button } from "../ui/button"
 
 export const Welcome = (props: MultiStepFormComponentProps) => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
 
   const nextStep = () => {
     startTransition(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const url = new URL(window.location.href);
-      url.searchParams.set("step", MultiStepFormEnum.SELECT_DATE.toString());
-      router.push(url.toString());
-    });
-  };
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      const url = new URL(window.location.href)
+      url.searchParams.set("step", MultiStepFormEnum.SELECT_DATE.toString())
+      router.push(url.toString())
+    })
+  }
 
   return (
     <div className="mx-auto bg-white rounded-b-lg shadow-lg">
@@ -112,5 +112,5 @@ export const Welcome = (props: MultiStepFormComponentProps) => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}

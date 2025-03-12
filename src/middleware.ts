@@ -1,10 +1,10 @@
-import { auth } from "@/auth";
-import { env } from "@/env";
-import { NextResponse } from "next/server";
-import { routes } from "./config/routes";
+import { auth } from "@/auth"
+import { env } from "@/env"
+import { NextResponse } from "next/server"
+import { routes } from "./config/routes"
 
 function setRequestHeaders(requestHeaders: Headers) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const nonce = Buffer.from(crypto.randomUUID()).toString("base64")
   const cspHeader = `
       default-src 'self';
       script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
@@ -16,44 +16,44 @@ function setRequestHeaders(requestHeaders: Headers) {
       form-action 'self';
       frame-ancestors 'none';
       upgrade-insecure-requests;
-  `;
+  `
 
-  requestHeaders.set("x-auth-token", `Bearer ${env.X_AUTH_TOKEN}`);
+  requestHeaders.set("x-auth-token", `Bearer ${env.X_AUTH_TOKEN}`)
 
-  const contentSecurityPolicy = cspHeader.replace(/\s{2,}/g, " ").trim();
-  requestHeaders.set("x-nonce", nonce);
-  requestHeaders.set("Content-Security-Policy", contentSecurityPolicy);
+  const contentSecurityPolicy = cspHeader.replace(/\s{2,}/g, " ").trim()
+  requestHeaders.set("x-nonce", nonce)
+  requestHeaders.set("Content-Security-Policy", contentSecurityPolicy)
 }
 
 export default auth((req) => {
-  const nextUrl = req.nextUrl.clone();
-  const requestHeaders = new Headers(req.headers);
-  setRequestHeaders(requestHeaders);
+  const nextUrl = req.nextUrl.clone()
+  const requestHeaders = new Headers(req.headers)
+  setRequestHeaders(requestHeaders)
 
   if (req.auth) {
     if (req.auth.requires2FA) {
       if (nextUrl.pathname === routes.challenge) {
-        return NextResponse.next();
+        return NextResponse.next()
       }
 
-      const challengeUrl = new URL(routes.challenge, req.url);
-      return NextResponse.redirect(challengeUrl);
+      const challengeUrl = new URL(routes.challenge, req.url)
+      return NextResponse.redirect(challengeUrl)
     }
 
     if (
       nextUrl.pathname === routes.challenge ||
       nextUrl.pathname === routes.signIn
     ) {
-      const adminUrl = new URL(routes.admin.dashboard, req.url);
-      return NextResponse.redirect(adminUrl);
+      const adminUrl = new URL(routes.admin.dashboard, req.url)
+      return NextResponse.redirect(adminUrl)
     }
   } else {
     if (
       nextUrl.pathname.startsWith("/admin") ||
       nextUrl.pathname === routes.challenge
     ) {
-      const signInUrl = new URL(routes.signIn, req.url);
-      return NextResponse.redirect(signInUrl);
+      const signInUrl = new URL(routes.signIn, req.url)
+      return NextResponse.redirect(signInUrl)
     }
   }
 
@@ -64,11 +64,11 @@ export default auth((req) => {
     request: {
       headers: requestHeaders,
     },
-  });
-});
+  })
+})
 
 export const config = {
   matcher:
     "/((?!api/auth|_next/static|_next/image|favicon.ico|manifest.json|logo.svg).*)",
   runtime: "nodejs",
-};
+}

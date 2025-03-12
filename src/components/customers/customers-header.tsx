@@ -1,6 +1,6 @@
-import { RadioFilter } from "@/components/shared/radio-filter";
-import type { AwaitedPageProps } from "@/config/types";
-import { CustomerStatus } from "@prisma/client";
+import { RadioFilter } from "@/components/shared/radio-filter"
+import type { AwaitedPageProps } from "@/config/types"
+import { CustomerStatus } from "@prisma/client"
 
 export const AdminCustomersHeader = ({ searchParams }: AwaitedPageProps) => {
   return (
@@ -15,5 +15,5 @@ export const AdminCustomersHeader = ({ searchParams }: AwaitedPageProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

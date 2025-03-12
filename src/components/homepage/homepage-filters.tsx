@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import type { SidebarProps } from "@/config/types";
-import { parseAsString, useQueryStates } from "nuqs";
-import { RangeFilter } from "../inventory/range-filters";
-import { TaxonomyFilters } from "../inventory/taxonomy-filters";
+import type { SidebarProps } from "@/config/types"
+import { parseAsString, useQueryStates } from "nuqs"
+import { RangeFilter } from "../inventory/range-filters"
+import { TaxonomyFilters } from "../inventory/taxonomy-filters"
 
 interface HomepageTaxonomyFiltersProps extends SidebarProps {}
 export const HomepageTaxonomyFilters = ({
   searchParams,
   minMaxValues,
 }: HomepageTaxonomyFiltersProps) => {
-  const { _min, _max } = minMaxValues;
+  const { _min, _max } = minMaxValues
   const [, setState] = useQueryStates(
     {
       make: parseAsString.withDefault(""),
@@ -22,24 +22,24 @@ export const HomepageTaxonomyFilters = ({
       maxPrice: parseAsString.withDefault(""),
     },
     { shallow: false },
-  );
+  )
 
   const handleChange = async (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     switch (name) {
       case "make":
-        await setState({ make: value, model: null, modelVariant: null });
-        break;
+        await setState({ make: value, model: null, modelVariant: null })
+        break
       case "model":
-        await setState({ model: value, modelVariant: null });
-        break;
+        await setState({ model: value, modelVariant: null })
+        break
       default:
-        await setState({ [name]: value });
+        await setState({ [name]: value })
     }
-  };
+  }
 
   return (
     <>
@@ -71,5 +71,5 @@ export const HomepageTaxonomyFilters = ({
         }}
       />
     </>
-  );
-};
+  )
+}

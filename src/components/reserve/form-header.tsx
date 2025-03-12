@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
-import { useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils"
+import { useSearchParams } from "next/navigation"
 
 export const FormHeader = () => {
-  const params = useSearchParams();
+  const params = useSearchParams()
   const steps = [
     { id: "1", title: "Welcome" },
     { id: "2", title: "Select Handover Date" },
     { id: "3", title: "Submit Details" },
-  ];
+  ]
 
   return (
     <div className="flex justify-between bg-primary p-4 shadow-lg">
@@ -34,5 +34,5 @@ export const FormHeader = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

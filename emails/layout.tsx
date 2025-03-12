@@ -11,17 +11,17 @@ import {
   Row,
   Section,
   Tailwind,
-} from "@react-email/components";
-import type { PropsWithChildren } from "react";
+} from "@react-email/components"
+import type { PropsWithChildren } from "react"
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : process.env.NEXT_PUBLIC_APP_URL;
+  : process.env.NEXT_PUBLIC_APP_URL
 
-const twConfig = {};
+const twConfig = {}
 
 interface EmailLayoutProps extends PropsWithChildren {
-  preview: string;
+  preview: string
 }
 
 const EmailLayout = ({ children, preview = "" }: EmailLayoutProps) => {
@@ -117,7 +117,7 @@ const EmailLayout = ({ children, preview = "" }: EmailLayoutProps) => {
         </Body>
       </Tailwind>
     </Html>
-  );
-};
+  )
+}
 
-export default EmailLayout;
+export default EmailLayout

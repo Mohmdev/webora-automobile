@@ -1,20 +1,20 @@
-import type { FilterOptions, TaxonomyFiltersProps } from "@/config/types";
-import { formatNumber, formatPrice } from "@/lib/utils";
-import type { CurrencyCode } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { RangeSelect } from "../ui/range-select";
+import type { FilterOptions, TaxonomyFiltersProps } from "@/config/types"
+import { formatNumber, formatPrice } from "@/lib/utils"
+import type { CurrencyCode } from "@prisma/client"
+import { useEffect, useState } from "react"
+import { RangeSelect } from "../ui/range-select"
 
 interface RangeFilterProps extends TaxonomyFiltersProps {
-  label: string;
-  minName: string;
-  maxName: string;
-  defaultMin: number;
-  defaultMax: number;
-  increment?: number;
-  thousandSeparator?: boolean;
+  label: string
+  minName: string
+  maxName: string
+  defaultMin: number
+  defaultMax: number
+  increment?: number
+  thousandSeparator?: boolean
   currency?: {
-    currencyCode: CurrencyCode;
-  };
+    currencyCode: CurrencyCode
+  }
 }
 
 export const RangeFilter = (props: RangeFilterProps) => {
@@ -29,17 +29,17 @@ export const RangeFilter = (props: RangeFilterProps) => {
     currency,
     handleChange,
     searchParams,
-  } = props;
+  } = props
 
   const getInitialState = () => {
-    const state: FilterOptions<string, number> = [];
-    let iterator = defaultMin - (increment ?? 1);
+    const state: FilterOptions<string, number> = []
+    let iterator = defaultMin - (increment ?? 1)
 
     do {
       if (increment) {
-        iterator = iterator + increment;
+        iterator = iterator + increment
       } else {
-        iterator++;
+        iterator++
       }
 
       if (currency) {
@@ -49,24 +49,24 @@ export const RangeFilter = (props: RangeFilterProps) => {
             currency: currency.currencyCode,
           }),
           value: iterator,
-        });
+        })
       } else if (thousandSeparator) {
-        state.push({ label: formatNumber(iterator), value: iterator });
+        state.push({ label: formatNumber(iterator), value: iterator })
       } else {
-        state.push({ label: iterator.toString(), value: iterator });
+        state.push({ label: iterator.toString(), value: iterator })
       }
-    } while (iterator < defaultMax);
+    } while (iterator < defaultMax)
 
-    return state;
-  };
+    return state
+  }
 
-  const initialState = getInitialState();
+  const initialState = getInitialState()
 
   const [minOptions, setMinOptions] =
-    useState<FilterOptions<string, number>>(initialState);
+    useState<FilterOptions<string, number>>(initialState)
   const [maxOptions, setMaxOptions] = useState<FilterOptions<string, number>>(
     initialState.toReversed(),
-  );
+  )
 
   // biome-ignore lint:
   useEffect(() => {
@@ -75,16 +75,16 @@ export const RangeFilter = (props: RangeFilterProps) => {
         initialState.filter(
           ({ value }) => value > Number(searchParams[minName]),
         ),
-      );
+      )
     }
     if (searchParams?.[maxName]) {
       setMinOptions(
         initialState.filter(
           ({ value }) => value < Number(searchParams[maxName]),
         ),
-      );
+      )
     }
-  }, [searchParams?.[minName], searchParams?.[maxName]]);
+  }, [searchParams?.[minName], searchParams?.[maxName]])
 
   return (
     <RangeSelect
@@ -102,5 +102,5 @@ export const RangeFilter = (props: RangeFilterProps) => {
         options: maxOptions,
       }}
     />
-  );
-};
+  )
+}

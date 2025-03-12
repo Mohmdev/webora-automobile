@@ -1,14 +1,14 @@
-import { cn } from "@/lib/utils";
-import type { ChangeEvent, SelectHTMLAttributes } from "react";
+import { cn } from "@/lib/utils"
+import type { ChangeEvent, SelectHTMLAttributes } from "react"
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  label?: string;
-  value: string;
-  options: { label: string; value: string }[];
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  className?: string;
-  selectClassName?: string;
-  noDefault?: boolean;
+  label?: string
+  value: string
+  options: { label: string; value: string }[]
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  className?: string
+  selectClassName?: string
+  noDefault?: boolean
 }
 
 export const Select = (props: SelectProps) => {
@@ -21,7 +21,7 @@ export const Select = (props: SelectProps) => {
     selectClassName,
     noDefault = true,
     ...rest
-  } = props;
+  } = props
 
   return (
     <div className={cn("mt-1", className)}>
@@ -48,5 +48,5 @@ export const Select = (props: SelectProps) => {
         </select>
       </div>
     </div>
-  );
-};
+  )
+}

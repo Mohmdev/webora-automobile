@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { routes } from "@/config/routes";
+import { routes } from "@/config/routes"
 import {
   CarFrontIcon,
   LayoutDashboardIcon,
   SettingsIcon,
   UsersIcon,
-} from "lucide-react";
-import { AnimatePresence, type Variants, motion } from "motion/react";
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useState } from "react";
-import { ActiveLink } from "../ui/active-link";
+} from "lucide-react"
+import { AnimatePresence, type Variants, motion } from "motion/react"
+import Image from "next/image"
+import Link from "next/link"
+import { useCallback, useState } from "react"
+import { ActiveLink } from "../ui/active-link"
 
 const navigation = [
   {
@@ -34,18 +34,18 @@ const navigation = [
     href: routes.admin.settings,
     icon: SettingsIcon,
   },
-];
+]
 
 export const AdminSidebar = () => {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false)
   const handleSidebarHover = useCallback((expanded: boolean) => {
-    setIsSidebarExpanded(expanded);
-  }, []);
+    setIsSidebarExpanded(expanded)
+  }, [])
 
   const sidebarVariants: Variants = {
     expanded: { width: 256 },
     collapsed: { width: "fit-content" },
-  };
+  }
 
   const menuTextVariants: Variants = {
     expanded: {
@@ -54,13 +54,13 @@ export const AdminSidebar = () => {
       marginLeft: 10,
     },
     collapsed: { opacity: 0, width: 0 },
-  };
+  }
 
   const logoVariants: Variants = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
-  };
+  }
 
   return (
     <motion.div
@@ -141,10 +141,10 @@ export const AdminSidebar = () => {
                   </motion.span>
                 </div>
               </ActiveLink>
-            );
+            )
           })}
         </nav>
       </div>
     </motion.div>
-  );
-};
+  )
+}

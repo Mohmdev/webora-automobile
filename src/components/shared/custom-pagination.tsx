@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   PaginationContent,
@@ -7,66 +7,66 @@ import {
   PaginationNext,
   PaginationPrevious,
   Pagination as PaginationRoot,
-} from "@/components/ui/pagination";
-import { env } from "@/env";
-import { cn } from "@/lib/utils";
-import { useQueryState } from "nuqs";
-import { useEffect, useState } from "react";
+} from "@/components/ui/pagination"
+import { env } from "@/env"
+import { cn } from "@/lib/utils"
+import { useQueryState } from "nuqs"
+import { useEffect, useState } from "react"
 
 interface PaginationProps {
-  baseURL: string;
-  totalPages: number;
-  maxVisiblePages?: number;
+  baseURL: string
+  totalPages: number
+  maxVisiblePages?: number
   styles: {
-    paginationRoot: string;
-    paginationPrevious: string;
-    paginationNext: string;
-    paginationLink: string;
-    paginationLinkActive: string;
-  };
+    paginationRoot: string
+    paginationPrevious: string
+    paginationNext: string
+    paginationLink: string
+    paginationLinkActive: string
+  }
 }
 
 export const CustomPagination = (props: PaginationProps) => {
-  const { baseURL, totalPages, maxVisiblePages = 5, styles } = props;
+  const { baseURL, totalPages, maxVisiblePages = 5, styles } = props
   const [currentPage, setPage] = useQueryState("page", {
     defaultValue: 1,
     parse: (value) => {
-      const parsed = Number.parseInt(value, 10);
-      return Number.isNaN(parsed) || parsed < 1 ? 1 : parsed;
+      const parsed = Number.parseInt(value, 10)
+      return Number.isNaN(parsed) || parsed < 1 ? 1 : parsed
     },
     serialize: (value) => value.toString(),
     shallow: false,
-  });
+  })
 
   const [visibleRange, setVisibleRange] = useState({
     start: 1,
     end: Math.min(maxVisiblePages, totalPages),
-  });
+  })
 
   useEffect(() => {
-    const halfVisible = Math.floor(maxVisiblePages / 2);
+    const halfVisible = Math.floor(maxVisiblePages / 2)
     const newStart = Math.max(
       1,
       Math.min(currentPage - halfVisible, totalPages - maxVisiblePages + 1),
-    );
-    const newEnd = Math.min(newStart + maxVisiblePages - 1, totalPages);
-    setVisibleRange({ start: newStart, end: newEnd });
-  }, [currentPage, totalPages, maxVisiblePages]);
+    )
+    const newEnd = Math.min(newStart + maxVisiblePages - 1, totalPages)
+    setVisibleRange({ start: newStart, end: newEnd })
+  }, [currentPage, totalPages, maxVisiblePages])
 
   const createPageUrl = (pageNumber: number) => {
-    const url = new URL(baseURL, env.NEXT_PUBLIC_APP_URL);
-    url.searchParams.set("page", pageNumber.toString());
-    return url.toString();
-  };
+    const url = new URL(baseURL, env.NEXT_PUBLIC_APP_URL)
+    url.searchParams.set("page", pageNumber.toString())
+    return url.toString()
+  }
 
   const handleEllipsisClick = (direction: "left" | "right") => {
     const newPage =
       direction === "left"
         ? Math.max(1, visibleRange.start - maxVisiblePages)
-        : Math.min(totalPages, visibleRange.end + maxVisiblePages);
+        : Math.min(totalPages, visibleRange.end + maxVisiblePages)
 
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   return (
     <PaginationRoot className={styles.paginationRoot}>
@@ -79,8 +79,8 @@ export const CustomPagination = (props: PaginationProps) => {
             )}
             href={createPageUrl(currentPage - 1)}
             onClick={(e) => {
-              e.preventDefault();
-              if (currentPage > 1) setPage(currentPage - 1);
+              e.preventDefault()
+              if (currentPage > 1) setPage(currentPage - 1)
             }}
           />
         </PaginationItem>
@@ -91,8 +91,8 @@ export const CustomPagination = (props: PaginationProps) => {
               className={styles.paginationLink}
               href="#"
               onClick={(e) => {
-                e.preventDefault();
-                handleEllipsisClick("left");
+                e.preventDefault()
+                handleEllipsisClick("left")
               }}
             >
               ...
@@ -104,15 +104,15 @@ export const CustomPagination = (props: PaginationProps) => {
           { length: visibleRange.end - visibleRange.start + 1 },
           (_, index) => visibleRange.start + index,
         ).map((pageNumber) => {
-          const isActive = pageNumber === currentPage;
-          let rel = "";
+          const isActive = pageNumber === currentPage
+          let rel = ""
 
           if (pageNumber === currentPage - 1) {
-            rel = "prev";
+            rel = "prev"
           }
 
           if (pageNumber === currentPage + 1) {
-            rel = "next";
+            rel = "next"
           }
 
           return (
@@ -121,8 +121,8 @@ export const CustomPagination = (props: PaginationProps) => {
                 isActive={isActive}
                 href={createPageUrl(pageNumber)}
                 onClick={(e) => {
-                  e.preventDefault();
-                  setPage(pageNumber);
+                  e.preventDefault()
+                  setPage(pageNumber)
                 }}
                 className={cn(
                   styles.paginationLink,
@@ -133,7 +133,7 @@ export const CustomPagination = (props: PaginationProps) => {
                 {pageNumber}
               </PaginationLink>
             </PaginationItem>
-          );
+          )
         })}
 
         {visibleRange.end < totalPages && (
@@ -142,8 +142,8 @@ export const CustomPagination = (props: PaginationProps) => {
               className={styles.paginationLink}
               href="#"
               onClick={(e) => {
-                e.preventDefault();
-                handleEllipsisClick("right");
+                e.preventDefault()
+                handleEllipsisClick("right")
               }}
             >
               ...
@@ -159,12 +159,12 @@ export const CustomPagination = (props: PaginationProps) => {
             )}
             href={createPageUrl(currentPage + 1)}
             onClick={(e) => {
-              e.preventDefault();
-              if (currentPage < totalPages) setPage(currentPage + 1);
+              e.preventDefault()
+              if (currentPage < totalPages) setPage(currentPage + 1)
             }}
           />
         </PaginationItem>
       </PaginationContent>
     </PaginationRoot>
-  );
-};
+  )
+}

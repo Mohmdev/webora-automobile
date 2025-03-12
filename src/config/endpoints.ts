@@ -7,4 +7,4 @@ export const endpoints = {
     getMultipartUpload: "/api/images/get-multipart",
     finaliseMultipartUpload: "/api/images/finalise-multipart",
   },
-};
+}

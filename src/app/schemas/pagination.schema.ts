@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const PaginationSchema = z.object({
   page: z
@@ -13,24 +13,24 @@ export const PaginationSchema = z.object({
       message: "Items per page must be greater than 0",
     })
     .default("10"),
-});
+})
 
-export type PaginationType = z.infer<typeof PaginationSchema>;
+export type PaginationType = z.infer<typeof PaginationSchema>
 
 export const validatePagination = ({ page, itemsPerPage }: PaginationType) => {
   const { data, success, error } = PaginationSchema.safeParse({
     page,
     itemsPerPage,
-  });
+  })
 
-  if (error) console.log("Validation error: ", error);
+  if (error) console.log("Validation error: ", error)
 
   if (!success) {
     return {
       page: "1",
       itemsPerPage: "10",
-    };
+    }
   }
 
-  return data;
-};
+  return data
+}

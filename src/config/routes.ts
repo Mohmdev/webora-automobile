@@ -1,4 +1,4 @@
-import type { MultiStepFormEnum } from "./types";
+import type { MultiStepFormEnum } from "./types"
 
 export const routes = {
   home: "/",
@@ -19,4 +19,4 @@ export const routes = {
     editCustomer: (id: number) => `/admin/customers/edit/${id}`,
     settings: "/admin/settings",
   },
-};
+}

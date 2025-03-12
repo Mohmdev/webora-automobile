@@ -1,12 +1,12 @@
-import { faker } from "@faker-js/faker";
-import { CustomerStatus, type Prisma, type PrismaClient } from "@prisma/client";
+import { faker } from "@faker-js/faker"
+import { CustomerStatus, type Prisma, type PrismaClient } from "@prisma/client"
 
 export async function seedCustomers(prisma: PrismaClient) {
   const customerClassifieds = await prisma.classified.findMany({
     take: 5,
     select: { id: true },
     orderBy: { fuelType: "asc" },
-  });
+  })
 
   const customers: Prisma.CustomerCreateInput[] = Array.from({ length: 5 }).map(
     (_, index) => ({
@@ -17,9 +17,9 @@ export async function seedCustomers(prisma: PrismaClient) {
       status: faker.helpers.arrayElement(Object.values(CustomerStatus)),
       classifiedId: customerClassifieds[index].id,
     }),
-  );
+  )
 
-  const result = await prisma.customer.createMany({ data: customers });
+  const result = await prisma.customer.createMany({ data: customers })
 
-  console.log(`${result.count} customers created 🌱`);
+  console.log(`${result.count} customers created 🌱`)
 }

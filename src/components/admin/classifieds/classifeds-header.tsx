@@ -1,7 +1,7 @@
-import { RadioFilter } from "@/components/shared/radio-filter";
-import type { AwaitedPageProps } from "@/config/types";
-import { ClassifiedStatus } from "@prisma/client";
-import { CreateClassifiedDialog } from "./create-classified-dialog";
+import { RadioFilter } from "@/components/shared/radio-filter"
+import type { AwaitedPageProps } from "@/config/types"
+import { ClassifiedStatus } from "@prisma/client"
+import { CreateClassifiedDialog } from "./create-classified-dialog"
 
 export const AdminClassifiedsHeader = ({ searchParams }: AwaitedPageProps) => {
   return (
@@ -17,5 +17,5 @@ export const AdminClassifiedsHeader = ({ searchParams }: AwaitedPageProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import { ClassifiedStatus, CustomerStatus } from "@prisma/client";
-import { z } from "zod";
+import { ClassifiedStatus, CustomerStatus } from "@prisma/client"
+import { z } from "zod"
 
 export const AdminClassifiedFilterSchema = z.object({
   q: z.string().optional(),
@@ -7,7 +7,7 @@ export const AdminClassifiedFilterSchema = z.object({
     .enum(["ALL", ...Object.values(ClassifiedStatus)])
     .default("ALL")
     .optional(),
-});
+})
 
 export const AdminCustomerFilterSchema = z.object({
   q: z.string().optional(),
@@ -15,4 +15,4 @@ export const AdminCustomerFilterSchema = z.object({
     .enum(["ALL", ...Object.values(CustomerStatus)])
     .default("ALL")
     .optional(),
-});
+})

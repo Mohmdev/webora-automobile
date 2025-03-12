@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { logoutOfAllSessions } from "@/app/_actions/sign-out";
-import { Loader2 } from "lucide-react";
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
+import { logoutOfAllSessions } from "@/app/_actions/sign-out"
+import { Loader2 } from "lucide-react"
+import { useActionState } from "react"
+import { useFormStatus } from "react-dom"
+import { Button } from "../ui/button"
 
 const LogoutButton = () => {
-  const { pending } = useFormStatus();
+  const { pending } = useFormStatus()
 
   return (
     <div className="mt-8 flex">
@@ -21,11 +21,11 @@ const LogoutButton = () => {
         {pending ? "Logging out..." : "Log out of all sessions"}
       </Button>
     </div>
-  );
-};
+  )
+}
 
 export const SettingsPageContent = () => {
-  const [_, formAction] = useActionState(logoutOfAllSessions, null);
+  const [_, formAction] = useActionState(logoutOfAllSessions, null)
 
   return (
     <div className="divide-y divide-white/5 px-6">
@@ -47,5 +47,5 @@ export const SettingsPageContent = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}

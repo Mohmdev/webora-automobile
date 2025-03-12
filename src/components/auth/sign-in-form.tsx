@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { signInAction } from "@/app/_actions/sign-in";
-import { CircleCheckIcon, CircleX, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useRef } from "react";
-import { useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { signInAction } from "@/app/_actions/sign-in"
+import { CircleCheckIcon, CircleX, Loader2 } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useActionState, useEffect, useRef } from "react"
+import { useFormStatus } from "react-dom"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
 
 const SubmitButton = () => {
-  const { pending } = useFormStatus();
+  const { pending } = useFormStatus()
 
   return (
     <Button
@@ -26,24 +26,24 @@ const SubmitButton = () => {
       )}{" "}
       Sign In
     </Button>
-  );
-};
+  )
+}
 
 export const SignInForm = () => {
   const [state, formAction] = useActionState(signInAction, {
     success: false,
     message: "",
-  });
+  })
 
-  const router = useRouter();
-  const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter()
+  const formRef = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
     if (state.success && formRef.current) {
-      router.refresh();
+      router.refresh()
       // router.push(routes.challenge);
     }
-  }, [state, router]);
+  }, [state, router])
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-white">
@@ -106,5 +106,5 @@ export const SignInForm = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}

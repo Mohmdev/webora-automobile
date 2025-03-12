@@ -1,20 +1,20 @@
-import type { Prisma, PrismaClient } from "@prisma/client";
-import { parse } from "csv";
-import fs from "node:fs";
+import type { Prisma, PrismaClient } from "@prisma/client"
+import { parse } from "csv"
+import fs from "node:fs"
 
 type Row = {
-  make: string;
-  model: string;
-  variant: string | undefined;
-  yearStart: number;
-  yearEnd: number;
-};
+  make: string
+  model: string
+  variant: string | undefined
+  yearStart: number
+  yearEnd: number
+}
 
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 100
 
 export async function seedTaxonomy(prisma: PrismaClient) {
   const rows = await new Promise<Row[]>((resolve, reject) => {
-    const eachRow: Row[] = [];
+    const eachRow: Row[] = []
 
     fs.createReadStream("taxonomy.csv")
       .pipe(parse({ columns: true }))
@@ -27,54 +27,54 @@ export async function seedTaxonomy(prisma: PrismaClient) {
           yearEnd: row.Year_End
             ? Number(row.Year_End)
             : new Date().getFullYear(),
-        });
+        })
       })
       .on("error", (error) => {
-        console.log({ error });
-        reject(error);
+        console.log({ error })
+        reject(error)
       })
       .on("end", () => {
-        resolve(eachRow);
-      });
-  });
+        resolve(eachRow)
+      })
+  })
 
-  console.log(rows);
+  console.log(rows)
 
   type MakeModelMap = {
     [make: string]: {
       [model: string]: {
         variants: {
           [variant: string]: {
-            yearStart: number;
-            yearEnd: number;
-          };
-        };
-      };
-    };
-  };
+            yearStart: number
+            yearEnd: number
+          }
+        }
+      }
+    }
+  }
 
-  const result: MakeModelMap = {};
+  const result: MakeModelMap = {}
 
   for (const row of rows) {
     if (!result[row.make]) {
-      result[row.make] = {};
+      result[row.make] = {}
     }
 
     if (!result[row.make][row.model]) {
       result[row.make][row.model] = {
         variants: {},
-      };
+      }
     }
 
     if (row.variant) {
       result[row.make][row.model].variants[row.variant] = {
         yearStart: row.yearStart,
         yearEnd: row.yearEnd,
-      };
+      }
     }
   }
 
-  console.log({ result });
+  console.log({ result })
 
   const makePromises = Object.entries(result).map(([name]) => {
     return prisma.make.upsert({
@@ -89,13 +89,13 @@ export async function seedTaxonomy(prisma: PrismaClient) {
         name,
         image: `https://vl.imgix.net/img/${name.replace(/\s+/g, "-").toLowerCase()}-logo.png?auto=format,compress`,
       },
-    });
-  });
+    })
+  })
 
-  const makes = await Promise.all(makePromises);
-  console.log(`Seeded db with ${makes.length} makes 🌱`);
+  const makes = await Promise.all(makePromises)
+  console.log(`Seeded db with ${makes.length} makes 🌱`)
 
-  const modelPromises: Prisma.Prisma__ModelClient<unknown, unknown>[] = [];
+  const modelPromises: Prisma.Prisma__ModelClient<unknown, unknown>[] = []
 
   for (const make of makes) {
     for (const model in result[make.name]) {
@@ -115,7 +115,7 @@ export async function seedTaxonomy(prisma: PrismaClient) {
             make: { connect: { id: make.id } },
           },
         }),
-      );
+      )
     }
   }
 
@@ -125,8 +125,8 @@ export async function seedTaxonomy(prisma: PrismaClient) {
     insertFunction: (batch: TUpsertArgs[]) => void,
   ) {
     for (let i = 0; i < items.length; i += batchSize) {
-      const batch = items.slice(i, i + batchSize);
-      await insertFunction(batch);
+      const batch = items.slice(i, i + batchSize)
+      await insertFunction(batch)
     }
   }
 
@@ -134,18 +134,18 @@ export async function seedTaxonomy(prisma: PrismaClient) {
     modelPromises,
     BATCH_SIZE,
     async (batch) => {
-      const models = await Promise.all(batch);
-      console.log(`Seeded batch of ${models.length} models 🌱`);
+      const models = await Promise.all(batch)
+      console.log(`Seeded batch of ${models.length} models 🌱`)
     },
-  );
+  )
 
   const variantPromises: Prisma.Prisma__ModelVariantClient<unknown, unknown>[] =
-    [];
+    []
 
   for (const make of makes) {
     const models = await prisma.model.findMany({
       where: { makeId: make.id },
-    });
+    })
 
     for (const model of models) {
       for (const [variant, year_range] of Object.entries(
@@ -169,7 +169,7 @@ export async function seedTaxonomy(prisma: PrismaClient) {
               model: { connect: { id: model.id } },
             },
           }),
-        );
+        )
       }
     }
   }
@@ -178,8 +178,8 @@ export async function seedTaxonomy(prisma: PrismaClient) {
     variantPromises,
     BATCH_SIZE,
     async (batch) => {
-      const variants = await Promise.all(batch);
-      console.log(`Seeded batch of ${variants.length} variants 🌱`);
+      const variants = await Promise.all(batch)
+      console.log(`Seeded batch of ${variants.length} variants 🌱`)
     },
-  );
+  )
 }

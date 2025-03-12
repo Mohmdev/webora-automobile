@@ -1,44 +1,44 @@
-"use client";
-import type { AwaitedPageProps, FilterOptions } from "@/config/types";
-import { useRouter } from "next/navigation";
-import { type ChangeEvent, useEffect } from "react";
-import { Select } from "../ui/select";
-import { TableCell, TableFooter, TableRow } from "../ui/table";
-import { CustomPagination } from "./custom-pagination";
+"use client"
+import type { AwaitedPageProps, FilterOptions } from "@/config/types"
+import { useRouter } from "next/navigation"
+import { type ChangeEvent, useEffect } from "react"
+import { Select } from "../ui/select"
+import { TableCell, TableFooter, TableRow } from "../ui/table"
+import { CustomPagination } from "./custom-pagination"
 const itemsPerPageOptions: FilterOptions<string, string> = [
   { label: "10", value: "10" },
   { label: "25", value: "25" },
   { label: "50", value: "50" },
   { label: "100", value: "100" },
-];
+]
 
 interface AdminTableFooterProps extends AwaitedPageProps {
-  disabled: boolean;
-  totalPages: number;
-  baseURL: string;
-  cols: number;
+  disabled: boolean
+  totalPages: number
+  baseURL: string
+  cols: number
 }
 
 export const AdminTableFooter = (props: AdminTableFooterProps) => {
-  const { disabled, totalPages, baseURL, cols, searchParams } = props;
-  const itemsPerPage = searchParams?.itemsPerPage || "10";
-  const router = useRouter();
+  const { disabled, totalPages, baseURL, cols, searchParams } = props
+  const itemsPerPage = searchParams?.itemsPerPage || "10"
+  const router = useRouter()
 
   const handleItemsPerPage = (e: ChangeEvent<HTMLSelectElement>) => {
-    const currentUrlParams = new URLSearchParams(window.location.search);
-    currentUrlParams.set(e.target.name, e.target.value);
-    const url = new URL(window.location.href);
-    url.search = currentUrlParams.toString();
-    router.push(url.toString());
-  };
+    const currentUrlParams = new URLSearchParams(window.location.search)
+    currentUrlParams.set(e.target.name, e.target.value)
+    const url = new URL(window.location.href)
+    url.search = currentUrlParams.toString()
+    router.push(url.toString())
+  }
 
   useEffect(() => {
-    const currentUrlParams = new URLSearchParams(window.location.search);
-    currentUrlParams.set("itemsPerPage", itemsPerPage as string);
-    const url = new URL(window.location.href);
-    url.search = currentUrlParams.toString();
-    router.push(url.toString());
-  }, [router, itemsPerPage]);
+    const currentUrlParams = new URLSearchParams(window.location.search)
+    currentUrlParams.set("itemsPerPage", itemsPerPage as string)
+    const url = new URL(window.location.href)
+    url.search = currentUrlParams.toString()
+    router.push(url.toString())
+  }, [router, itemsPerPage])
 
   return (
     <TableFooter className="border-primary-800 hover:bg-transparent">
@@ -71,5 +71,5 @@ export const AdminTableFooter = (props: AdminTableFooterProps) => {
         </TableCell>
       </TableRow>
     </TableFooter>
-  );
-};
+  )
+}

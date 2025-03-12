@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { imgixLoader } from "@/lib/imgix-loader";
-import Image, { type ImageProps } from "next/image";
-import { useState } from "react";
+import { imgixLoader } from "@/lib/imgix-loader"
+import Image, { type ImageProps } from "next/image"
+import { useState } from "react"
 
-type ImgixImageProps = Omit<ImageProps, "priority" | "loading">;
+type ImgixImageProps = Omit<ImageProps, "priority" | "loading">
 
 export const ImgixImage = (props: ImgixImageProps) => {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(false)
 
   if (error)
     return (
@@ -15,7 +15,7 @@ export const ImgixImage = (props: ImgixImageProps) => {
         fetchPriority="high"
         {...props}
       />
-    );
+    )
 
   return (
     <Image
@@ -24,5 +24,5 @@ export const ImgixImage = (props: ImgixImageProps) => {
       onError={() => setError(true)}
       {...props}
     />
-  );
-};
+  )
+}

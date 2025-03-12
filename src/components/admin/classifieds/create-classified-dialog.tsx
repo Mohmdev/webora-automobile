@@ -1,42 +1,42 @@
-"use client";
+"use client"
 
-import type { AI } from "@/app/_actions/ai";
-import { createClassifiedAction } from "@/app/_actions/classified";
-import { ClassifiedAISchema } from "@/app/schemas/classified-ai.schema";
+import type { AI } from "@/app/_actions/ai"
+import { createClassifiedAction } from "@/app/_actions/classified"
+import { ClassifiedAISchema } from "@/app/schemas/classified-ai.schema"
 import {
   SingleImageSchema,
   type SingleImageType,
-} from "@/app/schemas/images.schema";
-import { Button } from "@/components/ui/button";
+} from "@/app/schemas/images.schema"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Form } from "@/components/ui/form";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { readStreamableValue, useActions, useUIState } from "ai/rsc";
-import { Loader2 } from "lucide-react";
-import { useState, useTransition } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
-import { ImageUploader } from "./single-image-uploader";
-import type { StreamableSkeletonProps } from "./streamable-skeleton";
+} from "@/components/ui/dialog"
+import { Form } from "@/components/ui/form"
+import { toast } from "@/hooks/use-toast"
+import { cn } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { readStreamableValue, useActions, useUIState } from "ai/rsc"
+import { Loader2 } from "lucide-react"
+import { useState, useTransition } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
+import { ImageUploader } from "./single-image-uploader"
+import type { StreamableSkeletonProps } from "./streamable-skeleton"
 
 export const CreateClassifiedDialog = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUploading, startUploadTransition] = useTransition();
-  const [isCreating, startCreateTransition] = useTransition();
-  const { generateClassified } = useActions<typeof AI>();
-  const [messages, setMessages] = useUIState<typeof AI>();
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isUploading, startUploadTransition] = useTransition()
+  const [isCreating, startCreateTransition] = useTransition()
+  const { generateClassified } = useActions<typeof AI>()
+  const [messages, setMessages] = useUIState<typeof AI>()
 
   const imageForm = useForm<SingleImageType>({
     resolver: zodResolver(SingleImageSchema),
-  });
+  })
 
   const createForm = useForm<StreamableSkeletonProps>({
     resolver: zodResolver(
@@ -50,29 +50,29 @@ export const CreateClassifiedDialog = () => {
         }),
       }),
     ),
-  });
+  })
 
   const handleImageUpload = (url: string) => {
-    imageForm.setValue("image", url);
-  };
+    imageForm.setValue("image", url)
+  }
 
   const onImageSubmit: SubmitHandler<SingleImageType> = (data) => {
     startUploadTransition(async () => {
-      const responseMessage = await generateClassified(data.image);
-      if (!responseMessage) return;
-      setMessages((currentMessages) => [...currentMessages, responseMessage]);
+      const responseMessage = await generateClassified(data.image)
+      if (!responseMessage) return
+      setMessages((currentMessages) => [...currentMessages, responseMessage])
       for await (const value of readStreamableValue(
         responseMessage.classified,
       )) {
-        if (value) createForm.reset(value);
+        if (value) createForm.reset(value)
       }
-    });
-  };
+    })
+  }
 
   const onCreateSubmit: SubmitHandler<StreamableSkeletonProps> = (data) => {
     startCreateTransition(async () => {
-      setMessages([]);
-      const { success, message } = await createClassifiedAction(data);
+      setMessages([])
+      const { success, message } = await createClassifiedAction(data)
 
       if (!success) {
         toast({
@@ -81,12 +81,12 @@ export const CreateClassifiedDialog = () => {
           type: "background",
           duration: 2500,
           variant: "destructive",
-        });
+        })
 
-        return;
+        return
       }
-    });
-  };
+    })
+  }
 
   return (
     <Dialog
@@ -169,5 +169,5 @@ export const CreateClassifiedDialog = () => {
         )}
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}

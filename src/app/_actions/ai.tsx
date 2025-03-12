@@ -1,40 +1,40 @@
-"use server";
+"use server"
 
 import {
   StreamableSkeleton,
   type StreamableSkeletonProps,
-} from "@/components/admin/classifieds/streamable-skeleton";
-import { env } from "@/env";
-import { mapToTaxonomyOrCreate } from "@/lib/ai-utils";
-import { prisma } from "@/lib/prisma";
-import { createOpenAI } from "@ai-sdk/openai";
-import { type CoreMessage, type UserContent, generateObject } from "ai";
+} from "@/components/admin/classifieds/streamable-skeleton"
+import { env } from "@/env"
+import { mapToTaxonomyOrCreate } from "@/lib/ai-utils"
+import { prisma } from "@/lib/prisma"
+import { createOpenAI } from "@ai-sdk/openai"
+import { type CoreMessage, type UserContent, generateObject } from "ai"
 import {
   type StreamableValue,
   createAI,
   createStreamableUI,
   createStreamableValue,
-} from "ai/rsc";
-import type { ReactNode } from "react";
+} from "ai/rsc"
+import type { ReactNode } from "react"
 import {
   ClassifiedDetailsAISchema,
   ClassifiedTaxonomyAISchema,
-} from "../schemas/classified-ai.schema";
+} from "../schemas/classified-ai.schema"
 
 const openai = createOpenAI({
   apiKey: env.OPENAI_API_KEY,
   compatibility: "strict",
-});
+})
 
 export async function generateClassified(
   image: string,
 ): Promise<ClientMessage | null> {
-  const uiStream = createStreamableUI();
-  const valueStream = createStreamableValue<StreamableSkeletonProps>();
+  const uiStream = createStreamableUI()
+  const valueStream = createStreamableValue<StreamableSkeletonProps>()
 
-  let classified = { image } as StreamableSkeletonProps;
+  let classified = { image } as StreamableSkeletonProps
 
-  uiStream.update(<StreamableSkeleton {...classified} />);
+  uiStream.update(<StreamableSkeleton {...classified} />)
 
   async function processEvents() {
     const { object: taxonomy } = await generateObject({
@@ -54,22 +54,22 @@ export async function generateClassified(
           ],
         },
       ] as CoreMessage[],
-    });
+    })
 
     classified.title =
-      `${taxonomy.year} ${taxonomy.make} ${taxonomy.model} ${taxonomy.modelVariant ? ` ${taxonomy.modelVariant}` : ""}`.trim();
+      `${taxonomy.year} ${taxonomy.make} ${taxonomy.model} ${taxonomy.modelVariant ? ` ${taxonomy.modelVariant}` : ""}`.trim()
 
     const foundTaxonomy = await mapToTaxonomyOrCreate({
       year: taxonomy.year,
       make: taxonomy.make,
       model: taxonomy.model,
       modelVariant: taxonomy.modelVariant,
-    });
+    })
 
     if (foundTaxonomy) {
       const make = await prisma.make.findFirst({
         where: { name: foundTaxonomy.make },
-      });
+      })
 
       if (make) {
         classified = {
@@ -77,11 +77,11 @@ export async function generateClassified(
           ...foundTaxonomy,
           make,
           makeId: make.id,
-        };
+        }
       }
     }
 
-    uiStream.update(<StreamableSkeleton {...classified} />);
+    uiStream.update(<StreamableSkeleton {...classified} />)
 
     const { object: details } = await generateObject({
       model: openai("gpt-4o-mini-2024-07-18", { structuredOutputs: true }),
@@ -100,47 +100,47 @@ export async function generateClassified(
           ],
         },
       ] as CoreMessage[],
-    });
+    })
 
     classified = {
       ...classified,
       ...details,
-    };
+    }
 
     uiStream.update(
       <StreamableSkeleton
         done={true}
         {...classified}
       />,
-    );
-    valueStream.update(classified);
-    uiStream.done();
-    valueStream.done();
+    )
+    valueStream.update(classified)
+    uiStream.done()
+    valueStream.done()
   }
 
-  processEvents();
+  processEvents()
 
   return {
     id: Date.now(),
     display: uiStream.value,
     role: "assistant" as const,
     classified: valueStream.value,
-  };
+  }
 }
 
 type ServerMessage = {
-  id?: number;
-  name?: string | undefined;
-  role: "user" | "assistant" | "system";
-  content: UserContent;
-};
+  id?: number
+  name?: string | undefined
+  role: "user" | "assistant" | "system"
+  content: UserContent
+}
 
 export type ClientMessage = {
-  id: number;
-  role: "user" | "assistant";
-  display: ReactNode;
-  classified: StreamableValue<StreamableSkeletonProps>;
-};
+  id: number
+  role: "user" | "assistant"
+  display: ReactNode
+  classified: StreamableValue<StreamableSkeletonProps>
+}
 
 export const AI = createAI({
   initialUIState: [] as ClientMessage[],
@@ -148,4 +148,4 @@ export const AI = createAI({
   actions: {
     generateClassified,
   },
-});
+})

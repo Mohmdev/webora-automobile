@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
-import { type ElementType, forwardRef } from "react";
-import { NumericFormat, type NumericFormatProps } from "react-number-format";
+import { cn } from "@/lib/utils"
+import { type ElementType, forwardRef } from "react"
+import { NumericFormat, type NumericFormatProps } from "react-number-format"
 
 export const NumberInput = forwardRef<
   ElementType<typeof NumericFormat>,
@@ -19,5 +19,5 @@ export const NumberInput = forwardRef<
       )}
       {...props}
     />
-  );
-});
+  )
+})

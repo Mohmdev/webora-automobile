@@ -1,14 +1,14 @@
-import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "../ui/button";
+import { cn } from "@/lib/utils"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "../ui/button"
 
 interface SwiperButtonsProps {
-  prevClassName?: string;
-  nextClassName?: string;
+  prevClassName?: string
+  nextClassName?: string
 }
 
 export const SwiperButtons = (props: SwiperButtonsProps) => {
-  const { prevClassName, nextClassName } = props;
+  const { prevClassName, nextClassName } = props
 
   return (
     <>
@@ -45,5 +45,5 @@ export const SwiperButtons = (props: SwiperButtonsProps) => {
         />
       </Button>
     </>
-  );
-};
+  )
+}

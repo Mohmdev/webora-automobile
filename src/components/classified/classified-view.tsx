@@ -1,5 +1,5 @@
-import { routes } from "@/config/routes";
-import { MultiStepFormEnum } from "@/config/types";
+import { routes } from "@/config/routes"
+import { MultiStepFormEnum } from "@/config/types"
 import {
   formatBodyType,
   formatColour,
@@ -9,8 +9,8 @@ import {
   formatPrice,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils";
-import type { Prisma } from "@prisma/client";
+} from "@/lib/utils"
+import type { Prisma } from "@prisma/client"
 import {
   CarFrontIcon,
   CarIcon,
@@ -21,16 +21,16 @@ import {
   PowerIcon,
   UsersIcon,
   XIcon,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { HTMLParser } from "../shared/html-parser";
-import { Button } from "../ui/button";
-import { ClassifiedCarousel } from "./classified-carousel";
+} from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { HTMLParser } from "../shared/html-parser"
+import { Button } from "../ui/button"
+import { ClassifiedCarousel } from "./classified-carousel"
 
 type ClassifiedWithImagesAndMake = Prisma.ClassifiedGetPayload<{
-  include: { make: true; images: true };
-}>;
+  include: { make: true; images: true }
+}>
 
 const features = (props: ClassifiedWithImagesAndMake) => [
   {
@@ -78,7 +78,7 @@ const features = (props: ClassifiedWithImagesAndMake) => [
     icon: <CarFrontIcon className="w-6 h-6 mx-auto text-gray-500" />,
     label: props.doors,
   },
-];
+]
 
 export const ClassifiedView = (props: ClassifiedWithImagesAndMake) => {
   return (
@@ -150,5 +150,5 @@ export const ClassifiedView = (props: ClassifiedWithImagesAndMake) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

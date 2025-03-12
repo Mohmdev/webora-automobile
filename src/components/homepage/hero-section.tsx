@@ -1,23 +1,23 @@
-import { imageSources } from "@/config/constants";
-import { routes } from "@/config/routes";
-import type { AwaitedPageProps } from "@/config/types";
-import { imgixLoader } from "@/lib/imgix-loader";
-import { prisma } from "@/lib/prisma";
-import { buildClassifiedFilterQuery } from "@/lib/utils";
-import { ClassifiedStatus } from "@prisma/client";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { HomepageTaxonomyFilters } from "./homepage-filters";
-import { SearchButton } from "./search-button";
+import { imageSources } from "@/config/constants"
+import { routes } from "@/config/routes"
+import type { AwaitedPageProps } from "@/config/types"
+import { imgixLoader } from "@/lib/imgix-loader"
+import { prisma } from "@/lib/prisma"
+import { buildClassifiedFilterQuery } from "@/lib/utils"
+import { ClassifiedStatus } from "@prisma/client"
+import Link from "next/link"
+import { Button } from "../ui/button"
+import { HomepageTaxonomyFilters } from "./homepage-filters"
+import { SearchButton } from "./search-button"
 
 export const HeroSection = async (props: AwaitedPageProps) => {
-  const { searchParams } = props;
-  const totalFiltersApplied = Object.keys(searchParams || {}).length;
-  const isFilterApplied = totalFiltersApplied > 0;
+  const { searchParams } = props
+  const totalFiltersApplied = Object.keys(searchParams || {}).length
+  const isFilterApplied = totalFiltersApplied > 0
 
   const classifiedsCount = await prisma.classified.count({
     where: buildClassifiedFilterQuery(searchParams),
-  });
+  })
 
   const minMaxResult = await prisma.classified.aggregate({
     where: { status: ClassifiedStatus.LIVE },
@@ -31,7 +31,7 @@ export const HeroSection = async (props: AwaitedPageProps) => {
       year: true,
       odoReading: true,
     },
-  });
+  })
 
   return (
     <section
@@ -74,5 +74,5 @@ export const HeroSection = async (props: AwaitedPageProps) => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

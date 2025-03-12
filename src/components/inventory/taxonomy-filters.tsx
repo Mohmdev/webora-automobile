@@ -1,44 +1,44 @@
-"use client";
+"use client"
 
-import { endpoints } from "@/config/endpoints";
-import type { FilterOptions, TaxonomyFiltersProps } from "@/config/types";
-import { api } from "@/lib/api-client";
-import { useEffect, useState } from "react";
-import { Select } from "../ui/select";
+import { endpoints } from "@/config/endpoints"
+import type { FilterOptions, TaxonomyFiltersProps } from "@/config/types"
+import { api } from "@/lib/api-client"
+import { useEffect, useState } from "react"
+import { Select } from "../ui/select"
 
 export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
-  const { searchParams, handleChange } = props;
+  const { searchParams, handleChange } = props
 
-  const [makes, setMakes] = useState<FilterOptions<string, string>>([]);
-  const [models, setModels] = useState<FilterOptions<string, string>>([]);
+  const [makes, setMakes] = useState<FilterOptions<string, string>>([])
+  const [models, setModels] = useState<FilterOptions<string, string>>([])
   const [modelVariants, setModelVariants] = useState<
     FilterOptions<string, string>
-  >([]);
+  >([])
 
   useEffect(() => {
-    (async function fetchMakesOptions() {
-      const params = new URLSearchParams();
+    ;(async function fetchMakesOptions() {
+      const params = new URLSearchParams()
       for (const [k, v] of Object.entries(
         searchParams as Record<string, string>,
       )) {
-        if (v) params.set(k, v as string);
+        if (v) params.set(k, v as string)
       }
 
-      const url = new URL(endpoints.taxonomy, window.location.href);
+      const url = new URL(endpoints.taxonomy, window.location.href)
 
-      url.search = params.toString();
+      url.search = params.toString()
 
       const data = await api.get<{
-        makes: FilterOptions<string, string>;
-        models: FilterOptions<string, string>;
-        modelVariants: FilterOptions<string, string>;
-      }>(url.toString());
+        makes: FilterOptions<string, string>
+        models: FilterOptions<string, string>
+        modelVariants: FilterOptions<string, string>
+      }>(url.toString())
 
-      setMakes(data.makes);
-      setModels(data.models);
-      setModelVariants(data.modelVariants);
-    })();
-  }, [searchParams]);
+      setMakes(data.makes)
+      setModels(data.models)
+      setModelVariants(data.modelVariants)
+    })()
+  }, [searchParams])
 
   return (
     <>
@@ -66,5 +66,5 @@ export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
         disabled={!modelVariants.length}
       />
     </>
-  );
-};
+  )
+}

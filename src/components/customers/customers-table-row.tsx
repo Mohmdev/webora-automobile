@@ -1,10 +1,10 @@
-import { CustomerBadgeMap } from "@/config/constants";
-import type { CustomerWithClassified } from "@/config/types";
-import { formatCustomerStatus } from "@/lib/utils";
-import { format } from "date-fns";
-import { Badge } from "../ui/badge";
-import { TableCell, TableRow } from "../ui/table";
-import { ActionButtons } from "./action-buttons";
+import { CustomerBadgeMap } from "@/config/constants"
+import type { CustomerWithClassified } from "@/config/types"
+import { formatCustomerStatus } from "@/lib/utils"
+import { format } from "date-fns"
+import { Badge } from "../ui/badge"
+import { TableCell, TableRow } from "../ui/table"
+import { ActionButtons } from "./action-buttons"
 
 export const CustomerTableRow = (customer: CustomerWithClassified) => {
   return (
@@ -41,5 +41,5 @@ export const CustomerTableRow = (customer: CustomerWithClassified) => {
         <ActionButtons customer={customer} />
       </TableCell>
     </TableRow>
-  );
-};
+  )
+}

@@ -5,8 +5,8 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client";
-import { z } from "zod";
+} from "@prisma/client"
+import { z } from "zod"
 
 export const ClassifiedTaxonomyAISchema = z.object({
   year: z.number().describe("The year of the vehicle"),
@@ -22,7 +22,7 @@ export const ClassifiedTaxonomyAISchema = z.object({
     .string()
     .nullable()
     .describe("The model variant of the vehicle"),
-});
+})
 
 export const ClassifiedDetailsAISchema = z.object({
   description: z
@@ -48,13 +48,13 @@ export const ClassifiedDetailsAISchema = z.object({
   fuelType: z.nativeEnum(FuelType).describe("THe fuel type of the vehicle"),
   bodyType: z.nativeEnum(BodyType).describe("THe body type of the vehicle"),
   odoUnit: z.nativeEnum(OdoUnit).describe("THe odometer unit of the vehicle"),
-});
+})
 
 export const ClassifiedAISchema = ClassifiedDetailsAISchema.merge(
   ClassifiedTaxonomyAISchema,
 ).extend({
   title: z.string().describe("The title of the vehicle"),
   image: z.string().url().describe("The image of the vehicle"),
-});
+})
 
-export type ClassifiedAI = z.infer<typeof ClassifiedAISchema>;
+export type ClassifiedAI = z.infer<typeof ClassifiedAISchema>

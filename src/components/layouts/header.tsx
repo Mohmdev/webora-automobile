@@ -1,20 +1,20 @@
-import { auth } from "@/auth";
-import { navLinks } from "@/config/constants";
-import { routes } from "@/config/routes";
-import type { Favourites } from "@/config/types";
-import { redis } from "@/lib/redis-store";
-import { getSourceId } from "@/lib/source-id";
-import { HeartIcon, MenuIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { SignOutForm } from "../auth/sign-out-form";
-import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { auth } from "@/auth"
+import { navLinks } from "@/config/constants"
+import { routes } from "@/config/routes"
+import type { Favourites } from "@/config/types"
+import { redis } from "@/lib/redis-store"
+import { getSourceId } from "@/lib/source-id"
+import { HeartIcon, MenuIcon } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { SignOutForm } from "../auth/sign-out-form"
+import { Button } from "../ui/button"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet"
 
 export const PublicHeader = async () => {
-  const session = await auth();
-  const sourceId = await getSourceId();
-  const favourites = await redis.get<Favourites>(sourceId ?? "");
+  const session = await auth()
+  const sourceId = await getSourceId()
+  const favourites = await redis.get<Favourites>(sourceId ?? "")
   return (
     <header className="flex items-center justify-between h-16 px-4 bg-transparent gap-x-6">
       <div className="flex items-center flex-1">
@@ -100,5 +100,5 @@ export const PublicHeader = async () => {
         </SheetContent>
       </Sheet>
     </header>
-  );
-};
+  )
+}

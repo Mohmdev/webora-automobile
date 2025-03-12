@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import type { FilterOptions } from "@/config/types";
-import type { SelectHTMLAttributes } from "react";
+import type { FilterOptions } from "@/config/types"
+import type { SelectHTMLAttributes } from "react"
 
 interface SelectType extends SelectHTMLAttributes<HTMLSelectElement> {
-  options: FilterOptions<string, number>;
+  options: FilterOptions<string, number>
 }
 
 interface RangeSelectProps {
-  label: string;
-  minSelect: SelectType;
-  maxSelect: SelectType;
+  label: string
+  minSelect: SelectType
+  maxSelect: SelectType
 }
 export const RangeSelect = (props: RangeSelectProps) => {
-  const { label, minSelect, maxSelect } = props;
+  const { label, minSelect, maxSelect } = props
 
   return (
     <>
@@ -32,7 +32,7 @@ export const RangeSelect = (props: RangeSelectProps) => {
               >
                 {option.label}
               </option>
-            );
+            )
           })}
         </select>
         <select
@@ -48,10 +48,10 @@ export const RangeSelect = (props: RangeSelectProps) => {
               >
                 {option.label}
               </option>
-            );
+            )
           })}
         </select>
       </div>
     </>
-  );
-};
+  )
+}

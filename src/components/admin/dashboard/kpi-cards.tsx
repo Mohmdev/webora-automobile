@@ -1,37 +1,32 @@
-import type { DashboardDataType } from "@/app/admin/dashboard/page";
+import type { DashboardDataType } from "@/app/admin/dashboard/page"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { cn, formatNumber, formatPrice } from "@/lib/utils";
-import {
-  CarIcon,
-  PoundSterling,
-  TrendingUpIcon,
-  UsersIcon,
-} from "lucide-react";
-import type React from "react";
-import { use } from "react";
+} from "@/components/ui/card"
+import { cn, formatNumber, formatPrice } from "@/lib/utils"
+import { CarIcon, PoundSterling, TrendingUpIcon, UsersIcon } from "lucide-react"
+import type React from "react"
+import { use } from "react"
 
 type KpiCardDataProps = {
-  data: DashboardDataType;
-};
+  data: DashboardDataType
+}
 
 interface DashboardItem {
-  id: number;
-  title: string;
-  description: string;
-  icon: React.ElementType;
-  amount: number;
-  percentage: number;
-  style: Intl.NumberFormatOptions["style"];
+  id: number
+  title: string
+  description: string
+  icon: React.ElementType
+  amount: number
+  percentage: number
+  style: Intl.NumberFormatOptions["style"]
 }
 
 export const KPICards = (props: KpiCardDataProps) => {
-  const { data } = props;
+  const { data } = props
   const {
     totalSales,
     carsSoldThisMonth,
@@ -41,7 +36,7 @@ export const KPICards = (props: KpiCardDataProps) => {
     salesPercentageChange,
     carsSoldPercentageChange,
     newCustomersPercentageChange,
-  } = use(data);
+  } = use(data)
 
   const dashboardData: DashboardItem[] = [
     {
@@ -80,7 +75,7 @@ export const KPICards = (props: KpiCardDataProps) => {
       percentage: Math.round(conversionRatePercentageChange),
       style: "percent",
     },
-  ];
+  ]
 
   return (
     <div className="grid gap-4 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -91,11 +86,11 @@ export const KPICards = (props: KpiCardDataProps) => {
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
 const KPICard = (props: DashboardItem[][number]) => {
-  const { icon: Icon, ...rest } = props;
+  const { icon: Icon, ...rest } = props
 
   return (
     <Card
@@ -139,5 +134,5 @@ const KPICard = (props: DashboardItem[][number]) => {
         </p>
       </CardContent>
     </Card>
-  );
-};
+  )
+}

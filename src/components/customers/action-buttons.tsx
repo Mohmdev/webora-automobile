@@ -1,36 +1,36 @@
-"use client";
-import { deleteClassifiedAction } from "@/app/_actions/classified";
-import type { CustomerWithClassified } from "@/config/types";
-import { toast } from "@/hooks/use-toast";
-import { EyeIcon, Loader2, PencilIcon, Trash } from "lucide-react";
-import Link from "next/link";
-import { useTransition } from "react";
-import { Tooltip } from "react-tooltip";
-import { routes } from "../../config/routes";
-import { Button } from "../ui/button";
-import { deleteCustomerAction } from "@/app/_actions/customer";
+"use client"
+import { deleteClassifiedAction } from "@/app/_actions/classified"
+import type { CustomerWithClassified } from "@/config/types"
+import { toast } from "@/hooks/use-toast"
+import { EyeIcon, Loader2, PencilIcon, Trash } from "lucide-react"
+import Link from "next/link"
+import { useTransition } from "react"
+import { Tooltip } from "react-tooltip"
+import { routes } from "../../config/routes"
+import { Button } from "../ui/button"
+import { deleteCustomerAction } from "@/app/_actions/customer"
 
 export const ActionButtons = ({
   customer,
 }: { customer: CustomerWithClassified }) => {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
   const deleteCustomer = (id: number) => {
     startTransition(async () => {
-      const result = await deleteCustomerAction(id);
+      const result = await deleteCustomerAction(id)
       if (result.success) {
         toast({
           title: "Classified Deleted",
           description: result.message,
-        });
+        })
       } else {
         toast({
           title: "Error Deleting Classified",
           description: result.message,
           variant: "destructive",
-        });
+        })
       }
-    });
-  };
+    })
+  }
 
   return (
     <>
@@ -60,5 +60,5 @@ export const ActionButtons = ({
         </Link>
       </Button>
     </>
-  );
-};
+  )
+}

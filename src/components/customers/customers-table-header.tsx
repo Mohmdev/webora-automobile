@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import { sortOrder } from "@/config/constants";
-import type { CustomerKeys, PageProps } from "@/config/types";
-import type { Customer } from "@prisma/client";
-import { parseAsStringLiteral, useQueryState } from "nuqs";
-import { SortIcon } from "../shared/sort-icon";
-import { TableHead, TableHeader, TableRow } from "../ui/table";
+import { sortOrder } from "@/config/constants"
+import type { CustomerKeys, PageProps } from "@/config/types"
+import type { Customer } from "@prisma/client"
+import { parseAsStringLiteral, useQueryState } from "nuqs"
+import { SortIcon } from "../shared/sort-icon"
+import { TableHead, TableHeader, TableRow } from "../ui/table"
 
 const customerKeys = [
   "id",
@@ -18,41 +18,41 @@ const customerKeys = [
   "status",
   "bookingDate",
   "classified",
-] as const;
+] as const
 
 interface CustomerTableProps extends PageProps {
-  customers: Customer[];
-  sort: CustomerKeys;
-  order: "asc" | "desc";
-  currentPage: number;
-  totalPages: number;
+  customers: Customer[]
+  sort: CustomerKeys
+  order: "asc" | "desc"
+  currentPage: number
+  totalPages: number
 }
 
-type CustomersTableHeaderProps = Pick<CustomerTableProps, "sort" | "order">;
+type CustomersTableHeaderProps = Pick<CustomerTableProps, "sort" | "order">
 
 export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
-  const { sort: initialSort, order: initialOrder } = props;
+  const { sort: initialSort, order: initialOrder } = props
   const [sort, setSort] = useQueryState(
     "sort",
     parseAsStringLiteral(customerKeys)
       .withDefault(initialSort)
       .withOptions({ shallow: false }),
-  );
+  )
   const [order, setOrder] = useQueryState(
     "order",
     parseAsStringLiteral(sortOrder)
       .withDefault(initialOrder)
       .withOptions({ shallow: false }),
-  );
+  )
 
   const handleSort = (newSort: CustomerKeys) => {
     if (newSort === sort) {
-      setOrder(order === "asc" ? "desc" : "asc");
+      setOrder(order === "asc" ? "desc" : "asc")
     } else {
-      setSort(newSort);
-      setOrder("asc");
+      setSort(newSort)
+      setOrder("asc")
     }
-  };
+  }
 
   return (
     <TableHeader>
@@ -173,5 +173,5 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
         <TableHead className="text-muted w-[100px]">Actions</TableHead>
       </TableRow>
     </TableHeader>
-  );
-};
+  )
+}

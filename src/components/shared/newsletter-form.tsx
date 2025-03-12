@@ -1,24 +1,18 @@
-"use client";
+"use client"
 
-import { subscribeAction } from "@/app/_actions/subscribe";
-import { SubscribeSchema } from "@/app/schemas/subscribe.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleCheckIcon, CircleX, Loader2 } from "lucide-react";
-import { useActionState, useEffect, useRef } from "react";
-import { useFormStatus } from "react-dom";
-import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+import { subscribeAction } from "@/app/_actions/subscribe"
+import { SubscribeSchema } from "@/app/schemas/subscribe.schema"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { CircleCheckIcon, CircleX, Loader2 } from "lucide-react"
+import { useActionState, useEffect, useRef } from "react"
+import { useFormStatus } from "react-dom"
+import { useForm } from "react-hook-form"
+import { Button } from "../ui/button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
+import { Input } from "../ui/input"
 
 const SubscribeButton = () => {
-  const { pending } = useFormStatus();
+  const { pending } = useFormStatus()
 
   return (
     <Button
@@ -34,32 +28,32 @@ const SubscribeButton = () => {
       )}{" "}
       Subscribe Now
     </Button>
-  );
-};
+  )
+}
 export const NewsletterForm = () => {
   const [state, formAction] = useActionState(subscribeAction, {
     success: false,
     message: "",
-  });
+  })
 
   const form = useForm({
     resolver: zodResolver(SubscribeSchema),
     mode: "onChange",
-  });
+  })
 
   const handleFormAction = async (formData: FormData) => {
-    const valid = await form.trigger();
-    if (!valid) return;
-    formAction(formData);
-  };
+    const valid = await form.trigger()
+    if (!valid) return
+    formAction(formData)
+  }
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
     if (state.success && formRef.current) {
-      formRef.current.reset();
+      formRef.current.reset()
     }
-  }, [state.success]);
+  }, [state.success])
 
   return (
     <div className="space-y-4">
@@ -144,5 +138,5 @@ export const NewsletterForm = () => {
         </form>
       </Form>
     </div>
-  );
-};
+  )
+}

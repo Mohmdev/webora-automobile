@@ -1,6 +1,6 @@
-import { EditCustomerForm } from "@/components/customers/edit-customer-form";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EditCustomerForm } from "@/components/customers/edit-customer-form"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Table,
   TableBody,
@@ -8,31 +8,31 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { CustomerBadgeMap } from "@/config/constants";
-import { routes } from "@/config/routes";
-import type { PageProps } from "@/config/types";
-import { prisma } from "@/lib/prisma";
-import { formatCustomerStatus } from "@/lib/utils";
-import { format } from "date-fns";
-import { redirect } from "next/navigation";
-import { z } from "zod";
+} from "@/components/ui/table"
+import { CustomerBadgeMap } from "@/config/constants"
+import { routes } from "@/config/routes"
+import type { PageProps } from "@/config/types"
+import { prisma } from "@/lib/prisma"
+import { formatCustomerStatus } from "@/lib/utils"
+import { format } from "date-fns"
+import { redirect } from "next/navigation"
+import { z } from "zod"
 
 export default async function EditCustomerPage(props: PageProps) {
-  const params = await props.params;
+  const params = await props.params
 
   const { data, success } = z.object({ id: z.number() }).safeParse({
     id: Number(params?.id),
-  });
+  })
 
-  if (!success) redirect(routes.admin.customers);
+  if (!success) redirect(routes.admin.customers)
 
   const customer = await prisma.customer.findUnique({
     where: { id: data.id },
     include: { classified: true, lifecycle: true },
-  });
+  })
 
-  if (!customer) redirect(routes.admin.customers);
+  if (!customer) redirect(routes.admin.customers)
 
   return (
     <>
@@ -157,5 +157,5 @@ export default async function EditCustomerPage(props: PageProps) {
         </Card>
       </div>
     </>
-  );
+  )
 }

@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import type { ClassifiedWithImages } from "@/config/types";
-import dynamic from "next/dynamic";
-import "swiper/css";
-import { Navigation } from "swiper/modules";
-import { SwiperSlide } from "swiper/react";
-import { ClassifiedCard } from "../inventory/classified-card";
-import { ClassifiedCardSkeleton } from "../inventory/classified-card-skeleton";
-import { SwiperButtons } from "../shared/swiper-button";
+import type { ClassifiedWithImages } from "@/config/types"
+import dynamic from "next/dynamic"
+import "swiper/css"
+import { Navigation } from "swiper/modules"
+import { SwiperSlide } from "swiper/react"
+import { ClassifiedCard } from "../inventory/classified-card"
+import { ClassifiedCardSkeleton } from "../inventory/classified-card-skeleton"
+import { SwiperButtons } from "../shared/swiper-button"
 
 interface CarouselProps {
-  classifieds: ClassifiedWithImages[];
-  favourites: number[];
+  classifieds: ClassifiedWithImages[]
+  favourites: number[]
 }
 
 const Swiper = dynamic(() => import("swiper/react").then((mod) => mod.Swiper), {
@@ -23,10 +23,10 @@ const Swiper = dynamic(() => import("swiper/react").then((mod) => mod.Swiper), {
       ))}
     </div>
   ),
-});
+})
 
 export const LatestArrivalsCarousel = (props: CarouselProps) => {
-  const { classifieds, favourites } = props;
+  const { classifieds, favourites } = props
 
   return (
     <div className="mt-8 relative">
@@ -60,7 +60,7 @@ export const LatestArrivalsCarousel = (props: CarouselProps) => {
                 favourites={favourites}
               />
             </SwiperSlide>
-          );
+          )
         })}
       </Swiper>
       <SwiperButtons
@@ -68,5 +68,5 @@ export const LatestArrivalsCarousel = (props: CarouselProps) => {
         nextClassName="-right-16 border border-2 border-border hidden lg:flex"
       />
     </div>
-  );
-};
+  )
+}

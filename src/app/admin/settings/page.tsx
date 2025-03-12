@@ -1,4 +1,4 @@
-import { SettingsPageContent } from "@/components/settings/content";
+import { SettingsPageContent } from "@/components/settings/content"
 
 export default function SettingsPage() {
   return (
@@ -12,5 +12,5 @@ export default function SettingsPage() {
       </div>
       <SettingsPageContent />
     </>
-  );
+  )
 }

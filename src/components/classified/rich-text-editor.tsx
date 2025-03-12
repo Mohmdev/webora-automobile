@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import { env } from "@/env";
-import type { IAllProps } from "@tinymce/tinymce-react";
+import { env } from "@/env"
+import type { IAllProps } from "@tinymce/tinymce-react"
 import {
   Editor,
   type InitOptions,
-} from "@tinymce/tinymce-react/lib/cjs/main/ts/components/Editor";
-import { useFormContext } from "react-hook-form";
-import { FormLabel } from "../ui/form";
+} from "@tinymce/tinymce-react/lib/cjs/main/ts/components/Editor"
+import { useFormContext } from "react-hook-form"
+import { FormLabel } from "../ui/form"
 
 interface TextEditorProps {
-  name: string;
-  label?: string;
-  config?: IAllProps;
+  name: string
+  label?: string
+  config?: IAllProps
 }
 
 export const RichTextEditor = (props: TextEditorProps) => {
-  const { name, label, config } = props;
+  const { name, label, config } = props
 
   const init: InitOptions = {
     height: 200,
@@ -46,10 +46,10 @@ export const RichTextEditor = (props: TextEditorProps) => {
 
     // Configure paste behavior
     paste_postprocess: (plugin, args) => {
-      const links = args.node.getElementsByTagName("a");
+      const links = args.node.getElementsByTagName("a")
       for (let i = 0; i < links.length; i++) {
-        links[i].style.color = "#3b82f6";
-        links[i].style.textDecoration = "underline";
+        links[i].style.color = "#3b82f6"
+        links[i].style.textDecoration = "underline"
       }
     },
     // Add custom styles for links
@@ -64,14 +64,14 @@ export const RichTextEditor = (props: TextEditorProps) => {
         }
     `,
     ...(config?.init && { ...config.init }),
-  };
+  }
 
-  const form = useFormContext();
-  const value = form.watch(name);
+  const form = useFormContext()
+  const value = form.watch(name)
 
   const handleEditorChange = (content: string) => {
-    form.setValue(name, content);
-  };
+    form.setValue(name, content)
+  }
 
   return (
     <div className="space-y-2">
@@ -85,5 +85,5 @@ export const RichTextEditor = (props: TextEditorProps) => {
         onEditorChange={handleEditorChange}
       />
     </div>
-  );
-};
+  )
+}

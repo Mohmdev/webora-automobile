@@ -1,19 +1,19 @@
-"use client";
-import { updateClassifiedAction } from "@/app/_actions/classified";
+"use client"
+import { updateClassifiedAction } from "@/app/_actions/classified"
 import {
   type UpdateClassifiedType,
   updateClassifiedSchema,
-} from "@/app/schemas/classified.schema";
-import { MAX_IMAGES } from "@/config/constants";
-import type { ClassifiedWithImages } from "@/config/types";
-import { useToast } from "@/hooks/use-toast";
-import { formatClassifiedStatus } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ClassifiedStatus, CurrencyCode, OdoUnit } from "@prisma/client";
-import { Loader2 } from "lucide-react";
-import { useTransition } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "../ui/button";
+} from "@/app/schemas/classified.schema"
+import { MAX_IMAGES } from "@/config/constants"
+import type { ClassifiedWithImages } from "@/config/types"
+import { useToast } from "@/hooks/use-toast"
+import { formatClassifiedStatus } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ClassifiedStatus, CurrencyCode, OdoUnit } from "@prisma/client"
+import { Loader2 } from "lucide-react"
+import { useTransition } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { Button } from "../ui/button"
 import {
   Form,
   FormControl,
@@ -21,28 +21,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Select } from "../ui/select";
-import { ClassifiedFormFields } from "./classified-form-fields";
-import { MultiImageUploader } from "./multi-image-uploader";
+} from "../ui/form"
+import { Select } from "../ui/select"
+import { ClassifiedFormFields } from "./classified-form-fields"
+import { MultiImageUploader } from "./multi-image-uploader"
 
 interface ClassifiedFormProps {
-  classified: ClassifiedWithImages;
+  classified: ClassifiedWithImages
 }
 
 function extractKey(url: string) {
-  const nextUrl = new URL(url);
-  nextUrl.href = url;
+  const nextUrl = new URL(url)
+  nextUrl.href = url
 
-  const regex = /uploads\/.+/;
-  const match = url.match(regex);
+  const regex = /uploads\/.+/
+  const match = url.match(regex)
 
-  return match ? match[0] : url;
+  return match ? match[0] : url
 }
 
 export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
-  const [isPending, startTransition] = useTransition();
-  const { toast } = useToast();
+  const [isPending, startTransition] = useTransition()
+  const { toast } = useToast()
 
   const form = useForm<UpdateClassifiedType>({
     resolver: zodResolver(updateClassifiedSchema),
@@ -78,11 +78,11 @@ export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
         price: classified.price / 100,
       }),
     },
-  });
+  })
 
   const classifiedFormSubmit: SubmitHandler<UpdateClassifiedType> = (data) => {
     startTransition(async () => {
-      const { success, message } = await updateClassifiedAction(data);
+      const { success, message } = await updateClassifiedAction(data)
       if (!success) {
         toast({
           title: "Error",
@@ -90,10 +90,10 @@ export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
           type: "background",
           duration: 2500,
           variant: "destructive",
-        });
+        })
       }
-    });
-  };
+    })
+  }
 
   return (
     <Form {...form}>
@@ -163,5 +163,5 @@ export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
         </div>
       </form>
     </Form>
-  );
-};
+  )
+}

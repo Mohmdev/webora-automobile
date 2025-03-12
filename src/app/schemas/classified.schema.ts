@@ -7,8 +7,8 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client";
-import { z } from "zod";
+} from "@prisma/client"
+import { z } from "zod"
 
 export const ClassifiedFilterSchema = z.object({
   q: z.string().optional(),
@@ -30,7 +30,7 @@ export const ClassifiedFilterSchema = z.object({
   doors: z.string().optional(),
   seats: z.string().optional(),
   ulezCompliance: z.string().optional(),
-});
+})
 
 export const updateClassifiedSchema = z.object({
   id: z.number(),
@@ -64,6 +64,6 @@ export const updateClassifiedSchema = z.object({
       done: z.boolean().optional(),
     }),
   ),
-});
+})
 
-export type UpdateClassifiedType = z.infer<typeof updateClassifiedSchema>;
+export type UpdateClassifiedType = z.infer<typeof updateClassifiedSchema>

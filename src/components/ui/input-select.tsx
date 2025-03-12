@@ -1,29 +1,29 @@
-import type { FilterOptions } from "@/config/types";
-import { cn } from "@/lib/utils";
-import { useFormContext } from "react-hook-form";
-import type { NumericFormatProps } from "react-number-format";
+import type { FilterOptions } from "@/config/types"
+import { cn } from "@/lib/utils"
+import { useFormContext } from "react-hook-form"
+import type { NumericFormatProps } from "react-number-format"
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { NumberInput } from "./number-input";
+} from "../ui/form"
+import { NumberInput } from "./number-input"
 
 interface InputSelectProps extends NumericFormatProps {
-  inputName: string;
-  selectName: string;
-  label?: string;
-  options: FilterOptions<string, string>;
-  prefix?: string;
+  inputName: string
+  selectName: string
+  label?: string
+  options: FilterOptions<string, string>
+  prefix?: string
 }
 
 export const InputSelect = (props: InputSelectProps) => {
   const { inputName, selectName, label, options, prefix, ...numberInputProps } =
-    props;
+    props
 
-  const form = useFormContext();
+  const form = useFormContext()
 
   return (
     <div className="w-full relative">
@@ -38,7 +38,7 @@ export const InputSelect = (props: InputSelectProps) => {
                 style={{ backgroundColor: "#081a2b" }}
                 className="text-muted/75"
                 onValueChange={(values) => {
-                  onChange(values.floatValue);
+                  onChange(values.floatValue)
                 }}
                 {...rest}
                 {...numberInputProps}
@@ -77,5 +77,5 @@ export const InputSelect = (props: InputSelectProps) => {
         )}
       />
     </div>
-  );
-};
+  )
+}

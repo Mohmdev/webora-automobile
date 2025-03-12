@@ -1,4 +1,4 @@
-import { AdminSearch } from "../admin/search";
+import { AdminSearch } from "../admin/search"
 
 export const AdminHeader = async () => {
   return (
@@ -9,5 +9,5 @@ export const AdminHeader = async () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}

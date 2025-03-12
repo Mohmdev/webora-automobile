@@ -1,9 +1,9 @@
-import { navLinks } from "@/config/constants";
-import { routes } from "@/config/routes";
-import { SiInstagram, SiMeta, SiX } from "@icons-pack/react-simple-icons";
-import Image from "next/image";
-import Link from "next/link";
-import { NewsletterForm } from "../shared/newsletter-form";
+import { navLinks } from "@/config/constants"
+import { routes } from "@/config/routes"
+import { SiInstagram, SiMeta, SiX } from "@icons-pack/react-simple-icons"
+import Image from "next/image"
+import Link from "next/link"
+import { NewsletterForm } from "../shared/newsletter-form"
 const socialLinks = [
   {
     id: 1,
@@ -26,7 +26,7 @@ const socialLinks = [
       <SiInstagram className="w-5 h-5 text-gray-600 hover:text-primary transition-colors" />
     ),
   },
-];
+]
 export const PublicFooter = () => {
   return (
     <footer className="bg-gray-100 px-8 lg:px-0 py-8">
@@ -53,7 +53,7 @@ export const PublicFooter = () => {
                 >
                   {link.icon}
                 </Link>
-              );
+              )
             })}
           </div>
         </div>
@@ -90,5 +90,5 @@ export const PublicFooter = () => {
         </p>
       </div>
     </footer>
-  );
-};
+  )
+}

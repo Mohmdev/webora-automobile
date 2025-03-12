@@ -1,7 +1,7 @@
-"use client";
-import { routes } from "@/config/routes";
-import type { SidebarProps } from "@/config/types";
-import { env } from "@/env";
+"use client"
+import { routes } from "@/config/routes"
+import type { SidebarProps } from "@/config/types"
+import { env } from "@/env"
 import {
   cn,
   formatBodyType,
@@ -10,7 +10,7 @@ import {
   formatOdometerUnit,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils";
+} from "@/lib/utils"
 import {
   BodyType,
   Colour,
@@ -19,34 +19,29 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client";
-import { Settings2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { parseAsString, useQueryStates } from "nuqs";
-import { type ChangeEvent, useEffect, useState } from "react";
-import { SearchInput } from "../shared/search-input";
-import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { Select } from "../ui/select";
-import { RangeFilter } from "./range-filters";
-import { TaxonomyFilters } from "./taxonomy-filters";
+} from "@prisma/client"
+import { Settings2 } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { parseAsString, useQueryStates } from "nuqs"
+import { type ChangeEvent, useEffect, useState } from "react"
+import { SearchInput } from "../shared/search-input"
+import { Button } from "../ui/button"
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog"
+import { Select } from "../ui/select"
+import { RangeFilter } from "./range-filters"
+import { TaxonomyFilters } from "./taxonomy-filters"
 
 interface DialogFiltersProps extends SidebarProps {
-  count: number;
+  count: number
 }
 
 export const DialogFilters = (props: DialogFiltersProps) => {
-  const { minMaxValues, searchParams, count } = props;
+  const { minMaxValues, searchParams, count } = props
 
-  const { _min, _max } = minMaxValues;
-  const [open, setIsOpen] = useState(false);
-  const router = useRouter();
-  const [filterCount, setFilterCount] = useState(0);
+  const { _min, _max } = minMaxValues
+  const [open, setIsOpen] = useState(false)
+  const router = useRouter()
+  const [filterCount, setFilterCount] = useState(0)
 
   const [queryStates, setQueryStates] = useQueryStates(
     {
@@ -72,40 +67,40 @@ export const DialogFilters = (props: DialogFiltersProps) => {
     {
       shallow: false,
     },
-  );
+  )
 
   useEffect(() => {
     const filterCount = Object.entries(
       searchParams as Record<string, string>,
-    ).filter(([key, value]) => key !== "page" && value).length;
+    ).filter(([key, value]) => key !== "page" && value).length
 
-    setFilterCount(filterCount);
-  }, [searchParams]);
+    setFilterCount(filterCount)
+  }, [searchParams])
 
   const clearFilters = () => {
-    const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL);
-    router.replace(url.toString());
-    setFilterCount(0);
-  };
+    const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL)
+    router.replace(url.toString())
+    setFilterCount(0)
+  }
 
   const handleChange = async (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     setQueryStates({
       [name]: value || null,
-    });
+    })
 
     if (name === "make") {
       setQueryStates({
         model: null,
         modelVariant: null,
-      });
+      })
     }
 
-    router.refresh();
-  };
+    router.refresh()
+  }
 
   return (
     <Dialog
@@ -297,5 +292,5 @@ export const DialogFilters = (props: DialogFiltersProps) => {
         </div>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}

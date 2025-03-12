@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import type { ClassifiedImages } from "@/config/types";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { CheckCircle, XIcon } from "lucide-react";
-import { Button } from "../ui/button";
-import { ImgixImage } from "../ui/imgix-image";
+import type { ClassifiedImages } from "@/config/types"
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import { CheckCircle, XIcon } from "lucide-react"
+import { Button } from "../ui/button"
+import { ImgixImage } from "../ui/imgix-image"
 
 interface SortableItemProps {
-  index: number;
-  item: ClassifiedImages[number];
-  remove: (index: number) => void;
-  progress?: number;
+  index: number
+  item: ClassifiedImages[number]
+  remove: (index: number) => void
+  progress?: number
 }
 
 export const SortableItem = (props: SortableItemProps) => {
-  const { index, item, remove, progress } = props;
+  const { index, item, remove, progress } = props
   const {
     attributes,
     listeners,
@@ -23,13 +23,13 @@ export const SortableItem = (props: SortableItemProps) => {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: index });
+  } = useSortable({ id: index })
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : undefined,
-  };
+  }
 
   return (
     <div className="group relative">
@@ -74,5 +74,5 @@ export const SortableItem = (props: SortableItemProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

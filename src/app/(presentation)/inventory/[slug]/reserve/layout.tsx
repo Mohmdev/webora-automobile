@@ -1,5 +1,5 @@
-import { FormHeader } from "@/components/reserve/form-header";
-import type { PropsWithChildren } from "react";
+import { FormHeader } from "@/components/reserve/form-header"
+import type { PropsWithChildren } from "react"
 
 export default function MultiStepFormLayout({ children }: PropsWithChildren) {
   return (
@@ -7,5 +7,5 @@ export default function MultiStepFormLayout({ children }: PropsWithChildren) {
       <FormHeader />
       {children}
     </main>
-  );
+  )
 }

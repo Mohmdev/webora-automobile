@@ -1,4 +1,4 @@
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../ui/skeleton"
 
 export const CarouselSkeleton = () => {
   return (
@@ -11,5 +11,5 @@ export const CarouselSkeleton = () => {
         <Skeleton className="aspect-3/2" />
       </div>
     </div>
-  );
-};
+  )
+}

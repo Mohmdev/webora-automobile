@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import type { ChartDataType } from "@/app/admin/dashboard/page";
+import type { ChartDataType } from "@/app/admin/dashboard/page"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { formatPrice } from "@/lib/utils";
-import { use } from "react";
+} from "@/components/ui/card"
+import { formatPrice } from "@/lib/utils"
+import { use } from "react"
 import {
   Bar,
   BarChart,
@@ -18,16 +18,16 @@ import {
   type TooltipProps,
   XAxis,
   YAxis,
-} from "recharts";
+} from "recharts"
 
 interface SalesChartProps {
-  data: ChartDataType;
+  data: ChartDataType
 }
 
 export const SalesChart = (props: SalesChartProps) => {
-  const { data } = props;
+  const { data } = props
 
-  const chartData = use(data);
+  const chartData = use(data)
 
   return (
     <Card className="mb-6 bg-gray-800 border-gray-700">
@@ -75,8 +75,8 @@ export const SalesChart = (props: SalesChartProps) => {
         </ResponsiveContainer>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
 const CustomTooltip = ({
   active,
@@ -90,6 +90,6 @@ const CustomTooltip = ({
           {`${label}: ${formatPrice({ price: payload[0].value as number, currency: "GBP" })}`}
         </p>
       </div>
-    );
+    )
   }
-};
+}

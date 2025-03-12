@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-import { seedAdmin } from "./admin.seed";
+import { PrismaClient } from "@prisma/client"
+import { seedAdmin } from "./admin.seed"
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 async function main() {
   // await prisma.$executeRaw`TRUNCATE TABLE "makes" RESTART IDENTITY CASCADE`;
@@ -9,14 +9,14 @@ async function main() {
   // await seedTaxonomy(prisma);
   // await seedClassifieds(prisma);
   // await seedImages(prisma);
-  await seedAdmin(prisma);
+  await seedAdmin(prisma)
   // await seedCustomers(prisma);
 }
 
 main()
   .catch((e) => {
-    throw e;
+    throw e
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })

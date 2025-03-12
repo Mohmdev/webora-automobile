@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import { sortOrder } from "@/config/constants";
-import type { ClassifiedKeys, PageProps } from "@/config/types";
-import type { Classified } from "@prisma/client";
-import { parseAsStringLiteral, useQueryState } from "nuqs";
-import { SortIcon } from "../shared/sort-icon";
-import { TableHead, TableHeader, TableRow } from "../ui/table";
+import { sortOrder } from "@/config/constants"
+import type { ClassifiedKeys, PageProps } from "@/config/types"
+import type { Classified } from "@prisma/client"
+import { parseAsStringLiteral, useQueryState } from "nuqs"
+import { SortIcon } from "../shared/sort-icon"
+import { TableHead, TableHeader, TableRow } from "../ui/table"
 
 const classifiedKeys = [
   "status",
@@ -17,41 +17,41 @@ const classifiedKeys = [
   "colour",
   "price",
   "createdAt",
-] as const;
+] as const
 
 interface ClassifiedTableProps extends PageProps {
-  classifieds: Classified[];
-  sort: ClassifiedKeys;
-  order: "asc" | "desc";
-  currentPage: number;
-  totalPages: number;
+  classifieds: Classified[]
+  sort: ClassifiedKeys
+  order: "asc" | "desc"
+  currentPage: number
+  totalPages: number
 }
 
-type ClassifiedsTableHeaderProps = Pick<ClassifiedTableProps, "sort" | "order">;
+type ClassifiedsTableHeaderProps = Pick<ClassifiedTableProps, "sort" | "order">
 
 export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
-  const { sort: initialSort, order: initialOrder } = props;
+  const { sort: initialSort, order: initialOrder } = props
   const [sort, setSort] = useQueryState(
     "sort",
     parseAsStringLiteral(classifiedKeys)
       .withDefault(initialSort)
       .withOptions({ shallow: false }),
-  );
+  )
   const [order, setOrder] = useQueryState(
     "order",
     parseAsStringLiteral(sortOrder)
       .withDefault(initialOrder)
       .withOptions({ shallow: false }),
-  );
+  )
 
   const handleSort = (newSort: ClassifiedKeys) => {
     if (newSort === sort) {
-      setOrder(order === "asc" ? "desc" : "asc");
+      setOrder(order === "asc" ? "desc" : "asc")
     } else {
-      setSort(newSort);
-      setOrder("asc");
+      setSort(newSort)
+      setOrder("asc")
     }
-  };
+  }
 
   return (
     <TableHeader>
@@ -172,5 +172,5 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="text-muted w-[100px]">Actions</TableHead>
       </TableRow>
     </TableHeader>
-  );
-};
+  )
+}

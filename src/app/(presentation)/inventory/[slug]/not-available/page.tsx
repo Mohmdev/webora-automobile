@@ -1,5 +1,5 @@
-import { EndButtons } from "@/components/shared/end-buttons";
-import { XCircle } from "lucide-react";
+import { EndButtons } from "@/components/shared/end-buttons"
+import { XCircle } from "lucide-react"
 
 export default function NotAvailablePage() {
   return (
@@ -16,5 +16,5 @@ export default function NotAvailablePage() {
         <EndButtons />
       </div>
     </div>
-  );
+  )
 }
