@@ -1,84 +1,84 @@
-import { auth } from "@/auth"
 import { env } from "@/env"
-import { type NextRequest, NextResponse } from "next/server"
+import { publicRoutes } from "@/lib/clerk-config"
+import { clerkMiddleware } from "@clerk/nextjs/server"
+import { NextResponse } from "next/server"
 import { routes } from "./config/routes"
 
-// Define an augmented request type with auth
-interface AuthenticatedRequest extends NextRequest {
-  auth?: {
-    requires2FA?: boolean
-  } | null
-}
-
-function setRequestHeaders(requestHeaders: Headers) {
+export default clerkMiddleware(async (auth, req) => {
+  // Set custom headers
+  const requestHeaders = new Headers(req.headers)
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64")
   const cspHeader = `
-      default-src 'self';
-      script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
-      style-src 'self' 'nonce-${nonce}';
-      img-src 'self' blob: data:;
-      font-src 'self';
-      base-uri 'self';
-      object-src 'none';
-      form-action 'self';
-      frame-ancestors 'none';
-      upgrade-insecure-requests;
+    default-src 'self';
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
+    style-src 'self' 'nonce-${nonce}';
+    img-src 'self' blob: data:;
+    font-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    form-action 'self';
+    frame-ancestors 'none';
+    upgrade-insecure-requests;
   `
 
   requestHeaders.set("x-auth-token", `Bearer ${env.X_AUTH_TOKEN}`)
-
   const contentSecurityPolicy = cspHeader.replace(/\s{2,}/g, " ").trim()
   requestHeaders.set("x-nonce", nonce)
   requestHeaders.set("Content-Security-Policy", contentSecurityPolicy)
-}
 
-// Create a middleware handler function that will be wrapped by auth
-const middlewareHandler = (req: AuthenticatedRequest) => {
-  const nextUrl = req.nextUrl.clone()
-  const requestHeaders = new Headers(req.headers)
-  setRequestHeaders(requestHeaders)
+  // Get the current path
+  const { pathname } = req.nextUrl
 
-  if (req.auth) {
-    if (req.auth.requires2FA) {
-      if (nextUrl.pathname === routes.challenge) {
-        return NextResponse.next({
-          request: { headers: requestHeaders },
-        })
-      }
+  // Check if the route is public
+  const isPublicRoute = publicRoutes.some((route) => {
+    if (route.includes("(.*)")) {
+      const pattern = new RegExp(route.replace("(.*)", ".*"))
+      return pattern.test(pathname)
+    }
+    return pathname === route
+  })
 
-      const challengeUrl = new URL(routes.challenge, req.url)
-      return NextResponse.redirect(challengeUrl)
+  // Get auth data using the auth() method
+  const { userId, sessionClaims } = await auth()
+
+  // Handle 2FA challenge logic
+  if (sessionClaims?.requires2FA) {
+    if (pathname === routes.challenge) {
+      return NextResponse.next({
+        request: { headers: requestHeaders },
+      })
     }
 
-    if (
-      nextUrl.pathname === routes.challenge ||
-      nextUrl.pathname === routes.signIn
-    ) {
+    const challengeUrl = new URL(routes.challenge, req.url)
+    return NextResponse.redirect(challengeUrl)
+  }
+
+  // Redirect authenticated users from sign-in or challenge pages
+  if (userId) {
+    if (pathname === routes.challenge || pathname === routes.signIn) {
       const adminUrl = new URL(routes.admin.dashboard, req.url)
       return NextResponse.redirect(adminUrl)
     }
   } else {
-    if (
-      nextUrl.pathname.startsWith("/admin") ||
-      nextUrl.pathname === routes.challenge
-    ) {
-      const signInUrl = new URL(routes.signIn, req.url)
-      return NextResponse.redirect(signInUrl)
+    // Redirect unauthenticated users from protected pages
+    if (!isPublicRoute) {
+      if (pathname.startsWith("/admin") || pathname === routes.challenge) {
+        const signInUrl = new URL(routes.signIn, req.url)
+        return NextResponse.redirect(signInUrl)
+      }
     }
   }
 
+  // Continue with request
   return NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   })
-}
-
-// Export the middleware function with auth wrapper
-export const middleware = auth(middlewareHandler)
+})
 
 export const config = {
-  matcher:
+  matcher: [
     "/((?!api/auth|_next/static|_next/image|favicon.ico|manifest.json|logo.svg).*)",
-  runtime: "nodejs",
+  ],
 }

@@ -22,6 +22,13 @@ export const env = createEnv({
     NEXTAUTH_SECRET: z.string(),
     X_AUTH_TOKEN: z.string(),
     OPENAI_API_KEY: z.string().optional(), // TODO: remove optional when we have api key
+    // Clerk
+    CLERK_SECRET_KEY: z.string(),
+    // Clerk URLs
+    CLERK_SIGN_IN_URL: z.string().default("/auth/sign-in"),
+    CLERK_SIGN_UP_URL: z.string().default("/auth/sign-up"),
+    CLERK_AFTER_SIGN_IN_URL: z.string().default("/admin/dashboard"),
+    CLERK_AFTER_SIGN_UP_URL: z.string().default("/admin/dashboard"),
   },
 
   client: {
@@ -32,6 +39,8 @@ export const env = createEnv({
     // NEXT_PUBLIC_S3_BUCKET_NAME: z.string().optional(),
     // NEXT_PUBLIC_S3_URL: z.string().optional(),
     NEXT_PUBLIC_TINYMCE_API_KEY: z.string(),
+    // Clerk
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
   },
 
   runtimeEnv: {
@@ -64,5 +73,16 @@ export const env = createEnv({
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     //
     NEXT_PUBLIC_TINYMCE_API_KEY: process.env.NEXT_PUBLIC_TINYMCE_API_KEY,
+    // Clerk
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    // Clerk URLs
+    CLERK_SIGN_IN_URL: process.env.CLERK_SIGN_IN_URL || "/auth/sign-in",
+    CLERK_SIGN_UP_URL: process.env.CLERK_SIGN_UP_URL || "/auth/sign-up",
+    CLERK_AFTER_SIGN_IN_URL:
+      process.env.CLERK_AFTER_SIGN_IN_URL || "/admin/dashboard",
+    CLERK_AFTER_SIGN_UP_URL:
+      process.env.CLERK_AFTER_SIGN_UP_URL || "/admin/dashboard",
   },
 })
