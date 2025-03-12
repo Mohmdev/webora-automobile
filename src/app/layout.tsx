@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Mulish, Roboto } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import "./globals.css";
+import "../styles/globals.css";
 
 export const metadata: Metadata = {
 	title: "Car Dealer Website",
