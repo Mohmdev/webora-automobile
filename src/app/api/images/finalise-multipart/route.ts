@@ -1,10 +1,11 @@
 import { FinaliseMultipartUploadSchema } from "@/app/schemas/images.schema"
 import { auth } from "@/auth"
-import { env } from "@/env"
-import { s3 } from "@/lib/s3"
-import type { CompleteMultipartUploadCommandInput } from "@aws-sdk/client-s3"
+import { deleteBlob } from "@/lib/blob"
+import { put } from "@vercel/blob"
 import { forbidden } from "next/navigation"
 import { NextResponse } from "next/server"
+
+export const maxDuration = 300
 
 export const POST = auth(async (req) => {
   try {
@@ -19,28 +20,48 @@ export const POST = auth(async (req) => {
 
     const { default: orderBy } = await import("lodash.orderby")
 
-    const multipartParams: CompleteMultipartUploadCommandInput = {
-      Bucket: env.NEXT_PUBLIC_S3_BUCKET_NAME,
-      Key: fileKey,
-      UploadId: fileId,
-      MultipartUpload: {
-        // make sure these are in the right order
-        Parts: orderBy(parts, ["PartNumber"], ["asc"]),
-      },
-      ...(mime && { ContentType: mime }),
+    // Sort parts by part number
+    const orderedParts = orderBy(parts, ["PartNumber"], ["asc"])
+
+    // Fetch all the part chunks and combine them
+    const chunks: Buffer[] = []
+
+    for (const part of orderedParts) {
+      const partUrl = part.ETag
+      const response = await fetch(partUrl)
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch part ${part.PartNumber}`)
+      }
+
+      const arrayBuffer = await response.arrayBuffer()
+      chunks.push(Buffer.from(arrayBuffer))
     }
 
-    const { CompleteMultipartUploadCommand } = await import(
-      "@aws-sdk/client-s3"
-    )
+    // Combine all chunks into a single buffer
+    const combinedBuffer = Buffer.concat(chunks)
 
-    const command = new CompleteMultipartUploadCommand(multipartParams)
-    const payload = await s3.send(command)
+    // Upload the combined file to Vercel Blob
+    const blob = await put(fileKey, combinedBuffer, {
+      access: "public",
+      contentType: mime?.toString() || "application/octet-stream",
+      addRandomSuffix: false,
+    })
+
+    // Clean up the temporary chunk files
+    for (const part of orderedParts) {
+      try {
+        await deleteBlob(part.ETag)
+      } catch (error) {
+        console.log(`Error deleting chunk: ${error}`)
+        // Continue even if deletion fails
+      }
+    }
 
     return NextResponse.json(
       {
-        url: payload.Location,
-        key: payload.Key,
+        url: blob.url,
+        key: blob.url,
       },
       { status: 200 },
     )

@@ -12,21 +12,25 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_URL: z.string().url().optional(),
     UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
     //
-    S3_BUCKET_ACCESS_KEY: z.string(),
-    S3_BUCKET_SECRET_KEY: z.string(),
-    NEXTAUTH_SECRET: z.string(),
+    // Vercel Blob
+    BLOB_READ_WRITE_TOKEN: z.string(),
+    // S3 (now optional as we're using Vercel Blob)
+    // S3_BUCKET_ACCESS_KEY: z.string().optional(),
+    // S3_BUCKET_SECRET_KEY: z.string().optional(),
     RESEND_API_KEY: z.string(),
     RESEND_FROM_EMAIL: z.string(),
+    NEXTAUTH_SECRET: z.string(),
     X_AUTH_TOKEN: z.string(),
-    OPENAI_API_KEY: z.string(),
+    OPENAI_API_KEY: z.string().optional(), // TODO: remove optional when we have api key
   },
 
   client: {
     NEXT_PUBLIC_APP_URL: z.string(),
-    NEXT_PUBLIC_IMGIX_URL: z.string().url(),
-    NEXT_PUBLIC_S3_BUCKET_REGION: z.string(),
-    NEXT_PUBLIC_S3_BUCKET_NAME: z.string(),
-    NEXT_PUBLIC_S3_URL: z.string(),
+    NEXT_PUBLIC_IMGIX_URL: z.string().url(), // https://{blob-id}.public.blob.vercel-storage.com
+    // S3 (now optional as we're using Vercel Blob)
+    // NEXT_PUBLIC_S3_BUCKET_REGION: z.string().optional(),
+    // NEXT_PUBLIC_S3_BUCKET_NAME: z.string().optional(),
+    // NEXT_PUBLIC_S3_URL: z.string().optional(),
     NEXT_PUBLIC_TINYMCE_API_KEY: z.string(),
   },
 
@@ -41,20 +45,24 @@ export const env = createEnv({
     KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    // Vercel Blob
+    BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
     // S3
-    S3_BUCKET_ACCESS_KEY: process.env.S3_BUCKET_ACCESS_KEY,
-    S3_BUCKET_SECRET_KEY: process.env.S3_BUCKET_SECRET_KEY,
-    NEXT_PUBLIC_S3_BUCKET_REGION: process.env.NEXT_PUBLIC_S3_BUCKET_REGION,
-    NEXT_PUBLIC_S3_BUCKET_NAME: process.env.NEXT_PUBLIC_S3_BUCKET_NAME,
-    NEXT_PUBLIC_S3_URL: process.env.NEXT_PUBLIC_S3_URL,
+    // S3_BUCKET_ACCESS_KEY: process.env.S3_BUCKET_ACCESS_KEY,
+    // S3_BUCKET_SECRET_KEY: process.env.S3_BUCKET_SECRET_KEY,
+    // NEXT_PUBLIC_S3_BUCKET_REGION: process.env.NEXT_PUBLIC_S3_BUCKET_REGION,
+    // NEXT_PUBLIC_S3_BUCKET_NAME: process.env.NEXT_PUBLIC_S3_BUCKET_NAME,
+    // NEXT_PUBLIC_S3_URL: process.env.NEXT_PUBLIC_S3_URL,
     // Resend
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
-    //
-    NEXT_PUBLIC_IMGIX_URL: process.env.NEXT_PUBLIC_IMGIX_URL,
+    // Auth
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     X_AUTH_TOKEN: process.env.X_AUTH_TOKEN,
+    //
+    NEXT_PUBLIC_IMGIX_URL: process.env.NEXT_PUBLIC_IMGIX_URL,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    //
     NEXT_PUBLIC_TINYMCE_API_KEY: process.env.NEXT_PUBLIC_TINYMCE_API_KEY,
   },
 })

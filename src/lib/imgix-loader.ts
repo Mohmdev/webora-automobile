@@ -6,16 +6,29 @@ interface LoaderProps extends ImageLoaderProps {
 }
 
 export const imgixLoader = ({ src, width, height, quality }: LoaderProps) => {
-  const url = new URL(src)
+  // Check if the src is already a full URL (like from Vercel Blob)
+  const isFullUrl = src.startsWith("http")
 
-  url.searchParams.set("w", width.toString())
+  // For Vercel Blob URLs, extract just the pathname
+  let path = src
+  if (isFullUrl) {
+    try {
+      const url = new URL(src)
+      path = url.pathname
+    } catch (e) {
+      console.error("Invalid URL in imgixLoader:", src)
+    }
+  }
 
-  url.searchParams.set("auto", "format,compress")
-  if (height) url.searchParams.set("h", height.toString())
-  if (quality) url.searchParams.set("q", quality.toString())
+  // Create a new URL with the Imgix domain
+  const imgixUrl = new URL(`${env.NEXT_PUBLIC_IMGIX_URL}`)
 
-  const path = url.pathname
-  const params = url.searchParams.toString()
+  // Set the path and parameters
+  imgixUrl.pathname = path
+  imgixUrl.searchParams.set("w", width.toString())
+  imgixUrl.searchParams.set("auto", "format,compress")
+  if (height) imgixUrl.searchParams.set("h", height.toString())
+  if (quality) imgixUrl.searchParams.set("q", quality.toString())
 
-  return `${env.NEXT_PUBLIC_IMGIX_URL}/${path}?${params}`
+  return imgixUrl.toString()
 }

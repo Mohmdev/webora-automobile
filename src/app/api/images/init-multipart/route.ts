@@ -1,10 +1,8 @@
 import { InitialiseMultipartUploadSchema } from "@/app/schemas/images.schema"
 import { auth } from "@/auth"
-import { env } from "@/env"
-import { s3 } from "@/lib/s3"
-import type { CreateMultipartUploadCommandInput } from "@aws-sdk/client-s3"
 import { forbidden } from "next/navigation"
 import { NextResponse } from "next/server"
+import { v4 as uuidv4 } from "uuid"
 
 export const POST = auth(async (req) => {
   try {
@@ -13,27 +11,15 @@ export const POST = auth(async (req) => {
     const validated = InitialiseMultipartUploadSchema.safeParse(data)
     if (!validated.success) return NextResponse.error()
     const { name, uuid } = validated.data
-    const key = `uploads/${uuid}/${name}`
-    const { default: mimetype } = await import("mime-types")
+    const key = `uploads/${uuid}/${name}`.replace(/\s+/g, "-")
 
-    const mime = mimetype.lookup(name)
-
-    const multipartParams: CreateMultipartUploadCommandInput = {
-      Bucket: env.NEXT_PUBLIC_S3_BUCKET_NAME,
-      Key: key.replace(/\s+/g, "-"),
-      ...(mime && { ContentType: mime }),
-    }
-
-    const { CreateMultipartUploadCommand } = await import("@aws-sdk/client-s3")
-
-    const command = new CreateMultipartUploadCommand(multipartParams)
-
-    const multipartUpload = await s3.send(command)
+    // Generate a unique ID for this upload
+    const uploadId = uuidv4()
 
     return NextResponse.json(
       {
-        fileId: multipartUpload.UploadId,
-        fileKey: multipartUpload.Key,
+        fileId: uploadId,
+        fileKey: key,
       },
       { status: 200 },
     )

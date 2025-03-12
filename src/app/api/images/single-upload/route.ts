@@ -1,8 +1,7 @@
 import { SingleImageUploadSchema } from "@/app/schemas/images.schema"
 import { auth } from "@/auth"
 import { MAX_IMAGE_SIZE } from "@/config/constants"
-import { env } from "@/env"
-import { uploadToS3 } from "@/lib/s3"
+import { uploadToBlob } from "@/lib/blob"
 import { forbidden } from "next/navigation"
 import { NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
@@ -44,14 +43,13 @@ export const POST = auth(async (req) => {
 
   try {
     const buffer = Buffer.from(await file.arrayBuffer())
-    await uploadToS3({
-      bucketName: env.NEXT_PUBLIC_S3_BUCKET_NAME,
+    const blob = await uploadToBlob({
       file: buffer,
-      path: key,
+      filename: key,
       mimetype: mime,
     })
-    const url = `${env.NEXT_PUBLIC_S3_URL}/${key}`
-    return NextResponse.json({ url }, { status: 200 })
+
+    return NextResponse.json({ url: blob.url }, { status: 200 })
   } catch (err) {
     console.log(`Error uploading file: ${err}`)
     if (err instanceof Error) {

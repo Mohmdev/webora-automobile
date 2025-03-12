@@ -1,0 +1,5 @@
+{
+  "installCommand": "bun install --frozen-lockfile",
+  "buildCommand": "prisma generate --no-engine && next build",
+  "framework": "nextjs"
+}

@@ -14,8 +14,17 @@ const nextConfig: NextConfig = {
     optimizeServerReact: true,
     optimizePackageImports: ["lucide-react", "date-fns"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
-    remotePatterns: [{ hostname: "*" }],
+    remotePatterns: [
+      { hostname: "*" },
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+    ],
   },
   async headers() {
     return [

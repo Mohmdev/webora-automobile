@@ -1,4 +1,5 @@
 import { SettingsPageContent } from "@/components/settings/content"
+import { Suspense } from "react"
 
 export default function SettingsPage() {
   return (
@@ -10,7 +11,9 @@ export default function SettingsPage() {
           </h1>
         </div>
       </div>
-      <SettingsPageContent />
+      <Suspense fallback={<div className="p-6">Loading settings...</div>}>
+        <SettingsPageContent />
+      </Suspense>
     </>
   )
 }
