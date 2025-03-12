@@ -5,13 +5,13 @@ import { OurBrandsSection } from "@/components/homepage/our-brands-section";
 import type { PageProps } from "@/config/types";
 
 export default async function Home(props: PageProps) {
-	const searchParams = await props.searchParams;
-	return (
-		<div className="w-full min-h-screen bg-background">
-			<HeroSection searchParams={searchParams} />
-			<FeaturesSection />
-			<LatestArrivals />
-			<OurBrandsSection />
-		</div>
-	);
+  const searchParams = await props.searchParams;
+  return (
+    <div className="w-full min-h-screen bg-background">
+      <HeroSection searchParams={searchParams} />
+      <FeaturesSection />
+      <LatestArrivals />
+      <OurBrandsSection />
+    </div>
+  );
 }

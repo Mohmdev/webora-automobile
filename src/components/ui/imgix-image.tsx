@@ -7,16 +7,22 @@ import { useState } from "react";
 type ImgixImageProps = Omit<ImageProps, "priority" | "loading">;
 
 export const ImgixImage = (props: ImgixImageProps) => {
-	const [error, setError] = useState(false);
+  const [error, setError] = useState(false);
 
-	if (error) return <Image fetchPriority="high" {...props} />;
+  if (error)
+    return (
+      <Image
+        fetchPriority="high"
+        {...props}
+      />
+    );
 
-	return (
-		<Image
-			fetchPriority="high"
-			loader={(imgProps) => imgixLoader(imgProps)}
-			onError={() => setError(true)}
-			{...props}
-		/>
-	);
+  return (
+    <Image
+      fetchPriority="high"
+      loader={(imgProps) => imgixLoader(imgProps)}
+      onError={() => setError(true)}
+      {...props}
+    />
+  );
 };

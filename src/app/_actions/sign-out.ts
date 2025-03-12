@@ -5,21 +5,21 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
 export const signOutAction = async () => {
-	const session = await auth();
-	if (session) {
-		await signOut({
-			redirect: true,
-			redirectTo: routes.signIn,
-		});
-	}
+  const session = await auth();
+  if (session) {
+    await signOut({
+      redirect: true,
+      redirectTo: routes.signIn,
+    });
+  }
 };
 
 export const logoutOfAllSessions = async () => {
-	const session = await auth();
-	if (!session?.user?.id) return null;
-	await prisma.session.deleteMany({
-		where: { userId: session.user.id },
-	});
+  const session = await auth();
+  if (!session?.user?.id) return null;
+  await prisma.session.deleteMany({
+    where: { userId: session.user.id },
+  });
 
-	redirect(routes.signIn);
+  redirect(routes.signIn);
 };
