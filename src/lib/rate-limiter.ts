@@ -1,16 +1,16 @@
 import type { PrevState } from "@/config/types"
 import { Ratelimit } from "@upstash/ratelimit"
-import { Redis } from "@upstash/redis"
 import { differenceInMinutes } from "date-fns"
 import { headers } from "next/headers"
+import { redis } from "./redis-store"
 
 const ratelimitLogin = new Ratelimit({
-  redis: Redis.fromEnv(),
+  redis: redis,
   limiter: Ratelimit.slidingWindow(5, "10 m"),
 })
 
 const ratelimitOtp = new Ratelimit({
-  redis: Redis.fromEnv(),
+  redis: redis,
   limiter: Ratelimit.slidingWindow(3, "10 m"),
 })
 

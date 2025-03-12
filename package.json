@@ -21,7 +21,13 @@
     "lint:next": "next lint",
     "lint:fix": "biome lint --write ./src",
     "format:src": "biome format --write ./src",
-    "fix:ci": "biome ci --formatter-enabled=true --linter-enabled=true --organize-imports-enabled=true --assists-enabled=true"
+    "fix:ci": "biome ci --formatter-enabled=true --linter-enabled=true --organize-imports-enabled=true --assists-enabled=true",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate --no-engine",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "prisma db seed",
+    "db:tunnel": "bunx @prisma/ppg-tunnel"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.2.2",
@@ -104,10 +110,11 @@
     "tailwindcss": "^4.0.13",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "prisma": {
-    "seed": "ts-node -r tsconfig-paths/register --compiler-options {\"module\":\"CommonJS\"} prisma/seed/seed.ts"
+    "seed": "tsx prisma/seed/seed.ts"
   },
   "engines": {
     "node": ">=18.20.2 <23.0.0"

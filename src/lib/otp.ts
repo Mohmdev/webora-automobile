@@ -19,7 +19,7 @@ export async function issueChallenge(userId: string, email: string) {
   await redis.setex(`${REDIS_PREFIX}:uid-${userId}`, 10 * 60, challenge)
 
   const { error } = await resend.emails.send({
-    from: env.FROM_EMAIL_ADDRESS,
+    from: env.RESEND_FROM_EMAIL,
     to: email,
     subject: `Sign in to ${env.NEXT_PUBLIC_APP_URL}`,
     react: ChallengeEmail({ data: { code } }),
