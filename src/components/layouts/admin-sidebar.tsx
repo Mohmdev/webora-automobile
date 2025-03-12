@@ -1,13 +1,13 @@
 "use client";
+
 import { routes } from "@/config/routes";
-import type { Variants } from "framer-motion";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   CarFrontIcon,
   LayoutDashboardIcon,
   SettingsIcon,
   UsersIcon,
 } from "lucide-react";
+import { AnimatePresence, type Variants, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState } from "react";

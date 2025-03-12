@@ -11,6 +11,7 @@
   },
   "scripts": {
     "ci": "bun install --frozen-lockfile --production",
+    "update-deps": "rm node_modules bun.lock -rf && bun i",
     "build": "next build",
     "start": "next start",
     "dev": "next dev --turbopack -p 3000",
@@ -57,14 +58,14 @@
     "csv": "^6.3.11",
     "date-fns": "^4.1.0",
     "debounce": "^2.2.0",
-    "framer-motion": "^12.0.6",
     "fslightbox-react": "^1.7.6",
     "html-react-parser": "^5.2.2",
     "ky": "^1.7.4",
     "lodash.orderby": "^4.6.0",
     "lucide-react": "^0.474.0",
     "mime-types": "^2.1.35",
-    "next": "^15.2.1-canary.4",
+    "motion": "^12.5.0",
+    "next": "^15.2.2",
     "next-auth": "^5.0.0-beta.25",
     "nextjs-toploader": "^3.7.15",
     "nuqs": "^2.3.1",
@@ -107,5 +108,8 @@
   },
   "prisma": {
     "seed": "ts-node -r tsconfig-paths/register --compiler-options {\"module\":\"CommonJS\"} prisma/seed/seed.ts"
+  },
+  "engines": {
+    "node": ">=18.20.2 <23.0.0"
   }
 }

@@ -10,8 +10,8 @@ import {
   formatPrice,
   formatTransmission,
 } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
 import { Cog, Fuel, GaugeCircle, Paintbrush2 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
