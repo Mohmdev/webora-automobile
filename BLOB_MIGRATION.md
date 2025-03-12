@@ -78,6 +78,47 @@ The integration works as follows:
 
 This setup provides the benefits of both Vercel Blob for storage and Imgix for advanced image transformations.
 
+## Step 3: Fixing Middleware for Next.js 15 Compatibility
+
+After migrating to Vercel Blob and setting up Imgix, we encountered a middleware invocation error that needed to be addressed. The error was related to how middleware works in Next.js 15 with Node.js runtime.
+
+### Issue Encountered
+
+The application was failing with:
+```
+500: INTERNAL_SERVER_ERROR
+Code: MIDDLEWARE_INVOCATION_FAILED
+```
+
+The logs showed:
+```
+TypeError: middlewareHandler is not a function
+```
+
+### Changes Made
+
+1. Refactored the middleware implementation:
+   - Changed from default export to named export with auth wrapper
+   - Created a properly typed `AuthenticatedRequest` interface to handle auth properties
+   - Maintained the Node.js runtime setting to support Auth.js with Prisma adapter
+
+2. Fixed request headers handling:
+   - Ensured proper Content Security Policy (CSP) implementation
+   - Maintained header modifications needed for the application
+
+3. Updated the middleware configuration:
+   - Kept the matcher pattern to exclude static assets and auth API routes
+   - Explicitly specified Node.js runtime for middleware execution
+
+### Why This Fix Was Necessary
+
+The middleware error was directly related to our storage migration because:
+1. Next.js middleware typically runs in the Edge Runtime by default
+2. Our authentication system uses Auth.js with Prisma adapter, which requires Node.js runtime
+3. The storage migration required proper header handling for secure access to Vercel Blob
+
+This fix ensures that our middleware correctly handles authentication state while maintaining compatibility with our new storage service.
+
 ## Setting Up Vercel Blob
 
 1. Create a Vercel Blob store:

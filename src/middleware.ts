@@ -1,7 +1,14 @@
 import { auth } from "@/auth"
 import { env } from "@/env"
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { routes } from "./config/routes"
+
+// Define an augmented request type with auth
+interface AuthenticatedRequest extends NextRequest {
+  auth?: {
+    requires2FA?: boolean
+  } | null
+}
 
 function setRequestHeaders(requestHeaders: Headers) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64")
@@ -25,7 +32,8 @@ function setRequestHeaders(requestHeaders: Headers) {
   requestHeaders.set("Content-Security-Policy", contentSecurityPolicy)
 }
 
-export default auth((req) => {
+// Create a middleware handler function that will be wrapped by auth
+const middlewareHandler = (req: AuthenticatedRequest) => {
   const nextUrl = req.nextUrl.clone()
   const requestHeaders = new Headers(req.headers)
   setRequestHeaders(requestHeaders)
@@ -33,7 +41,9 @@ export default auth((req) => {
   if (req.auth) {
     if (req.auth.requires2FA) {
       if (nextUrl.pathname === routes.challenge) {
-        return NextResponse.next()
+        return NextResponse.next({
+          request: { headers: requestHeaders },
+        })
       }
 
       const challengeUrl = new URL(routes.challenge, req.url)
@@ -58,14 +68,14 @@ export default auth((req) => {
   }
 
   return NextResponse.next({
-    // !-- IMPORTANT: do not do this, it will break server actions
-    // !-- headers: requestHeaders - this interferes with server action requests
-    // instead, do this
     request: {
       headers: requestHeaders,
     },
   })
-})
+}
+
+// Export the middleware function with auth wrapper
+export const middleware = auth(middlewareHandler)
 
 export const config = {
   matcher:
