@@ -1,5 +1,5 @@
-import { Redis } from "@upstash/redis";
+import { Redis } from "@upstash/redis"
 
-const redis = Redis.fromEnv();
+const redis = Redis.fromEnv()
 
-export { redis };
+export { redis }

@@ -1,10 +1,10 @@
-import { InventorySkeleton } from "@/components/inventory/inventory-skeleton";
+import { InventorySkeleton } from "@/components/inventory/inventory-skeleton"
 
 export default function FavouritesLoadingPage() {
-	return (
-		<div className="container mx-auto px-4 py-8 min-h-[80dvh]">
-			<h1 className="text-3xl font-bold mb-6">Your Favourite Classifieds</h1>
-			<InventorySkeleton />
-		</div>
-	);
+  return (
+    <div className="container mx-auto min-h-[80dvh] px-4 py-8">
+      <h1 className="mb-6 font-bold text-3xl">Your Favourite Classifieds</h1>
+      <InventorySkeleton />
+    </div>
+  )
 }

@@ -1,221 +1,221 @@
-import type { ClassifiedAI } from "@/app/schemas/classified-ai.schema";
-import { Skeleton } from "@/components/ui/skeleton";
+import type { ClassifiedAI } from "@/app/schemas/classified-ai.schema"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
-	formatBodyType,
-	formatColour,
-	formatFuelType,
-	formatNumber,
-	formatOdometerUnit,
-	formatTransmission,
-	formatUlezCompliance,
-} from "@/lib/utils";
-import type { Make } from "@prisma/client";
+  formatBodyType,
+  formatColour,
+  formatFuelType,
+  formatNumber,
+  formatOdometerUnit,
+  formatTransmission,
+  formatUlezCompliance,
+} from "@/lib/utils"
+import type { Make } from "@prisma/client"
 import {
-	CarFrontIcon,
-	CarIcon,
-	CheckIcon,
-	Fingerprint,
-	FuelIcon,
-	GaugeIcon,
-	PowerIcon,
-	UsersIcon,
-	XIcon,
-} from "lucide-react";
-import Image from "next/image";
+  CarFrontIcon,
+  CarIcon,
+  CheckIcon,
+  Fingerprint,
+  FuelIcon,
+  GaugeIcon,
+  PowerIcon,
+  UsersIcon,
+  XIcon,
+} from "lucide-react"
+import Image from "next/image"
 
 export type StreamableSkeletonProps = Partial<Omit<ClassifiedAI, "make">> & {
-	make?: Make;
-	done?: boolean;
-};
+  make?: Make
+  done?: boolean
+}
 
 export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
-	const {
-		image,
-		title,
-		odoReading,
-		fuelType,
-		transmission,
-		description,
-		bodyType,
-		seats,
-		ulezCompliance,
-		doors,
-		colour,
-		vrm,
-		odoUnit,
-		make,
-		done,
-	} = props;
-	return (
-		<div className="flex flex-col container mx-auto py-12">
-			<div className="flex flex-col md:flex-row">
-				<div className="md:w-1/2 relative">
-					{image ? (
-						<Image
-							src={image}
-							alt={title || "Vehicle Image"}
-							width={600}
-							height={400}
-							className="rounded-lg aspect-3/2 object-cover"
-						/>
-					) : (
-						<Skeleton className="aspect-3/2 w-full" />
-					)}
-				</div>
-				<div className="md:w-1/2 md:pl-8 mt-4 md:mt-0">
-					<div className="flex flex-col md:flex-row items-start md:items-center">
-						{make ? (
-							<Image
-								src={make.image}
-								alt={make.name}
-								width={80}
-								height={64}
-								className="mr-4"
-							/>
-						) : !done ? (
-							<Skeleton className="w-20 h-16 mr-4" />
-						) : null}
-						<div>
-							{title ? (
-								<h1 className="text-2xl font-bold">{title}</h1>
-							) : (
-								<Skeleton className="h-8 w-64 mb-2" />
-							)}
-						</div>
-					</div>
-					<div className="my-4 flex flex-wrap items-center gap-2">
-						{odoReading && odoUnit ? (
-							<span className="bg-gray-200 text-gray-800 text-sm font-medium px-2 5 py-0 5 rounded-md">
-								{formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
-							</span>
-						) : !done ? (
-							<Skeleton className="h-6 w-16 rounded-md" />
-						) : null}
-						{fuelType ? (
-							<span className="bg-gray-200 text-gray-800 text-sm font-medium px-2 5 py-0 5 rounded-md">
-								{formatFuelType(fuelType)}
-							</span>
-						) : !done ? (
-							<Skeleton className="h-6 w-16 rounded-md" />
-						) : null}
-						{colour ? (
-							<span className="bg-gray-200 text-gray-800 text-sm font-medium px-2 5 py-0 5 rounded-md">
-								{formatColour(colour)}
-							</span>
-						) : !done ? (
-							<Skeleton className="h-6 w-16 rounded-md" />
-						) : null}
-						{transmission ? (
-							<span className="bg-gray-200 text-gray-800 text-sm font-medium px-2 5 py-0 5 rounded-md">
-								{formatTransmission(transmission)}
-							</span>
-						) : !done ? (
-							<Skeleton className="h-6 w-16 rounded-md" />
-						) : null}
-					</div>
-					{description ? (
-						<p className="text-gray-600 mb-4">{description}</p>
-					) : (
-						<Skeleton className="h-20 w-full mb-4" />
-					)}
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							{ulezCompliance === "EXEMPT" ? (
-								<CheckIcon className="w-6 h-6 mx-auto text-green-500" />
-							) : (
-								<XIcon className="w-6 h-6 mx-auto text-red-500" />
-							)}
-							{ulezCompliance ? (
-								<p className="text-sm font-medium mt-2">
-									{formatUlezCompliance(ulezCompliance)}
-								</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							<Fingerprint className="w-6 h-6 mx-auto text-zinc-400" />
-							{vrm ? (
-								<p className="text-sm font-medium mt-2">{vrm}</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							<CarIcon className="w-6 h-6 mx-auto text-zinc-400" />
-							{bodyType ? (
-								<p className="text-sm font-medium mt-2">
-									{formatBodyType(bodyType)}
-								</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							<FuelIcon className="w-6 h-6 mx-auto text-zinc-400" />
-							{fuelType ? (
-								<p className="text-sm font-medium mt-2">
-									{formatFuelType(fuelType)}
-								</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							<PowerIcon className="w-6 h-6 mx-auto text-zinc-400" />
-							{transmission ? (
-								<p className="text-sm font-medium mt-2">
-									{formatTransmission(transmission)}
-								</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							<GaugeIcon className="w-6 h-6 mx-auto text-zinc-400" />
-							{odoReading && odoUnit ? (
-								<p className="text-sm font-medium mt-2">
-									{formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
-								</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							<UsersIcon className="w-6 h-6 mx-auto text-zinc-400" />
-							{seats ? (
-								<p className="text-sm font-medium mt-2">{seats}</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-						<div className="bg-gray-100 rounded-lg shadow-xs p-4 text-center">
-							<CarFrontIcon className="w-6 h-6 mx-auto text-zinc-400" />
-							{doors ? (
-								<p className="text-sm font-medium mt-2">{doors}</p>
-							) : !done ? (
-								<Skeleton className="h-4 w-16 mx-auto mt-2" />
-							) : (
-								<p className="text-sm font-medium mt-2">UNKNOWN</p>
-							)}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-};
+  const {
+    image,
+    title,
+    odoReading,
+    fuelType,
+    transmission,
+    description,
+    bodyType,
+    seats,
+    ulezCompliance,
+    doors,
+    colour,
+    vrm,
+    odoUnit,
+    make,
+    done,
+  } = props
+  return (
+    <div className="container mx-auto flex flex-col py-12">
+      <div className="flex flex-col md:flex-row">
+        <div className="relative md:w-1/2">
+          {image ? (
+            <Image
+              src={image}
+              alt={title || "Vehicle Image"}
+              width={600}
+              height={400}
+              className="aspect-3/2 rounded-lg object-cover"
+            />
+          ) : (
+            <Skeleton className="aspect-3/2 w-full" />
+          )}
+        </div>
+        <div className="mt-4 md:mt-0 md:w-1/2 md:pl-8">
+          <div className="flex flex-col items-start md:flex-row md:items-center">
+            {make ? (
+              <Image
+                src={make.image}
+                alt={make.name}
+                width={80}
+                height={64}
+                className="mr-4"
+              />
+            ) : done ? null : (
+              <Skeleton className="mr-4 h-16 w-20" />
+            )}
+            <div>
+              {title ? (
+                <h1 className="font-bold text-2xl">{title}</h1>
+              ) : (
+                <Skeleton className="mb-2 h-8 w-64" />
+              )}
+            </div>
+          </div>
+          <div className="my-4 flex flex-wrap items-center gap-2">
+            {odoReading && odoUnit ? (
+              <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
+                {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
+              </span>
+            ) : done ? null : (
+              <Skeleton className="h-6 w-16 rounded-md" />
+            )}
+            {fuelType ? (
+              <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
+                {formatFuelType(fuelType)}
+              </span>
+            ) : done ? null : (
+              <Skeleton className="h-6 w-16 rounded-md" />
+            )}
+            {colour ? (
+              <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
+                {formatColour(colour)}
+              </span>
+            ) : done ? null : (
+              <Skeleton className="h-6 w-16 rounded-md" />
+            )}
+            {transmission ? (
+              <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
+                {formatTransmission(transmission)}
+              </span>
+            ) : done ? null : (
+              <Skeleton className="h-6 w-16 rounded-md" />
+            )}
+          </div>
+          {description ? (
+            <p className="mb-4 text-gray-600">{description}</p>
+          ) : (
+            <Skeleton className="mb-4 h-20 w-full" />
+          )}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              {ulezCompliance === "EXEMPT" ? (
+                <CheckIcon className="mx-auto h-6 w-6 text-green-500" />
+              ) : (
+                <XIcon className="mx-auto h-6 w-6 text-red-500" />
+              )}
+              {ulezCompliance ? (
+                <p className="mt-2 font-medium text-sm">
+                  {formatUlezCompliance(ulezCompliance)}
+                </p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              <Fingerprint className="mx-auto h-6 w-6 text-zinc-400" />
+              {vrm ? (
+                <p className="mt-2 font-medium text-sm">{vrm}</p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              <CarIcon className="mx-auto h-6 w-6 text-zinc-400" />
+              {bodyType ? (
+                <p className="mt-2 font-medium text-sm">
+                  {formatBodyType(bodyType)}
+                </p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              <FuelIcon className="mx-auto h-6 w-6 text-zinc-400" />
+              {fuelType ? (
+                <p className="mt-2 font-medium text-sm">
+                  {formatFuelType(fuelType)}
+                </p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              <PowerIcon className="mx-auto h-6 w-6 text-zinc-400" />
+              {transmission ? (
+                <p className="mt-2 font-medium text-sm">
+                  {formatTransmission(transmission)}
+                </p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              <GaugeIcon className="mx-auto h-6 w-6 text-zinc-400" />
+              {odoReading && odoUnit ? (
+                <p className="mt-2 font-medium text-sm">
+                  {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
+                </p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              <UsersIcon className="mx-auto h-6 w-6 text-zinc-400" />
+              {seats ? (
+                <p className="mt-2 font-medium text-sm">{seats}</p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
+              <CarFrontIcon className="mx-auto h-6 w-6 text-zinc-400" />
+              {doors ? (
+                <p className="mt-2 font-medium text-sm">{doors}</p>
+              ) : done ? (
+                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+              ) : (
+                <Skeleton className="mx-auto mt-2 h-4 w-16" />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

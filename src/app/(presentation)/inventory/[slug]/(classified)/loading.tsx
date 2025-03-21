@@ -1,3 +1,3 @@
 export default function ClassifiedSkeletonPage() {
-	return <></>;
+  return <></>
 }
