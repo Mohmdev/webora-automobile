@@ -1,0 +1,74 @@
+{
+	"name": "Node-22/bun",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "22",
+			"nodeGypDependencies": true
+		},
+		"ghcr.io/devcontainers/features/sshd:1": {
+			"version": "latest"
+		},
+		"ghcr.io/prulloac/devcontainer-features/bun:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/pnpm": {
+			"version": "latest"
+		}
+	},
+
+	"postCreateCommand": "sudo bun i -g vercel@latest railway@latest @biomejs/biome@1.9.4 && sudo bash -c 'for cmd in vercel vc railway biome; do if [ -f /root/.bun/bin/$cmd ]; then echo \"#!/bin/bash\" > /usr/local/bin/$cmd && echo \"sudo /root/.bun/bin/$cmd \\\"\\$@\\\"\" >> /usr/local/bin/$cmd && chmod +x /usr/local/bin/$cmd; fi; done'",
+
+	"remoteUser": "node",
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode-remote.remote-ssh",
+				"PKief.material-icon-theme",
+				"ms-vscode-remote.remote-ssh-edit",
+				"ms-vscode.remote-server",
+				"ms-vscode.remote-explorer",
+				"myaaghubi.andromeda-mariana-vscode",
+				"ms-vscode-remote.remote-containers",
+				"dsznajder.es7-react-js-snippets",
+				"tamasfe.even-better-toml",
+				"mhutchie.git-graph",
+				"heybourn.headwind",
+				"codezombiech.gitignore",
+				"ecmel.vscode-html-css",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"Zignd.html-css-class-completion",
+				"christian-kohler.npm-intellisense",
+				"christian-kohler.path-intellisense",
+				"jakob101.RelativePath",
+				"SimonSiefke.svg-preview",
+				"bradlc.vscode-tailwindcss",
+				"OmriGrossman.tailwind-color-matcher",
+				"Gruntfuggly.todo-tree",
+				"cweijan.vscode-database-client2",
+				"cweijan.dbclient-jdbc",
+				"macieklad.tailwind-sass-syntax",
+				"WakaTime.vscode-wakatime",
+				"biomejs.biome",
+				"jock.svg",
+				"henoc.svgeditor",
+				"matt-meyers.vscode-dbml",
+				"tomoki1207.pdf",
+				"YoavBls.pretty-ts-errors",
+				"MylesMurphy.prettify-ts",
+				"wix.vscode-import-cost",
+				"saber2pr.file-git-history"
+			],
+
+			"settings": {
+				"workbench.editor.scrollToSwitchTabs": true,
+				"workbench.iconTheme": "material-icon-theme",
+				"workbench.colorTheme": "Cursor Dark Midnight",
+				"workbench.preferredDarkColorTheme": "Cursor Dark Midnight"
+			}
+		}
+	}
+}
