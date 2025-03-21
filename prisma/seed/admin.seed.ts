@@ -2,11 +2,11 @@ import { bcryptPasswordHash } from "@/lib/bcrypt"
 import type { PrismaClient } from "@prisma/client"
 
 export async function seedAdmin(prisma: PrismaClient) {
-  const password = await bcryptPasswordHash("abc123#")
+  const password = await bcryptPasswordHash("demo@webora.app")
 
   const admin = await prisma.user.create({
     data: {
-      email: "dev@tlr.je",
+      email: "demo@webora.app",
       hashedPassword: password,
     },
   })
