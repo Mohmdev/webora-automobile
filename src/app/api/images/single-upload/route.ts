@@ -4,13 +4,14 @@ import { MAX_IMAGE_SIZE } from "@/config/constants"
 import { env } from "@/env"
 import { uploadToS3 } from "@/lib/s3"
 import { forbidden } from "next/navigation"
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
 
 export const maxDuration = 300
 
-export const POST = auth(async (req) => {
-  if (!req.auth) forbidden()
+export const POST = async (req: NextRequest) => {
+  const session = await auth()
+  if (!session) forbidden()
 
   const formData = await req.formData()
 
@@ -66,4 +67,4 @@ export const POST = auth(async (req) => {
       { status: 400 }
     )
   }
-})
+}
