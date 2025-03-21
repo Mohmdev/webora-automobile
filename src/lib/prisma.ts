@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client/edge"
 import { withAccelerate } from "@prisma/extension-accelerate"
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient }
@@ -9,4 +9,9 @@ function makeClient() {
 
 export const prisma = globalForPrisma.prisma || makeClient()
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
+if (
+  process.env.NODE_ENV !== "production" ||
+  process.env.VERCEL_ENV === "preview"
+) {
+  globalForPrisma.prisma = prisma
+}

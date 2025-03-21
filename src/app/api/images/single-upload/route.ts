@@ -7,7 +7,7 @@ import { forbidden } from "next/navigation"
 import { type NextRequest, NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
 
-export const maxDuration = 300
+// export const maxDuration = 60
 
 export const POST = async (req: NextRequest) => {
   const session = await auth()
