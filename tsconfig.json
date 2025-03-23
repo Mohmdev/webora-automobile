@@ -24,7 +24,8 @@
       "@/emails/*": ["./emails/*"],
       "@/env": ["./env.mjs"],
       "@/auth": ["./auth"]
-    }
+    },
+    "strictNullChecks": true
   },
   "include": [
     "next-auth.d.ts",
