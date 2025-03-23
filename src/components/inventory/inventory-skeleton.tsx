@@ -1,4 +1,4 @@
-import { ClassifiedCardSkeleton } from "./classified-card-skeleton"
+import { ClassifiedCardSkeleton } from './classified-card-skeleton'
 
 export const InventorySkeleton = () => {
   return (

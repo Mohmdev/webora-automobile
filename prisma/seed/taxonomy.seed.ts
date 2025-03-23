@@ -1,6 +1,6 @@
-import fs from "node:fs"
-import type { Prisma, PrismaClient } from "@prisma/client"
-import { parse } from "csv"
+import fs from 'node:fs'
+import type { Prisma, PrismaClient } from '@prisma/client'
+import { parse } from 'csv'
 
 type Row = {
   make: string
@@ -16,9 +16,9 @@ export async function seedTaxonomy(prisma: PrismaClient) {
   const rows = await new Promise<Row[]>((resolve, reject) => {
     const eachRow: Row[] = []
 
-    fs.createReadStream("taxonomy.csv")
+    fs.createReadStream('taxonomy.csv')
       .pipe(parse({ columns: true }))
-      .on("data", (row: { [index: string]: string }) => {
+      .on('data', (row: { [index: string]: string }) => {
         eachRow.push({
           make: row.Make,
           model: row.Model,
@@ -29,11 +29,11 @@ export async function seedTaxonomy(prisma: PrismaClient) {
             : new Date().getFullYear(),
         })
       })
-      .on("error", (error) => {
+      .on('error', (error) => {
         console.log({ error })
         reject(error)
       })
-      .on("end", () => {
+      .on('end', () => {
         resolve(eachRow)
       })
   })
@@ -83,11 +83,11 @@ export async function seedTaxonomy(prisma: PrismaClient) {
       },
       update: {
         name,
-        image: `https://vl.imgix.net/img/${name.replace(/\s+/g, "-").toLowerCase()}-logo.png?auto=format,compress`,
+        image: `https://vl.imgix.net/img/${name.replace(/\s+/g, '-').toLowerCase()}-logo.png?auto=format,compress`,
       },
       create: {
         name,
-        image: `https://vl.imgix.net/img/${name.replace(/\s+/g, "-").toLowerCase()}-logo.png?auto=format,compress`,
+        image: `https://vl.imgix.net/img/${name.replace(/\s+/g, '-').toLowerCase()}-logo.png?auto=format,compress`,
       },
     })
   })

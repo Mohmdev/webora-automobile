@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import { signInAction } from "@/app/_actions/sign-in"
-import { CircleCheckIcon, CircleX, Loader2 } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useActionState, useEffect, useRef } from "react"
-import { useFormStatus } from "react-dom"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
+import { signInAction } from '@/app/_actions/sign-in'
+import { CircleCheckIcon, CircleX, Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useActionState, useEffect, useRef } from 'react'
+import { useFormStatus } from 'react-dom'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
 
 const SubmitButton = () => {
   const { pending } = useFormStatus()
@@ -20,7 +20,7 @@ const SubmitButton = () => {
     >
       {pending && (
         <Loader2 className="h-4 w-4 shrink-0 animate-spin" aria-hidden="true" />
-      )}{" "}
+      )}{' '}
       Sign In
     </Button>
   )
@@ -29,7 +29,7 @@ const SubmitButton = () => {
 export const SignInForm = () => {
   const [state, formAction] = useActionState(signInAction, {
     success: false,
-    message: "",
+    message: '',
   })
 
   const router = useRouter()

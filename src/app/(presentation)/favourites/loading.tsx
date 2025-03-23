@@ -1,4 +1,4 @@
-import { InventorySkeleton } from "@/components/inventory/inventory-skeleton"
+import { InventorySkeleton } from '@/components/inventory/inventory-skeleton'
 
 export default function FavouritesLoadingPage() {
   return (

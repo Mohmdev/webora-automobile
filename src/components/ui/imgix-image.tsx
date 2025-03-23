@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { imgixLoader } from "@/lib/imgix-loader"
-import Image, { type ImageProps } from "next/image"
-import { useState } from "react"
+import { imgixLoader } from '@/lib/imgix-loader'
+import Image, { type ImageProps } from 'next/image'
+import { useState } from 'react'
 
-type ImgixImageProps = Omit<ImageProps, "priority" | "loading">
+type ImgixImageProps = Omit<ImageProps, 'priority' | 'loading'>
 
 export const ImgixImage = (props: ImgixImageProps) => {
   const [error, setError] = useState(false)

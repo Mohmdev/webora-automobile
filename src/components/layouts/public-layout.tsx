@@ -1,6 +1,6 @@
-import type { PropsWithChildren } from "react"
-import { PublicFooter } from "./footer"
-import { PublicHeader } from "./header"
+import type { PropsWithChildren } from 'react'
+import { PublicFooter } from './footer'
+import { PublicHeader } from './header'
 
 export function PublicLayout({ children }: PropsWithChildren) {
   return (

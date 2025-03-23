@@ -1,6 +1,6 @@
-import type { UpdateClassifiedType } from "@/app/schemas/classified.schema"
-import type { Classified, Prisma } from "@prisma/client"
-import type { ChangeEvent } from "react"
+import type { UpdateClassifiedType } from '@/app/schemas/classified.schema'
+import type { Classified, Prisma } from '@prisma/client'
+import type { ChangeEvent } from 'react'
 
 export interface MultiStepFormComponentProps extends AwaitedPageProps {
   classified: Prisma.ClassifiedGetPayload<{
@@ -23,8 +23,8 @@ export type PageProps = {
 }
 
 export type AwaitedPageProps = {
-  params?: Awaited<PageProps["params"]>
-  searchParams?: Awaited<PageProps["searchParams"]>
+  params?: Awaited<PageProps['params']>
+  searchParams?: Awaited<PageProps['searchParams']>
 }
 
 export type ClassifiedWithImages = Prisma.ClassifiedGetPayload<{
@@ -87,31 +87,31 @@ export interface ProgressArgs {
   key?: string
 }
 
-export type ClassifiedImages = UpdateClassifiedType["images"]
+export type ClassifiedImages = UpdateClassifiedType['images']
 
 export type ClassifiedKeys = keyof Pick<
   Classified,
-  | "status"
-  | "title"
-  | "vrm"
-  | "id"
-  | "views"
-  | "year"
-  | "colour"
-  | "price"
-  | "createdAt"
+  | 'status'
+  | 'title'
+  | 'vrm'
+  | 'id'
+  | 'views'
+  | 'year'
+  | 'colour'
+  | 'price'
+  | 'createdAt'
 >
 
 export type CustomerKeys = keyof Pick<
   Prisma.CustomerGetPayload<{ include: { classified: true } }>,
-  | "id"
-  | "email"
-  | "mobile"
-  | "firstName"
-  | "lastName"
-  | "updatedAt"
-  | "createdAt"
-  | "status"
-  | "bookingDate"
-  | "classified"
+  | 'id'
+  | 'email'
+  | 'mobile'
+  | 'firstName'
+  | 'lastName'
+  | 'updatedAt'
+  | 'createdAt'
+  | 'status'
+  | 'bookingDate'
+  | 'classified'
 >

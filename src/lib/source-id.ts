@@ -1,8 +1,8 @@
-import { cookies } from "next/headers"
-import "server-only"
-import { v4 as uuid } from "uuid"
+import { cookies } from 'next/headers'
+import 'server-only'
+import { v4 as uuid } from 'uuid'
 
-const SOURCE_ID_KEY = "sourceId"
+const SOURCE_ID_KEY = 'sourceId'
 
 export const setSourceId = async () => {
   const cookieStore = await cookies()
@@ -11,7 +11,7 @@ export const setSourceId = async () => {
   if (!sourceId) {
     sourceId = uuid()
     cookieStore.set(SOURCE_ID_KEY, sourceId, {
-      path: "/",
+      path: '/',
     })
   }
 

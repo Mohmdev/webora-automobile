@@ -1,11 +1,11 @@
-"use server"
+'use server'
 
-import { auth } from "@/auth"
-import { completeChallenge, issueChallenge } from "@/lib/otp"
-import { genericRateLimit } from "@/lib/rate-limiter"
+import { auth } from '@/auth'
+import { completeChallenge, issueChallenge } from '@/lib/otp'
+import { genericRateLimit } from '@/lib/rate-limiter'
 
 export const resendChallengeAction = async () => {
-  const limiterError = await genericRateLimit("otp")
+  const limiterError = await genericRateLimit('otp')
   if (limiterError) return limiterError
 
   const session = await auth()
@@ -13,7 +13,7 @@ export const resendChallengeAction = async () => {
   if (!session?.user) {
     return {
       success: false,
-      message: "Unauthorized",
+      message: 'Unauthorized',
     }
   }
 
@@ -21,7 +21,7 @@ export const resendChallengeAction = async () => {
 
   return {
     success: true,
-    message: "Code sent!",
+    message: 'Code sent!',
   }
 }
 
@@ -31,7 +31,7 @@ export const completeChallengeAction = async (code: string) => {
   if (!session?.user) {
     return {
       success: false,
-      message: "Unauthorized",
+      message: 'Unauthorized',
     }
   }
 

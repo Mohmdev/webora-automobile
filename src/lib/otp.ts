@@ -1,11 +1,11 @@
-import ChallengeEmail from "@/emails/challenge"
-import { env } from "@/env"
-import { bcryptPasswordCompare, bcryptPasswordHash } from "./bcrypt"
-import { prisma } from "./prisma"
-import { redis } from "./redis-store"
-import { resend } from "./resend"
+import ChallengeEmail from '@/emails/challenge'
+import { env } from '@/env'
+import { bcryptPasswordCompare, bcryptPasswordHash } from './bcrypt'
+import { prisma } from './prisma'
+import { redis } from './redis-store'
+import { resend } from './resend'
 
-const REDIS_PREFIX = "otp"
+const REDIS_PREFIX = 'otp'
 
 // helper which issues a new 2fa challenge for user and sends them the code
 // if there is already an outstanding challenge, it just resends same code
@@ -59,20 +59,20 @@ export async function completeChallenge(userId: string, code: string) {
         })
         await redis.del(`${REDIS_PREFIX}:uid-${userId}`)
 
-        return { success: true, message: "2FA enabled successfully" }
+        return { success: true, message: '2FA enabled successfully' }
       }
       return {
         succcess: false,
-        message: "Could not find the session for the user",
+        message: 'Could not find the session for the user',
       }
     }
     return {
       succcess: false,
-      message: "Incorrect verification code - please try again",
+      message: 'Incorrect verification code - please try again',
     }
   }
   return {
     succcess: false,
-    message: "Challenge does not exist - please try again",
+    message: 'Challenge does not exist - please try again',
   }
 }

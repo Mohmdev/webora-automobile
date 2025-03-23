@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker"
+import { faker } from '@faker-js/faker'
 import {
   BodyType,
   ClassifiedStatus,
@@ -10,8 +10,8 @@ import {
   type PrismaClient,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client"
-import slugify from "slugify"
+} from '@prisma/client'
+import slugify from 'slugify'
 
 export async function seedClassifieds(prisma: PrismaClient) {
   const makes = await prisma.make.findMany({
@@ -44,7 +44,7 @@ export async function seedClassifieds(prisma: PrismaClient) {
 
     const title = [year, make.name, model.name, variant?.name]
       .filter(Boolean)
-      .join(" ")
+      .join(' ')
 
     const vrm = faker.vehicle.vrm()
 

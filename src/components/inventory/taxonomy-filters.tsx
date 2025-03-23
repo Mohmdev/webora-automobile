@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { endpoints } from "@/config/endpoints"
-import type { FilterOptions, TaxonomyFiltersProps } from "@/config/types"
-import { api } from "@/lib/api-client"
-import { useEffect, useState } from "react"
-import { Select } from "../ui/select"
+import { endpoints } from '@/config/endpoints'
+import type { FilterOptions, TaxonomyFiltersProps } from '@/config/types'
+import { api } from '@/lib/api-client'
+import { useEffect, useState } from 'react'
+import { Select } from '../ui/select'
 
 export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
   const { searchParams, handleChange } = props

@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { logoutOfAllSessions } from "@/app/_actions/sign-out"
-import { Loader2 } from "lucide-react"
-import { useActionState } from "react"
-import { useFormStatus } from "react-dom"
-import { Button } from "../ui/button"
+import { logoutOfAllSessions } from '@/app/_actions/sign-out'
+import { Loader2 } from 'lucide-react'
+import { useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
+import { Button } from '../ui/button'
 
 const LogoutButton = () => {
   const { pending } = useFormStatus()
@@ -18,7 +18,7 @@ const LogoutButton = () => {
         type="submit"
       >
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
-        {pending ? "Logging out..." : "Log out of all sessions"}
+        {pending ? 'Logging out...' : 'Log out of all sessions'}
       </Button>
     </div>
   )

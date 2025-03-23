@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import type { FilterOptions } from "@/config/types"
-import type { SelectHTMLAttributes } from "react"
+import type { FilterOptions } from '@/config/types'
+import type { SelectHTMLAttributes } from 'react'
 
 interface SelectType extends SelectHTMLAttributes<HTMLSelectElement> {
   options: FilterOptions<string, number>

@@ -1,10 +1,10 @@
-import { GetMultipartUploadSchema } from "@/app/schemas/images.schema"
-import { auth } from "@/auth"
-import { env } from "@/env"
-import { s3 } from "@/lib/s3"
-import type { UploadPartCommandInput } from "@aws-sdk/client-s3"
-import { forbidden } from "next/navigation"
-import { type NextRequest, NextResponse } from "next/server"
+import { GetMultipartUploadSchema } from '@/app/schemas/images.schema'
+import { auth } from '@/auth'
+import { env } from '@/env'
+import { s3 } from '@/lib/s3'
+import type { UploadPartCommandInput } from '@aws-sdk/client-s3'
+import { forbidden } from 'next/navigation'
+import { type NextRequest, NextResponse } from 'next/server'
 
 export const POST = async (req: NextRequest) => {
   const session = await auth()
@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
     if (!validated.success) return NextResponse.error()
     const { fileId, fileKey, parts } = validated.data
 
-    const multipartParams: Omit<UploadPartCommandInput, "PartNumber"> = {
+    const multipartParams: Omit<UploadPartCommandInput, 'PartNumber'> = {
       Bucket: env.NEXT_PUBLIC_S3_BUCKET_NAME,
       Key: fileKey,
       UploadId: fileId,
@@ -24,8 +24,8 @@ export const POST = async (req: NextRequest) => {
 
     const promises: Promise<string>[] = []
 
-    const { getSignedUrl } = await import("@aws-sdk/s3-request-presigner")
-    const { UploadPartCommand } = await import("@aws-sdk/client-s3")
+    const { getSignedUrl } = await import('@aws-sdk/s3-request-presigner')
+    const { UploadPartCommand } = await import('@aws-sdk/client-s3')
 
     for (let index = 0; index < parts; index += 1) {
       const command = new UploadPartCommand({

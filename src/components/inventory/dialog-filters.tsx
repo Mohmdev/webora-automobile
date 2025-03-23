@@ -1,7 +1,7 @@
-"use client"
-import { routes } from "@/config/routes"
-import type { SidebarProps } from "@/config/types"
-import { env } from "@/env"
+'use client'
+import { routes } from '@/config/routes'
+import type { SidebarProps } from '@/config/types'
+import { env } from '@/env'
 import {
   cn,
   formatBodyType,
@@ -10,7 +10,7 @@ import {
   formatOdometerUnit,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils"
+} from '@/lib/utils'
 import {
   BodyType,
   Colour,
@@ -19,17 +19,17 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client"
-import { Settings2 } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { parseAsString, useQueryStates } from "nuqs"
-import { type ChangeEvent, useEffect, useState } from "react"
-import { SearchInput } from "../shared/search-input"
-import { Button } from "../ui/button"
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Select } from "../ui/select"
-import { RangeFilter } from "./range-filters"
-import { TaxonomyFilters } from "./taxonomy-filters"
+} from '@prisma/client'
+import { Settings2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { parseAsString, useQueryStates } from 'nuqs'
+import { type ChangeEvent, useEffect, useState } from 'react'
+import { SearchInput } from '../shared/search-input'
+import { Button } from '../ui/button'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Select } from '../ui/select'
+import { RangeFilter } from './range-filters'
+import { TaxonomyFilters } from './taxonomy-filters'
 
 interface DialogFiltersProps extends SidebarProps {
   count: number
@@ -45,24 +45,24 @@ export const DialogFilters = (props: DialogFiltersProps) => {
 
   const [queryStates, setQueryStates] = useQueryStates(
     {
-      make: parseAsString.withDefault(""),
-      model: parseAsString.withDefault(""),
-      modelVariant: parseAsString.withDefault(""),
-      minYear: parseAsString.withDefault(""),
-      maxYear: parseAsString.withDefault(""),
-      minPrice: parseAsString.withDefault(""),
-      maxPrice: parseAsString.withDefault(""),
-      minReading: parseAsString.withDefault(""),
-      maxReading: parseAsString.withDefault(""),
-      currency: parseAsString.withDefault(""),
-      odoUnit: parseAsString.withDefault(""),
-      transmission: parseAsString.withDefault(""),
-      fuelType: parseAsString.withDefault(""),
-      bodyType: parseAsString.withDefault(""),
-      colour: parseAsString.withDefault(""),
-      doors: parseAsString.withDefault(""),
-      seats: parseAsString.withDefault(""),
-      ulezCompliance: parseAsString.withDefault(""),
+      make: parseAsString.withDefault(''),
+      model: parseAsString.withDefault(''),
+      modelVariant: parseAsString.withDefault(''),
+      minYear: parseAsString.withDefault(''),
+      maxYear: parseAsString.withDefault(''),
+      minPrice: parseAsString.withDefault(''),
+      maxPrice: parseAsString.withDefault(''),
+      minReading: parseAsString.withDefault(''),
+      maxReading: parseAsString.withDefault(''),
+      currency: parseAsString.withDefault(''),
+      odoUnit: parseAsString.withDefault(''),
+      transmission: parseAsString.withDefault(''),
+      fuelType: parseAsString.withDefault(''),
+      bodyType: parseAsString.withDefault(''),
+      colour: parseAsString.withDefault(''),
+      doors: parseAsString.withDefault(''),
+      seats: parseAsString.withDefault(''),
+      ulezCompliance: parseAsString.withDefault(''),
     },
     {
       shallow: false,
@@ -72,7 +72,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
   useEffect(() => {
     const filterCount = Object.entries(
       searchParams as Record<string, string>
-    ).filter(([key, value]) => key !== "page" && value).length
+    ).filter(([key, value]) => key !== 'page' && value).length
 
     setFilterCount(filterCount)
   }, [searchParams])
@@ -92,7 +92,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
       [name]: value || null,
     })
 
-    if (name === "make") {
+    if (name === 'make') {
       setQueryStates({
         model: null,
         modelVariant: null,
@@ -106,7 +106,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="icon" className="lg:hidden">
-          <Settings2 className="h-4 w-4" />{" "}
+          <Settings2 className="h-4 w-4" />{' '}
         </Button>
       </DialogTrigger>
       <DialogContent className="h-[90vh] max-w-[425px] overflow-y-auto rounded-xl bg-white">
@@ -149,7 +149,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
               increment={1000000}
               thousandSeparator
               currency={{
-                currencyCode: "GBP",
+                currencyCode: 'GBP',
               }}
             />
             <RangeFilter
@@ -166,7 +166,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Currency"
               name="currency"
-              value={queryStates.currency || ""}
+              value={queryStates.currency || ''}
               onChange={handleChange}
               options={Object.values(CurrencyCode).map((value) => ({
                 label: value,
@@ -176,7 +176,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Odometer Unit"
               name="odoUnit"
-              value={queryStates.odoUnit || ""}
+              value={queryStates.odoUnit || ''}
               onChange={handleChange}
               options={Object.values(OdoUnit).map((value) => ({
                 label: formatOdometerUnit(value),
@@ -186,7 +186,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Transmission"
               name="transmission"
-              value={queryStates.transmission || ""}
+              value={queryStates.transmission || ''}
               onChange={handleChange}
               options={Object.values(Transmission).map((value) => ({
                 label: formatTransmission(value),
@@ -196,7 +196,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Fuel Type"
               name="fuelType"
-              value={queryStates.fuelType || ""}
+              value={queryStates.fuelType || ''}
               onChange={handleChange}
               options={Object.values(FuelType).map((value) => ({
                 label: formatFuelType(value),
@@ -206,7 +206,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Body Type"
               name="bodyType"
-              value={queryStates.bodyType || ""}
+              value={queryStates.bodyType || ''}
               onChange={handleChange}
               options={Object.values(BodyType).map((value) => ({
                 label: formatBodyType(value),
@@ -216,7 +216,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Colour"
               name="colour"
-              value={queryStates.colour || ""}
+              value={queryStates.colour || ''}
               onChange={handleChange}
               options={Object.values(Colour).map((value) => ({
                 label: formatColour(value),
@@ -226,7 +226,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="ULEZ Compliance"
               name="ulezCompliance"
-              value={queryStates.ulezCompliance || ""}
+              value={queryStates.ulezCompliance || ''}
               onChange={handleChange}
               options={Object.values(ULEZCompliance).map((value) => ({
                 label: formatUlezCompliance(value),
@@ -237,7 +237,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Doors"
               name="doors"
-              value={queryStates.doors || ""}
+              value={queryStates.doors || ''}
               onChange={handleChange}
               options={Array.from({ length: 6 }).map((_, i) => ({
                 label: Number(i + 1).toString(),
@@ -247,7 +247,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             <Select
               label="Seats"
               name="seats"
-              value={queryStates.seats || ""}
+              value={queryStates.seats || ''}
               onChange={handleChange}
               options={Array.from({ length: 8 }).map((_, i) => ({
                 label: Number(i + 1).toString(),
@@ -272,10 +272,10 @@ export const DialogFilters = (props: DialogFiltersProps) => {
                 onClick={clearFilters}
                 aria-disabled={!filterCount}
                 className={cn(
-                  "py-1 text-sm",
+                  'py-1 text-sm',
                   filterCount
-                    ? "hover:underline"
-                    : "disabled pointer-events-none cursor-default opacity-50"
+                    ? 'hover:underline'
+                    : 'disabled pointer-events-none cursor-default opacity-50'
                 )}
               >
                 Clear all {filterCount ? `(${filterCount})` : null}

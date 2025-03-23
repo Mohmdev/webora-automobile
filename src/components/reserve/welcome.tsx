@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
 import {
   type MultiStepFormComponentProps,
   MultiStepFormEnum,
-} from "@/config/types"
+} from '@/config/types'
 import {
   ArrowRightIcon,
   CircleCheckIcon,
@@ -11,12 +11,12 @@ import {
   Loader2,
   LockIcon,
   StarIcon,
-} from "lucide-react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useTransition } from "react"
-import { HTMLParser } from "../shared/html-parser"
-import { Button } from "../ui/button"
+} from 'lucide-react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { HTMLParser } from '../shared/html-parser'
+import { Button } from '../ui/button'
 
 export const Welcome = (props: MultiStepFormComponentProps) => {
   const router = useRouter()
@@ -27,7 +27,7 @@ export const Welcome = (props: MultiStepFormComponentProps) => {
     startTransition(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500))
       const url = new URL(window.location.href)
-      url.searchParams.set("step", MultiStepFormEnum.SELECT_DATE.toString())
+      url.searchParams.set('step', MultiStepFormEnum.SELECT_DATE.toString())
       router.push(url.toString())
     })
   }
@@ -65,7 +65,7 @@ export const Welcome = (props: MultiStepFormComponentProps) => {
                 {props.classified.title}
               </h2>
               <div className="line-clamp-2 text-xs">
-                <HTMLParser html={props.classified.description ?? ""} />
+                <HTMLParser html={props.classified.description ?? ''} />
               </div>
             </div>
           </div>
@@ -107,7 +107,7 @@ export const Welcome = (props: MultiStepFormComponentProps) => {
         >
           {isPending ? (
             <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
-          ) : null}{" "}
+          ) : null}{' '}
           I'm Ready
         </Button>
       </div>

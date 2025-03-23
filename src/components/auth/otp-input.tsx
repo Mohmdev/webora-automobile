@@ -1,37 +1,37 @@
-import { cn } from "@/lib/utils"
-import type React from "react"
-import { forwardRef, useRef } from "react"
+import { cn } from '@/lib/utils'
+import type React from 'react'
+import { forwardRef, useRef } from 'react'
 
 interface PinCodeProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    "size" | "type" | "value"
+    'size' | 'type' | 'value'
   > {
   setValue: React.Dispatch<React.SetStateAction<string | number | undefined>>
-  type?: "text" | "number"
+  type?: 'text' | 'number'
   length?: number
   center?: boolean
   inputClassName?: string
 }
 
 const containerClassNames = {
-  base: "flex flex-row",
-  center: "justify-center align-center",
+  base: 'flex flex-row',
+  center: 'justify-center align-center',
 }
 
 const inputClassNames = {
-  base: "block peer text-center texct-slate-950 bg-transparent mr-2 focus:placeholder:opacity-0 focus:outline-hidden transition duration-200 disabled:bg-zinc-50 disabled:placeholder:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200 rounded focus:outline-hidden focus:border-primary",
-  size: "p-2 text-2xl font-medium w-12 h-12 sm:h-[70px] sm: w-[70px]",
+  base: 'block peer text-center texct-slate-950 bg-transparent mr-2 focus:placeholder:opacity-0 focus:outline-hidden transition duration-200 disabled:bg-zinc-50 disabled:placeholder:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200 rounded focus:outline-hidden focus:border-primary',
+  size: 'p-2 text-2xl font-medium w-12 h-12 sm:h-[70px] sm: w-[70px]',
   color: {
-    base: "bg-transparent focus:ring-[0.6px] border border-gray-300 focus-visible:border-secondary focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-secondary placeholder:text-slate-950",
-    active: "not-read-only:hover:enabled:border-secondary focus:ring-secondary",
+    base: 'bg-transparent focus:ring-[0.6px] border border-gray-300 focus-visible:border-secondary focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-secondary placeholder:text-slate-950',
+    active: 'not-read-only:hover:enabled:border-secondary focus:ring-secondary',
   },
 }
 
 export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
   (props, ref) => {
     const {
-      type = "text",
+      type = 'text',
       defaultValue,
       length = 6,
       setValue,
@@ -48,14 +48,14 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
     }
 
     function setPinValue() {
-      setValue(inputRefs.current.map((node) => node.value).join(""))
+      setValue(inputRefs.current.map((node) => node.value).join(''))
     }
 
     function handleChange(
       event: React.ChangeEvent<HTMLInputElement>,
       index: number
     ) {
-      const inputValues = event.target.value.split("")
+      const inputValues = event.target.value.split('')
       inputRefs.current[index].value = inputValues[inputValues.length - 1]
       if (index < length - 1) inputRefs?.current[index + 1].focus()
       setPinValue()
@@ -65,11 +65,11 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
       event: React.ClipboardEvent<HTMLInputElement>,
       index: number
     ) {
-      const copiedValue = event.clipboardData.getData("text").trim().split("")
+      const copiedValue = event.clipboardData.getData('text').trim().split('')
       const isComplete = copiedValue.length >= length
 
       for (let i = 0; i < length - index; i += 1) {
-        inputRefs.current[index + i].value = copiedValue[i] ?? ""
+        inputRefs.current[index + i].value = copiedValue[i] ?? ''
         if (index + i === length - 1) {
           inputRefs.current[index + i].focus()
         } else {
@@ -80,29 +80,29 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
       setPinValue()
 
       if (isComplete) {
-        const form = event.currentTarget.closest("form")
+        const form = event.currentTarget.closest('form')
         form?.requestSubmit()
       }
     }
 
     function handleKeyDown(event: React.KeyboardEvent, index: number) {
       const currentValue = inputRefs.current[index].value
-      if (event.key === "ArrowRight" && index < length - 1) {
+      if (event.key === 'ArrowRight' && index < length - 1) {
         inputRefs.current[index + 1].focus()
       }
 
-      if (event.key === "ArrowLeft" && index > 0) {
+      if (event.key === 'ArrowLeft' && index > 0) {
         inputRefs.current[index - 1].focus()
       }
 
-      if (event.key === "BackSpace") {
-        if (currentValue !== "") {
-          inputRefs.current[index].value = ""
+      if (event.key === 'BackSpace') {
+        if (currentValue !== '') {
+          inputRefs.current[index].value = ''
         } else {
           if (index === 0) {
             return
           }
-          inputRefs.current[index - 1].value = ""
+          inputRefs.current[index - 1].value = ''
           inputRefs.current[index - 1].focus()
         }
         setPinValue()
@@ -123,7 +123,7 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
                 key={`otp-input-${i}`}
                 ref={addInputRefs(i)}
                 type={type}
-                inputMode={type === "text" ? type : "numeric"}
+                inputMode={type === 'text' ? type : 'numeric'}
                 autoCapitalize="off"
                 autoCorrect="off"
                 autoComplete="off"
@@ -136,7 +136,7 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
                   inputClassNames.color.active,
                   inputClassNames.color.base,
                   inputClassName,
-                  "[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  '[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
                 )}
               />
             )

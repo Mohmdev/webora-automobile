@@ -1,31 +1,31 @@
-"use client"
+'use client'
 
-import type { AI } from "@/app/_actions/ai"
-import { createClassifiedAction } from "@/app/_actions/classified"
-import { ClassifiedAISchema } from "@/app/schemas/classified-ai.schema"
+import type { AI } from '@/app/_actions/ai'
+import { createClassifiedAction } from '@/app/_actions/classified'
+import { ClassifiedAISchema } from '@/app/schemas/classified-ai.schema'
 import {
   SingleImageSchema,
   type SingleImageType,
-} from "@/app/schemas/images.schema"
-import { Button } from "@/components/ui/button"
+} from '@/app/schemas/images.schema'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Form } from "@/components/ui/form"
-import { toast } from "@/hooks/use-toast"
-import { cn } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { readStreamableValue, useActions, useUIState } from "ai/rsc"
-import { Loader2 } from "lucide-react"
-import { useState, useTransition } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { z } from "zod"
-import { ImageUploader } from "./single-image-uploader"
-import type { StreamableSkeletonProps } from "./streamable-skeleton"
+} from '@/components/ui/dialog'
+import { Form } from '@/components/ui/form'
+import { toast } from '@/hooks/use-toast'
+import { cn } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { readStreamableValue, useActions, useUIState } from 'ai/rsc'
+import { Loader2 } from 'lucide-react'
+import { useState, useTransition } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { ImageUploader } from './single-image-uploader'
+import type { StreamableSkeletonProps } from './streamable-skeleton'
 
 export const CreateClassifiedDialog = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -53,7 +53,7 @@ export const CreateClassifiedDialog = () => {
   })
 
   const handleImageUpload = (url: string) => {
-    imageForm.setValue("image", url)
+    imageForm.setValue('image', url)
   }
 
   const onImageSubmit: SubmitHandler<SingleImageType> = (data) => {
@@ -76,11 +76,11 @@ export const CreateClassifiedDialog = () => {
 
       if (!success) {
         toast({
-          title: "Error",
+          title: 'Error',
           description: message,
-          type: "background",
+          type: 'background',
           duration: 2500,
-          variant: "destructive",
+          variant: 'destructive',
         })
 
         return
@@ -95,7 +95,7 @@ export const CreateClassifiedDialog = () => {
           Create New
         </Button>
       </DialogTrigger>
-      <DialogContent className={cn("max-w-6xl bg-white")}>
+      <DialogContent className={cn('max-w-6xl bg-white')}>
         <DialogHeader>
           <DialogTitle>Create New Classified</DialogTitle>
         </DialogHeader>
@@ -126,7 +126,7 @@ export const CreateClassifiedDialog = () => {
                   {isCreating || isUploading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : null}
-                  {isUploading ? "Uploading..." : "Create"}
+                  {isUploading ? 'Uploading...' : 'Create'}
                 </Button>
               </div>
             </form>

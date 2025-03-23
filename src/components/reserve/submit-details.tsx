@@ -1,24 +1,24 @@
-"use client"
+'use client'
 
-import { createCustomerAction } from "@/app/_actions/customer"
+import { createCustomerAction } from '@/app/_actions/customer'
 import {
   SubmitDetailsSchema,
   type SubmitDetailsSchemaType,
-} from "@/app/schemas/customer.schema"
-import { routes } from "@/config/routes"
+} from '@/app/schemas/customer.schema'
+import { routes } from '@/config/routes'
 import {
   type MultiStepFormComponentProps,
   MultiStepFormEnum,
-} from "@/config/types"
-import { toast } from "@/hooks/use-toast"
-import { formatDate } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Loader2 } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useTransition } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { Button } from "../ui/button"
-import { Checkbox } from "../ui/checkbox"
+} from '@/config/types'
+import { toast } from '@/hooks/use-toast'
+import { formatDate } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Button } from '../ui/button'
+import { Checkbox } from '../ui/checkbox'
 import {
   Form,
   FormControl,
@@ -26,21 +26,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
+} from '../ui/form'
+import { Input } from '../ui/input'
 
 export const SubmitDetails = (props: MultiStepFormComponentProps) => {
   const { params, searchParams } = props
   const router = useRouter()
   const form = useForm<SubmitDetailsSchemaType>({
     resolver: zodResolver(SubmitDetailsSchema),
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobile: "",
-      terms: "false",
+      firstName: '',
+      lastName: '',
+      email: '',
+      mobile: '',
+      terms: 'false',
     },
   })
 
@@ -51,7 +51,7 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
     startPrevTransition(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500))
       const url = new URL(window.location.href)
-      url.searchParams.set("step", MultiStepFormEnum.SELECT_DATE.toString())
+      url.searchParams.set('step', MultiStepFormEnum.SELECT_DATE.toString())
       router.push(url.toString())
     })
   }
@@ -80,19 +80,19 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
 
       if (!success) {
         toast({
-          title: "Error",
+          title: 'Error',
           description: message,
-          type: "background",
+          type: 'background',
           duration: 2500,
-          variant: "destructive",
+          variant: 'destructive',
         })
         return
       }
 
       toast({
-        title: "Success",
+        title: 'Success',
         description: message,
-        type: "background",
+        type: 'background',
         duration: 1000,
       })
 
@@ -172,7 +172,7 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
                   <FormControl>
                     <Checkbox
                       className="m-0 cursor-pointer"
-                      onCheckedChange={(e) => onChange(e ? "true" : "false")}
+                      onCheckedChange={(e) => onChange(e ? 'true' : 'false')}
                       {...rest}
                     />
                   </FormControl>
@@ -197,7 +197,7 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
           >
             {isPrevPending ? (
               <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
-            ) : null}{" "}
+            ) : null}{' '}
             Previous Step
           </Button>
           <Button
@@ -207,7 +207,7 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
           >
             {isPending ? (
               <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
-            ) : null}{" "}
+            ) : null}{' '}
             Submit Details
           </Button>
         </div>

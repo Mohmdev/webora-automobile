@@ -7,8 +7,8 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client"
-import { z } from "zod"
+} from '@prisma/client'
+import { z } from 'zod'
 
 export const ClassifiedFilterSchema = z.object({
   q: z.string().optional(),
@@ -44,15 +44,15 @@ export const updateClassifiedSchema = z.object({
   doors: z.number().min(1).max(8),
   seats: z.number().min(1).max(12),
   ulezCompliance: z.nativeEnum(ULEZCompliance, {
-    message: "Invalid ULEZ Compliance",
+    message: 'Invalid ULEZ Compliance',
   }),
-  transmission: z.nativeEnum(Transmission, { message: "Invalid Transmission" }),
-  colour: z.nativeEnum(Colour, { message: "Invalid Colour" }),
-  fuelType: z.nativeEnum(FuelType, { message: "Invalid Fuel Type" }),
-  bodyType: z.nativeEnum(BodyType, { message: "Invalid Body Type" }),
-  odoUnit: z.nativeEnum(OdoUnit, { message: "Invalid Odo Unit" }),
+  transmission: z.nativeEnum(Transmission, { message: 'Invalid Transmission' }),
+  colour: z.nativeEnum(Colour, { message: 'Invalid Colour' }),
+  fuelType: z.nativeEnum(FuelType, { message: 'Invalid Fuel Type' }),
+  bodyType: z.nativeEnum(BodyType, { message: 'Invalid Body Type' }),
+  odoUnit: z.nativeEnum(OdoUnit, { message: 'Invalid Odo Unit' }),
   status: z.nativeEnum(ClassifiedStatus),
-  currency: z.nativeEnum(CurrencyCode, { message: "Invalid Currency Code" }),
+  currency: z.nativeEnum(CurrencyCode, { message: 'Invalid Currency Code' }),
   price: z.number(),
   images: z.array(
     z.object({

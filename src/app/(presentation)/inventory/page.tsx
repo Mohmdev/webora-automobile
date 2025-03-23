@@ -1,20 +1,20 @@
-import { PageSchema } from "@/app/schemas/page.schema"
-import { ClassifiedsList } from "@/components/inventory/classifieds-list"
-import { DialogFilters } from "@/components/inventory/dialog-filters"
-import { InventorySkeleton } from "@/components/inventory/inventory-skeleton"
-import { Sidebar } from "@/components/inventory/sidebar"
-import { CustomPagination } from "@/components/shared/custom-pagination"
-import { CLASSIFIEDS_PER_PAGE } from "@/config/constants"
-import { routes } from "@/config/routes"
-import type { AwaitedPageProps, Favourites, PageProps } from "@/config/types"
-import { prisma } from "@/lib/prisma"
-import { redis } from "@/lib/redis-store"
-import { getSourceId } from "@/lib/source-id"
-import { buildClassifiedFilterQuery } from "@/lib/utils"
-import { ClassifiedStatus } from "@prisma/client"
-import { Suspense } from "react"
+import { PageSchema } from '@/app/schemas/page.schema'
+import { ClassifiedsList } from '@/components/inventory/classifieds-list'
+import { DialogFilters } from '@/components/inventory/dialog-filters'
+import { InventorySkeleton } from '@/components/inventory/inventory-skeleton'
+import { Sidebar } from '@/components/inventory/sidebar'
+import { CustomPagination } from '@/components/shared/custom-pagination'
+import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
+import { routes } from '@/config/routes'
+import type { AwaitedPageProps, Favourites, PageProps } from '@/config/types'
+import { prisma } from '@/lib/prisma'
+import { redis } from '@/lib/redis-store'
+import { getSourceId } from '@/lib/source-id'
+import { buildClassifiedFilterQuery } from '@/lib/utils'
+import { ClassifiedStatus } from '@prisma/client'
+import { Suspense } from 'react'
 
-const getInventory = async (searchParams: AwaitedPageProps["searchParams"]) => {
+const getInventory = async (searchParams: AwaitedPageProps['searchParams']) => {
   const validPage = PageSchema.parse(searchParams?.page)
 
   // get the current page
@@ -53,7 +53,7 @@ export default async function InventoryPage(props: PageProps) {
   })
 
   const sourceId = await getSourceId()
-  const favourites = await redis.get<Favourites>(sourceId ?? "")
+  const favourites = await redis.get<Favourites>(sourceId ?? '')
   const totalPages = Math.ceil(count / CLASSIFIEDS_PER_PAGE)
 
   return (
@@ -76,11 +76,11 @@ export default async function InventoryPage(props: PageProps) {
             baseURL={routes.inventory}
             totalPages={totalPages}
             styles={{
-              paginationRoot: "justify-end hidden lg:flex",
-              paginationPrevious: "",
-              paginationNext: "",
-              paginationLink: "border-none active:border text-black",
-              paginationLinkActive: "",
+              paginationRoot: 'justify-end hidden lg:flex',
+              paginationPrevious: '',
+              paginationNext: '',
+              paginationLink: 'border-none active:border text-black',
+              paginationLinkActive: '',
             }}
           />
         </div>
@@ -96,11 +96,11 @@ export default async function InventoryPage(props: PageProps) {
           baseURL={routes.inventory}
           totalPages={totalPages}
           styles={{
-            paginationRoot: "justify-center lg:hidden pt-12",
-            paginationPrevious: "",
-            paginationNext: "",
-            paginationLink: "border-none active:border",
-            paginationLinkActive: "",
+            paginationRoot: 'justify-center lg:hidden pt-12',
+            paginationPrevious: '',
+            paginationNext: '',
+            paginationLink: 'border-none active:border',
+            paginationLinkActive: '',
           }}
         />
       </div>

@@ -1,10 +1,10 @@
-"use client"
-import type { AwaitedPageProps } from "@/config/types"
-import { cn } from "@/lib/utils"
-import type { ClassifiedStatus } from "@prisma/client"
-import { useRouter } from "next/navigation"
-import { Label } from "../ui/label"
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
+'use client'
+import type { AwaitedPageProps } from '@/config/types'
+import { cn } from '@/lib/utils'
+import type { ClassifiedStatus } from '@prisma/client'
+import { useRouter } from 'next/navigation'
+import { Label } from '../ui/label'
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 
 interface RadioFilterProps extends AwaitedPageProps {
   items: string[]
@@ -13,11 +13,11 @@ interface RadioFilterProps extends AwaitedPageProps {
 export const RadioFilter = (props: RadioFilterProps) => {
   const { items, searchParams } = props
   const router = useRouter()
-  const status = (searchParams?.status as string) || "all"
+  const status = (searchParams?.status as string) || 'all'
 
   const handleStatus = (status: Lowercase<ClassifiedStatus>) => {
     const currentUrlParams = new URLSearchParams(window.location.search)
-    currentUrlParams.set("status", status.toUpperCase())
+    currentUrlParams.set('status', status.toUpperCase())
     const url = new URL(window.location.href)
     url.search = currentUrlParams.toString()
     router.push(url.toString())
@@ -33,9 +33,9 @@ export const RadioFilter = (props: RadioFilterProps) => {
         <Label
           htmlFor={item.toLowerCase()}
           className={cn(
-            "flex-1 cursor-pointer rounded-md px-4 py-2 text-center font-medium text-muted text-sm transition-colors hover:bg-primary-800",
+            'flex-1 cursor-pointer rounded-md px-4 py-2 text-center font-medium text-muted text-sm transition-colors hover:bg-primary-800',
             status?.toLowerCase() === item.toLowerCase() &&
-              "bg-primary-800 text-white"
+              'bg-primary-800 text-white'
           )}
           key={item}
         >

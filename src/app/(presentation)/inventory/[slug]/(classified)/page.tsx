@@ -1,9 +1,9 @@
-import { ClassifiedView } from "@/components/classified/classified-view"
-import { routes } from "@/config/routes"
-import type { PageProps } from "@/config/types"
-import { prisma } from "@/lib/prisma"
-import { ClassifiedStatus } from "@prisma/client"
-import { notFound, redirect } from "next/navigation"
+import { ClassifiedView } from '@/components/classified/classified-view'
+import { routes } from '@/config/routes'
+import type { PageProps } from '@/config/types'
+import { prisma } from '@/lib/prisma'
+import { ClassifiedStatus } from '@prisma/client'
+import { notFound, redirect } from 'next/navigation'
 
 export default async function ClassifiedPage(props: PageProps) {
   const params = await props?.params

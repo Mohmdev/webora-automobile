@@ -1,5 +1,5 @@
-import { Container, Heading, Section, Text } from "@react-email/components"
-import EmailLayout from "./layout"
+import { Container, Heading, Section, Text } from '@react-email/components'
+import EmailLayout from './layout'
 const PropDefaults = {
   code: 123456,
 }

@@ -1,5 +1,5 @@
-import { ClassifiedFilterSchema } from "@/app/schemas/classified.schema"
-import type { AwaitedPageProps } from "@/config/types"
+import { ClassifiedFilterSchema } from '@/app/schemas/classified.schema'
+import type { AwaitedPageProps } from '@/config/types'
 import {
   BodyType,
   ClassifiedStatus,
@@ -11,11 +11,11 @@ import {
   type Prisma,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client"
-import { type ClassValue, clsx } from "clsx"
-import { format, parse } from "date-fns"
-import prettyBytes from "pretty-bytes"
-import { twMerge } from "tailwind-merge"
+} from '@prisma/client'
+import { type ClassValue, clsx } from 'clsx'
+import { format, parse } from 'date-fns'
+import prettyBytes from 'pretty-bytes'
+import { twMerge } from 'tailwind-merge'
 
 /**
  * Combines multiple class names and merges Tailwind CSS classes efficiently
@@ -32,34 +32,34 @@ interface FormatPriceArgs {
 }
 
 export function formatUlezCompliance(ulezCompliance: ULEZCompliance) {
-  return ulezCompliance === ULEZCompliance.EXEMPT ? "Exempt" : "Non-Exempt"
+  return ulezCompliance === ULEZCompliance.EXEMPT ? 'Exempt' : 'Non-Exempt'
 }
 
 export function formatBodyType(bodyType: BodyType) {
   switch (bodyType) {
     case BodyType.CONVERTIBLE:
-      return "Convertible"
+      return 'Convertible'
     case BodyType.COUPE:
-      return "Coupe"
+      return 'Coupe'
     case BodyType.HATCHBACK:
-      return "Hatchback"
+      return 'Hatchback'
     case BodyType.SUV:
-      return "SUV"
+      return 'SUV'
     case BodyType.WAGON:
-      return "Wagon"
+      return 'Wagon'
     case BodyType.SEDAN:
-      return "Sedan"
+      return 'Sedan'
     default:
-      return "Unknown"
+      return 'Unknown'
   }
 }
 
 export function formatPrice({ price, currency }: FormatPriceArgs) {
-  if (!price) return "0"
+  if (!price) return '0'
 
-  const formatter = new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currencyDisplay: "narrowSymbol",
+  const formatter = new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currencyDisplay: 'narrowSymbol',
     ...(currency && { currency }),
     maximumFractionDigits: 0,
   })
@@ -71,69 +71,69 @@ export function formatNumber(
   num: number | null,
   options?: Intl.NumberFormatOptions
 ) {
-  if (!num) return "0"
+  if (!num) return '0'
 
-  return new Intl.NumberFormat("en-GB", options).format(num)
+  return new Intl.NumberFormat('en-GB', options).format(num)
 }
 
 export function formatOdometerUnit(unit: OdoUnit) {
-  return unit === OdoUnit.MILES ? "mi" : "km"
+  return unit === OdoUnit.MILES ? 'mi' : 'km'
 }
 
 export function formatTransmission(transmission: Transmission) {
-  return transmission === Transmission.AUTOMATIC ? "Automatic" : "Manual"
+  return transmission === Transmission.AUTOMATIC ? 'Automatic' : 'Manual'
 }
 
 export function formatFuelType(fuelType: FuelType) {
   switch (fuelType) {
     case FuelType.PETROL:
-      return "Petrol"
+      return 'Petrol'
     case FuelType.DIESEL:
-      return "Diesel"
+      return 'Diesel'
     case FuelType.ELECTRIC:
-      return "Electric"
+      return 'Electric'
     case FuelType.HYBRID:
-      return "Hybrid"
+      return 'Hybrid'
     default:
-      return "Unknown"
+      return 'Unknown'
   }
 }
 
 export function formatColour(colour: Colour) {
   switch (colour) {
     case Colour.BLACK:
-      return "Black"
+      return 'Black'
     case Colour.WHITE:
-      return "White"
+      return 'White'
     case Colour.SILVER:
-      return "Silver"
+      return 'Silver'
     case Colour.RED:
-      return "Red"
+      return 'Red'
     case Colour.BLUE:
-      return "Blue"
+      return 'Blue'
     case Colour.BROWN:
-      return "Brown"
+      return 'Brown'
     case Colour.GOLD:
-      return "Gold"
+      return 'Gold'
     case Colour.GREEN:
-      return "Green"
+      return 'Green'
     case Colour.GREY:
-      return "Grey"
+      return 'Grey'
     case Colour.ORANGE:
-      return "Orange"
+      return 'Orange'
     case Colour.PINK:
-      return "Pink"
+      return 'Pink'
     case Colour.PURPLE:
-      return "Purple"
+      return 'Purple'
     case Colour.YELLOW:
-      return "Yellow"
+      return 'Yellow'
     default:
-      return "Unknown"
+      return 'Unknown'
   }
 }
 
 export const buildClassifiedFilterQuery = (
-  searchParams: AwaitedPageProps["searchParams"] | undefined
+  searchParams: AwaitedPageProps['searchParams'] | undefined
 ): Prisma.ClassifiedWhereInput => {
   const { data } = ClassifiedFilterSchema.safeParse(searchParams)
 
@@ -141,26 +141,26 @@ export const buildClassifiedFilterQuery = (
 
   const keys = Object.keys(data)
 
-  const taxonomyFilters = ["make", "model", "modelVariant"]
+  const taxonomyFilters = ['make', 'model', 'modelVariant']
 
   const rangeFilters = {
-    minYear: "year",
-    maxYear: "year",
-    minPrice: "price",
-    maxPrice: "price",
-    minReading: "odoReading",
-    maxReading: "odoReading",
+    minYear: 'year',
+    maxYear: 'year',
+    minPrice: 'price',
+    maxPrice: 'price',
+    minReading: 'odoReading',
+    maxReading: 'odoReading',
   }
 
-  const numFilters = ["seats", "doors"]
+  const numFilters = ['seats', 'doors']
   const enumFilters = [
-    "odoUnit",
-    "currency",
-    "transmission",
-    "bodyType",
-    "fuelType",
-    "colour",
-    "ulezCompliance",
+    'odoUnit',
+    'currency',
+    'transmission',
+    'bodyType',
+    'fuelType',
+    'colour',
+    'ulezCompliance',
   ]
 
   const mapParamsToFields = keys.reduce(
@@ -177,9 +177,9 @@ export const buildClassifiedFilterQuery = (
       } else if (key in rangeFilters) {
         const field = rangeFilters[key as keyof typeof rangeFilters]
         acc[field] = acc[field] || {}
-        if (key.startsWith("min")) {
+        if (key.startsWith('min')) {
           acc[field].gte = Number(value)
-        } else if (key.startsWith("max")) {
+        } else if (key.startsWith('max')) {
           acc[field].lte = Number(value)
         }
       }
@@ -196,14 +196,14 @@ export const buildClassifiedFilterQuery = (
         {
           title: {
             contains: searchParams.q as string,
-            mode: "insensitive",
+            mode: 'insensitive',
           },
         },
 
         {
           description: {
             contains: searchParams.q as string,
-            mode: "insensitive",
+            mode: 'insensitive',
           },
         },
       ],
@@ -223,9 +223,9 @@ export const generateTimeOptions = () => {
     date.setHours(hour)
     date.setMinutes(0)
 
-    const formattedTime = date.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
+    const formattedTime = date.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
       hour12: true,
     })
 
@@ -244,16 +244,16 @@ export const generateDateOptions = () => {
     const date = new Date(today)
     date.setDate(today.getDate() + i)
     dates.push({
-      label: format(date, "dd MMM yyyy"),
-      value: format(date, "dd MMM yyyy"),
+      label: format(date, 'dd MMM yyyy'),
+      value: format(date, 'dd MMM yyyy'),
     })
   }
   return dates
 }
 
 export const formatDate = (date: string, time: string) => {
-  const parsedDate = parse(date, "dd MMM yyyy", new Date())
-  const parsedTime = parse(time, "hh:mm aa", new Date())
+  const parsedDate = parse(date, 'dd MMM yyyy', new Date())
+  const parsedTime = parse(time, 'hh:mm aa', new Date())
 
   parsedDate.setHours(parsedTime.getHours(), parsedTime.getMinutes(), 0, 0)
 
@@ -288,25 +288,25 @@ export function generateYears(minYear: number, maxYear?: number): string[] {
 export function formatClassifiedStatus(status: ClassifiedStatus) {
   switch (status) {
     case ClassifiedStatus.LIVE:
-      return "Live"
+      return 'Live'
     case ClassifiedStatus.SOLD:
-      return "Sold"
+      return 'Sold'
     case ClassifiedStatus.DRAFT:
-      return "Draft"
+      return 'Draft'
   }
 }
 
 export function formatCustomerStatus(status: CustomerStatus) {
   switch (status) {
     case CustomerStatus.COLD:
-      return "Cold"
+      return 'Cold'
     case CustomerStatus.CONTACTED:
-      return "Contacted"
+      return 'Contacted'
     case CustomerStatus.INTERESTED:
-      return "Interested"
+      return 'Interested'
     case CustomerStatus.PURCHASED:
-      return "Purchased"
+      return 'Purchased'
     case CustomerStatus.SUBSCRIBER:
-      return "Subscriber"
+      return 'Subscriber'
   }
 }

@@ -1,15 +1,15 @@
-"use client"
+'use client'
 
-import { subscribeAction } from "@/app/_actions/subscribe"
-import { SubscribeSchema } from "@/app/schemas/subscribe.schema"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { CircleCheckIcon, CircleX, Loader2 } from "lucide-react"
-import { useActionState, useEffect, useRef } from "react"
-import { useFormStatus } from "react-dom"
-import { useForm } from "react-hook-form"
-import { Button } from "../ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
+import { subscribeAction } from '@/app/_actions/subscribe'
+import { SubscribeSchema } from '@/app/schemas/subscribe.schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CircleCheckIcon, CircleX, Loader2 } from 'lucide-react'
+import { useActionState, useEffect, useRef } from 'react'
+import { useFormStatus } from 'react-dom'
+import { useForm } from 'react-hook-form'
+import { Button } from '../ui/button'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
+import { Input } from '../ui/input'
 
 const SubscribeButton = () => {
   const { pending } = useFormStatus()
@@ -22,7 +22,7 @@ const SubscribeButton = () => {
     >
       {pending && (
         <Loader2 className="h-4 w-4 shrink-0 animate-spin" aria-hidden="true" />
-      )}{" "}
+      )}{' '}
       Subscribe Now
     </Button>
   )
@@ -30,12 +30,12 @@ const SubscribeButton = () => {
 export const NewsletterForm = () => {
   const [state, formAction] = useActionState(subscribeAction, {
     success: false,
-    message: "",
+    message: '',
   })
 
   const form = useForm({
     resolver: zodResolver(SubscribeSchema),
-    mode: "onChange",
+    mode: 'onChange',
   })
 
   const handleFormAction = async (formData: FormData) => {

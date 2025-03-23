@@ -1,27 +1,27 @@
-import { navLinks } from "@/config/constants"
-import { routes } from "@/config/routes"
-import { SiInstagram, SiMeta, SiX } from "@icons-pack/react-simple-icons"
-import Image from "next/image"
-import Link from "next/link"
-import { NewsletterForm } from "../shared/newsletter-form"
+import { navLinks } from '@/config/constants'
+import { routes } from '@/config/routes'
+import { SiInstagram, SiMeta, SiX } from '@icons-pack/react-simple-icons'
+import Image from 'next/image'
+import Link from 'next/link'
+import { NewsletterForm } from '../shared/newsletter-form'
 const socialLinks = [
   {
     id: 1,
-    href: "https://facebook.com",
+    href: 'https://facebook.com',
     icon: (
       <SiMeta className="h-5 w-5 text-gray-600 transition-colors hover:text-primary" />
     ),
   },
   {
     id: 2,
-    href: "https://twitter.com",
+    href: 'https://twitter.com',
     icon: (
       <SiX className="h-5 w-5 text-gray-600 transition-colors hover:text-primary" />
     ),
   },
   {
     id: 3,
-    href: "https://instagram.com",
+    href: 'https://instagram.com',
     icon: (
       <SiInstagram className="h-5 w-5 text-gray-600 transition-colors hover:text-primary" />
     ),

@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import type { ClassifiedImages } from "@/config/types"
+import type { ClassifiedImages } from '@/config/types'
 import {
   type Active,
   DndContext,
@@ -10,14 +10,14 @@ import {
   closestCenter,
   useSensor,
   useSensors,
-} from "@dnd-kit/core"
+} from '@dnd-kit/core'
 import {
   SortableContext,
   arrayMove,
   sortableKeyboardCoordinates,
-} from "@dnd-kit/sortable"
-import { type JSX, useCallback, useMemo, useState } from "react"
-import { SortableOverlay } from "./sortable-overlay"
+} from '@dnd-kit/sortable'
+import { type JSX, useCallback, useMemo, useState } from 'react'
+import { SortableOverlay } from './sortable-overlay'
 type ClassifiedImage = ClassifiedImages[number]
 
 interface DragAndDropContextProps {

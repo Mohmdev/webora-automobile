@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "../ui/button"
+import { cn } from '@/lib/utils'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Button } from '../ui/button'
 
 interface SwiperButtonsProps {
   prevClassName?: string
@@ -19,7 +19,7 @@ export const SwiperButtons = (props: SwiperButtonsProps) => {
         size="icon"
         className={cn(
           prevClassName,
-          "swiper-button-prev -translate-y-1/2 absolute top-1/2 z-10 flex items-center rounded-full"
+          'swiper-button-prev -translate-y-1/2 absolute top-1/2 z-10 flex items-center rounded-full'
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -32,7 +32,7 @@ export const SwiperButtons = (props: SwiperButtonsProps) => {
         size="icon"
         className={cn(
           nextClassName,
-          "swiper-button-next -translate-y-1/2 absolute top-1/2 z-10 flex items-center rounded-full"
+          'swiper-button-next -translate-y-1/2 absolute top-1/2 z-10 flex items-center rounded-full'
         )}
         onClick={(e) => e.stopPropagation()}
       >

@@ -1,5 +1,5 @@
-import { imageSources } from "@/config/constants"
-import { imgixLoader } from "@/lib/imgix-loader"
+import { imageSources } from '@/config/constants'
+import { imgixLoader } from '@/lib/imgix-loader'
 
 export const FeaturesSection = () => {
   return (

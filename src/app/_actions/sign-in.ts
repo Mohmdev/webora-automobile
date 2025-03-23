@@ -1,19 +1,19 @@
-"use server"
+'use server'
 
-import { signIn } from "@/auth"
-import { routes } from "@/config/routes"
-import type { PrevState } from "@/config/types"
-import { genericRateLimit } from "@/lib/rate-limiter"
-import { isRedirectError } from "next/dist/client/components/redirect-error"
-import { SignInSchema } from "../schemas/auth.schema"
+import { signIn } from '@/auth'
+import { routes } from '@/config/routes'
+import type { PrevState } from '@/config/types'
+import { genericRateLimit } from '@/lib/rate-limiter'
+import { isRedirectError } from 'next/dist/client/components/redirect-error'
+import { SignInSchema } from '../schemas/auth.schema'
 
 export const signInAction = async (_: PrevState, formData: FormData) => {
   try {
-    const limiterError = await genericRateLimit("login")
+    const limiterError = await genericRateLimit('login')
     if (limiterError) return limiterError
 
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
 
     const { data, success, error } = SignInSchema.safeParse({
       email,
@@ -22,10 +22,10 @@ export const signInAction = async (_: PrevState, formData: FormData) => {
 
     if (!success) {
       console.log({ error })
-      return { success: false, message: "Invalid Credentials" }
+      return { success: false, message: 'Invalid Credentials' }
     }
 
-    await signIn("credentials", {
+    await signIn('credentials', {
       email: data.email,
       password: data.password,
       redirect: true,
@@ -34,11 +34,11 @@ export const signInAction = async (_: PrevState, formData: FormData) => {
 
     return {
       success: true,
-      message: "Signed in successfully!",
+      message: 'Signed in successfully!',
     }
   } catch (error) {
     console.log({ error })
     if (isRedirectError(error)) throw error
-    return { success: false, message: "Invalid Credentials" }
+    return { success: false, message: 'Invalid Credentials' }
   }
 }

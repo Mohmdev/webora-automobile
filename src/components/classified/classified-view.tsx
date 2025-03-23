@@ -1,5 +1,5 @@
-import { routes } from "@/config/routes"
-import { MultiStepFormEnum } from "@/config/types"
+import { routes } from '@/config/routes'
+import { MultiStepFormEnum } from '@/config/types'
 import {
   formatBodyType,
   formatColour,
@@ -9,8 +9,8 @@ import {
   formatPrice,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils"
-import type { Prisma } from "@prisma/client"
+} from '@/lib/utils'
+import type { Prisma } from '@prisma/client'
 import {
   CarFrontIcon,
   CarIcon,
@@ -21,12 +21,12 @@ import {
   PowerIcon,
   UsersIcon,
   XIcon,
-} from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { HTMLParser } from "../shared/html-parser"
-import { Button } from "../ui/button"
-import { ClassifiedCarousel } from "./classified-carousel"
+} from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { HTMLParser } from '../shared/html-parser'
+import { Button } from '../ui/button'
+import { ClassifiedCarousel } from './classified-carousel'
 
 type ClassifiedWithImagesAndMake = Prisma.ClassifiedGetPayload<{
   include: { make: true; images: true }
@@ -36,7 +36,7 @@ const features = (props: ClassifiedWithImagesAndMake) => [
   {
     id: 1,
     icon:
-      props.ulezCompliance === "EXEMPT" ? (
+      props.ulezCompliance === 'EXEMPT' ? (
         <CheckIcon className="mx-auto h-6 w-6 text-green-500" />
       ) : (
         <XIcon className="mx-auto h-6 w-6 text-red-500" />
@@ -106,7 +106,7 @@ export const ClassifiedView = (props: ClassifiedWithImagesAndMake) => {
               {props.year}
             </span>
             <span className="rounded-md bg-gray-200 px-2.5 py-0.5 font-medium text-gray-800 text-sm">
-              {formatNumber(props.odoReading)}{" "}
+              {formatNumber(props.odoReading)}{' '}
               {formatOdometerUnit(props.odoUnit)}
             </span>
             <span className="rounded-md bg-gray-200 px-2.5 py-0.5 font-medium text-gray-800 text-sm">
@@ -123,7 +123,7 @@ export const ClassifiedView = (props: ClassifiedWithImagesAndMake) => {
           )}
 
           <div className="my-4 flex w-full items-center justify-center rounded-xl border border-slate-200 py-12 font-bold text-4xl">
-            Our Price:{" "}
+            Our Price:{' '}
             {formatPrice({ price: props.price, currency: props.currency })}
           </div>
           <Button

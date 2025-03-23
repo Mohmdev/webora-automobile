@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
-import type { ChangeEvent, SelectHTMLAttributes } from "react"
+import { cn } from '@/lib/utils'
+import type { ChangeEvent, SelectHTMLAttributes } from 'react'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string
@@ -24,15 +24,15 @@ export const Select = (props: SelectProps) => {
   } = props
 
   return (
-    <div className={cn("mt-1", className)}>
+    <div className={cn('mt-1', className)}>
       {label && <h4 className="font-semibold text-sm">{label}</h4>}
       <div className="mt-1">
         <select
           onChange={onChange}
-          value={value ?? ""}
+          value={value ?? ''}
           className={cn(
             selectClassName,
-            "disabled:!bg-gray-100 custom-select w-full appearance-none rounded-md border border-input bg-no-repeat px-3 py-2 pr-12 focus:outline-hidden"
+            'disabled:!bg-gray-100 custom-select w-full appearance-none rounded-md border border-input bg-no-repeat px-3 py-2 pr-12 focus:outline-hidden'
           )}
           {...rest}
         >

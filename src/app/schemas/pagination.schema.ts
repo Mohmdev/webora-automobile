@@ -1,18 +1,18 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 export const PaginationSchema = z.object({
   page: z
     .string()
     .refine((val) => Number(val) > 0, {
-      message: "Page must be greater than 0",
+      message: 'Page must be greater than 0',
     })
-    .default("1"),
+    .default('1'),
   itemsPerPage: z
-    .enum(["10", "25", "50", "100"])
+    .enum(['10', '25', '50', '100'])
     .refine((val) => Number(val) > 0, {
-      message: "Items per page must be greater than 0",
+      message: 'Items per page must be greater than 0',
     })
-    .default("10"),
+    .default('10'),
 })
 
 export type PaginationType = z.infer<typeof PaginationSchema>
@@ -23,12 +23,12 @@ export const validatePagination = ({ page, itemsPerPage }: PaginationType) => {
     itemsPerPage,
   })
 
-  if (error) console.log("Validation error: ", error)
+  if (error) console.log('Validation error: ', error)
 
   if (!success) {
     return {
-      page: "1",
-      itemsPerPage: "10",
+      page: '1',
+      itemsPerPage: '10',
     }
   }
 

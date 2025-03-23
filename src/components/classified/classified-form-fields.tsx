@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   formatBodyType,
@@ -7,7 +7,7 @@ import {
   formatTransmission,
   formatUlezCompliance,
   generateYears,
-} from "@/lib/utils"
+} from '@/lib/utils'
 import {
   BodyType,
   Colour,
@@ -16,25 +16,25 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client"
-import dynamic from "next/dynamic"
-import { useFormContext } from "react-hook-form"
+} from '@prisma/client'
+import dynamic from 'next/dynamic'
+import { useFormContext } from 'react-hook-form'
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
-import { InputSelect } from "../ui/input-select"
-import { NumberInput } from "../ui/number-input"
-import { Select } from "../ui/select"
-import { Skeleton } from "../ui/skeleton"
-import { TaxonomySelects } from "./taxonomy-selects"
+} from '../ui/form'
+import { Input } from '../ui/input'
+import { InputSelect } from '../ui/input-select'
+import { NumberInput } from '../ui/number-input'
+import { Select } from '../ui/select'
+import { Skeleton } from '../ui/skeleton'
+import { TaxonomySelects } from './taxonomy-selects'
 
 const RichTextEditor = dynamic(
-  () => import("./rich-text-editor").then((mod) => mod.RichTextEditor),
+  () => import('./rich-text-editor').then((mod) => mod.RichTextEditor),
   {
     ssr: false,
     loading: () => (
@@ -229,7 +229,7 @@ export const ClassifiedFormFields = () => {
                 max={6}
                 min={1}
                 placeholder="0"
-                style={{ background: "#081a2b" }}
+                style={{ background: '#081a2b' }}
                 className="text-muted placeholder:text-muted/75"
                 onValueChange={(values) => {
                   onChange(values.floatValue)
@@ -252,7 +252,7 @@ export const ClassifiedFormFields = () => {
                 max={8}
                 min={1}
                 placeholder="0"
-                style={{ background: "#081a2b" }}
+                style={{ background: '#081a2b' }}
                 className="text-muted placeholder:text-muted/75"
                 onValueChange={(values) => {
                   onChange(values.floatValue)

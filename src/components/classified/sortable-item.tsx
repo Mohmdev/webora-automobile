@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import type { ClassifiedImages } from "@/config/types"
-import { useSortable } from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
-import { CheckCircle, XIcon } from "lucide-react"
-import { Button } from "../ui/button"
-import { ImgixImage } from "../ui/imgix-image"
+import type { ClassifiedImages } from '@/config/types'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { CheckCircle, XIcon } from 'lucide-react'
+import { Button } from '../ui/button'
+import { ImgixImage } from '../ui/imgix-image'
 
 interface SortableItemProps {
   index: number
@@ -60,7 +60,7 @@ export const SortableItem = (props: SortableItemProps) => {
                 height={160}
                 quality={25}
                 blurDataURL={item.base64 as string}
-                placeholder={item.base64 ? "blur" : "empty"}
+                placeholder={item.base64 ? 'blur' : 'empty'}
                 className="aspect-3/2 object-cover"
               />
 

@@ -1,12 +1,12 @@
-import { PageSchema } from "@/app/schemas/page.schema"
-import { ClassifiedCard } from "@/components/inventory/classified-card"
-import { CustomPagination } from "@/components/shared/custom-pagination"
-import { CLASSIFIEDS_PER_PAGE } from "@/config/constants"
-import { routes } from "@/config/routes"
-import type { Favourites, PageProps } from "@/config/types"
-import { prisma } from "@/lib/prisma"
-import { redis } from "@/lib/redis-store"
-import { getSourceId } from "@/lib/source-id"
+import { PageSchema } from '@/app/schemas/page.schema'
+import { ClassifiedCard } from '@/components/inventory/classified-card'
+import { CustomPagination } from '@/components/shared/custom-pagination'
+import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
+import { routes } from '@/config/routes'
+import type { Favourites, PageProps } from '@/config/types'
+import { prisma } from '@/lib/prisma'
+import { redis } from '@/lib/redis-store'
+import { getSourceId } from '@/lib/source-id'
 
 export default async function FavouritesPage(props: PageProps) {
   const searchParams = await props.searchParams
@@ -19,7 +19,7 @@ export default async function FavouritesPage(props: PageProps) {
   const offset = (page - 1) * CLASSIFIEDS_PER_PAGE
 
   const sourceId = await getSourceId()
-  const favourites = await redis.get<Favourites>(sourceId ?? "")
+  const favourites = await redis.get<Favourites>(sourceId ?? '')
 
   const classifieds = await prisma.classified.findMany({
     where: { id: { in: favourites ? favourites.ids : [] } },
@@ -53,11 +53,11 @@ export default async function FavouritesPage(props: PageProps) {
           baseURL={routes.favourites}
           totalPages={totalPages}
           styles={{
-            paginationRoot: "justify-center",
-            paginationPrevious: "",
-            paginationNext: "",
-            paginationLinkActive: "",
-            paginationLink: "border-none active:border",
+            paginationRoot: 'justify-center',
+            paginationPrevious: '',
+            paginationNext: '',
+            paginationLinkActive: '',
+            paginationLink: 'border-none active:border',
           }}
         />
       </div>

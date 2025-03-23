@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { cn } from "@/lib/utils"
-import debounce from "debounce"
-import { SearchIcon, XIcon } from "lucide-react"
-import { useQueryState } from "nuqs"
-import { type ChangeEvent, useCallback, useRef } from "react"
-import { Input } from "../ui/input"
+import { cn } from '@/lib/utils'
+import debounce from 'debounce'
+import { SearchIcon, XIcon } from 'lucide-react'
+import { useQueryState } from 'nuqs'
+import { type ChangeEvent, useCallback, useRef } from 'react'
+import { Input } from '../ui/input'
 
 function debounceFunc<T extends (...args: any) => any>(
   func: T,
@@ -22,7 +22,7 @@ interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const SearchInput = (props: SearchInputProps) => {
   const { className, ...rest } = props
 
-  const [q, setSearch] = useQueryState("q", { shallow: false })
+  const [q, setSearch] = useQueryState('q', { shallow: false })
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSearch = useCallback(
@@ -43,7 +43,7 @@ export const SearchInput = (props: SearchInputProps) => {
 
   const clearSearch = () => {
     setSearch(null)
-    if (inputRef.current) inputRef.current.value = ""
+    if (inputRef.current) inputRef.current.value = ''
   }
 
   return (
@@ -51,8 +51,8 @@ export const SearchInput = (props: SearchInputProps) => {
       <SearchIcon className="absolute top-2.5 left-2.5 h-4 w-4 text-gray-500" />
       <Input
         ref={inputRef}
-        defaultValue={q || ""}
-        className={cn(className, "pl-8")}
+        defaultValue={q || ''}
+        className={cn(className, 'pl-8')}
         onChange={onChange}
         type="text"
         {...rest}

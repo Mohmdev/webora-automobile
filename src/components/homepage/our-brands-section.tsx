@@ -1,31 +1,31 @@
-import { routes } from "@/config/routes"
-import { prisma } from "@/lib/prisma"
-import { ClassifiedStatus } from "@prisma/client"
-import Image from "next/image"
-import Link from "next/link"
+import { routes } from '@/config/routes'
+import { prisma } from '@/lib/prisma'
+import { ClassifiedStatus } from '@prisma/client'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export const OurBrandsSection = async () => {
   const brands = await prisma.make.findMany({
     where: {
       name: {
         in: [
-          "Rolls-Royce",
-          "Aston Martin",
-          "Porsche",
-          "Lamborghini",
-          "Audi",
-          "Jaguar",
-          "Land Rover",
-          "Mercedes-Benz",
-          "Ferrari",
-          "Bentley",
-          "McLaren",
-          "Ford",
-          "Volkswagen",
-          "Maserati",
-          "Lexus",
+          'Rolls-Royce',
+          'Aston Martin',
+          'Porsche',
+          'Lamborghini',
+          'Audi',
+          'Jaguar',
+          'Land Rover',
+          'Mercedes-Benz',
+          'Ferrari',
+          'Bentley',
+          'McLaren',
+          'Ford',
+          'Volkswagen',
+          'Maserati',
+          'Lexus',
         ],
-        mode: "insensitive",
+        mode: 'insensitive',
       },
     },
   })

@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client"
-import { seedAdmin } from "./admin.seed"
-import { seedTaxonomy } from "./taxonomy.seed"
+import { PrismaClient } from '@prisma/client'
+import { seedAdmin } from './admin.seed'
+import { seedTaxonomy } from './taxonomy.seed'
 
 const prisma = new PrismaClient()
 

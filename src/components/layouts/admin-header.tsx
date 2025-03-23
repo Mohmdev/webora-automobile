@@ -1,5 +1,5 @@
-import { Suspense } from "react"
-import { AdminSearch } from "../admin/search"
+import { Suspense } from 'react'
+import { AdminSearch } from '../admin/search'
 
 export const AdminHeader = async () => {
   return (

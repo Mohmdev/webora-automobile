@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import type { SidebarProps } from "@/config/types"
-import { parseAsString, useQueryStates } from "nuqs"
-import { RangeFilter } from "../inventory/range-filters"
-import { TaxonomyFilters } from "../inventory/taxonomy-filters"
+import type { SidebarProps } from '@/config/types'
+import { parseAsString, useQueryStates } from 'nuqs'
+import { RangeFilter } from '../inventory/range-filters'
+import { TaxonomyFilters } from '../inventory/taxonomy-filters'
 
 interface HomepageTaxonomyFiltersProps extends SidebarProps {}
 export const HomepageTaxonomyFilters = ({
@@ -13,13 +13,13 @@ export const HomepageTaxonomyFilters = ({
   const { _min, _max } = minMaxValues
   const [, setState] = useQueryStates(
     {
-      make: parseAsString.withDefault(""),
-      model: parseAsString.withDefault(""),
-      modelVariant: parseAsString.withDefault(""),
-      minYear: parseAsString.withDefault(""),
-      maxYear: parseAsString.withDefault(""),
-      minPrice: parseAsString.withDefault(""),
-      maxPrice: parseAsString.withDefault(""),
+      make: parseAsString.withDefault(''),
+      model: parseAsString.withDefault(''),
+      modelVariant: parseAsString.withDefault(''),
+      minYear: parseAsString.withDefault(''),
+      maxYear: parseAsString.withDefault(''),
+      minPrice: parseAsString.withDefault(''),
+      maxPrice: parseAsString.withDefault(''),
     },
     { shallow: false }
   )
@@ -30,10 +30,10 @@ export const HomepageTaxonomyFilters = ({
     const { name, value } = e.target
 
     switch (name) {
-      case "make":
+      case 'make':
         await setState({ make: value, model: null, modelVariant: null })
         break
-      case "model":
+      case 'model':
         await setState({ model: value, modelVariant: null })
         break
       default:
@@ -67,7 +67,7 @@ export const HomepageTaxonomyFilters = ({
         increment={1000000}
         thousandSeparator
         currency={{
-          currencyCode: "GBP",
+          currencyCode: 'GBP',
         }}
       />
     </>

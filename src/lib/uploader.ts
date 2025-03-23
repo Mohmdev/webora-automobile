@@ -1,7 +1,7 @@
-import { MAX_IMAGES } from "@/config/constants"
-import { endpoints } from "@/config/endpoints"
-import type { ProgressArgs } from "@/config/types"
-import { api } from "./api-client"
+import { MAX_IMAGES } from '@/config/constants'
+import { endpoints } from '@/config/endpoints'
+import type { ProgressArgs } from '@/config/types'
+import { api } from './api-client'
 
 interface UploaderOptions {
   file: File
@@ -62,12 +62,12 @@ export class Uploader {
 
   async initUpload() {
     try {
-      const ext = this.file?.name.split(".").pop()
-      const name = this.file?.name.split(".").shift()
-      let fileName = ""
+      const ext = this.file?.name.split('.').pop()
+      const name = this.file?.name.split('.').shift()
+      let fileName = ''
 
       if (ext) {
-        fileName += `${name?.replace(/\s+/g, "-")}.${ext}`
+        fileName += `${name?.replace(/\s+/g, '-')}.${ext}`
       } else fileName += name
 
       const imageInitialisationUploadInput = {
@@ -148,7 +148,7 @@ export class Uploader {
       this.upload(chunk, part, sendChunkStarted)
         .then((status) => {
           if (status !== 200) {
-            reject(new Error("Failed chunk upload"))
+            reject(new Error('Failed chunk upload'))
             return
           }
 
@@ -175,21 +175,21 @@ export class Uploader {
           part.PartNumber - 1
         )
 
-        xhr.upload.addEventListener("progress", progressListener)
-        xhr.addEventListener("error", progressListener)
-        xhr.addEventListener("abort", progressListener)
-        xhr.addEventListener("loadend", progressListener)
+        xhr.upload.addEventListener('progress', progressListener)
+        xhr.addEventListener('error', progressListener)
+        xhr.addEventListener('abort', progressListener)
+        xhr.addEventListener('loadend', progressListener)
 
-        xhr.open("PUT", part.signedUrl)
+        xhr.open('PUT', part.signedUrl)
 
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4 && xhr.status === 200) {
-            const ETag = xhr.getResponseHeader("ETag")
+            const ETag = xhr.getResponseHeader('ETag')
 
             if (ETag) {
               const uploadedPart = {
                 PartNumber: part.PartNumber,
-                ETag: ETag.replaceAll('"', ""),
+                ETag: ETag.replaceAll('"', ''),
               } as FilePart
 
               this.uploadedParts.push(uploadedPart)
@@ -215,11 +215,11 @@ export class Uploader {
 
   handleUploadProgress(part: number, event: ProgressEvent) {
     if (this.file) {
-      if (["progress", "error", "abort"].includes(event.type)) {
+      if (['progress', 'error', 'abort'].includes(event.type)) {
         this.progressCache[part] = event.loaded
       }
 
-      if (event.type === "uploaded") {
+      if (event.type === 'uploaded') {
         this.uploadedSize += this.progressCache[part] || 0
         delete this.progressCache[part]
       }
@@ -276,7 +276,7 @@ export class Uploader {
         return result
       }
     } catch (error) {
-      console.log("Complete request issue:", error)
+      console.log('Complete request issue:', error)
     }
   }
 

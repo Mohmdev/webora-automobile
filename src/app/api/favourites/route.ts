@@ -1,10 +1,10 @@
-import { validateIdSchema } from "@/app/schemas/id.schema"
-import { routes } from "@/config/routes"
-import type { Favourites } from "@/config/types"
-import { redis } from "@/lib/redis-store"
-import { setSourceId } from "@/lib/source-id"
-import { revalidatePath } from "next/cache"
-import { type NextRequest, NextResponse } from "next/server"
+import { validateIdSchema } from '@/app/schemas/id.schema'
+import { routes } from '@/config/routes'
+import type { Favourites } from '@/config/types'
+import { redis } from '@/lib/redis-store'
+import { setSourceId } from '@/lib/source-id'
+import { revalidatePath } from 'next/cache'
+import { type NextRequest, NextResponse } from 'next/server'
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json()
@@ -15,8 +15,8 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ error: error?.message }, { status: 400 })
   }
 
-  if (typeof data.id !== "number") {
-    return NextResponse.json({ error: "Invalid ID" }, { status: 400 })
+  if (typeof data.id !== 'number') {
+    return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
   }
 
   // get the source id from cookies

@@ -11,8 +11,8 @@ import {
   Row,
   Section,
   Tailwind,
-} from "@react-email/components"
-import type { PropsWithChildren } from "react"
+} from '@react-email/components'
+import type { PropsWithChildren } from 'react'
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -24,7 +24,7 @@ interface EmailLayoutProps extends PropsWithChildren {
   preview: string
 }
 
-const EmailLayout = ({ children, preview = "" }: EmailLayoutProps) => {
+const EmailLayout = ({ children, preview = '' }: EmailLayoutProps) => {
   return (
     <Html>
       <Tailwind config={twConfig}>
@@ -36,16 +36,16 @@ const EmailLayout = ({ children, preview = "" }: EmailLayoutProps) => {
         <Preview>{preview}</Preview>
         <Body
           style={{
-            backgroundColor: "#f4f4f4",
+            backgroundColor: '#f4f4f4',
             fontFamily:
               "-apple-system, BlinkMaxSystemFont, 'Roboto', sans-serif",
-            margin: "0 auto",
-            padding: "16px 16px 0 16px",
+            margin: '0 auto',
+            padding: '16px 16px 0 16px',
           }}
         >
-          <Container style={{ margin: "0 auto" }}>
+          <Container style={{ margin: '0 auto' }}>
             <Container
-              style={{ backgroundColor: "#fff" }}
+              style={{ backgroundColor: '#fff' }}
               className="mb-4 rounded-lg p-4 2xl:mb-6 2xl:p-6"
             >
               <Section>
@@ -67,13 +67,13 @@ const EmailLayout = ({ children, preview = "" }: EmailLayoutProps) => {
               </Section>
             </Container>
             <Container
-              style={{ backgroundColor: "#fff" }}
+              style={{ backgroundColor: '#fff' }}
               className="mb-4 rounded-lg p-4 2xl:mb-6 2xl:p-6"
             >
               {children}
             </Container>
             <Container
-              style={{ backgroundColor: "#fff" }}
+              style={{ backgroundColor: '#fff' }}
               className="mb-4 rounded-lg p-4 2xl:mb-6 2xl:p-6"
             >
               <Section>
@@ -92,7 +92,7 @@ const EmailLayout = ({ children, preview = "" }: EmailLayoutProps) => {
                       United Kingdom, W1 1AB <br />
                       <Link
                         className="text-blue-600 underline"
-                        href={"mailto:hello@majesticmotors.com"}
+                        href={'mailto:hello@majesticmotors.com'}
                       >
                         hello@majesticmotors.com
                       </Link>

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   PaginationContent,
@@ -7,11 +7,11 @@ import {
   PaginationNext,
   PaginationPrevious,
   Pagination as PaginationRoot,
-} from "@/components/ui/pagination"
-import { env } from "@/env"
-import { cn } from "@/lib/utils"
-import { useQueryState } from "nuqs"
-import { useEffect, useState } from "react"
+} from '@/components/ui/pagination'
+import { env } from '@/env'
+import { cn } from '@/lib/utils'
+import { useQueryState } from 'nuqs'
+import { useEffect, useState } from 'react'
 
 interface PaginationProps {
   baseURL: string
@@ -28,7 +28,7 @@ interface PaginationProps {
 
 export const CustomPagination = (props: PaginationProps) => {
   const { baseURL, totalPages, maxVisiblePages = 5, styles } = props
-  const [currentPage, setPage] = useQueryState("page", {
+  const [currentPage, setPage] = useQueryState('page', {
     defaultValue: 1,
     parse: (value) => {
       const parsed = Number.parseInt(value, 10)
@@ -55,13 +55,13 @@ export const CustomPagination = (props: PaginationProps) => {
 
   const createPageUrl = (pageNumber: number) => {
     const url = new URL(baseURL, env.NEXT_PUBLIC_APP_URL)
-    url.searchParams.set("page", pageNumber.toString())
+    url.searchParams.set('page', pageNumber.toString())
     return url.toString()
   }
 
-  const handleEllipsisClick = (direction: "left" | "right") => {
+  const handleEllipsisClick = (direction: 'left' | 'right') => {
     const newPage =
-      direction === "left"
+      direction === 'left'
         ? Math.max(1, visibleRange.start - maxVisiblePages)
         : Math.min(totalPages, visibleRange.end + maxVisiblePages)
 
@@ -74,7 +74,7 @@ export const CustomPagination = (props: PaginationProps) => {
         <PaginationItem>
           <PaginationPrevious
             className={cn(
-              currentPage <= 1 && "hidden",
+              currentPage <= 1 && 'hidden',
               styles.paginationPrevious
             )}
             href={createPageUrl(currentPage - 1)}
@@ -92,7 +92,7 @@ export const CustomPagination = (props: PaginationProps) => {
               href="#"
               onClick={(e) => {
                 e.preventDefault()
-                handleEllipsisClick("left")
+                handleEllipsisClick('left')
               }}
             >
               ...
@@ -105,14 +105,14 @@ export const CustomPagination = (props: PaginationProps) => {
           (_, index) => visibleRange.start + index
         ).map((pageNumber) => {
           const isActive = pageNumber === currentPage
-          let rel = ""
+          let rel = ''
 
           if (pageNumber === currentPage - 1) {
-            rel = "prev"
+            rel = 'prev'
           }
 
           if (pageNumber === currentPage + 1) {
-            rel = "next"
+            rel = 'next'
           }
 
           return (
@@ -143,7 +143,7 @@ export const CustomPagination = (props: PaginationProps) => {
               href="#"
               onClick={(e) => {
                 e.preventDefault()
-                handleEllipsisClick("right")
+                handleEllipsisClick('right')
               }}
             >
               ...
@@ -154,7 +154,7 @@ export const CustomPagination = (props: PaginationProps) => {
         <PaginationItem>
           <PaginationNext
             className={cn(
-              currentPage >= totalPages && "hidden",
+              currentPage >= totalPages && 'hidden',
               styles.paginationNext
             )}
             href={createPageUrl(currentPage + 1)}

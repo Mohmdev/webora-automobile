@@ -1,8 +1,8 @@
-"use client"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import type { ReactNode } from "react"
+'use client'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import type { ReactNode } from 'react'
 
 interface ActiveLinkProps {
   href: string
@@ -20,8 +20,8 @@ export const ActiveLink = (props: ActiveLinkProps) => {
       className={cn(
         className,
         isActive
-          ? "bg-primary text-primary-foreground hover:bg-primary"
-          : "text-muted hover:bg-white/10"
+          ? 'bg-primary text-primary-foreground hover:bg-primary'
+          : 'text-muted hover:bg-white/10'
       )}
     >
       {children}

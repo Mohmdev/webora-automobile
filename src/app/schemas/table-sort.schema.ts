@@ -1,40 +1,40 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 export const CustomersTableSortSchema = z.object({
-  order: z.enum(["asc", "desc"]).default("desc"),
+  order: z.enum(['asc', 'desc']).default('desc'),
   sort: z
     .enum([
-      "id",
-      "email",
-      "mobile",
-      "firstName",
-      "lastName",
-      "updatedAt",
-      "createdAt",
-      "status",
-      "bookingDate",
-      "classified",
+      'id',
+      'email',
+      'mobile',
+      'firstName',
+      'lastName',
+      'updatedAt',
+      'createdAt',
+      'status',
+      'bookingDate',
+      'classified',
     ])
-    .default("createdAt"),
+    .default('createdAt'),
 })
 
 export type CustomersTableSortType = z.infer<typeof CustomersTableSortSchema>
 
 export const ClassifiedsTableSortSchema = z.object({
-  order: z.enum(["asc", "desc"]).default("desc"),
+  order: z.enum(['asc', 'desc']).default('desc'),
   sort: z
     .enum([
-      "status",
-      "title",
-      "vrm",
-      "id",
-      "views",
-      "year",
-      "colour",
-      "price",
-      "createdAt",
+      'status',
+      'title',
+      'vrm',
+      'id',
+      'views',
+      'year',
+      'colour',
+      'price',
+      'createdAt',
     ])
-    .default("createdAt"),
+    .default('createdAt'),
 })
 
 export type ClassifiedsTableSortType = z.infer<
@@ -58,7 +58,7 @@ export function validateSortOrder<TSchemaType>(
     order,
   })
 
-  if (error) console.log("Validation error: ", error)
+  if (error) console.log('Validation error: ', error)
 
   if (!success) {
     return {

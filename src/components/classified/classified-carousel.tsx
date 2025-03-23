@@ -1,31 +1,31 @@
-"use client"
+'use client'
 
-import { imgixLoader } from "@/lib/imgix-loader"
-import type { Image as PrismaImage } from "@prisma/client"
-import FsLightbox from "fslightbox-react"
-import dynamic from "next/dynamic"
-import { useCallback, useState } from "react"
-import "swiper/css"
-import "swiper/css/effect-fade"
-import "swiper/css/virtual"
-import { EffectFade, Navigation, Thumbs, Virtual } from "swiper/modules"
-import { SwiperSlide } from "swiper/react"
-import type { Swiper as SwiperType } from "swiper/types"
-import { SwiperButtons } from "../shared/swiper-button"
-import { ImgixImage } from "../ui/imgix-image"
-import { CarouselSkeleton } from "./carousel-skeleton"
+import { imgixLoader } from '@/lib/imgix-loader'
+import type { Image as PrismaImage } from '@prisma/client'
+import FsLightbox from 'fslightbox-react'
+import dynamic from 'next/dynamic'
+import { useCallback, useState } from 'react'
+import 'swiper/css'
+import 'swiper/css/effect-fade'
+import 'swiper/css/virtual'
+import { EffectFade, Navigation, Thumbs, Virtual } from 'swiper/modules'
+import { SwiperSlide } from 'swiper/react'
+import type { Swiper as SwiperType } from 'swiper/types'
+import { SwiperButtons } from '../shared/swiper-button'
+import { ImgixImage } from '../ui/imgix-image'
+import { CarouselSkeleton } from './carousel-skeleton'
 
 interface ClassifiedCarouselProps {
   images: PrismaImage[]
 }
 
-const Swiper = dynamic(() => import("swiper/react").then((mod) => mod.Swiper), {
+const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   ssr: false,
   loading: () => <CarouselSkeleton />,
 })
 
 const SwiperThumb = dynamic(
-  () => import("swiper/react").then((mod) => mod.Swiper),
+  () => import('swiper/react').then((mod) => mod.Swiper),
   {
     ssr: false,
     loading: () => null,
@@ -71,8 +71,8 @@ export const ClassifiedCarousel = ({ images }: ClassifiedCarouselProps) => {
       <div className="relative">
         <Swiper
           navigation={{
-            prevEl: ".swiper-button-prev",
-            nextEl: ".swiper-button-next",
+            prevEl: '.swiper-button-prev',
+            nextEl: '.swiper-button-next',
           }}
           effect="fade"
           spaceBetween={10}
@@ -105,7 +105,7 @@ export const ClassifiedCarousel = ({ images }: ClassifiedCarouselProps) => {
         <SwiperButtons
           prevClassName="left-4 bg-white"
           nextClassName="right-4 bg-white"
-        />{" "}
+        />{' '}
       </div>
       <SwiperThumb
         onSwiper={setSwiper}

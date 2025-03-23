@@ -1,13 +1,13 @@
-"use client"
-import { deleteClassifiedAction } from "@/app/_actions/classified"
-import type { ClassifiedWithImages } from "@/config/types"
-import { toast } from "@/hooks/use-toast"
-import { EyeIcon, Loader2, PencilIcon, Trash } from "lucide-react"
-import Link from "next/link"
-import { useTransition } from "react"
-import { Tooltip } from "react-tooltip"
-import { routes } from "../../config/routes"
-import { Button } from "../ui/button"
+'use client'
+import { deleteClassifiedAction } from '@/app/_actions/classified'
+import type { ClassifiedWithImages } from '@/config/types'
+import { toast } from '@/hooks/use-toast'
+import { EyeIcon, Loader2, PencilIcon, Trash } from 'lucide-react'
+import Link from 'next/link'
+import { useTransition } from 'react'
+import { Tooltip } from 'react-tooltip'
+import { routes } from '../../config/routes'
+import { Button } from '../ui/button'
 
 export const ActionButtons = ({
   classified,
@@ -18,14 +18,14 @@ export const ActionButtons = ({
       const result = await deleteClassifiedAction(id)
       if (result.success) {
         toast({
-          title: "Classified Deleted",
+          title: 'Classified Deleted',
           description: result.message,
         })
       } else {
         toast({
-          title: "Error Deleting Classified",
+          title: 'Error Deleting Classified',
           description: result.message,
-          variant: "destructive",
+          variant: 'destructive',
         })
       }
     })

@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { signOutAction } from "@/app/_actions/sign-out"
-import { Loader2 } from "lucide-react"
-import { useFormStatus } from "react-dom"
-import { Button } from "../ui/button"
+import { signOutAction } from '@/app/_actions/sign-out'
+import { Loader2 } from 'lucide-react'
+import { useFormStatus } from 'react-dom'
+import { Button } from '../ui/button'
 
 export const SignOutForm = () => {
   return (

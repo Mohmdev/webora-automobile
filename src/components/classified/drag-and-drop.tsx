@@ -1,14 +1,14 @@
-import { MAX_IMAGES, MAX_IMAGE_SIZE } from "@/config/constants"
-import type { ClassifiedImages } from "@/config/types"
-import { cn, convertToMb } from "@/lib/utils"
-import { ImagePlus, Loader2 } from "lucide-react"
+import { MAX_IMAGES, MAX_IMAGE_SIZE } from '@/config/constants'
+import type { ClassifiedImages } from '@/config/types'
+import { cn, convertToMb } from '@/lib/utils'
+import { ImagePlus, Loader2 } from 'lucide-react'
 import {
   type ChangeEvent,
   useCallback,
   useEffect,
   useRef,
   useState,
-} from "react"
+} from 'react'
 
 interface DragAndDropProps {
   isUploading: boolean
@@ -22,11 +22,11 @@ export const DragAndDrop = (props: DragAndDropProps) => {
   const dropRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const [filesRejected, setFilesRejected] = useState<string[]>([])
-  const [isError, setIsError] = useState({ status: false, message: "" })
+  const [isError, setIsError] = useState({ status: false, message: '' })
   const [isDraggingOver, setDraggingOver] = useState(false)
 
   const clearError = useCallback(() => {
-    setIsError({ status: false, message: "" })
+    setIsError({ status: false, message: '' })
   }, [])
 
   const handleFilesRejected = useCallback((fileSizeTooBig: string[]) => {
@@ -64,7 +64,7 @@ export const DragAndDrop = (props: DragAndDropProps) => {
         setFiles(validFiles)
       }
     }
-    e.target.value = ""
+    e.target.value = ''
   }
 
   const handleClick = () => inputRef.current?.click()
@@ -123,18 +123,18 @@ export const DragAndDrop = (props: DragAndDropProps) => {
   useEffect(() => {
     const div = dropRef.current
     if (div) {
-      div.addEventListener("drop", handleDrop)
-      div.addEventListener("dragover", handleDragOver)
-      div.addEventListener("dragenter", handleDragEnter)
-      div.addEventListener("dragleave", handleDragLeave)
+      div.addEventListener('drop', handleDrop)
+      div.addEventListener('dragover', handleDragOver)
+      div.addEventListener('dragenter', handleDragEnter)
+      div.addEventListener('dragleave', handleDragLeave)
     }
 
     return () => {
       if (div) {
-        div.removeEventListener("drop", handleDrop)
-        div.removeEventListener("dragover", handleDragOver)
-        div.removeEventListener("dragenter", handleDragEnter)
-        div.removeEventListener("dragleave", handleDragLeave)
+        div.removeEventListener('drop', handleDrop)
+        div.removeEventListener('dragover', handleDragOver)
+        div.removeEventListener('dragenter', handleDragEnter)
+        div.removeEventListener('dragleave', handleDragLeave)
       }
     }
   }, [])
@@ -143,7 +143,7 @@ export const DragAndDrop = (props: DragAndDropProps) => {
     if (filesRejected.length) {
       setIsError({
         status: true,
-        message: `${filesRejected.length} image${filesRejected.length > 1 ? "s" : ""} exceeded ${convertToMb(MAX_IMAGE_SIZE)} limit: \n${filesRejected.join(",\n")}`,
+        message: `${filesRejected.length} image${filesRejected.length > 1 ? 's' : ''} exceeded ${convertToMb(MAX_IMAGE_SIZE)} limit: \n${filesRejected.join(',\n')}`,
       })
     }
   }, [filesRejected])
@@ -153,9 +153,9 @@ export const DragAndDrop = (props: DragAndDropProps) => {
       <div
         ref={dropRef}
         className={cn(
-          "relative flex h-36 cursor-pointer flex-col items-center justify-center rounded-md border border-muted/75 border-dashed",
-          isError.status && "border-red-500",
-          isUploading && "pointer-events-none"
+          'relative flex h-36 cursor-pointer flex-col items-center justify-center rounded-md border border-muted/75 border-dashed',
+          isError.status && 'border-red-500',
+          isUploading && 'pointer-events-none'
         )}
       >
         <input
@@ -171,8 +171,8 @@ export const DragAndDrop = (props: DragAndDropProps) => {
         <div
           onClick={handleClick}
           className={cn(
-            "flex h-full w-full flex-col items-center justify-center text-center font-medium",
-            isUploading || (isDraggingOver && "opacity-75")
+            'flex h-full w-full flex-col items-center justify-center text-center font-medium',
+            isUploading || (isDraggingOver && 'opacity-75')
           )}
           onKeyDown={handleClick}
         >

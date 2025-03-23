@@ -1,33 +1,33 @@
-import { SignInSchema } from "@/app/schemas/auth.schema"
-import { SESSION_MAX_AGE } from "@/config/constants"
-import { routes } from "@/config/routes"
-import { bcryptPasswordCompare } from "@/lib/bcrypt"
-import { issueChallenge } from "@/lib/otp"
-import { prisma } from "@/lib/prisma"
-import type { AdapterUser } from "@auth/core/adapters"
-import CredentialsProvider from "@auth/core/providers/credentials"
-import ResendProvider from "@auth/core/providers/resend"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import type { NextAuthConfig, User } from "next-auth"
+import { SignInSchema } from '@/app/schemas/auth.schema'
+import { SESSION_MAX_AGE } from '@/config/constants'
+import { routes } from '@/config/routes'
+import { bcryptPasswordCompare } from '@/lib/bcrypt'
+import { issueChallenge } from '@/lib/otp'
+import { prisma } from '@/lib/prisma'
+import type { AdapterUser } from '@auth/core/adapters'
+import CredentialsProvider from '@auth/core/providers/credentials'
+import ResendProvider from '@auth/core/providers/resend'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import type { NextAuthConfig, User } from 'next-auth'
 
 export const config = {
   adapter: PrismaAdapter(prisma),
   useSecureCookies: false,
   trustHost: true,
   session: {
-    strategy: "database",
+    strategy: 'database',
     maxAge: SESSION_MAX_AGE / 1000,
   },
   providers: [
     CredentialsProvider({
       credentials: {
         email: {
-          label: "Email",
-          type: "email",
+          label: 'Email',
+          type: 'email',
         },
         password: {
-          label: "Password",
-          type: "password",
+          label: 'Password',
+          type: 'password',
         },
       },
       authorize: async (credentials): Promise<User | null> => {
@@ -68,8 +68,8 @@ export const config = {
   ],
   pages: {
     signIn: routes.signIn,
-    signOut: "/auth/sign-out",
-    error: "/auth/error",
+    signOut: '/auth/sign-out',
+    error: '/auth/error',
   },
   callbacks: {
     async jwt({ user, token }) {

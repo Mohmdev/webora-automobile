@@ -1,19 +1,19 @@
-"use client"
-import { updateClassifiedAction } from "@/app/_actions/classified"
+'use client'
+import { updateClassifiedAction } from '@/app/_actions/classified'
 import {
   type UpdateClassifiedType,
   updateClassifiedSchema,
-} from "@/app/schemas/classified.schema"
-import { MAX_IMAGES } from "@/config/constants"
-import type { ClassifiedWithImages } from "@/config/types"
-import { useToast } from "@/hooks/use-toast"
-import { formatClassifiedStatus } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { ClassifiedStatus, CurrencyCode, OdoUnit } from "@prisma/client"
-import { Loader2 } from "lucide-react"
-import { useTransition } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { Button } from "../ui/button"
+} from '@/app/schemas/classified.schema'
+import { MAX_IMAGES } from '@/config/constants'
+import type { ClassifiedWithImages } from '@/config/types'
+import { useToast } from '@/hooks/use-toast'
+import { formatClassifiedStatus } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ClassifiedStatus, CurrencyCode, OdoUnit } from '@prisma/client'
+import { Loader2 } from 'lucide-react'
+import { useTransition } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Button } from '../ui/button'
 import {
   Form,
   FormControl,
@@ -21,10 +21,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Select } from "../ui/select"
-import { ClassifiedFormFields } from "./classified-form-fields"
-import { MultiImageUploader } from "./multi-image-uploader"
+} from '../ui/form'
+import { Select } from '../ui/select'
+import { ClassifiedFormFields } from './classified-form-fields'
+import { MultiImageUploader } from './multi-image-uploader'
 
 interface ClassifiedFormProps {
   classified: ClassifiedWithImages
@@ -64,8 +64,8 @@ export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
         model: classified.modelId.toString(),
         modelVariant: classified.modelVariantId?.toString(),
         year: classified.year.toString(),
-        vrm: classified.vrm ?? "",
-        description: classified.description ?? "",
+        vrm: classified.vrm ?? '',
+        description: classified.description ?? '',
         fuelType: classified.fuelType,
         bodyType: classified.bodyType,
         transmission: classified.transmission,
@@ -85,11 +85,11 @@ export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
       const { success, message } = await updateClassifiedAction(data)
       if (!success) {
         toast({
-          title: "Error",
+          title: 'Error',
           description: message,
-          type: "background",
+          type: 'background',
           duration: 2500,
-          variant: "destructive",
+          variant: 'destructive',
         })
       }
     })

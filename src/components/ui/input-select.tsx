@@ -1,15 +1,15 @@
-import type { FilterOptions } from "@/config/types"
-import { cn } from "@/lib/utils"
-import { useFormContext } from "react-hook-form"
-import type { NumericFormatProps } from "react-number-format"
+import type { FilterOptions } from '@/config/types'
+import { cn } from '@/lib/utils'
+import { useFormContext } from 'react-hook-form'
+import type { NumericFormatProps } from 'react-number-format'
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { NumberInput } from "./number-input"
+} from '../ui/form'
+import { NumberInput } from './number-input'
 
 interface InputSelectProps extends NumericFormatProps {
   inputName: string
@@ -35,7 +35,7 @@ export const InputSelect = (props: InputSelectProps) => {
             {label && <FormLabel htmlFor={inputName}>{label}</FormLabel>}
             <FormControl>
               <NumberInput
-                style={{ backgroundColor: "#081a2b" }}
+                style={{ backgroundColor: '#081a2b' }}
                 className="text-muted/75"
                 onValueChange={(values) => {
                   onChange(values.floatValue)
@@ -57,7 +57,7 @@ export const InputSelect = (props: InputSelectProps) => {
               <div className="-translate-y-10 absolute right-0 flex h-10 items-center border-input border-l border-l-white/10 pr-2">
                 <select
                   className={cn(
-                    "custom-select appearance-none rounded-md border border-transparent bg-no-repeat pr-10 pl-3 text-muted/75 focus:outline-hidden focus:ring-0 focus-visible:ring-0 disabled:bg-white/10"
+                    'custom-select appearance-none rounded-md border border-transparent bg-no-repeat pr-10 pl-3 text-muted/75 focus:outline-hidden focus:ring-0 focus-visible:ring-0 disabled:bg-white/10'
                   )}
                   {...rest}
                 >

@@ -1,6 +1,6 @@
-import { RadioFilter } from "@/components/shared/radio-filter"
-import type { AwaitedPageProps } from "@/config/types"
-import { CustomerStatus } from "@prisma/client"
+import { RadioFilter } from '@/components/shared/radio-filter'
+import type { AwaitedPageProps } from '@/config/types'
+import { CustomerStatus } from '@prisma/client'
 
 export const AdminCustomersHeader = ({ searchParams }: AwaitedPageProps) => {
   return (
@@ -9,7 +9,7 @@ export const AdminCustomersHeader = ({ searchParams }: AwaitedPageProps) => {
         <h1 className="font-semibold text-lg md:text-2xl">All Customers</h1>
         <div className="flex items-center justify-between">
           <RadioFilter
-            items={["ALL", ...Object.values(CustomerStatus)]}
+            items={['ALL', ...Object.values(CustomerStatus)]}
             searchParams={searchParams}
           />
         </div>

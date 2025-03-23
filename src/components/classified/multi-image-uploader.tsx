@@ -1,20 +1,20 @@
-import type { UpdateClassifiedType } from "@/app/schemas/classified.schema"
-import type { ClassifiedImages, ProgressArgs } from "@/config/types"
-import { env } from "@/env"
-import { generateThumbHashFromFile } from "@/lib/thumbhash-client"
-import { Uploader } from "@/lib/uploader"
-import { cn } from "@/lib/utils"
-import dynamic from "next/dynamic"
-import { useCallback, useState } from "react"
-import { useFieldArray, useFormContext } from "react-hook-form"
-import { createPngDataUri } from "unlazy/thumbhash"
-import { v4 as uuidv4 } from "uuid"
-import { Skeleton } from "../ui/skeleton"
-import { DragAndDrop } from "./drag-and-drop"
-import { SortableItem } from "./sortable-item"
+import type { UpdateClassifiedType } from '@/app/schemas/classified.schema'
+import type { ClassifiedImages, ProgressArgs } from '@/config/types'
+import { env } from '@/env'
+import { generateThumbHashFromFile } from '@/lib/thumbhash-client'
+import { Uploader } from '@/lib/uploader'
+import { cn } from '@/lib/utils'
+import dynamic from 'next/dynamic'
+import { useCallback, useState } from 'react'
+import { useFieldArray, useFormContext } from 'react-hook-form'
+import { createPngDataUri } from 'unlazy/thumbhash'
+import { v4 as uuidv4 } from 'uuid'
+import { Skeleton } from '../ui/skeleton'
+import { DragAndDrop } from './drag-and-drop'
+import { SortableItem } from './sortable-item'
 
 const DragAndDropContext = dynamic(
-  () => import("./drag-and-drop-context").then((mod) => mod.DragAndDropContext),
+  () => import('./drag-and-drop-context').then((mod) => mod.DragAndDropContext),
   {
     ssr: false,
     loading: () => (
@@ -43,8 +43,8 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
   const form = useFormContext<UpdateClassifiedType>()
   const { fields, replace } = useFieldArray({
     control: form.control,
-    name: "images",
-    keyName: "uuid",
+    name: 'images',
+    keyName: 'uuid',
   })
 
   const [items, setItems] = useState<ClassifiedImages>(fields)
@@ -87,8 +87,8 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
           uuid,
           percentage: 0,
           alt: file.name,
-          key: "",
-          src: "",
+          key: '',
+          src: '',
           base64,
           done: false,
         }
@@ -104,7 +104,7 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
           .onProgress((progress: ProgressArgs) => {
             if (progress.percentage !== data.percentage) {
               data.src = `${env.NEXT_PUBLIC_S3_URL}/${progress.key}`
-              data.key = progress.key || ""
+              data.key = progress.key || ''
               handleItemProgress({
                 uuid,
                 progress: progress.percentage,
@@ -141,7 +141,7 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
   }
 
   return (
-    <div className={cn(className, "mt-1 space-y-3")}>
+    <div className={cn(className, 'mt-1 space-y-3')}>
       <DragAndDrop
         items={items}
         setFiles={setFiles}

@@ -1,11 +1,11 @@
-import { SingleImageUploadSchema } from "@/app/schemas/images.schema"
-import { auth } from "@/auth"
-import { MAX_IMAGE_SIZE } from "@/config/constants"
-import { env } from "@/env"
-import { uploadToS3 } from "@/lib/s3"
-import { forbidden } from "next/navigation"
-import { type NextRequest, NextResponse } from "next/server"
-import { v4 as uuidv4 } from "uuid"
+import { SingleImageUploadSchema } from '@/app/schemas/images.schema'
+import { auth } from '@/auth'
+import { MAX_IMAGE_SIZE } from '@/config/constants'
+import { env } from '@/env'
+import { uploadToS3 } from '@/lib/s3'
+import { forbidden } from 'next/navigation'
+import { type NextRequest, NextResponse } from 'next/server'
+import { v4 as uuidv4 } from 'uuid'
 
 // export const maxDuration = 60
 
@@ -18,21 +18,21 @@ export const POST = async (req: NextRequest) => {
   const validated = SingleImageUploadSchema.safeParse(formData)
 
   if (!validated.success) {
-    return NextResponse.json({ message: "Invalid file" }, { status: 400 })
+    return NextResponse.json({ message: 'Invalid file' }, { status: 400 })
   }
 
   const { file } = validated.data
   const uuid = uuidv4()
 
   if (file.size > MAX_IMAGE_SIZE) {
-    return NextResponse.json({ message: "Invalid file size" }, { status: 400 })
+    return NextResponse.json({ message: 'Invalid file size' }, { status: 400 })
   }
 
-  const { default: mimetype } = await import("mime-types")
+  const { default: mimetype } = await import('mime-types')
 
   const mime = mimetype.lookup(file.name).toString()
   if (mime.match(/image\/(jpeg|jpg|png|webp)/) === null) {
-    console.log("File is not an image")
+    console.log('File is not an image')
 
     return NextResponse.json(
       { message: `File type invalid ${mime}` },
@@ -63,7 +63,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: 'Something went wrong' },
       { status: 400 }
     )
   }

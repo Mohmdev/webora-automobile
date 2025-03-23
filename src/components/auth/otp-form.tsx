@@ -1,23 +1,23 @@
-"use client"
+'use client'
 
 import {
   completeChallengeAction,
   resendChallengeAction,
-} from "@/app/_actions/challenge"
+} from '@/app/_actions/challenge'
 import {
   OneTimePasswordSchema,
   type OtpSchemaType,
-} from "@/app/schemas/otp.schema"
-import { routes } from "@/config/routes"
-import { toast } from "@/hooks/use-toast"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Loader2, RotateCw } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useEffect, useState, useTransition } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { Button } from "../ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
-import { OneTimePasswordInput } from "./otp-input"
+} from '@/app/schemas/otp.schema'
+import { routes } from '@/config/routes'
+import { toast } from '@/hooks/use-toast'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2, RotateCw } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState, useTransition } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Button } from '../ui/button'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
+import { OneTimePasswordInput } from './otp-input'
 
 export const OtpForm = () => {
   const [isCodePending, startCodeTransition] = useTransition()
@@ -31,45 +31,45 @@ export const OtpForm = () => {
   const onSubmit: SubmitHandler<OtpSchemaType> = (data) => {
     startSubmitTransition(async () => {
       const result = await completeChallengeAction(data.code)
-      console.log("first", { result })
+      console.log('first', { result })
 
       if (result?.success) {
         router.push(routes.admin.dashboard)
       } else {
         toast({
-          title: "Error",
+          title: 'Error',
           description: result.message,
-          variant: "destructive",
+          variant: 'destructive',
         })
       }
     })
   }
 
-  const [sendButtonText, setSendButtonText] = useState("Send code")
+  const [sendButtonText, setSendButtonText] = useState('Send code')
 
   const sendCode = () => {
     startCodeTransition(async () => {
       const { success, message } = await resendChallengeAction()
-      setSendButtonText("Resend code")
+      setSendButtonText('Resend code')
 
       if (!success) {
         toast({
-          title: "Error",
+          title: 'Error',
           description: message,
-          variant: "destructive",
+          variant: 'destructive',
         })
         return
       }
 
       toast({
-        title: "Code sent",
-        description: "Check your email for the code",
+        title: 'Code sent',
+        description: 'Check your email for the code',
       })
     })
   }
 
   useEffect(() => {
-    if (isCodePending) setSendButtonText("Sending...")
+    if (isCodePending) setSendButtonText('Sending...')
   }, [isCodePending])
 
   return (
@@ -122,7 +122,7 @@ export const OtpForm = () => {
                 disabled={isSubmitPending}
               >
                 <span className="text-inherit text-sm uppercase tracking-wider">
-                  {isSubmitPending ? "Verifying..." : "Verify"}
+                  {isSubmitPending ? 'Verifying...' : 'Verify'}
                 </span>
                 {isSubmitPending ? (
                   <Loader2 className="h-4 w-4 shrink-0 animate-spin" />

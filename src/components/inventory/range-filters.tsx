@@ -1,8 +1,8 @@
-import type { FilterOptions, TaxonomyFiltersProps } from "@/config/types"
-import { formatNumber, formatPrice } from "@/lib/utils"
-import type { CurrencyCode } from "@prisma/client"
-import { useEffect, useState } from "react"
-import { RangeSelect } from "../ui/range-select"
+import type { FilterOptions, TaxonomyFiltersProps } from '@/config/types'
+import { formatNumber, formatPrice } from '@/lib/utils'
+import type { CurrencyCode } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import { RangeSelect } from '../ui/range-select'
 
 interface RangeFilterProps extends TaxonomyFiltersProps {
   label: string
@@ -91,13 +91,13 @@ export const RangeFilter = (props: RangeFilterProps) => {
       label={label}
       minSelect={{
         name: minName,
-        value: Number(searchParams?.[minName]) || "",
+        value: Number(searchParams?.[minName]) || '',
         onChange: handleChange,
         options: minOptions,
       }}
       maxSelect={{
         name: maxName,
-        value: Number(searchParams?.[maxName]) || "",
+        value: Number(searchParams?.[maxName]) || '',
         onChange: handleChange,
         options: maxOptions,
       }}

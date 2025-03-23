@@ -1,7 +1,7 @@
-import { AdminHeader } from "@/components/layouts/admin-header"
-import { AdminSidebar } from "@/components/layouts/admin-sidebar"
-import type { PropsWithChildren } from "react"
-import { AI } from "../_actions/ai"
+import { AdminHeader } from '@/components/layouts/admin-header'
+import { AdminSidebar } from '@/components/layouts/admin-sidebar'
+import type { PropsWithChildren } from 'react'
+import { AI } from '../_actions/ai'
 
 export default async function AdminLayout({ children }: PropsWithChildren) {
   return (

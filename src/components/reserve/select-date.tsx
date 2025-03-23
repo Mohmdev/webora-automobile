@@ -1,22 +1,22 @@
-"use client"
+'use client'
 
 import {
   SelectDateSchema,
   type SelectDateType,
-} from "@/app/schemas/form.schema"
-import { routes } from "@/config/routes"
+} from '@/app/schemas/form.schema'
+import { routes } from '@/config/routes'
 import {
   type MultiStepFormComponentProps,
   MultiStepFormEnum,
-} from "@/config/types"
-import { env } from "@/env"
-import { generateDateOptions, generateTimeOptions } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Loader2 } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useTransition } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { Button } from "../ui/button"
+} from '@/config/types'
+import { env } from '@/env'
+import { generateDateOptions, generateTimeOptions } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Button } from '../ui/button'
 import {
   Form,
   FormControl,
@@ -24,8 +24,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Select } from "../ui/select"
+} from '../ui/form'
+import { Select } from '../ui/select'
 
 export const SelectDate = (props: MultiStepFormComponentProps) => {
   const { searchParams } = props
@@ -35,7 +35,7 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
 
   const form = useForm<SelectDateType>({
     resolver: zodResolver(SelectDateSchema),
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
       handoverDate: handoverDate
         ? decodeURIComponent(handoverDate)
@@ -54,7 +54,7 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
     startPrevTransition(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500))
       const url = new URL(window.location.href)
-      url.searchParams.set("step", MultiStepFormEnum.WELCOME.toString())
+      url.searchParams.set('step', MultiStepFormEnum.WELCOME.toString())
       router.push(url.toString())
     })
   }
@@ -71,11 +71,11 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
       )
 
       url.searchParams.set(
-        "handoverDate",
+        'handoverDate',
         encodeURIComponent(data.handoverDate)
       )
       url.searchParams.set(
-        "handoverTime",
+        'handoverTime',
         encodeURIComponent(data.handoverTime)
       )
 
@@ -126,7 +126,7 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
           >
             {isPrevPending ? (
               <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
-            ) : null}{" "}
+            ) : null}{' '}
             Previous Step
           </Button>
           <Button
@@ -136,7 +136,7 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
           >
             {isPending ? (
               <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
-            ) : null}{" "}
+            ) : null}{' '}
             Continue
           </Button>
         </div>

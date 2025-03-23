@@ -1,36 +1,36 @@
-"use client"
-import { routes } from "@/config/routes"
-import type { Variants } from "framer-motion"
-import { AnimatePresence, motion } from "framer-motion"
+'use client'
+import { routes } from '@/config/routes'
+import type { Variants } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import {
   CarFrontIcon,
   LayoutDashboardIcon,
   SettingsIcon,
   UsersIcon,
-} from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useCallback, useState } from "react"
-import { ActiveLink } from "../ui/active-link"
+} from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useCallback, useState } from 'react'
+import { ActiveLink } from '../ui/active-link'
 
 const navigation = [
   {
-    name: "Dashboard",
+    name: 'Dashboard',
     href: routes.admin.dashboard,
     icon: LayoutDashboardIcon,
   },
   {
-    name: "Classifieds",
+    name: 'Classifieds',
     href: routes.admin.classifieds,
     icon: CarFrontIcon,
   },
   {
-    name: "Customers",
+    name: 'Customers',
     href: routes.admin.customers,
     icon: UsersIcon,
   },
   {
-    name: "Settings",
+    name: 'Settings',
     href: routes.admin.settings,
     icon: SettingsIcon,
   },
@@ -44,13 +44,13 @@ export const AdminSidebar = () => {
 
   const sidebarVariants: Variants = {
     expanded: { width: 256 },
-    collapsed: { width: "fit-content" },
+    collapsed: { width: 'fit-content' },
   }
 
   const menuTextVariants: Variants = {
     expanded: {
       opacity: 1,
-      width: "auto",
+      width: 'auto',
       marginLeft: 10,
     },
     collapsed: { opacity: 0, width: 0 },
@@ -65,10 +65,10 @@ export const AdminSidebar = () => {
   return (
     <motion.div
       className="flex h-screen flex-col overflow-hidden bg-black/20"
-      animate={isSidebarExpanded ? "expanded" : "collapsed"}
+      animate={isSidebarExpanded ? 'expanded' : 'collapsed'}
       variants={sidebarVariants}
       initial="collapsed"
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
       onMouseEnter={() => handleSidebarHover(true)}
       onMouseLeave={() => handleSidebarHover(false)}
     >
@@ -126,9 +126,9 @@ export const AdminSidebar = () => {
                   <item.icon aria-hidden="true" className="shrinnk-0 h-6 w-6" />
                   <motion.span
                     variants={menuTextVariants}
-                    animate={isSidebarExpanded ? "expanded" : "collapsed"}
+                    animate={isSidebarExpanded ? 'expanded' : 'collapsed'}
                     initial="collapsed"
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="overflow-hidden whitespace-nowrap"
                   >
                     {item.name}

@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { routes } from "@/config/routes"
-import type { SidebarProps } from "@/config/types"
-import { env } from "@/env"
+import { routes } from '@/config/routes'
+import type { SidebarProps } from '@/config/types'
+import { env } from '@/env'
 import {
   cn,
   formatBodyType,
@@ -11,7 +11,7 @@ import {
   formatOdometerUnit,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils"
+} from '@/lib/utils'
 import {
   BodyType,
   Colour,
@@ -20,14 +20,14 @@ import {
   OdoUnit,
   Transmission,
   ULEZCompliance,
-} from "@prisma/client"
-import { useRouter } from "next/navigation"
-import { parseAsString, useQueryStates } from "nuqs"
-import { type ChangeEvent, useEffect, useState } from "react"
-import { SearchInput } from "../shared/search-input"
-import { Select } from "../ui/select"
-import { RangeFilter } from "./range-filters"
-import { TaxonomyFilters } from "./taxonomy-filters"
+} from '@prisma/client'
+import { useRouter } from 'next/navigation'
+import { parseAsString, useQueryStates } from 'nuqs'
+import { type ChangeEvent, useEffect, useState } from 'react'
+import { SearchInput } from '../shared/search-input'
+import { Select } from '../ui/select'
+import { RangeFilter } from './range-filters'
+import { TaxonomyFilters } from './taxonomy-filters'
 
 export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
   const router = useRouter()
@@ -35,24 +35,24 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
   const { _min, _max } = minMaxValues
   const [queryStates, setQueryStates] = useQueryStates(
     {
-      make: parseAsString.withDefault(""),
-      model: parseAsString.withDefault(""),
-      modelVariant: parseAsString.withDefault(""),
-      minYear: parseAsString.withDefault(""),
-      maxYear: parseAsString.withDefault(""),
-      minPrice: parseAsString.withDefault(""),
-      maxPrice: parseAsString.withDefault(""),
-      minReading: parseAsString.withDefault(""),
-      maxReading: parseAsString.withDefault(""),
-      currency: parseAsString.withDefault(""),
-      odoUnit: parseAsString.withDefault(""),
-      transmission: parseAsString.withDefault(""),
-      fuelType: parseAsString.withDefault(""),
-      bodyType: parseAsString.withDefault(""),
-      colour: parseAsString.withDefault(""),
-      doors: parseAsString.withDefault(""),
-      seats: parseAsString.withDefault(""),
-      ulezCompliance: parseAsString.withDefault(""),
+      make: parseAsString.withDefault(''),
+      model: parseAsString.withDefault(''),
+      modelVariant: parseAsString.withDefault(''),
+      minYear: parseAsString.withDefault(''),
+      maxYear: parseAsString.withDefault(''),
+      minPrice: parseAsString.withDefault(''),
+      maxPrice: parseAsString.withDefault(''),
+      minReading: parseAsString.withDefault(''),
+      maxReading: parseAsString.withDefault(''),
+      currency: parseAsString.withDefault(''),
+      odoUnit: parseAsString.withDefault(''),
+      transmission: parseAsString.withDefault(''),
+      fuelType: parseAsString.withDefault(''),
+      bodyType: parseAsString.withDefault(''),
+      colour: parseAsString.withDefault(''),
+      doors: parseAsString.withDefault(''),
+      seats: parseAsString.withDefault(''),
+      ulezCompliance: parseAsString.withDefault(''),
     },
     {
       shallow: false,
@@ -62,7 +62,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
   useEffect(() => {
     const filterCount = Object.entries(
       searchParams as Record<string, string>
-    ).filter(([key, value]) => key !== "page" && value).length
+    ).filter(([key, value]) => key !== 'page' && value).length
 
     setFilterCount(filterCount)
   }, [searchParams])
@@ -82,7 +82,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
       [name]: value || null,
     })
 
-    if (name === "make") {
+    if (name === 'make') {
       setQueryStates({
         model: null,
         modelVariant: null,
@@ -102,10 +102,10 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
             onClick={clearFilters}
             aria-disabled={!filterCount}
             className={cn(
-              "py-1 text-gray-500 text-sm",
+              'py-1 text-gray-500 text-sm',
               filterCount
-                ? "cursor-pointer hover:underline"
-                : "disabled pointer-events-none cursor-default opacity-50"
+                ? 'cursor-pointer hover:underline'
+                : 'disabled pointer-events-none cursor-default opacity-50'
             )}
           >
             Clear all {filterCount ? `(${filterCount})` : null}
@@ -145,7 +145,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
           increment={1000000}
           thousandSeparator
           currency={{
-            currencyCode: "GBP",
+            currencyCode: 'GBP',
           }}
         />
         <RangeFilter
@@ -162,7 +162,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Currency"
           name="currency"
-          value={queryStates.currency || ""}
+          value={queryStates.currency || ''}
           onChange={handleChange}
           options={Object.values(CurrencyCode).map((value) => ({
             label: value,
@@ -172,7 +172,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Odometer Unit"
           name="odoUnit"
-          value={queryStates.odoUnit || ""}
+          value={queryStates.odoUnit || ''}
           onChange={handleChange}
           options={Object.values(OdoUnit).map((value) => ({
             label: formatOdometerUnit(value),
@@ -182,7 +182,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Transmission"
           name="transmission"
-          value={queryStates.transmission || ""}
+          value={queryStates.transmission || ''}
           onChange={handleChange}
           options={Object.values(Transmission).map((value) => ({
             label: formatTransmission(value),
@@ -192,7 +192,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Fuel Type"
           name="fuelType"
-          value={queryStates.fuelType || ""}
+          value={queryStates.fuelType || ''}
           onChange={handleChange}
           options={Object.values(FuelType).map((value) => ({
             label: formatFuelType(value),
@@ -202,7 +202,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Body Type"
           name="bodyType"
-          value={queryStates.bodyType || ""}
+          value={queryStates.bodyType || ''}
           onChange={handleChange}
           options={Object.values(BodyType).map((value) => ({
             label: formatBodyType(value),
@@ -212,7 +212,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Colour"
           name="colour"
-          value={queryStates.colour || ""}
+          value={queryStates.colour || ''}
           onChange={handleChange}
           options={Object.values(Colour).map((value) => ({
             label: formatColour(value),
@@ -222,7 +222,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="ULEZ Compliance"
           name="ulezCompliance"
-          value={queryStates.ulezCompliance || ""}
+          value={queryStates.ulezCompliance || ''}
           onChange={handleChange}
           options={Object.values(ULEZCompliance).map((value) => ({
             label: formatUlezCompliance(value),
@@ -233,7 +233,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Doors"
           name="doors"
-          value={queryStates.doors || ""}
+          value={queryStates.doors || ''}
           onChange={handleChange}
           options={Array.from({ length: 6 }).map((_, i) => ({
             label: Number(i + 1).toString(),
@@ -243,7 +243,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         <Select
           label="Seats"
           name="seats"
-          value={queryStates.seats || ""}
+          value={queryStates.seats || ''}
           onChange={handleChange}
           options={Array.from({ length: 8 }).map((_, i) => ({
             label: Number(i + 1).toString(),

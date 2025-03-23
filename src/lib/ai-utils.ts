@@ -1,5 +1,5 @@
-import type { ModelVariant } from "@prisma/client"
-import { prisma } from "./prisma"
+import type { ModelVariant } from '@prisma/client'
+import { prisma } from './prisma'
 
 interface MapToTaxonomyOrCreateType {
   year: number
@@ -11,7 +11,7 @@ interface MapToTaxonomyOrCreateType {
 export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
   // attempt to find the make
   const make = await prisma.make.findFirst({
-    where: { name: { equals: object.make, mode: "insensitive" } },
+    where: { name: { equals: object.make, mode: 'insensitive' } },
   })
 
   if (!make) throw new Error(`Make "${object.make}" not found.`)
@@ -20,7 +20,7 @@ export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
   let model = await prisma.model.findFirst({
     where: {
       makeId: make.id,
-      name: { contains: object.model, mode: "insensitive" },
+      name: { contains: object.model, mode: 'insensitive' },
     },
   })
 
@@ -36,7 +36,7 @@ export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
     })
   }
 
-  if (!model) throw new Error("Model not found")
+  if (!model) throw new Error('Model not found')
 
   let modelVariant: ModelVariant | null = null
 
@@ -45,7 +45,7 @@ export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
     modelVariant = await prisma.modelVariant.findFirst({
       where: {
         modelId: model.id,
-        name: { contains: object.modelVariant, mode: "insensitive" },
+        name: { contains: object.modelVariant, mode: 'insensitive' },
       },
     })
 

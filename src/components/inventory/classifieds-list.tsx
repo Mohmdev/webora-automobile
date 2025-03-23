@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import type { ClassifiedWithImages } from "@/config/types"
-import { use } from "react"
-import { ClassifiedCard } from "./classified-card"
+import type { ClassifiedWithImages } from '@/config/types'
+import { use } from 'react'
+import { ClassifiedCard } from './classified-card'
 
 interface ClassifiedsListProps {
   classifieds: Promise<ClassifiedWithImages[]>

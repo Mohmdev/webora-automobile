@@ -1,6 +1,6 @@
-import { EditCustomerForm } from "@/components/customers/edit-customer-form"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { EditCustomerForm } from '@/components/customers/edit-customer-form'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Table,
   TableBody,
@@ -8,15 +8,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { CustomerBadgeMap } from "@/config/constants"
-import { routes } from "@/config/routes"
-import type { PageProps } from "@/config/types"
-import { prisma } from "@/lib/prisma"
-import { formatCustomerStatus } from "@/lib/utils"
-import { format } from "date-fns"
-import { redirect } from "next/navigation"
-import { z } from "zod"
+} from '@/components/ui/table'
+import { CustomerBadgeMap } from '@/config/constants'
+import { routes } from '@/config/routes'
+import type { PageProps } from '@/config/types'
+import { prisma } from '@/lib/prisma'
+import { formatCustomerStatus } from '@/lib/utils'
+import { format } from 'date-fns'
+import { redirect } from 'next/navigation'
+import { z } from 'zod'
 
 export default async function EditCustomerPage(props: PageProps) {
   const params = await props.params
@@ -69,7 +69,7 @@ export default async function EditCustomerPage(props: PageProps) {
             </CardHeader>
             <CardContent className="grid gap-2 text-muted">
               <div>
-                <strong>Status:</strong>{" "}
+                <strong>Status:</strong>{' '}
                 <Badge
                   className="text-muted/75"
                   variant={CustomerBadgeMap[customer.status]}
@@ -78,14 +78,14 @@ export default async function EditCustomerPage(props: PageProps) {
                 </Badge>
               </div>
               <div>
-                <strong>Terms Accepted:</strong>{" "}
-                {customer.termsAccepted ? "Yes" : "No"}
+                <strong>Terms Accepted:</strong>{' '}
+                {customer.termsAccepted ? 'Yes' : 'No'}
               </div>
               <div>
-                <strong>Booking Date:</strong>{" "}
+                <strong>Booking Date:</strong>{' '}
                 {customer.bookingDate
-                  ? format(customer.bookingDate, "do MMM yyy HH:mm")
-                  : "N/A"}
+                  ? format(customer.bookingDate, 'do MMM yyy HH:mm')
+                  : 'N/A'}
               </div>
             </CardContent>
           </Card>
@@ -105,12 +105,12 @@ export default async function EditCustomerPage(props: PageProps) {
               <strong>Classified Title:</strong> {customer.classified?.title}
             </div>
             <div>
-              <strong>Created:</strong>{" "}
-              {format(customer.createdAt, "do MMM yyy HH:mm")}
+              <strong>Created:</strong>{' '}
+              {format(customer.createdAt, 'do MMM yyy HH:mm')}
             </div>
             <div>
-              <strong>Last Updated:</strong>{" "}
-              {format(customer.updatedAt, "do MMM yyy HH:mm")}
+              <strong>Last Updated:</strong>{' '}
+              {format(customer.updatedAt, 'do MMM yyy HH:mm')}
             </div>
           </CardContent>
         </Card>
@@ -138,7 +138,7 @@ export default async function EditCustomerPage(props: PageProps) {
                 {customer.lifecycle.map((entry) => (
                   <TableRow className="text-muted/75" key={entry.id}>
                     <TableCell>
-                      {format(entry.updatedAt, "do MMM yyy HH:mm")}
+                      {format(entry.updatedAt, 'do MMM yyy HH:mm')}
                     </TableCell>
                     <TableCell>
                       {formatCustomerStatus(entry.oldStatus)}

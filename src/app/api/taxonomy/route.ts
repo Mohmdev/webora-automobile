@@ -1,6 +1,6 @@
-import { prisma } from "@/lib/prisma"
-import type { Model, ModelVariant } from "@prisma/client"
-import { type NextRequest, NextResponse } from "next/server"
+import { prisma } from '@/lib/prisma'
+import type { Model, ModelVariant } from '@prisma/client'
+import { type NextRequest, NextResponse } from 'next/server'
 
 export const GET = async (req: NextRequest) => {
   const params = new URL(req.url).searchParams
@@ -8,25 +8,25 @@ export const GET = async (req: NextRequest) => {
   try {
     const makes = await prisma.make.findMany({
       select: { id: true, name: true },
-      orderBy: { name: "asc" },
+      orderBy: { name: 'asc' },
     })
 
     let models: Model[] = []
 
-    if (params.get("make")) {
+    if (params.get('make')) {
       models = await prisma.model.findMany({
         where: {
-          make: { id: Number(params.get("make")) },
+          make: { id: Number(params.get('make')) },
         },
       })
     }
 
     let modelVariants: ModelVariant[] = []
 
-    if (params.get("make") && params.get("model")) {
+    if (params.get('make') && params.get('model')) {
       modelVariants = await prisma.modelVariant.findMany({
         where: {
-          model: { id: Number(params.get("model")) },
+          model: { id: Number(params.get('model')) },
         },
       })
     }
@@ -57,6 +57,6 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json(error.message, { status: 400 })
     }
 
-    return NextResponse.json("Internal Server Error", { status: 500 })
+    return NextResponse.json('Internal Server Error', { status: 500 })
   }
 }

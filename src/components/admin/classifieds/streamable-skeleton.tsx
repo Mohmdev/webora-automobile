@@ -1,5 +1,5 @@
-import type { ClassifiedAI } from "@/app/schemas/classified-ai.schema"
-import { Skeleton } from "@/components/ui/skeleton"
+import type { ClassifiedAI } from '@/app/schemas/classified-ai.schema'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   formatBodyType,
   formatColour,
@@ -8,8 +8,8 @@ import {
   formatOdometerUnit,
   formatTransmission,
   formatUlezCompliance,
-} from "@/lib/utils"
-import type { Make } from "@prisma/client"
+} from '@/lib/utils'
+import type { Make } from '@prisma/client'
 import {
   CarFrontIcon,
   CarIcon,
@@ -20,10 +20,10 @@ import {
   PowerIcon,
   UsersIcon,
   XIcon,
-} from "lucide-react"
-import Image from "next/image"
+} from 'lucide-react'
+import Image from 'next/image'
 
-export type StreamableSkeletonProps = Partial<Omit<ClassifiedAI, "make">> & {
+export type StreamableSkeletonProps = Partial<Omit<ClassifiedAI, 'make'>> & {
   make?: Make
   done?: boolean
 }
@@ -53,7 +53,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
           {image ? (
             <Image
               src={image}
-              alt={title || "Vehicle Image"}
+              alt={title || 'Vehicle Image'}
               width={600}
               height={400}
               className="aspect-3/2 rounded-lg object-cover"
@@ -120,7 +120,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
           )}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
-              {ulezCompliance === "EXEMPT" ? (
+              {ulezCompliance === 'EXEMPT' ? (
                 <CheckIcon className="mx-auto h-6 w-6 text-green-500" />
               ) : (
                 <XIcon className="mx-auto h-6 w-6 text-red-500" />

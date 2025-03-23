@@ -1,4 +1,4 @@
-import { rgbaToThumbHash } from "thumbhash"
+import { rgbaToThumbHash } from 'thumbhash'
 
 export async function generateThumbHashFromFile(file: File) {
   const img = new Image()
@@ -8,8 +8,8 @@ export async function generateThumbHashFromFile(file: File) {
     img.onload = resolve
   })
 
-  const canvas = document.createElement("canvas")
-  const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
   const maxSize = 100
   const scale = Math.min(maxSize / img.width, maxSize / img.height)
@@ -24,5 +24,5 @@ export async function generateThumbHashFromFile(file: File) {
 
   URL.revokeObjectURL(img.src)
 
-  return Buffer.from(thumbhash).toString("base64")
+  return Buffer.from(thumbhash).toString('base64')
 }

@@ -1,7 +1,7 @@
-import { routes } from "@/config/routes"
-import { CarIcon, HomeIcon } from "lucide-react"
-import Link from "next/link"
-import { Button } from "../ui/button"
+import { routes } from '@/config/routes'
+import { CarIcon, HomeIcon } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '../ui/button'
 
 export const EndButtons = () => {
   return (

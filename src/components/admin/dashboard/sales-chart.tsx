@@ -1,15 +1,15 @@
-"use client"
+'use client'
 
-import type { ChartDataType } from "@/app/admin/dashboard/page"
+import type { ChartDataType } from '@/app/admin/dashboard/page'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { formatPrice } from "@/lib/utils"
-import { use } from "react"
+} from '@/components/ui/card'
+import { formatPrice } from '@/lib/utils'
+import { use } from 'react'
 import {
   Bar,
   BarChart,
@@ -18,7 +18,7 @@ import {
   type TooltipProps,
   XAxis,
   YAxis,
-} from "recharts"
+} from 'recharts'
 
 interface SalesChartProps {
   data: ChartDataType
@@ -56,12 +56,12 @@ export const SalesChart = (props: SalesChartProps) => {
               tickLine={false}
               axisLine={false}
               tickFormatter={(value) =>
-                formatPrice({ price: value, currency: "GBP" })
+                formatPrice({ price: value, currency: 'GBP' })
               }
             />
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{ fill: "transparent" }}
+              cursor={{ fill: 'transparent' }}
             />
             <Bar
               dataKey="sales"
@@ -84,7 +84,7 @@ const CustomTooltip = ({
     return (
       <div className="rounded border border-gray-700 bg-gray-800 p-2">
         <p className="text-gray-100">
-          {`${label}: ${formatPrice({ price: payload[0].value as number, currency: "GBP" })}`}
+          {`${label}: ${formatPrice({ price: payload[0].value as number, currency: 'GBP' })}`}
         </p>
       </div>
     )

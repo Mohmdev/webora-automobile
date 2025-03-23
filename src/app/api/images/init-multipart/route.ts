@@ -1,10 +1,10 @@
-import { InitialiseMultipartUploadSchema } from "@/app/schemas/images.schema"
-import { auth } from "@/auth"
-import { env } from "@/env"
-import { s3 } from "@/lib/s3"
-import type { CreateMultipartUploadCommandInput } from "@aws-sdk/client-s3"
-import { forbidden } from "next/navigation"
-import { type NextRequest, NextResponse } from "next/server"
+import { InitialiseMultipartUploadSchema } from '@/app/schemas/images.schema'
+import { auth } from '@/auth'
+import { env } from '@/env'
+import { s3 } from '@/lib/s3'
+import type { CreateMultipartUploadCommandInput } from '@aws-sdk/client-s3'
+import { forbidden } from 'next/navigation'
+import { type NextRequest, NextResponse } from 'next/server'
 
 export const POST = async (req: NextRequest) => {
   const session = await auth()
@@ -16,17 +16,17 @@ export const POST = async (req: NextRequest) => {
     if (!validated.success) return NextResponse.error()
     const { name, uuid } = validated.data
     const key = `uploads/${uuid}/${name}`
-    const { default: mimetype } = await import("mime-types")
+    const { default: mimetype } = await import('mime-types')
 
     const mime = mimetype.lookup(name)
 
     const multipartParams: CreateMultipartUploadCommandInput = {
       Bucket: env.NEXT_PUBLIC_S3_BUCKET_NAME,
-      Key: key.replace(/\s+/g, "-"),
+      Key: key.replace(/\s+/g, '-'),
       ...(mime && { ContentType: mime }),
     }
 
-    const { CreateMultipartUploadCommand } = await import("@aws-sdk/client-s3")
+    const { CreateMultipartUploadCommand } = await import('@aws-sdk/client-s3')
 
     const command = new CreateMultipartUploadCommand(multipartParams)
 

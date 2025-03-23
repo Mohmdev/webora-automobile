@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { MAX_IMAGE_SIZE } from "@/config/constants"
-import { endpoints } from "@/config/endpoints"
-import { api } from "@/lib/api-client"
-import { cn, convertToMb } from "@/lib/utils"
-import { ImagePlus, Loader2 } from "lucide-react"
-import { type ChangeEvent, type DragEvent, useRef, useState } from "react"
+import { MAX_IMAGE_SIZE } from '@/config/constants'
+import { endpoints } from '@/config/endpoints'
+import { api } from '@/lib/api-client'
+import { cn, convertToMb } from '@/lib/utils'
+import { ImagePlus, Loader2 } from 'lucide-react'
+import { type ChangeEvent, type DragEvent, useRef, useState } from 'react'
 
 interface ImageUploaderProps {
   onUploadComplete: (url: string) => void
@@ -44,7 +44,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
 
     try {
       const formData = new FormData()
-      formData.append("file", file)
+      formData.append('file', file)
       const response = await api.post<{ url: string }>(
         endpoints.images.singleUpload,
         {
@@ -55,8 +55,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
       onUploadComplete(url)
       setUploadComplete(true)
     } catch (error) {
-      console.log("Error uploading file: ", error)
-      setError("Failed to upload image. Please try again.")
+      console.log('Error uploading file: ', error)
+      setError('Failed to upload image. Please try again.')
     } finally {
       setIsUploading(false)
     }
@@ -87,7 +87,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
 
     try {
       const formData = new FormData()
-      formData.append("file", file)
+      formData.append('file', file)
       const response = await api.post<{ url: string }>(
         endpoints.images.singleUpload,
         {
@@ -100,8 +100,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
       onUploadComplete(url)
       setUploadComplete(true)
     } catch (error) {
-      console.log("Error uploading file: ", error)
-      setError("Failed to upload image. Please try again.")
+      console.log('Error uploading file: ', error)
+      setError('Failed to upload image. Please try again.')
     } finally {
       setIsUploading(false)
     }
@@ -137,11 +137,11 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         onClick={handleClick}
         onKeyDown={() => null}
         className={cn(
-          "relative flex aspect-3/2 cursor-pointer flex-col items-center justify-center rounded-md",
-          error && "border-2 border-red-500 border-dotted",
-          isUploading && "pointer-events-none opacity-50",
-          draggingOver && "opacity-50",
-          !uploadComplete && "border-2 border-gray-300 border-dashed"
+          'relative flex aspect-3/2 cursor-pointer flex-col items-center justify-center rounded-md',
+          error && 'border-2 border-red-500 border-dotted',
+          isUploading && 'pointer-events-none opacity-50',
+          draggingOver && 'opacity-50',
+          !uploadComplete && 'border-2 border-gray-300 border-dashed'
         )}
       >
         <input

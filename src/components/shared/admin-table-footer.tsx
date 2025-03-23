@@ -1,15 +1,15 @@
-"use client"
-import type { AwaitedPageProps, FilterOptions } from "@/config/types"
-import { useRouter } from "next/navigation"
-import { type ChangeEvent, useEffect } from "react"
-import { Select } from "../ui/select"
-import { TableCell, TableFooter, TableRow } from "../ui/table"
-import { CustomPagination } from "./custom-pagination"
+'use client'
+import type { AwaitedPageProps, FilterOptions } from '@/config/types'
+import { useRouter } from 'next/navigation'
+import { type ChangeEvent, useEffect } from 'react'
+import { Select } from '../ui/select'
+import { TableCell, TableFooter, TableRow } from '../ui/table'
+import { CustomPagination } from './custom-pagination'
 const itemsPerPageOptions: FilterOptions<string, string> = [
-  { label: "10", value: "10" },
-  { label: "25", value: "25" },
-  { label: "50", value: "50" },
-  { label: "100", value: "100" },
+  { label: '10', value: '10' },
+  { label: '25', value: '25' },
+  { label: '50', value: '50' },
+  { label: '100', value: '100' },
 ]
 
 interface AdminTableFooterProps extends AwaitedPageProps {
@@ -21,7 +21,7 @@ interface AdminTableFooterProps extends AwaitedPageProps {
 
 export const AdminTableFooter = (props: AdminTableFooterProps) => {
   const { disabled, totalPages, baseURL, cols, searchParams } = props
-  const itemsPerPage = searchParams?.itemsPerPage || "10"
+  const itemsPerPage = searchParams?.itemsPerPage || '10'
   const router = useRouter()
 
   const handleItemsPerPage = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -34,7 +34,7 @@ export const AdminTableFooter = (props: AdminTableFooterProps) => {
 
   useEffect(() => {
     const currentUrlParams = new URLSearchParams(window.location.search)
-    currentUrlParams.set("itemsPerPage", itemsPerPage as string)
+    currentUrlParams.set('itemsPerPage', itemsPerPage as string)
     const url = new URL(window.location.href)
     url.search = currentUrlParams.toString()
     router.push(url.toString())
@@ -59,12 +59,12 @@ export const AdminTableFooter = (props: AdminTableFooterProps) => {
               totalPages={totalPages}
               baseURL={baseURL}
               styles={{
-                paginationRoot: "justify-end",
+                paginationRoot: 'justify-end',
                 paginationPrevious:
-                  "border-none hover:bg-primary-800 text-muted",
-                paginationNext: "hover:bg-primary-800 text-muted",
-                paginationLink: "border-none hover:bg-primary-800 text-muted",
-                paginationLinkActive: "bg-primary-800 !text-white",
+                  'border-none hover:bg-primary-800 text-muted',
+                paginationNext: 'hover:bg-primary-800 text-muted',
+                paginationLink: 'border-none hover:bg-primary-800 text-muted',
+                paginationLinkActive: 'bg-primary-800 !text-white',
               }}
             />
           </div>

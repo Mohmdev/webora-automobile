@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import { env } from "@/env"
-import type { IAllProps } from "@tinymce/tinymce-react"
+import { env } from '@/env'
+import type { IAllProps } from '@tinymce/tinymce-react'
 import {
   Editor,
   type InitOptions,
-} from "@tinymce/tinymce-react/lib/cjs/main/ts/components/Editor"
-import { useFormContext } from "react-hook-form"
-import { FormLabel } from "../ui/form"
+} from '@tinymce/tinymce-react/lib/cjs/main/ts/components/Editor'
+import { useFormContext } from 'react-hook-form'
+import { FormLabel } from '../ui/form'
 
 interface TextEditorProps {
   name: string
@@ -20,9 +20,9 @@ export const RichTextEditor = (props: TextEditorProps) => {
 
   const init: InitOptions = {
     height: 200,
-    skin: "oxide-dark",
-    content_css: "dark",
-    icons: "small",
+    skin: 'oxide-dark',
+    content_css: 'dark',
+    icons: 'small',
     resize: false,
     menubar: false,
     branding: false,
@@ -32,25 +32,25 @@ export const RichTextEditor = (props: TextEditorProps) => {
     importcss_append: true,
     browser_spellcheck: true,
     highlight_on_focus: true,
-    newline_behavior: "linebreak", // Changed from 'linebreak'
-    forced_root_block: "p", // Added to ensure consistent block behavior
-    plugins: ["lists", "link", "wordcount", "importcss", "media"],
-    valid_elements: "p,a[href|rel|target],strong/b,em/i,u,strike,br,ul,ol,li",
+    newline_behavior: 'linebreak', // Changed from 'linebreak'
+    forced_root_block: 'p', // Added to ensure consistent block behavior
+    plugins: ['lists', 'link', 'wordcount', 'importcss', 'media'],
+    valid_elements: 'p,a[href|rel|target],strong/b,em/i,u,strike,br,ul,ol,li',
     toolbar:
-      "undo redo | styles | formatselect bold italic | bullist numlist | link",
+      'undo redo | styles | formatselect bold italic | bullist numlist | link',
 
     // Configure link settings
-    link_default_target: "_blank",
+    link_default_target: '_blank',
     link_assume_external_targets: true,
     autolink_pattern: /^(https?:\/\/|www\.)(.+)$/i,
 
     // Configure paste behavior
     // @ts-ignore
     paste_postprocess: (plugin, args) => {
-      const links = args.node.getElementsByTagName("a")
+      const links = args.node.getElementsByTagName('a')
       for (let i = 0; i < links.length; i++) {
-        links[i].style.color = "#3b82f6"
-        links[i].style.textDecoration = "underline"
+        links[i].style.color = '#3b82f6'
+        links[i].style.textDecoration = 'underline'
       }
     },
     // Add custom styles for links

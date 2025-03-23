@@ -1,44 +1,44 @@
-"use client"
+'use client'
 
-import { sortOrder } from "@/config/constants"
-import type { ClassifiedKeys, PageProps } from "@/config/types"
-import type { Classified } from "@prisma/client"
-import { parseAsStringLiteral, useQueryState } from "nuqs"
-import { SortIcon } from "../shared/sort-icon"
-import { TableHead, TableHeader, TableRow } from "../ui/table"
+import { sortOrder } from '@/config/constants'
+import type { ClassifiedKeys, PageProps } from '@/config/types'
+import type { Classified } from '@prisma/client'
+import { parseAsStringLiteral, useQueryState } from 'nuqs'
+import { SortIcon } from '../shared/sort-icon'
+import { TableHead, TableHeader, TableRow } from '../ui/table'
 
 const classifiedKeys = [
-  "status",
-  "title",
-  "vrm",
-  "id",
-  "views",
-  "year",
-  "colour",
-  "price",
-  "createdAt",
+  'status',
+  'title',
+  'vrm',
+  'id',
+  'views',
+  'year',
+  'colour',
+  'price',
+  'createdAt',
 ] as const
 
 interface ClassifiedTableProps extends PageProps {
   classifieds: Classified[]
   sort: ClassifiedKeys
-  order: "asc" | "desc"
+  order: 'asc' | 'desc'
   currentPage: number
   totalPages: number
 }
 
-type ClassifiedsTableHeaderProps = Pick<ClassifiedTableProps, "sort" | "order">
+type ClassifiedsTableHeaderProps = Pick<ClassifiedTableProps, 'sort' | 'order'>
 
 export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
   const { sort: initialSort, order: initialOrder } = props
   const [sort, setSort] = useQueryState(
-    "sort",
+    'sort',
     parseAsStringLiteral(classifiedKeys)
       .withDefault(initialSort)
       .withOptions({ shallow: false })
   )
   const [order, setOrder] = useQueryState(
-    "order",
+    'order',
     parseAsStringLiteral(sortOrder)
       .withDefault(initialOrder)
       .withOptions({ shallow: false })
@@ -46,10 +46,10 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
 
   const handleSort = (newSort: ClassifiedKeys) => {
     if (newSort === sort) {
-      setOrder(order === "asc" ? "desc" : "asc")
+      setOrder(order === 'asc' ? 'desc' : 'asc')
     } else {
       setSort(newSort)
-      setOrder("asc")
+      setOrder('asc')
     }
   }
 
@@ -59,13 +59,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="w-[80px] text-muted">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("id")}
-            onKeyDown={() => handleSort("id")}
+            onClick={() => handleSort('id')}
+            onKeyDown={() => handleSort('id')}
           >
             ID
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="id"
             />
           </div>
@@ -74,13 +74,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="w-[150px] text-muted">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("title")}
-            onKeyDown={() => handleSort("title")}
+            onClick={() => handleSort('title')}
+            onKeyDown={() => handleSort('title')}
           >
             Title
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="title"
             />
           </div>
@@ -88,13 +88,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="w-[150px] text-muted">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("price")}
-            onKeyDown={() => handleSort("price")}
+            onClick={() => handleSort('price')}
+            onKeyDown={() => handleSort('price')}
           >
             Price
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="price"
             />
           </div>
@@ -102,13 +102,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="w-[150px] text-muted">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("vrm")}
-            onKeyDown={() => handleSort("vrm")}
+            onClick={() => handleSort('vrm')}
+            onKeyDown={() => handleSort('vrm')}
           >
             VRM
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="vrm"
             />
           </div>
@@ -116,13 +116,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="w-[150px] text-muted">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("colour")}
-            onKeyDown={() => handleSort("colour")}
+            onClick={() => handleSort('colour')}
+            onKeyDown={() => handleSort('colour')}
           >
             Colour
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="colour"
             />
           </div>
@@ -130,13 +130,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="text-muted">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("status")}
-            onKeyDown={() => handleSort("status")}
+            onClick={() => handleSort('status')}
+            onKeyDown={() => handleSort('status')}
           >
             Status
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="status"
             />
           </div>
@@ -144,13 +144,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="hidden text-muted md:table-cell">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("createdAt")}
-            onKeyDown={() => handleSort("createdAt")}
+            onClick={() => handleSort('createdAt')}
+            onKeyDown={() => handleSort('createdAt')}
           >
             Date Created
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="createdAt"
             />
           </div>
@@ -158,13 +158,13 @@ export const ClassifiedsTableHeader = (props: ClassifiedsTableHeaderProps) => {
         <TableHead className="text-muted">
           <div
             className="flex cursor-pointer items-center gap-2"
-            onClick={() => handleSort("views")}
-            onKeyDown={() => handleSort("views")}
+            onClick={() => handleSort('views')}
+            onKeyDown={() => handleSort('views')}
           >
             Views
             <SortIcon<ClassifiedKeys>
               currentSort={sort}
-              currentOrder={order as "asc" | "desc" | null}
+              currentOrder={order as 'asc' | 'desc' | null}
               sort="views"
             />
           </div>

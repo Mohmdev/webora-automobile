@@ -1,23 +1,23 @@
-"use client"
+'use client'
 
-import { endpoints } from "@/config/endpoints"
-import type { FilterOptions } from "@/config/types"
-import { api } from "@/lib/api-client"
-import { type ChangeEvent, useEffect, useState } from "react"
-import { useFormContext } from "react-hook-form"
+import { endpoints } from '@/config/endpoints'
+import type { FilterOptions } from '@/config/types'
+import { api } from '@/lib/api-client'
+import { type ChangeEvent, useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Select } from "../ui/select"
+} from '../ui/form'
+import { Select } from '../ui/select'
 
 export const TaxonomySelects = () => {
   const form = useFormContext()
-  const defaultMake = form.getValues("make") || null
-  const defaultModel = form.getValues("model") || null
+  const defaultMake = form.getValues('make') || null
+  const defaultModel = form.getValues('model') || null
 
   const [make, setMake] = useState<string | null>(defaultMake)
   const [makes, setMakes] = useState<FilterOptions<string, string>>([])
@@ -32,8 +32,8 @@ export const TaxonomySelects = () => {
   useEffect(() => {
     ;(async function fetchMakeOptions() {
       const url = new URL(endpoints.taxonomy, window.location.href)
-      if (make) url.searchParams.append("make", make)
-      if (model) url.searchParams.append("model", model)
+      if (make) url.searchParams.append('make', make)
+      if (model) url.searchParams.append('model', model)
 
       const data = await api.get<{
         makes: FilterOptions<string, string>
@@ -54,10 +54,10 @@ export const TaxonomySelects = () => {
     onChange: (...event: any[]) => void
   ) => {
     switch (e.target.name) {
-      case "make":
+      case 'make':
         setMake(e.target.value)
         break
-      case "model":
+      case 'model':
         setModel(e.target.value)
         break
     }

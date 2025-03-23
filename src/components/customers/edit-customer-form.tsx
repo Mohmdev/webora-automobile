@@ -1,15 +1,15 @@
-"use client"
-import { updateCustomerAction } from "@/app/_actions/customer"
+'use client'
+import { updateCustomerAction } from '@/app/_actions/customer'
 import {
   EditCustomerSchema,
   type EditCustomerType,
-} from "@/app/schemas/customer.schema"
-import { toast } from "@/hooks/use-toast"
-import { formatCustomerStatus } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { type Customer, CustomerStatus } from "@prisma/client"
-import { useTransition } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@/app/schemas/customer.schema'
+import { toast } from '@/hooks/use-toast'
+import { formatCustomerStatus } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { type Customer, CustomerStatus } from '@prisma/client'
+import { useTransition } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
@@ -17,8 +17,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Select } from "../ui/select"
+} from '../ui/form'
+import { Select } from '../ui/select'
 
 export const EditCustomerForm = ({ customer }: { customer: Customer }) => {
   const form = useForm<EditCustomerType>({
@@ -39,14 +39,14 @@ export const EditCustomerForm = ({ customer }: { customer: Customer }) => {
 
       if (result.success) {
         toast({
-          title: "Customer Updated",
+          title: 'Customer Updated',
           description: result.message,
         })
       } else {
         toast({
-          title: "Error Updating Customer",
+          title: 'Error Updating Customer',
           description: result.message,
-          variant: "destructive",
+          variant: 'destructive',
         })
       }
     })

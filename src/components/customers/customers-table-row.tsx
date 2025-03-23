@@ -1,10 +1,10 @@
-import { CustomerBadgeMap } from "@/config/constants"
-import type { CustomerWithClassified } from "@/config/types"
-import { formatCustomerStatus } from "@/lib/utils"
-import { format } from "date-fns"
-import { Badge } from "../ui/badge"
-import { TableCell, TableRow } from "../ui/table"
-import { ActionButtons } from "./action-buttons"
+import { CustomerBadgeMap } from '@/config/constants'
+import type { CustomerWithClassified } from '@/config/types'
+import { formatCustomerStatus } from '@/lib/utils'
+import { format } from 'date-fns'
+import { Badge } from '../ui/badge'
+import { TableCell, TableRow } from '../ui/table'
+import { ActionButtons } from './action-buttons'
 
 export const CustomerTableRow = (customer: CustomerWithClassified) => {
   return (
@@ -27,15 +27,15 @@ export const CustomerTableRow = (customer: CustomerWithClassified) => {
         {customer.classified?.title} ({customer.classified?.vrm})
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {format(customer.createdAt, "do MMM yyy HH:mm")}
+        {format(customer.createdAt, 'do MMM yyy HH:mm')}
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {format(customer.updatedAt, "do MMM yyy HH:mm")}
+        {format(customer.updatedAt, 'do MMM yyy HH:mm')}
       </TableCell>
       <TableCell>
         {customer.bookingDate
-          ? format(customer.bookingDate, "do MMM yyy HH:mm")
-          : "N/A"}
+          ? format(customer.bookingDate, 'do MMM yyy HH:mm')
+          : 'N/A'}
       </TableCell>
       <TableCell className="flex gap-x-2">
         <ActionButtons customer={customer} />

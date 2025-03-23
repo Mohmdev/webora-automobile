@@ -1,10 +1,10 @@
-import { env } from "@/env"
+import { env } from '@/env'
 import {
   PutObjectCommand,
   type PutObjectCommandInput,
   S3Client,
-} from "@aws-sdk/client-s3"
-import { Credentials } from "aws-sdk/lib/core"
+} from '@aws-sdk/client-s3'
+import { Credentials } from 'aws-sdk/lib/core'
 
 const credentials = new Credentials({
   accessKeyId: env.S3_BUCKET_ACCESS_KEY,
@@ -34,7 +34,7 @@ export async function uploadToS3({
     Key: path,
     Body: file,
     ContentType: mimetype,
-    CacheControl: "no-store",
+    CacheControl: 'no-store',
   } satisfies PutObjectCommandInput
 
   try {

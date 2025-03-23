@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { routes } from "@/config/routes"
-import { type ClassifiedWithImages, MultiStepFormEnum } from "@/config/types"
+import { routes } from '@/config/routes'
+import { type ClassifiedWithImages, MultiStepFormEnum } from '@/config/types'
 import {
   formatColour,
   formatFuelType,
@@ -9,16 +9,16 @@ import {
   formatOdometerUnit,
   formatPrice,
   formatTransmission,
-} from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
-import { Cog, Fuel, GaugeCircle, Paintbrush2 } from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
-import { HTMLParser } from "../shared/html-parser"
-import { Button } from "../ui/button"
-import { ImgixImage } from "../ui/imgix-image"
-import { FavouriteButton } from "./favourite-button"
+} from '@/lib/utils'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Cog, Fuel, GaugeCircle, Paintbrush2 } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { HTMLParser } from '../shared/html-parser'
+import { Button } from '../ui/button'
+import { ImgixImage } from '../ui/imgix-image'
+import { FavouriteButton } from './favourite-button'
 
 interface ClassifiedCardProps {
   classified: ClassifiedWithImages
@@ -28,24 +28,24 @@ interface ClassifiedCardProps {
 const getKeyClassifiedInfo = (classified: ClassifiedWithImages) => {
   return [
     {
-      id: "odoReading",
+      id: 'odoReading',
       icon: <GaugeCircle className="h-4 w-4" />,
       value: `${formatNumber(classified.odoReading)} ${formatOdometerUnit(classified.odoUnit)}`,
     },
     {
-      id: "transmission",
+      id: 'transmission',
       icon: <Cog className="h-4 w-4" />,
       value: classified?.transmission
         ? formatTransmission(classified?.transmission)
         : null,
     },
     {
-      id: "fuelType",
+      id: 'fuelType',
       icon: <Fuel className="h-4 w-4" />,
       value: classified?.fuelType ? formatFuelType(classified.fuelType) : null,
     },
     {
-      id: "colour",
+      id: 'colour',
       icon: <Paintbrush2 className="h-4 w-4" />,
       value: classified?.colour ? formatColour(classified.colour) : null,
     },
@@ -111,7 +111,7 @@ export const ClassifiedCard = (props: ClassifiedCardProps) => {
               {classified?.description && (
                 <div className="line-clamp-2 text-gray-500 text-xs md:text-sm xl:text-base">
                   <HTMLParser html={classified.description} />
-                  &nbsp;{" "}
+                  &nbsp;{' '}
                   {/* Used for equal spacing across each card in the grid */}
                 </div>
               )}

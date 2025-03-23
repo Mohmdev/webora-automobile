@@ -1,20 +1,20 @@
-"use server"
-import { randomInt } from "node:crypto"
-import { auth } from "@/auth"
-import type { StreamableSkeletonProps } from "@/components/admin/classifieds/streamable-skeleton"
-import { routes } from "@/config/routes"
-import { prisma } from "@/lib/prisma"
-import { generateThumbHashFromSrcUrl } from "@/lib/thumbhash-server"
-import { CurrencyCode } from "@prisma/client"
-import { revalidatePath } from "next/cache"
-import { forbidden, redirect } from "next/navigation"
-import slugify from "slugify"
-import { createPngDataUri } from "unlazy/thumbhash"
-import type { UpdateClassifiedType } from "../schemas/classified.schema"
+'use server'
+import { randomInt } from 'node:crypto'
+import { auth } from '@/auth'
+import type { StreamableSkeletonProps } from '@/components/admin/classifieds/streamable-skeleton'
+import { routes } from '@/config/routes'
+import { prisma } from '@/lib/prisma'
+import { generateThumbHashFromSrcUrl } from '@/lib/thumbhash-server'
+import { CurrencyCode } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
+import { forbidden, redirect } from 'next/navigation'
+import slugify from 'slugify'
+import { createPngDataUri } from 'unlazy/thumbhash'
+import type { UpdateClassifiedType } from '../schemas/classified.schema'
 
 export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
   const session = await auth()
-  if (!session) return { success: false, error: "Unauthorized" }
+  if (!session) return { success: false, error: 'Unauthorized' }
   let success = false
   let classifiedId: number | null = null
 
@@ -40,7 +40,7 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
     let slug = slugify(`${title} ${data.vrm ?? randomInt(100000, 999999)}`)
 
     const slugLikeFound = await prisma.classified.count({
-      where: { slug: { contains: slug, mode: "insensitive" } },
+      where: { slug: { contains: slug, mode: 'insensitive' } },
     })
 
     if (slugLikeFound) {
@@ -64,12 +64,12 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
         price: 0,
         currency: CurrencyCode.GBP,
         odoReading: data.odoReading ?? 0,
-        odoUnit: data.odoUnit ?? "KILOMETERS",
-        fuelType: data.fuelType ?? "PETROL",
-        bodyType: data.bodyType ?? "SEDAN",
-        colour: data.colour ?? "BLACK",
-        transmission: data.transmission ?? "MANUAL",
-        ulezCompliance: data.ulezCompliance ?? "EXEMPT",
+        odoUnit: data.odoUnit ?? 'KILOMETERS',
+        fuelType: data.fuelType ?? 'PETROL',
+        bodyType: data.bodyType ?? 'SEDAN',
+        colour: data.colour ?? 'BLACK',
+        transmission: data.transmission ?? 'MANUAL',
+        ulezCompliance: data.ulezCompliance ?? 'EXEMPT',
         description: data.description ?? null,
         doors: data.doors ?? 0,
         seats: data.seats ?? 0,
@@ -89,14 +89,14 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
       success = true
     }
   } catch (error) {
-    return { success: false, message: "Something went wrong" }
+    return { success: false, message: 'Something went wrong' }
   }
 
   if (success && classifiedId) {
     revalidatePath(routes.admin.classifieds)
     redirect(routes.admin.editClassified(classifiedId))
   } else {
-    return { success: false, message: "Failed to create classified" }
+    return { success: false, message: 'Failed to create classified' }
   }
 }
 
@@ -193,14 +193,14 @@ export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
     if (err instanceof Error) {
       return { success: false, message: err.message }
     }
-    return { success: false, message: "Something went wrong" }
+    return { success: false, message: 'Something went wrong' }
   }
 
   if (success) {
     revalidatePath(routes.admin.classifieds)
     redirect(routes.admin.classifieds)
   } else {
-    return { success: false, message: "Failed to update classified" }
+    return { success: false, message: 'Failed to update classified' }
   }
 }
 
@@ -208,12 +208,12 @@ export const deleteClassifiedAction = async (id: number) => {
   try {
     await prisma.classified.delete({ where: { id } })
     revalidatePath(routes.admin.classifieds)
-    return { success: true, message: "Classified deleted" }
+    return { success: true, message: 'Classified deleted' }
   } catch (error) {
-    console.log("Error deleting classified: ", { error })
+    console.log('Error deleting classified: ', { error })
     if (error instanceof Error) {
       return { success: false, message: error.message }
     }
-    return { success: false, message: "Something went wrong" }
+    return { success: false, message: 'Something went wrong' }
   }
 }

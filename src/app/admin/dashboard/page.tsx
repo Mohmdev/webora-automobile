@@ -1,9 +1,9 @@
-import { KPICards } from "@/components/admin/dashboard/kpi-cards"
-import { SalesChart } from "@/components/admin/dashboard/sales-chart"
-import { prisma } from "@/lib/prisma"
-import { calculatePercentageChange } from "@/lib/utils"
-import { ClassifiedStatus, CustomerStatus } from "@prisma/client"
-import { endOfMonth, format, startOfMonth, subMonths } from "date-fns"
+import { KPICards } from '@/components/admin/dashboard/kpi-cards'
+import { SalesChart } from '@/components/admin/dashboard/sales-chart'
+import { prisma } from '@/lib/prisma'
+import { calculatePercentageChange } from '@/lib/utils'
+import { ClassifiedStatus, CustomerStatus } from '@prisma/client'
+import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns'
 
 async function getDashboardData() {
   const now = new Date()
@@ -171,7 +171,7 @@ async function getChartData() {
     })
 
     monthsData.unshift({
-      month: format(startDate, "MMM"),
+      month: format(startDate, 'MMM'),
       sales: monthlySales._sum.price || 0,
     })
   }
