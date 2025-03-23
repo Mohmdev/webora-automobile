@@ -1,9 +1,9 @@
-import type { MultiStepFormEnum } from './types'
+import type { MultiStepFormType } from './types'
 
 export const routes = {
   home: '/',
   singleClassified: (slug: string) => `/inventory/${slug}`,
-  reserve: (slug: string, step: MultiStepFormEnum) =>
+  reserve: (slug: string, step: MultiStepFormType) =>
     `/inventory/${slug}/reserve?step=${step}`,
   success: (slug: string) => `/inventory/${slug}/success`,
   favourites: '/favourites',

@@ -34,21 +34,27 @@ export const config = {
         try {
           const validatedFields = SignInSchema.safeParse(credentials)
 
-          if (!validatedFields.success) return null
+          if (!validatedFields.success) {
+            return null
+          }
 
           const user = await prisma.user.findUnique({
             where: { email: validatedFields.data.email },
             select: { id: true, email: true, hashedPassword: true },
           })
 
-          if (!user) return null
+          if (!user) {
+            return null
+          }
 
           const match = await bcryptPasswordCompare(
             validatedFields.data.password,
             user.hashedPassword
           )
 
-          if (!match) return null
+          if (!match) {
+            return null
+          }
 
           await issueChallenge(user.id, user.email)
 
@@ -58,8 +64,7 @@ export const config = {
           })
 
           return { ...dbUser, requires2FA: true }
-        } catch (error) {
-          console.log({ error })
+        } catch (_error) {
           return null
         }
       },
@@ -82,9 +87,13 @@ export const config = {
         },
       })
 
-      if (!session) return null
+      if (!session) {
+        return null
+      }
 
-      if (user) token.requires2FA = user.requires2FA
+      if (user) {
+        token.requires2FA = user.requires2FA
+      }
 
       token.id = session.sessionToken
       token.exp = session.expires.getTime()
@@ -92,7 +101,7 @@ export const config = {
       return token
     },
 
-    async session({ session, user }) {
+    session({ session, user }) {
       session.user = {
         id: session.userId,
         email: user.email,

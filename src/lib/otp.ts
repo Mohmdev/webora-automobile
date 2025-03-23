@@ -26,7 +26,6 @@ export async function issueChallenge(userId: string, email: string) {
   })
 
   if (error) {
-    console.log({ error })
     throw new Error(`Error sending email: ${error.name} - ${error.message}`)
   }
 }

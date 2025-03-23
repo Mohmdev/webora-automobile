@@ -22,7 +22,9 @@ export class Uploader {
   file: File | null
   uuid: string
   uploadedSize: number
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   progressCache: any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   activeConnections: any
   counter: number
   aborted: boolean
@@ -51,9 +53,15 @@ export class Uploader {
     this.uploadedParts = []
     this.fileId = undefined
     this.fileKey = undefined
-    this.onProgressFn = () => {}
-    this.onErrorFn = () => {}
-    this.onCompleteFn = () => {}
+    this.onProgressFn = () => {
+      // no-op
+    }
+    this.onErrorFn = () => {
+      // no-op
+    }
+    this.onCompleteFn = () => {
+      // no-op
+    }
   }
 
   start() {
@@ -68,7 +76,9 @@ export class Uploader {
 
       if (ext) {
         fileName += `${name?.replace(/\s+/g, '-')}.${ext}`
-      } else fileName += name
+      } else {
+        fileName += name
+      }
 
       const imageInitialisationUploadInput = {
         name: fileName,
@@ -199,10 +209,12 @@ export class Uploader {
           }
         }
 
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         xhr.onerror = (error: any) => {
           reject(error)
           delete this.activeConnections[part.PartNumber - 1]
         }
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         xhr.onabort = (error: any) => {
           reject(error)
           delete this.activeConnections[part.PartNumber - 1]
@@ -276,20 +288,23 @@ export class Uploader {
         return result
       }
     } catch (error) {
-      console.log('Complete request issue:', error)
+      throw new Error(`Complete request issue: ${error}`)
     }
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onProgress(onProgress: any) {
     this.onProgressFn = onProgress
     return this
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onError(onError: any) {
     this.onErrorFn = onError
     return this
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onComplete(onComplete: any) {
     this.onCompleteFn = onComplete
     return this
@@ -297,7 +312,9 @@ export class Uploader {
 
   abort() {
     for (const id in this.activeConnections) {
-      this.activeConnections[id].abort()
+      if (Object.prototype.hasOwnProperty.call(this.activeConnections, id)) {
+        this.activeConnections[id].abort()
+      }
     }
     this.aborted = true
   }

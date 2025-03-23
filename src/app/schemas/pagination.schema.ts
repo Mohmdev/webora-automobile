@@ -23,12 +23,11 @@ export const validatePagination = ({ page, itemsPerPage }: PaginationType) => {
     itemsPerPage,
   })
 
-  if (error) console.log('Validation error: ', error)
-
   if (!success) {
     return {
       page: '1',
       itemsPerPage: '10',
+      error: error.format(),
     }
   }
 

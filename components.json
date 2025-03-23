@@ -4,9 +4,9 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "src/app/globals.css",
-    "css": "src/app/globals.css",
-    "baseColor": "zinc",
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },

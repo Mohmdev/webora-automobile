@@ -55,7 +55,9 @@ export function formatBodyType(bodyType: BodyType) {
 }
 
 export function formatPrice({ price, currency }: FormatPriceArgs) {
-  if (!price) return '0'
+  if (!price) {
+    return '0'
+  }
 
   const formatter = new Intl.NumberFormat('en-GB', {
     style: 'currency',
@@ -71,7 +73,9 @@ export function formatNumber(
   num: number | null,
   options?: Intl.NumberFormatOptions
 ) {
-  if (!num) return '0'
+  if (!num) {
+    return '0'
+  }
 
   return new Intl.NumberFormat('en-GB', options).format(num)
 }
@@ -132,12 +136,44 @@ export function formatColour(colour: Colour) {
   }
 }
 
+function mapTaxonomyFilter(key: string, value: string) {
+  return { [key]: { id: Number(value) } }
+}
+
+function mapEnumFilter(key: string, value: string) {
+  return { [key]: value.toUpperCase() }
+}
+
+function mapNumFilter(key: string, value: string) {
+  return { [key]: Number(value) }
+}
+
+function mapRangeFilter(
+  key: string,
+  value: string,
+  acc: Record<string, unknown>,
+  rangeFilters: Record<string, string>
+) {
+  const field = rangeFilters[key as keyof typeof rangeFilters]
+  acc[field] = acc[field] || {}
+
+  if (key.startsWith('min')) {
+    ;(acc[field] as Record<string, number>).gte = Number(value)
+  } else if (key.startsWith('max')) {
+    ;(acc[field] as Record<string, number>).lte = Number(value)
+  }
+
+  return acc
+}
+
 export const buildClassifiedFilterQuery = (
   searchParams: AwaitedPageProps['searchParams'] | undefined
 ): Prisma.ClassifiedWhereInput => {
   const { data } = ClassifiedFilterSchema.safeParse(searchParams)
 
-  if (!data) return { status: ClassifiedStatus.LIVE }
+  if (!data) {
+    return { status: ClassifiedStatus.LIVE }
+  }
 
   const keys = Object.keys(data)
 
@@ -166,27 +202,35 @@ export const buildClassifiedFilterQuery = (
   const mapParamsToFields = keys.reduce(
     (acc, key) => {
       const value = searchParams?.[key] as string | undefined
-      if (!value) return acc
+      if (!value) {
+        return acc
+      }
 
       if (taxonomyFilters.includes(key)) {
-        acc[key] = { id: Number(value) }
-      } else if (enumFilters.includes(key)) {
-        acc[key] = value.toUpperCase()
-      } else if (numFilters.includes(key)) {
-        acc[key] = Number(value)
-      } else if (key in rangeFilters) {
-        const field = rangeFilters[key as keyof typeof rangeFilters]
-        acc[field] = acc[field] || {}
-        if (key.startsWith('min')) {
-          acc[field].gte = Number(value)
-        } else if (key.startsWith('max')) {
-          acc[field].lte = Number(value)
-        }
+        const result = mapTaxonomyFilter(key, value)
+        Object.assign(acc, result)
+        return acc
+      }
+
+      if (enumFilters.includes(key)) {
+        const result = mapEnumFilter(key, value)
+        Object.assign(acc, result)
+        return acc
+      }
+
+      if (numFilters.includes(key)) {
+        const result = mapNumFilter(key, value)
+        Object.assign(acc, result)
+        return acc
+      }
+
+      if (key in rangeFilters) {
+        return mapRangeFilter(key, value, acc, rangeFilters)
       }
 
       return acc
     },
-    {} as { [key: string]: any }
+    {} as Record<string, unknown>
   )
 
   return {
@@ -213,7 +257,7 @@ export const buildClassifiedFilterQuery = (
 }
 
 export const generateTimeOptions = () => {
-  const times = []
+  const times: { label: string; value: string }[] = []
   const startHour = 8
   const endHour = 18
 
@@ -239,7 +283,7 @@ export const generateTimeOptions = () => {
 
 export const generateDateOptions = () => {
   const today = new Date()
-  const dates = []
+  const dates: { label: string; value: string }[] = []
   for (let i = 0; i < 30; i++) {
     const date = new Date(today)
     date.setDate(today.getDate() + i)
@@ -261,7 +305,15 @@ export const formatDate = (date: string, time: string) => {
 }
 
 export function calculatePercentageChange(current: number, previous: number) {
-  if (previous === 0) return current > 0 ? 100 : current < 0 ? -100 : 0
+  if (previous === 0) {
+    if (current > 0) {
+      return 100
+    }
+    if (current < 0) {
+      return -100
+    }
+    return 0
+  }
 
   return ((current - previous) / Math.abs(previous)) * 100
 }
@@ -293,6 +345,8 @@ export function formatClassifiedStatus(status: ClassifiedStatus) {
       return 'Sold'
     case ClassifiedStatus.DRAFT:
       return 'Draft'
+    default:
+      return 'Draft'
   }
 }
 
@@ -308,5 +362,7 @@ export function formatCustomerStatus(status: CustomerStatus) {
       return 'Purchased'
     case CustomerStatus.SUBSCRIBER:
       return 'Subscriber'
+    default:
+      return '-'
   }
 }

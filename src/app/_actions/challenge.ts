@@ -6,7 +6,9 @@ import { genericRateLimit } from '@/lib/rate-limiter'
 
 export const resendChallengeAction = async () => {
   const limiterError = await genericRateLimit('otp')
-  if (limiterError) return limiterError
+  if (limiterError) {
+    return limiterError
+  }
 
   const session = await auth()
 

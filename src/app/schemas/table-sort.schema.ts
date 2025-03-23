@@ -58,12 +58,11 @@ export function validateSortOrder<TSchemaType>(
     order,
   })
 
-  if (error) console.log('Validation error: ', error)
-
   if (!success) {
     return {
       sort: undefined,
       order: undefined,
+      error: error.format(),
     }
   }
 

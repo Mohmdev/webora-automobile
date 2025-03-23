@@ -15,8 +15,7 @@ export const createCustomerAction = async (props: CreateCustomerType) => {
     const { data, success, error } = CreateCustomerSchema.safeParse(props)
 
     if (!success) {
-      console.log({ error })
-      return { success: false, message: 'Invalid data' }
+      return { success: false, message: `Invalid data: ${error.message}` }
     }
 
     if (data.terms !== 'true') {
@@ -36,7 +35,6 @@ export const createCustomerAction = async (props: CreateCustomerType) => {
 
     return { success: true, message: 'Reservation Successful!' }
   } catch (error) {
-    console.log({ error })
     if (error instanceof Error) {
       return { success: false, message: error.message }
     }
@@ -51,10 +49,9 @@ export const deleteCustomerAction = async (id: number) => {
     revalidatePath(routes.admin.customers)
     return { success: true, message: 'Customer deleted' }
   } catch (error) {
-    console.log('Error deleting customer: ', { error })
     return {
       success: false,
-      message: 'Something went wrong deleting customer',
+      message: `Something went wrong deleting customer: ${error}`,
     }
   }
 }
@@ -66,19 +63,22 @@ export const updateCustomerAction = async (props: {
   try {
     const validProps = UpdateCustomerSchema.safeParse(props)
 
-    if (!validProps.success) return { success: false, message: 'Invalid data' }
+    if (!validProps.success) {
+      return { success: false, message: `Invalid data: ${validProps.error}` }
+    }
 
     const customer = await prisma.customer.findUnique({
       where: { id: validProps.data?.id },
     })
 
-    console.log({ customer })
-    if (!customer) return { success: false, message: 'Customer not found' }
+    if (!customer) {
+      return { success: false, message: 'Customer not found' }
+    }
 
-    console.log({
-      oldStatus: customer.status,
-      newStatus: validProps.data.status,
-    })
+    // console.log({
+    //   oldStatus: customer.status,
+    //   newStatus: validProps.data.status,
+    // })
     await prisma.customer.update({
       where: { id: customer.id },
       data: {
@@ -97,9 +97,11 @@ export const updateCustomerAction = async (props: {
 
     return { success: true, message: 'Customer updated' }
   } catch (error) {
-    console.log('Error in customer update action: ', { error })
     if (error instanceof Error) {
-      return { success: false, message: error.message }
+      return {
+        success: false,
+        message: `Error in customer update action: ${error.message}`,
+      }
     }
     return { success: false, message: 'Something went wrong' }
   }

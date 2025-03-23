@@ -37,11 +37,14 @@ export type CustomerWithClassified = Prisma.CustomerGetPayload<{
   include: { classified: true }
 }>
 
-export enum MultiStepFormEnum {
-  WELCOME = 1,
-  SELECT_DATE = 2,
-  SUBMIT_DETAILS = 3,
-}
+export const MultiStepFormEnum = {
+  WELCOME: 1,
+  SELECT_DATE: 2,
+  SUBMIT_DETAILS: 3,
+} as const
+
+export type MultiStepFormType =
+  (typeof MultiStepFormEnum)[keyof typeof MultiStepFormEnum]
 
 export interface Favourites {
   ids: number[]

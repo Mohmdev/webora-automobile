@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ hostname: '*' }],
   },
   async headers() {
-    return [
+    const headerConfig = [
       {
         source: '/(.*)',
         headers: [
@@ -44,6 +44,7 @@ const nextConfig: NextConfig = {
         ],
       },
     ]
+    return await Promise.resolve(headerConfig)
   },
 }
 

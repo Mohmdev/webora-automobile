@@ -1,4 +1,5 @@
 'use server'
+
 import { randomInt } from 'node:crypto'
 import { auth } from '@/auth'
 import type { StreamableSkeletonProps } from '@/components/admin/classifieds/streamable-skeleton'
@@ -14,7 +15,9 @@ import type { UpdateClassifiedType } from '../schemas/classified.schema'
 
 export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
   const session = await auth()
-  if (!session) return { success: false, error: 'Unauthorized' }
+  if (!session) {
+    return { success: false, error: 'Unauthorized' }
+  }
   let success = false
   let classifiedId: number | null = null
 
@@ -34,7 +37,9 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
         where: { id: data.modelVariantId as number },
       })
 
-      if (modelVariant) title = `${title} ${modelVariant.name}`
+      if (modelVariant) {
+        title = `${title} ${modelVariant.name}`
+      }
     }
 
     let slug = slugify(`${title} ${data.vrm ?? randomInt(100000, 999999)}`)
@@ -89,7 +94,7 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
       success = true
     }
   } catch (error) {
-    return { success: false, message: 'Something went wrong' }
+    return { success: false, message: `Something went wrong: ${error}` }
   }
 
   if (success && classifiedId) {
@@ -102,7 +107,9 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
 
 export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
   const session = await auth()
-  if (!session) forbidden()
+  if (!session) {
+    forbidden()
+  }
 
   let success = false
 
@@ -126,7 +133,9 @@ export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
         where: { id: modelVariantId },
       })
 
-      if (modelVariant) title = `${title} ${modelVariant.name}`
+      if (modelVariant) {
+        title = `${title} ${modelVariant.name}`
+      }
     }
 
     const slug = slugify(`${title} ${data.vrm}`)
@@ -187,9 +196,10 @@ export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
       { timeout: 10000 }
     )
 
-    if (classified && images) success = true
+    if (classified && images) {
+      success = true
+    }
   } catch (err) {
-    console.log({ err })
     if (err instanceof Error) {
       return { success: false, message: err.message }
     }
@@ -210,7 +220,6 @@ export const deleteClassifiedAction = async (id: number) => {
     revalidatePath(routes.admin.classifieds)
     return { success: true, message: 'Classified deleted' }
   } catch (error) {
-    console.log('Error deleting classified: ', { error })
     if (error instanceof Error) {
       return { success: false, message: error.message }
     }

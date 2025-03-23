@@ -113,7 +113,7 @@ export async function generateClassified(
     valueStream.done()
   }
 
-  processEvents()
+  await processEvents()
 
   return {
     id: Date.now(),

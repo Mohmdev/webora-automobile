@@ -10,7 +10,7 @@ export const imageSources = {
   featureSection:
     'https://majestic-motors.s3.eu-west-2.amazonaws.com/uploads/feature-section.jpg',
 }
-export const CLASSIFIEDS_PER_PAGE = 3
+export const CLASSIFIEDS_PER_PAGE = 12
 
 export const navLinks = [
   { id: 1, href: routes.home, label: 'Home' },

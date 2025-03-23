@@ -39,9 +39,8 @@ export async function uploadToS3({
 
   try {
     const command = new PutObjectCommand(params)
-    return s3.send(command)
+    return await s3.send(command)
   } catch (error: unknown) {
-    console.log(error)
     throw new Error(`Failed to upload file: ${path}. Error: ${error}`)
   }
 }

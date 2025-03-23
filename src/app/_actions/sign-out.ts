@@ -1,4 +1,5 @@
 'use server'
+
 import { auth, signOut } from '@/auth'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
@@ -16,7 +17,9 @@ export const signOutAction = async () => {
 
 export const logoutOfAllSessions = async () => {
   const session = await auth()
-  if (!session?.user?.id) return null
+  if (!session?.user?.id) {
+    return null
+  }
   await prisma.session.deleteMany({
     where: { userId: session.user.id },
   })
