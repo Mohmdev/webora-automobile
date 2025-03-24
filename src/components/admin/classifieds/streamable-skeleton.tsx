@@ -63,6 +63,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
           )}
         </div>
         <div className="mt-4 md:mt-0 md:w-1/2 md:pl-8">
+          {/*  */}
           <div className="flex flex-col items-start md:flex-row md:items-center">
             {make && make.name !== 'UNKNOWN' && (
               <Image
@@ -84,12 +85,16 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
               )}
             </div>
           </div>
+          {/* Top section */}
           <div className="my-4 flex flex-wrap items-center gap-2">
-            {odoReading && odoUnit && (
-              <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
-                {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
-              </span>
-            )}
+            {odoReading !== undefined &&
+              odoReading !== null &&
+              odoReading > 0 &&
+              odoUnit && (
+                <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
+                  {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
+                </span>
+              )}
             {!(odoReading && odoUnit) && !done && (
               <Skeleton className="h-6 w-16 rounded-md" />
             )}
@@ -114,11 +119,13 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
               <Skeleton className="h-6 w-16 rounded-md" />
             )}
           </div>
+          {/*  */}
           {description ? (
             <p className="mb-4 text-gray-600">{description}</p>
           ) : (
             <Skeleton className="mb-4 h-20 w-full" />
           )}
+          {/* Bottom section */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               {ulezCompliance === 'EXEMPT' ? (
@@ -188,15 +195,18 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <GaugeIcon className="mx-auto h-6 w-6 text-zinc-400" />
-              {odoReading && odoUnit && (
-                <p className="mt-2 font-medium text-sm">
-                  {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
-                </p>
-              )}
-              {!(odoReading && odoUnit) && done && (
+              {odoReading !== undefined &&
+                odoReading !== null &&
+                odoReading > 0 &&
+                odoUnit && (
+                  <p className="mt-2 font-medium text-sm">
+                    {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
+                  </p>
+                )}
+              {(!odoReading || odoReading === 0 || !odoUnit) && done && (
                 <p className="mt-2 font-medium text-sm">-</p>
               )}
-              {!(odoReading && odoUnit) && !done && (
+              {(!odoReading || odoReading === 0 || !odoUnit) && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>

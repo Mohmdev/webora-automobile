@@ -50,7 +50,7 @@ export function formatBodyType(bodyType: BodyType) {
     case BodyType.SEDAN:
       return 'Sedan'
     default:
-      return '-'
+      return ''
   }
 }
 
@@ -73,8 +73,8 @@ export function formatNumber(
   num: number | null,
   options?: Intl.NumberFormatOptions
 ) {
-  if (!num) {
-    return '0'
+  if (num === null || num === undefined) {
+    return null
   }
 
   return new Intl.NumberFormat('en-GB', options).format(num)
@@ -99,7 +99,7 @@ export function formatFuelType(fuelType: FuelType) {
     case FuelType.HYBRID:
       return 'Hybrid'
     default:
-      return '-'
+      return ''
   }
 }
 
@@ -132,7 +132,7 @@ export function formatColour(colour: Colour) {
     case Colour.YELLOW:
       return 'Yellow'
     default:
-      return '-'
+      return ''
   }
 }
 
@@ -346,7 +346,7 @@ export function formatClassifiedStatus(status: ClassifiedStatus) {
     case ClassifiedStatus.DRAFT:
       return 'Draft'
     default:
-      return '-'
+      return ''
   }
 }
 
@@ -363,6 +363,6 @@ export function formatCustomerStatus(status: CustomerStatus) {
     case CustomerStatus.SUBSCRIBER:
       return 'Subscriber'
     default:
-      return '-'
+      return ''
   }
 }

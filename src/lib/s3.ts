@@ -6,6 +6,8 @@ import {
 } from '@aws-sdk/client-s3'
 import { Credentials } from 'aws-sdk/lib/core'
 
+process.env.AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE = '1'
+
 const credentials = new Credentials({
   accessKeyId: env.S3_BUCKET_ACCESS_KEY,
   secretAccessKey: env.S3_BUCKET_SECRET_KEY,
