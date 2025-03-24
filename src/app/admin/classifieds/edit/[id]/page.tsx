@@ -12,14 +12,18 @@ export default async function EditClassified(props: PageProps) {
     id: Number(params?.id),
   })
 
-  if (!success) redirect(routes.admin.classifieds)
+  if (!success) {
+    redirect(routes.admin.classifieds)
+  }
 
   const classified = await prisma.classified.findUnique({
     where: { id: data.id },
     include: { images: true },
   })
 
-  if (!classified) redirect(routes.admin.classifieds)
+  if (!classified) {
+    redirect(routes.admin.classifieds)
+  }
 
   return <ClassifiedForm classified={classified} />
 }

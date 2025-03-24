@@ -32,7 +32,9 @@ export default async function CustomersPage(props: PageProps) {
 
   const { data, error } = AdminCustomerFilterSchema.safeParse(searchParams)
 
-  if (error) console.log('Validation error: ', error)
+  if (error) {
+    console.log('Validation error: ', error)
+  }
 
   const customers = await prisma.customer.findMany({
     where: {

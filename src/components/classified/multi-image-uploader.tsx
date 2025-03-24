@@ -119,7 +119,6 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
           })
           .onError((error: Error) => {
             setIsUploading(false)
-            // biome-ignore lint/suspicious/noConsole: <explanation>
             console.error(error)
           })
           .onComplete(() => {

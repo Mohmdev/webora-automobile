@@ -8,13 +8,17 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 export const POST = async (req: NextRequest) => {
   const session = await auth()
-  if (!session) forbidden()
+  if (!session) {
+    forbidden()
+  }
 
   try {
     const data = await req.json()
 
     const validated = FinaliseMultipartUploadSchema.safeParse(data)
-    if (!validated.success) return NextResponse.error()
+    if (!validated.success) {
+      return NextResponse.error()
+    }
     const { fileId, fileKey, parts } = validated.data
     const { default: mimetype } = await import('mime-types')
     const mime = mimetype.lookup(fileKey)

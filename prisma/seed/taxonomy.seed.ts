@@ -99,23 +99,25 @@ export async function seedTaxonomy(prisma: PrismaClient) {
 
   for (const make of makes) {
     for (const model in result[make.name]) {
-      modelPromises.push(
-        prisma.model.upsert({
-          where: {
-            makeId_name: {
-              name: model,
-              makeId: make.id,
+      if (Object.hasOwn(result[make.name], model)) {
+        modelPromises.push(
+          prisma.model.upsert({
+            where: {
+              makeId_name: {
+                name: model,
+                makeId: make.id,
+              },
             },
-          },
-          update: {
-            name: model,
-          },
-          create: {
-            name: model,
-            make: { connect: { id: make.id } },
-          },
-        })
-      )
+            update: {
+              name: model,
+            },
+            create: {
+              name: model,
+              make: { connect: { id: make.id } },
+            },
+          })
+        )
+      }
     }
   }
 

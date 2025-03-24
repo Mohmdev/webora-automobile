@@ -25,14 +25,18 @@ export default async function EditCustomerPage(props: PageProps) {
     id: Number(params?.id),
   })
 
-  if (!success) redirect(routes.admin.customers)
+  if (!success) {
+    redirect(routes.admin.customers)
+  }
 
   const customer = await prisma.customer.findUnique({
     where: { id: data.id },
     include: { classified: true, lifecycle: true },
   })
 
-  if (!customer) redirect(routes.admin.customers)
+  if (!customer) {
+    redirect(routes.admin.customers)
+  }
 
   return (
     <>

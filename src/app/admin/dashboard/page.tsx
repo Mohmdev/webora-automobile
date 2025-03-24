@@ -151,7 +151,7 @@ async function getDashboardData() {
 
 async function getChartData() {
   const now = new Date()
-  const monthsData = []
+  const monthsData: Array<{ month: string; sales: number }> = []
 
   for (let i = 0; i < 12; i++) {
     const startDate = startOfMonth(subMonths(now, i))
@@ -181,7 +181,7 @@ async function getChartData() {
 export type DashboardDataType = ReturnType<typeof getDashboardData>
 export type ChartDataType = ReturnType<typeof getChartData>
 
-export default async function AdminDashboardPage() {
+export default function AdminDashboardPage() {
   const dashboardData = getDashboardData()
   const chartData = getChartData()
   return (

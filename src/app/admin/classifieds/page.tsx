@@ -32,7 +32,9 @@ export default async function ClassifiedsPage(props: PageProps) {
 
   const { data, error } = AdminClassifiedFilterSchema.safeParse(searchParams)
 
-  if (error) console.log('Validation error: ', error)
+  if (error) {
+    console.log('Validation error: ', error)
+  }
 
   const classifieds = await prisma.classified.findMany({
     where: {

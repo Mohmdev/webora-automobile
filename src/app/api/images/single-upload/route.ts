@@ -9,9 +9,13 @@ import { v4 as uuidv4 } from 'uuid'
 
 // export const maxDuration = 60
 
+const IMAGE_MIME_REGEX = /image\/(jpeg|jpg|png|webp)/
+
 export const POST = async (req: NextRequest) => {
   const session = await auth()
-  if (!session) forbidden()
+  if (!session) {
+    forbidden()
+  }
 
   const formData = await req.formData()
 
@@ -31,7 +35,7 @@ export const POST = async (req: NextRequest) => {
   const { default: mimetype } = await import('mime-types')
 
   const mime = mimetype.lookup(file.name).toString()
-  if (mime.match(/image\/(jpeg|jpg|png|webp)/) === null) {
+  if (mime.match(IMAGE_MIME_REGEX) === null) {
     console.log('File is not an image')
 
     return NextResponse.json(
