@@ -14,7 +14,7 @@ import { buildClassifiedFilterQuery } from '@/lib/utils'
 import { ClassifiedStatus } from '@prisma/client'
 import { Suspense } from 'react'
 
-const getInventory = async (searchParams: AwaitedPageProps['searchParams']) => {
+const getInventory = (searchParams: AwaitedPageProps['searchParams']) => {
   const validPage = PageSchema.parse(searchParams?.page)
 
   // get the current page
@@ -60,7 +60,7 @@ export default async function InventoryPage(props: PageProps) {
     <div className="flex">
       <Sidebar minMaxValues={minMaxResult} searchParams={searchParams} />
 
-      <div className="flex-1 bg-white p-4">
+      <div className="flex-1 p-4">
         <div className="-mt-1 flex items-center justify-between space-y-2 pb-4">
           <div className="flex w-full items-center justify-between">
             <h2 className="min-w-fit font-semibold text-sm md:text-base lg:text-xl">
@@ -79,7 +79,7 @@ export default async function InventoryPage(props: PageProps) {
               paginationRoot: 'justify-end hidden lg:flex',
               paginationPrevious: '',
               paginationNext: '',
-              paginationLink: 'border-none active:border text-black',
+              paginationLink: 'border-none active:border text-foreground',
               paginationLinkActive: '',
             }}
           />

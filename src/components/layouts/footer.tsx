@@ -29,7 +29,7 @@ const socialLinks = [
 ]
 export const PublicFooter = () => {
   return (
-    <footer className="bg-gray-100 px-8 py-8 lg:px-0">
+    <footer className="px-8 py-8 lg:px-0">
       <div className="container mx-auto grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="flex flex-col gap-y-2 space-x-2">
           <Link className="flex items-center" href={routes.home}>

@@ -66,7 +66,7 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
 
     let title = createTitleParts.join(' ').trim()
 
-    let modelVariant = null
+    let modelVariant: { id: number; name: string } | null = null
     if (data?.modelVariantId) {
       modelVariant = await prisma.modelVariant.findUnique({
         where: { id: data.modelVariantId as number },

@@ -258,7 +258,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
     useSidebarFilters(searchParams as Record<string, string>)
 
   return (
-    <div className="hidden w-[21.25rem] border-muted border-r bg-white py-4 lg:block">
+    <div className="hidden w-[21.25rem] border-muted border-r py-4 lg:block">
       <div>
         <div className="flex justify-between px-4 font-semibold text-lg">
           <span>Filters</span>

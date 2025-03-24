@@ -33,7 +33,9 @@ export default async function ReservePage(props: PageProps) {
     include: { make: true },
   })
 
-  if (!classified) notFound()
+  if (!classified) {
+    notFound()
+  }
 
   const Component = MAP_STEP_TO_COMPONENT[data.step]
 

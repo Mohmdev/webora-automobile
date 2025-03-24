@@ -45,7 +45,11 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "suspicious": {
+        "noConsole": "off",
+        "noConsoleLog": "off"
+      }
     }
   },
   "javascript": {
@@ -54,5 +58,12 @@
       "semicolons": "asNeeded"
     }
   },
-  "css": { "formatter": { "enabled": true }, "linter": { "enabled": true } }
+  "css": {
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    }
+  }
 }

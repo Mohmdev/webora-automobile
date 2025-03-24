@@ -3,7 +3,7 @@ import { AdminSidebar } from '@/components/layouts/admin-sidebar'
 import type { PropsWithChildren } from 'react'
 import { AI } from '../_actions/ai'
 
-export default async function AdminLayout({ children }: PropsWithChildren) {
+export default function AdminLayout({ children }: PropsWithChildren) {
   return (
     <AI>
       <div className="flex min-h-screen w-full bg-primary-900">

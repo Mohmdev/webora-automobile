@@ -35,10 +35,10 @@ export const OurBrandsSection = async () => {
   })
 
   return (
-    <div className="bg-white py-16 sm:py-24">
+    <div className="bg-background py-16 sm:py-24">
       <div className="mx-auto max-w-7xl space-y-12 px-6 lg:px-8">
         <div className="px-6 sm:text-center lg:px-8">
-          <h2 className="mt-2 font-bold text-2xl text-gray-900 uppercase tracking-tight sm:text-4xl">
+          <h2 className="mt-2 font-bold text-2xl text-foreground uppercase tracking-tight sm:text-4xl">
             Our Brands
           </h2>
           <p className="mt-6 text-gray-600 text-lg leading-8">

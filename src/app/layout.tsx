@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'overscroll-none bg-background font-heading antialiased',
+          'overscroll-none font-heading antialiased',
           roboto.variable,
           mulish.variable
         )}

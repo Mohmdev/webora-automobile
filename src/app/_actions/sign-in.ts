@@ -17,7 +17,7 @@ export const signInAction = async (_: PrevState, formData: FormData) => {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    const { data, success, error } = SignInSchema.safeParse({
+    const { data, success } = SignInSchema.safeParse({
       email,
       password,
     })

@@ -10,14 +10,18 @@ export default async function ClassifiedPage(props: PageProps) {
 
   const slug = decodeURIComponent(params?.slug as string)
 
-  if (!slug) notFound()
+  if (!slug) {
+    notFound()
+  }
 
   const classified = await prisma.classified.findUnique({
     where: { slug },
     include: { make: true, images: true },
   })
 
-  if (!classified) notFound()
+  if (!classified) {
+    notFound()
+  }
 
   if (classified.status === ClassifiedStatus.SOLD) {
     redirect(routes.notAvailable(classified.slug))

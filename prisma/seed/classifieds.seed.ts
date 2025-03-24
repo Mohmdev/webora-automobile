@@ -28,7 +28,9 @@ export async function seedClassifieds(prisma: PrismaClient) {
 
   for (let i = 0; i < 25; i++) {
     const make = faker.helpers.arrayElement(makes)
-    if (!make.models.length) continue
+    if (!make.models.length) {
+      continue
+    }
     const model = faker.helpers.arrayElement(make.models)
 
     const variant = model.modelVariants.length
