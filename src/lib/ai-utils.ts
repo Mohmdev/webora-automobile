@@ -45,7 +45,7 @@ export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
           },
         })
       })
-    } catch (error) {
+    } catch (_error) {
       // If model creation fails, fallback to UNKNOWN model for this make
       model = await prisma.model.findFirst({
         where: {
@@ -84,7 +84,7 @@ export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
             },
           })
         })
-      } catch (error) {
+      } catch (_error) {
         // No need to set a fallback for model variant as it's optional
       }
     }

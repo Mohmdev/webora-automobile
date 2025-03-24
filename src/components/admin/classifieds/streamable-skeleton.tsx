@@ -64,7 +64,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
         </div>
         <div className="mt-4 md:mt-0 md:w-1/2 md:pl-8">
           <div className="flex flex-col items-start md:flex-row md:items-center">
-            {make && make.name !== 'UNKNOWN' ? (
+            {make && make.name !== 'UNKNOWN' && (
               <Image
                 src={make.image}
                 alt={make.name}
@@ -72,7 +72,8 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
                 height={64}
                 className="mr-4"
               />
-            ) : done ? null : (
+            )}
+            {(!make || make.name === 'UNKNOWN') && !done && (
               <Skeleton className="mr-4 h-16 w-20" />
             )}
             <div>
@@ -84,32 +85,32 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
             </div>
           </div>
           <div className="my-4 flex flex-wrap items-center gap-2">
-            {odoReading && odoUnit ? (
+            {odoReading && odoUnit && (
               <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
                 {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
               </span>
-            ) : done ? null : (
+            )}
+            {!(odoReading && odoUnit) && !done && (
               <Skeleton className="h-6 w-16 rounded-md" />
             )}
-            {fuelType ? (
+            {fuelType && (
               <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
                 {formatFuelType(fuelType)}
               </span>
-            ) : done ? null : (
-              <Skeleton className="h-6 w-16 rounded-md" />
             )}
-            {colour ? (
+            {!fuelType && !done && <Skeleton className="h-6 w-16 rounded-md" />}
+            {colour && (
               <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
                 {formatColour(colour)}
               </span>
-            ) : done ? null : (
-              <Skeleton className="h-6 w-16 rounded-md" />
             )}
-            {transmission ? (
+            {!colour && !done && <Skeleton className="h-6 w-16 rounded-md" />}
+            {transmission && (
               <span className="5 5 rounded-md bg-gray-200 px-2 py-0 font-medium text-gray-800 text-sm">
                 {formatTransmission(transmission)}
               </span>
-            ) : done ? null : (
+            )}
+            {!transmission && !done && (
               <Skeleton className="h-6 w-16 rounded-md" />
             )}
           </div>
@@ -125,91 +126,93 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
               ) : (
                 <XIcon className="mx-auto h-6 w-6 text-red-500" />
               )}
-              {ulezCompliance ? (
+              {ulezCompliance && (
                 <p className="mt-2 font-medium text-sm">
                   {formatUlezCompliance(ulezCompliance)}
                 </p>
-              ) : done ? (
+              )}
+              {!ulezCompliance && done && (
                 <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
+              )}
+              {!ulezCompliance && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <Fingerprint className="mx-auto h-6 w-6 text-zinc-400" />
-              {vrm ? (
-                <p className="mt-2 font-medium text-sm">{vrm}</p>
-              ) : done ? (
-                <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
-                <Skeleton className="mx-auto mt-2 h-4 w-16" />
-              )}
+              {vrm && <p className="mt-2 font-medium text-sm">{vrm}</p>}
+              {!vrm && done && <p className="mt-2 font-medium text-sm">-</p>}
+              {!vrm && !done && <Skeleton className="mx-auto mt-2 h-4 w-16" />}
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <CarIcon className="mx-auto h-6 w-6 text-zinc-400" />
-              {bodyType ? (
+              {bodyType && (
                 <p className="mt-2 font-medium text-sm">
                   {formatBodyType(bodyType)}
                 </p>
-              ) : done ? (
+              )}
+              {!bodyType && done && (
                 <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
+              )}
+              {!bodyType && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <FuelIcon className="mx-auto h-6 w-6 text-zinc-400" />
-              {fuelType ? (
+              {fuelType && (
                 <p className="mt-2 font-medium text-sm">
                   {formatFuelType(fuelType)}
                 </p>
-              ) : done ? (
+              )}
+              {!fuelType && done && (
                 <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
+              )}
+              {!fuelType && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <PowerIcon className="mx-auto h-6 w-6 text-zinc-400" />
-              {transmission ? (
+              {transmission && (
                 <p className="mt-2 font-medium text-sm">
                   {formatTransmission(transmission)}
                 </p>
-              ) : done ? (
+              )}
+              {!transmission && done && (
                 <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
+              )}
+              {!transmission && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <GaugeIcon className="mx-auto h-6 w-6 text-zinc-400" />
-              {odoReading && odoUnit ? (
+              {odoReading && odoUnit && (
                 <p className="mt-2 font-medium text-sm">
                   {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
                 </p>
-              ) : done ? (
+              )}
+              {!(odoReading && odoUnit) && done && (
                 <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
+              )}
+              {!(odoReading && odoUnit) && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <UsersIcon className="mx-auto h-6 w-6 text-zinc-400" />
-              {seats ? (
-                <p className="mt-2 font-medium text-sm">{seats}</p>
-              ) : done ? (
-                <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
+              {seats && <p className="mt-2 font-medium text-sm">{seats}</p>}
+              {!seats && done && <p className="mt-2 font-medium text-sm">-</p>}
+              {!seats && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <CarFrontIcon className="mx-auto h-6 w-6 text-zinc-400" />
-              {doors ? (
-                <p className="mt-2 font-medium text-sm">{doors}</p>
-              ) : done ? (
-                <p className="mt-2 font-medium text-sm">-</p>
-              ) : (
+              {doors && <p className="mt-2 font-medium text-sm">{doors}</p>}
+              {!doors && done && <p className="mt-2 font-medium text-sm">-</p>}
+              {!doors && !done && (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
             </div>
