@@ -10,12 +10,19 @@ interface MapToTaxonomyOrCreateType {
 
 export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
   // attempt to find the make
-  const make = await prisma.make.findFirst({
+  let make = await prisma.make.findFirst({
     where: { name: { equals: object.make, mode: 'insensitive' } },
   })
 
+  // If make not found, fallback to UNKNOWN
   if (!make) {
-    throw new Error(`Make "${object.make}" not found.`)
+    make = await prisma.make.findFirst({
+      where: { name: { equals: 'UNKNOWN', mode: 'insensitive' } },
+    })
+
+    if (!make) {
+      return null
+    }
   }
 
   // attempt to find the model
@@ -27,25 +34,36 @@ export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
   })
 
   if (!model) {
-    model = await prisma.$transaction(async (prisma) => {
-      await prisma.$executeRaw`LOCK TABLE "models" IN EXCLUSIVE MODE`
-      return prisma.model.create({
-        data: {
-          name: object.model,
-          make: { connect: { id: make.id } },
+    // Try to create the model
+    try {
+      model = await prisma.$transaction(async (prisma) => {
+        await prisma.$executeRaw`LOCK TABLE "models" IN EXCLUSIVE MODE`
+        return prisma.model.create({
+          data: {
+            name: object.model,
+            make: { connect: { id: make.id } },
+          },
+        })
+      })
+    } catch (error) {
+      // If model creation fails, fallback to UNKNOWN model for this make
+      model = await prisma.model.findFirst({
+        where: {
+          makeId: make.id,
+          name: { equals: 'UNKNOWN', mode: 'insensitive' },
         },
       })
-    })
+    }
   }
 
   if (!model) {
-    throw new Error('Model not found')
+    return null
   }
 
   let modelVariant: ModelVariant | null = null
 
   if (object.modelVariant) {
-    // attempt to find the model
+    // attempt to find the model variant
     modelVariant = await prisma.modelVariant.findFirst({
       where: {
         modelId: model.id,
@@ -54,17 +72,21 @@ export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
     })
 
     if (!modelVariant) {
-      modelVariant = await prisma.$transaction(async (prisma) => {
-        await prisma.$executeRaw`LOCK TABLE "model_variants" IN EXCLUSIVE MODE`
-        return prisma.modelVariant.create({
-          data: {
-            name: object.modelVariant as string,
-            model: { connect: { id: model.id } },
-            yearStart: object.year,
-            yearEnd: object.year,
-          },
+      try {
+        modelVariant = await prisma.$transaction(async (prisma) => {
+          await prisma.$executeRaw`LOCK TABLE "model_variants" IN EXCLUSIVE MODE`
+          return prisma.modelVariant.create({
+            data: {
+              name: object.modelVariant as string,
+              model: { connect: { id: model.id } },
+              yearStart: object.year,
+              yearEnd: object.year,
+            },
+          })
         })
-      })
+      } catch (error) {
+        // No need to set a fallback for model variant as it's optional
+      }
     }
   }
 

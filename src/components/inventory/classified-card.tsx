@@ -62,7 +62,9 @@ export const ClassifiedCard = (props: ClassifiedCardProps) => {
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    if (!isFavourite && pathname === routes.favourites) setIsVisible(false)
+    if (!isFavourite && pathname === routes.favourites) {
+      setIsVisible(false)
+    }
   }, [isFavourite, pathname])
 
   return (

@@ -32,16 +32,18 @@ export const TaxonomySelects = () => {
   useEffect(() => {
     ;(async function fetchMakeOptions() {
       const url = new URL(endpoints.taxonomy, window.location.href)
-      if (make) url.searchParams.append('make', make)
-      if (model) url.searchParams.append('model', model)
+      if (make) {
+        url.searchParams.append('make', make)
+      }
+      if (model) {
+        url.searchParams.append('model', model)
+      }
 
       const data = await api.get<{
         makes: FilterOptions<string, string>
         models: FilterOptions<string, string>
         modelVariants: FilterOptions<string, string>
       }>(url.toString())
-
-      console.log({ data })
 
       setMakes(data.makes)
       setModels(data.models)
@@ -51,6 +53,7 @@ export const TaxonomySelects = () => {
 
   const handleChange = (
     e: ChangeEvent<HTMLSelectElement>,
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     onChange: (...event: any[]) => void
   ) => {
     switch (e.target.name) {
@@ -60,6 +63,8 @@ export const TaxonomySelects = () => {
       case 'model':
         setModel(e.target.value)
         break
+      default:
+        null
     }
 
     return onChange(e)

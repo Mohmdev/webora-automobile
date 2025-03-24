@@ -4,9 +4,11 @@ import { cn } from '@/lib/utils'
 import debounce from 'debounce'
 import { SearchIcon, XIcon } from 'lucide-react'
 import { useQueryState } from 'nuqs'
+import type React from 'react'
 import { type ChangeEvent, useCallback, useRef } from 'react'
 import { Input } from '../ui/input'
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function debounceFunc<T extends (...args: any) => any>(
   func: T,
   wait: number,
@@ -43,7 +45,9 @@ export const SearchInput = (props: SearchInputProps) => {
 
   const clearSearch = () => {
     setSearch(null)
-    if (inputRef.current) inputRef.current.value = ''
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
   }
 
   return (

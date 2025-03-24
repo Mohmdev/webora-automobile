@@ -50,7 +50,7 @@ export function formatBodyType(bodyType: BodyType) {
     case BodyType.SEDAN:
       return 'Sedan'
     default:
-      return 'Unknown'
+      return null
   }
 }
 
@@ -99,7 +99,7 @@ export function formatFuelType(fuelType: FuelType) {
     case FuelType.HYBRID:
       return 'Hybrid'
     default:
-      return 'Unknown'
+      return null
   }
 }
 
@@ -132,7 +132,7 @@ export function formatColour(colour: Colour) {
     case Colour.YELLOW:
       return 'Yellow'
     default:
-      return 'Unknown'
+      return null
   }
 }
 
@@ -346,7 +346,7 @@ export function formatClassifiedStatus(status: ClassifiedStatus) {
     case ClassifiedStatus.DRAFT:
       return 'Draft'
     default:
-      return 'Draft'
+      return null
   }
 }
 
@@ -363,6 +363,6 @@ export function formatCustomerStatus(status: CustomerStatus) {
     case CustomerStatus.SUBSCRIBER:
       return 'Subscriber'
     default:
-      return '-'
+      return null
   }
 }

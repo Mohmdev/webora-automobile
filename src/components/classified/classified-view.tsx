@@ -89,13 +89,15 @@ export const ClassifiedView = (props: ClassifiedWithImagesAndMake) => {
         </div>
         <div className="mt-4 md:mt-0 md:w-1/2 md:pl-8">
           <div className="flex flex-col items-start md:flex-row md:items-center">
-            <Image
-              src={props.make.image}
-              alt={props.make.name}
-              className="mr-4 w-20"
-              width={120}
-              height={120}
-            />
+            {props.make.name !== 'UNKNOWN' ? (
+              <Image
+                src={props.make.image}
+                alt={props.make.name}
+                className="mr-4 w-20"
+                width={120}
+                height={120}
+              />
+            ) : null}
             <div>
               <h1 className="font-bold text-2xl md:text-3xl">{props.title}</h1>
             </div>

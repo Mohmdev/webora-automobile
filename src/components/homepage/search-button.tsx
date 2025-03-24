@@ -22,13 +22,28 @@ export const SearchButton = ({ count }: { count: number }) => {
     )
 
   const queryParams = new URLSearchParams()
-  if (make) queryParams.append('make', make)
-  if (model) queryParams.append('model', model)
-  if (modelVariant) queryParams.append('modelVariant', modelVariant)
-  if (minYear) queryParams.append('minYear', minYear)
-  if (maxYear) queryParams.append('maxYear', maxYear)
-  if (minPrice) queryParams.append('minPrice', minPrice)
-  if (maxPrice) queryParams.append('maxPrice', maxPrice)
+
+  if (make) {
+    queryParams.append('make', make)
+  }
+  if (model) {
+    queryParams.append('model', model)
+  }
+  if (modelVariant) {
+    queryParams.append('modelVariant', modelVariant)
+  }
+  if (minYear) {
+    queryParams.append('minYear', minYear)
+  }
+  if (maxYear) {
+    queryParams.append('maxYear', maxYear)
+  }
+  if (minPrice) {
+    queryParams.append('minPrice', minPrice)
+  }
+  if (maxPrice) {
+    queryParams.append('maxPrice', maxPrice)
+  }
 
   const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL)
   url.search = queryParams.toString()

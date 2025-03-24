@@ -22,18 +22,46 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
   let classifiedId: number | null = null
 
   try {
-    const make = await prisma.make.findUnique({
-      where: { id: data.makeId as number },
-    })
+    // If make isn't provided or found, try to find the "UNKNOWN" make
+    let make = data.makeId
+      ? await prisma.make.findUnique({ where: { id: data.makeId as number } })
+      : null
 
-    const model = await prisma.model.findUnique({
-      where: { id: data.modelId as number },
-    })
+    if (!make) {
+      make = await prisma.make.findFirst({ where: { name: 'UNKNOWN' } })
+      if (!make) {
+        return {
+          success: false,
+          error: 'Make not found and no UNKNOWN make available as fallback',
+        }
+      }
+    }
 
-    let title = `${data.year} ${make?.name} ${model?.name}`
+    // If model isn't provided or found, try to find the "UNKNOWN" model for this make
+    let model = data.modelId
+      ? await prisma.model.findUnique({ where: { id: data.modelId as number } })
+      : null
 
+    if (!model) {
+      model = await prisma.model.findFirst({
+        where: {
+          makeId: make.id,
+          name: 'UNKNOWN',
+        },
+      })
+      if (!model) {
+        return {
+          success: false,
+          error: 'Model not found and no UNKNOWN model available as fallback',
+        }
+      }
+    }
+
+    let title = `${data.year} ${make.name} ${model.name}`
+
+    let modelVariant = null
     if (data?.modelVariantId) {
-      const modelVariant = await prisma.modelVariant.findUnique({
+      modelVariant = await prisma.modelVariant.findUnique({
         where: { id: data.modelVariantId as number },
       })
 
@@ -60,10 +88,10 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
         slug,
         title,
         year: Number(data.year),
-        makeId: data.makeId as number,
-        modelId: data.modelId as number,
-        ...(data.modelVariantId && {
-          modelVariantId: data.modelVariantId as number,
+        makeId: make.id,
+        modelId: model.id,
+        ...(modelVariant && {
+          modelVariantId: modelVariant.id,
         }),
         vrm: data?.vrm ? data.vrm : null,
         price: 0,

@@ -67,8 +67,8 @@ export async function generateClassified(
     })
 
     if (foundTaxonomy) {
-      const make = await prisma.make.findFirst({
-        where: { name: foundTaxonomy.make },
+      const make = await prisma.make.findUnique({
+        where: { id: foundTaxonomy.makeId },
       })
 
       if (make) {
@@ -78,6 +78,31 @@ export async function generateClassified(
           make,
           makeId: make.id,
         }
+      }
+    } else {
+      // If we couldn't map to a taxonomy, try to find UNKNOWN entries as fallback
+      try {
+        const unknownMake = await prisma.make.findFirst({
+          where: { name: 'UNKNOWN' },
+        })
+
+        if (unknownMake) {
+          const unknownModel = await prisma.model.findFirst({
+            where: {
+              makeId: unknownMake.id,
+              name: 'UNKNOWN',
+            },
+          })
+
+          if (unknownModel) {
+            // Just update the make/model parts of classified
+            classified.make = unknownMake
+            classified.makeId = unknownMake.id
+            classified.modelId = unknownModel.id
+          }
+        }
+      } catch (error) {
+        console.error('Error finding UNKNOWN make/model:', error)
       }
     }
 

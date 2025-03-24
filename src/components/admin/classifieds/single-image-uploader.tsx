@@ -25,7 +25,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     e.stopPropagation()
 
     const file = e.target.files?.[0]
-    if (!file) return
+    if (!file) {
+      return
+    }
     if (file.size > MAX_IMAGE_SIZE) {
       setError(`File size exceeds ${convertToMb(file.size)} limit`)
       return
@@ -55,20 +57,21 @@ export const ImageUploader = (props: ImageUploaderProps) => {
       onUploadComplete(url)
       setUploadComplete(true)
     } catch (error) {
-      console.log('Error uploading file: ', error)
-      setError('Failed to upload image. Please try again.')
+      setError(`Failed to upload image. Please try again. / ${error}`)
     } finally {
       setIsUploading(false)
     }
   }
 
-  const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (e: DragEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
     setDraggingOver(false)
 
     const file = e.dataTransfer.files?.[0]
-    if (!file) return
+    if (!file) {
+      return
+    }
     if (file.size > MAX_IMAGE_SIZE) {
       setError(`File size exceeds ${convertToMb(file.size)} limit`)
       return
@@ -100,25 +103,24 @@ export const ImageUploader = (props: ImageUploaderProps) => {
       onUploadComplete(url)
       setUploadComplete(true)
     } catch (error) {
-      console.log('Error uploading file: ', error)
-      setError('Failed to upload image. Please try again.')
+      setError(`Failed to upload image. Please try again. / ${error}`)
     } finally {
       setIsUploading(false)
     }
   }
 
-  const stopEvent = (e: DragEvent<HTMLInputElement>) => {
+  const stopEvent = (e: DragEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
   }
-  const handleDragEnter = (e: DragEvent<HTMLInputElement>) => {
+  const handleDragEnter = (e: DragEvent<HTMLButtonElement>) => {
     stopEvent(e)
   }
-  const handleDragLeave = (e: DragEvent<HTMLInputElement>) => {
+  const handleDragLeave = (e: DragEvent<HTMLButtonElement>) => {
     stopEvent(e)
     setDraggingOver(false)
   }
-  const handleDragOver = (e: DragEvent<HTMLInputElement>) => {
+  const handleDragOver = (e: DragEvent<HTMLButtonElement>) => {
     stopEvent(e)
     setDraggingOver(true)
   }
@@ -129,15 +131,15 @@ export const ImageUploader = (props: ImageUploaderProps) => {
 
   return (
     <div className="mx-auto w-full">
-      <div
+      <button
+        type="button"
         onDrop={handleDrop}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onClick={handleClick}
-        onKeyDown={() => null}
         className={cn(
-          'relative flex aspect-3/2 cursor-pointer flex-col items-center justify-center rounded-md',
+          'relative flex aspect-3/2 w-full cursor-pointer flex-col items-center justify-center rounded-md',
           error && 'border-2 border-red-500 border-dotted',
           isUploading && 'pointer-events-none opacity-50',
           draggingOver && 'opacity-50',
@@ -154,6 +156,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
           multiple={false}
         />
         {preview ? (
+          // biome-ignore lint/nursery/noImgElement: <explanation>
           <img
             src={preview}
             alt="Preview"
@@ -172,7 +175,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
           </div>
         )}
-      </div>
+      </button>
       {error && <p className="mt-2 text-red-500 text-sm">{error}</p>}
     </div>
   )

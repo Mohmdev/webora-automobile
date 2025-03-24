@@ -64,7 +64,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
         </div>
         <div className="mt-4 md:mt-0 md:w-1/2 md:pl-8">
           <div className="flex flex-col items-start md:flex-row md:items-center">
-            {make ? (
+            {make && make.name !== 'UNKNOWN' ? (
               <Image
                 src={make.image}
                 alt={make.name}
@@ -130,7 +130,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
                   {formatUlezCompliance(ulezCompliance)}
                 </p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
@@ -140,7 +140,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
               {vrm ? (
                 <p className="mt-2 font-medium text-sm">{vrm}</p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
@@ -152,7 +152,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
                   {formatBodyType(bodyType)}
                 </p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
@@ -164,7 +164,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
                   {formatFuelType(fuelType)}
                 </p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
@@ -176,7 +176,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
                   {formatTransmission(transmission)}
                 </p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
@@ -188,7 +188,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
                   {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
                 </p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
@@ -198,7 +198,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
               {seats ? (
                 <p className="mt-2 font-medium text-sm">{seats}</p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}
@@ -208,7 +208,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
               {doors ? (
                 <p className="mt-2 font-medium text-sm">{doors}</p>
               ) : done ? (
-                <p className="mt-2 font-medium text-sm">UNKNOWN</p>
+                <p className="mt-2 font-medium text-sm">-</p>
               ) : (
                 <Skeleton className="mx-auto mt-2 h-4 w-16" />
               )}

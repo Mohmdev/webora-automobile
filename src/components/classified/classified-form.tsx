@@ -30,12 +30,13 @@ interface ClassifiedFormProps {
   classified: ClassifiedWithImages
 }
 
+const UPLOADS_REGEX = /uploads\/.+/
+
 function extractKey(url: string) {
   const nextUrl = new URL(url)
   nextUrl.href = url
 
-  const regex = /uploads\/.+/
-  const match = url.match(regex)
+  const match = url.match(UPLOADS_REGEX)
 
   return match ? match[0] : url
 }

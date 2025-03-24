@@ -80,7 +80,9 @@ export const CustomPagination = (props: PaginationProps) => {
             href={createPageUrl(currentPage - 1)}
             onClick={(e) => {
               e.preventDefault()
-              if (currentPage > 1) setPage(currentPage - 1)
+              if (currentPage > 1) {
+                setPage(currentPage - 1)
+              }
             }}
           />
         </PaginationItem>
@@ -160,7 +162,9 @@ export const CustomPagination = (props: PaginationProps) => {
             href={createPageUrl(currentPage + 1)}
             onClick={(e) => {
               e.preventDefault()
-              if (currentPage < totalPages) setPage(currentPage + 1)
+              if (currentPage < totalPages) {
+                setPage(currentPage + 1)
+              }
             }}
           />
         </PaginationItem>

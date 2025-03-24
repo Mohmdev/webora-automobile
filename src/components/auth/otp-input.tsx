@@ -43,7 +43,9 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
     const inputRefs = useRef<HTMLInputElement[]>([])
     function addInputRefs(index: number) {
       return (refs: HTMLInputElement) => {
-        if (refs) inputRefs.current[index] = refs
+        if (refs) {
+          inputRefs.current[index] = refs
+        }
       }
     }
 
@@ -56,8 +58,10 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
       index: number
     ) {
       const inputValues = event.target.value.split('')
-      inputRefs.current[index].value = inputValues[inputValues.length - 1]
-      if (index < length - 1) inputRefs?.current[index + 1].focus()
+      inputRefs.current[index].value = inputValues.at(-1) || ''
+      if (index < length - 1) {
+        inputRefs?.current[index + 1].focus()
+      }
       setPinValue()
     }
 
@@ -85,27 +89,35 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
       }
     }
 
-    function handleKeyDown(event: React.KeyboardEvent, index: number) {
-      const currentValue = inputRefs.current[index].value
-      if (event.key === 'ArrowRight' && index < length - 1) {
+    function handleArrowNavigation(key: string, index: number) {
+      if (key === 'ArrowRight' && index < length - 1) {
         inputRefs.current[index + 1].focus()
       }
 
-      if (event.key === 'ArrowLeft' && index > 0) {
+      if (key === 'ArrowLeft' && index > 0) {
         inputRefs.current[index - 1].focus()
+      }
+    }
+
+    function handleBackspace(currentValue: string, index: number) {
+      if (currentValue !== '') {
+        inputRefs.current[index].value = ''
+      } else if (index > 0) {
+        inputRefs.current[index - 1].value = ''
+        inputRefs.current[index - 1].focus()
+      }
+      setPinValue()
+    }
+
+    function handleKeyDown(event: React.KeyboardEvent, index: number) {
+      const currentValue = inputRefs.current[index].value
+
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        handleArrowNavigation(event.key, index)
       }
 
       if (event.key === 'BackSpace') {
-        if (currentValue !== '') {
-          inputRefs.current[index].value = ''
-        } else {
-          if (index === 0) {
-            return
-          }
-          inputRefs.current[index - 1].value = ''
-          inputRefs.current[index - 1].focus()
-        }
-        setPinValue()
+        handleBackspace(currentValue, index)
       }
     }
     return (
@@ -138,6 +150,7 @@ export const OneTimePasswordInput = forwardRef<HTMLInputElement, PinCodeProps>(
                   inputClassName,
                   '[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
                 )}
+                {...rest}
               />
             )
           })}

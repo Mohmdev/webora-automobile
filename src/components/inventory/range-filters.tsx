@@ -37,7 +37,7 @@ export const RangeFilter = (props: RangeFilterProps) => {
 
     do {
       if (increment) {
-        iterator = iterator + increment
+        iterator += increment
       } else {
         iterator++
       }

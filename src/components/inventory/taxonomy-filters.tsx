@@ -21,7 +21,9 @@ export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
       for (const [k, v] of Object.entries(
         searchParams as Record<string, string>
       )) {
-        if (v) params.set(k, v as string)
+        if (v) {
+          params.set(k, v as string)
+        }
       }
 
       const url = new URL(endpoints.taxonomy, window.location.href)

@@ -168,12 +168,14 @@ export const DragAndDrop = (props: DragAndDropProps) => {
           onChange={handleUpload}
         />
 
-        <div
+        <button
+          type="button"
           onClick={handleClick}
           className={cn(
             'flex h-full w-full flex-col items-center justify-center text-center font-medium',
             isUploading || (isDraggingOver && 'opacity-75')
           )}
+          aria-label="Upload Files"
           onKeyDown={handleClick}
         >
           <ImagePlus className="mx-auto mb-3 h-auto w-9 text-gray-400" />
@@ -184,7 +186,7 @@ export const DragAndDrop = (props: DragAndDropProps) => {
           <p className="text-muted/75 text-xs">
             PNG, JPG, WEBP, up to {convertToMb(MAX_IMAGE_SIZE)} each.
           </p>
-        </div>
+        </button>
         {isUploading && (
           <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50">
             <Loader2 className="h-6 w-6 animate-spin" />

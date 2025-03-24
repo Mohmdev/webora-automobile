@@ -58,10 +58,11 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
     <TableHeader>
       <TableRow className="border-primary-800 hover:bg-transparent">
         <TableHead className="w-[80px] text-muted">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('id')}
-            onKeyDown={() => handleSort('id')}
+            aria-label={`Sort by ID ${sort === 'id' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             ID
             <SortIcon<CustomerKeys>
@@ -69,13 +70,14 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="id"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="w-[150px] text-muted">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('status')}
-            onKeyDown={() => handleSort('status')}
+            aria-label={`Sort by Status ${sort === 'status' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             Status
             <SortIcon<CustomerKeys>
@@ -83,13 +85,14 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="status"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="w-[150px] text-muted">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('firstName')}
-            onKeyDown={() => handleSort('firstName')}
+            aria-label={`Sort by Name ${sort === 'firstName' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             Name
             <SortIcon<CustomerKeys>
@@ -97,13 +100,14 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="firstName"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="w-[150px] text-muted">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('email')}
-            onKeyDown={() => handleSort('email')}
+            aria-label={`Sort by Email ${sort === 'email' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             Email
             <SortIcon<CustomerKeys>
@@ -111,13 +115,14 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="email"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="w-[150px] text-muted">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('mobile')}
-            onKeyDown={() => handleSort('mobile')}
+            aria-label={`Sort by Mobile ${sort === 'mobile' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             Mobile
             <SortIcon<CustomerKeys>
@@ -125,14 +130,15 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="mobile"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="max-w-[150px] text-muted">Classified</TableHead>
         <TableHead className="hidden text-muted md:table-cell">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('createdAt')}
-            onKeyDown={() => handleSort('createdAt')}
+            aria-label={`Sort by Date Created ${sort === 'createdAt' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             Date Created
             <SortIcon<CustomerKeys>
@@ -140,13 +146,14 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="createdAt"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="hidden text-muted md:table-cell">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('updatedAt')}
-            onKeyDown={() => handleSort('updatedAt')}
+            aria-label={`Sort by Date Updated ${sort === 'updatedAt' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             Date Updated
             <SortIcon<CustomerKeys>
@@ -154,13 +161,14 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="updatedAt"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="text-muted">
-          <div
-            className="flex cursor-pointer items-center gap-2"
+          <button
+            type="button"
+            className="flex items-center gap-2"
             onClick={() => handleSort('bookingDate')}
-            onKeyDown={() => handleSort('bookingDate')}
+            aria-label={`Sort by Booking Date ${sort === 'bookingDate' ? (order === 'asc' ? 'descending' : 'ascending') : 'ascending'}`}
           >
             Booking Date
             <SortIcon<CustomerKeys>
@@ -168,7 +176,7 @@ export const CustomersTableHeader = (props: CustomersTableHeaderProps) => {
               currentOrder={order as 'asc' | 'desc' | null}
               sort="bookingDate"
             />
-          </div>
+          </button>
         </TableHead>
         <TableHead className="w-[100px] text-muted">Actions</TableHead>
       </TableRow>

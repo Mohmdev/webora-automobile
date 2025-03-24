@@ -62,7 +62,9 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
   const onSelectDate: SubmitHandler<SelectDateType> = (data) => {
     startTransition(async () => {
       const valid = await form.trigger()
-      if (!valid) return
+      if (!valid) {
+        return
+      }
       await new Promise((resolve) => setTimeout(resolve, 500))
 
       const url = new URL(

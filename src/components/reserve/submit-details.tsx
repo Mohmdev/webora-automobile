@@ -59,7 +59,9 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
   const onSubmitDetails: SubmitHandler<SubmitDetailsSchemaType> = (data) => {
     startTransition(async () => {
       const valid = await form.trigger()
-      if (!valid) return
+      if (!valid) {
+        return
+      }
       await new Promise((resolve) => setTimeout(resolve, 500))
 
       const handoverDate = decodeURIComponent(

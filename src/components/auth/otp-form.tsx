@@ -31,7 +31,7 @@ export const OtpForm = () => {
   const onSubmit: SubmitHandler<OtpSchemaType> = (data) => {
     startSubmitTransition(async () => {
       const result = await completeChallengeAction(data.code)
-      console.log('first', { result })
+      // console.log('first', { result })
 
       if (result?.success) {
         router.push(routes.admin.dashboard)
@@ -69,7 +69,9 @@ export const OtpForm = () => {
   }
 
   useEffect(() => {
-    if (isCodePending) setSendButtonText('Sending...')
+    if (isCodePending) {
+      setSendButtonText('Sending...')
+    }
   }, [isCodePending])
 
   return (

@@ -59,12 +59,16 @@ export const CreateClassifiedDialog = () => {
   const onImageSubmit: SubmitHandler<SingleImageType> = (data) => {
     startUploadTransition(async () => {
       const responseMessage = await generateClassified(data.image)
-      if (!responseMessage) return
+      if (!responseMessage) {
+        return
+      }
       setMessages((currentMessages) => [...currentMessages, responseMessage])
       for await (const value of readStreamableValue(
         responseMessage.classified
       )) {
-        if (value) createForm.reset(value)
+        if (value) {
+          createForm.reset(value)
+        }
       }
     })
   }
@@ -72,7 +76,15 @@ export const CreateClassifiedDialog = () => {
   const onCreateSubmit: SubmitHandler<StreamableSkeletonProps> = (data) => {
     startCreateTransition(async () => {
       setMessages([])
-      const { success, message } = await createClassifiedAction(data)
+      const { success, message, error } = await createClassifiedAction(data)
+
+      if (error) {
+        toast({
+          title: 'Error',
+          description: error,
+          type: 'background',
+        })
+      }
 
       if (!success) {
         toast({

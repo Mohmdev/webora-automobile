@@ -5,6 +5,7 @@ import { generateThumbHashFromFile } from '@/lib/thumbhash-client'
 import { Uploader } from '@/lib/uploader'
 import { cn } from '@/lib/utils'
 import dynamic from 'next/dynamic'
+import type React from 'react'
 import { useCallback, useState } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { createPngDataUri } from 'unlazy/thumbhash'
@@ -54,7 +55,9 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
   const handleItemProgress = useCallback((updates: ImageProgress) => {
     setProgress((prev) => {
       const index = prev.findIndex((item) => item.uuid === updates.uuid)
-      if (index === -1) return [...prev, updates]
+      if (index === -1) {
+        return [...prev, updates]
+      }
       const newProgress = [...prev]
       newProgress[index] = { ...newProgress[index], ...updates }
       return newProgress
@@ -116,6 +119,7 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
           })
           .onError((error: Error) => {
             setIsUploading(false)
+            // biome-ignore lint/suspicious/noConsole: <explanation>
             console.error(error)
           })
           .onComplete(() => {

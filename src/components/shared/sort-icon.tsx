@@ -9,7 +9,9 @@ interface SortIconProps<TKeys> {
 export function SortIcon<TKeys>(props: SortIconProps<TKeys>) {
   const { sort, currentOrder, currentSort } = props
 
-  if (sort !== currentSort) return <ArrowUpDown className="h-4 w-4" />
+  if (sort !== currentSort) {
+    return <ArrowUpDown className="h-4 w-4" />
+  }
 
   return currentOrder === 'asc' ? (
     <ArrowUpNarrowWide className="h-4 w-4" />

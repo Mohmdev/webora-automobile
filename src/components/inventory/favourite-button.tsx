@@ -23,8 +23,11 @@ export const FavouriteButton = (props: FavouriteButtonProps) => {
       json: { id },
     })
 
-    if (ids.includes(id)) setIsFavourite(true)
-    else setIsFavourite(false)
+    if (ids.includes(id)) {
+      setIsFavourite(true)
+    } else {
+      setIsFavourite(false)
+    }
     setTimeout(() => router.refresh(), 250)
   }
 

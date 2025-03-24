@@ -40,7 +40,9 @@ export const NewsletterForm = () => {
 
   const handleFormAction = async (formData: FormData) => {
     const valid = await form.trigger()
-    if (!valid) return
+    if (!valid) {
+      return
+    }
     formAction(formData)
   }
 

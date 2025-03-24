@@ -12,16 +12,21 @@ export const ClassifiedTaxonomyAISchema = z.object({
   year: z.number().describe('The year of the vehicle'),
   makeId: z.number().nullable().describe('The make ID of the vehicle'),
   make: z.string().describe('The make of the vehicle'),
-  modelId: z.number().nullable().describe('The model ID of the vehicle'),
+  modelId: z
+    .number()
+    .nullable()
+    .describe('The model ID of the vehicle. if unable to detect use "-"'),
   model: z.string().describe('The model of the vehicle'),
   modelVariantId: z
     .number()
     .nullable()
-    .describe('The model variant ID of the vehicle'),
+    .describe(
+      'The model variant ID of the vehicle. if unable to detect use "-"'
+    ),
   modelVariant: z
     .string()
     .nullable()
-    .describe('The model variant of the vehicle'),
+    .describe('The model variant of the vehicle. if unable to detect use "-"'),
 })
 
 export const ClassifiedDetailsAISchema = z.object({
