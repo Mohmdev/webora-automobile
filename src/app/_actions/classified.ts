@@ -57,7 +57,14 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
       }
     }
 
-    let title = `${data.year} ${make.name} ${model.name}`
+    // Create a filtered array of title parts
+    const createTitleParts = [
+      data.year && data.year > 0 ? data.year.toString() : null,
+      make.name !== 'UNKNOWN' ? make.name : null,
+      model.name !== 'UNKNOWN' ? model.name : null,
+    ].filter((part) => part && part.trim().length > 0)
+
+    let title = createTitleParts.join(' ').trim()
 
     let modelVariant = null
     if (data?.modelVariantId) {
@@ -65,8 +72,12 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
         where: { id: data.modelVariantId as number },
       })
 
-      if (modelVariant) {
-        title = `${title} ${modelVariant.name}`
+      if (
+        modelVariant &&
+        modelVariant.name !== '-' &&
+        modelVariant.name !== 'UNKNOWN'
+      ) {
+        title = `${title} ${modelVariant.name}`.trim()
       }
     }
 
@@ -154,15 +165,26 @@ export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
       where: { id: modelId as number },
     })
 
-    let title = `${data.year} ${make?.name} ${model?.name}`
+    // Create a filtered array of title parts
+    const updateTitleParts = [
+      data.year && Number(data.year) > 0 ? data.year.toString() : null,
+      make?.name !== 'UNKNOWN' ? make?.name : null,
+      model?.name !== 'UNKNOWN' ? model?.name : null,
+    ].filter((part) => part && part.trim().length > 0)
+
+    let title = updateTitleParts.join(' ').trim()
 
     if (modelVariantId) {
       const modelVariant = await prisma.modelVariant.findUnique({
         where: { id: modelVariantId },
       })
 
-      if (modelVariant) {
-        title = `${title} ${modelVariant.name}`
+      if (
+        modelVariant &&
+        modelVariant.name !== '-' &&
+        modelVariant.name !== 'UNKNOWN'
+      ) {
+        title = `${title} ${modelVariant.name}`.trim()
       }
     }
 

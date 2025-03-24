@@ -56,8 +56,22 @@ export async function generateClassified(
       ] as CoreMessage[],
     })
 
-    classified.title =
-      `${taxonomy.year} ${taxonomy.make} ${taxonomy.model} ${taxonomy.modelVariant ? ` ${taxonomy.modelVariant}` : ''}`.trim()
+    const year = taxonomy.year ? taxonomy.year : null
+    const make = taxonomy.make ? taxonomy.make : null
+    const model = taxonomy.model ? taxonomy.model : null
+    const modelVariant = taxonomy.modelVariant ? taxonomy.modelVariant : null
+
+    // Create a filtered array of title parts, excluding null/undefined/empty values and invalid year (-1)
+    const titleParts = [
+      year && year > 0 ? year.toString() : null,
+      make || null,
+      model || null,
+      // Filter out '-' values from modelVariant
+      modelVariant && modelVariant !== '-' ? modelVariant : null,
+    ].filter((part) => part && part.trim().length > 0)
+
+    // Join the valid parts with spaces
+    classified.title = titleParts.join(' ').trim()
 
     const foundTaxonomy = await mapToTaxonomyOrCreate({
       year: taxonomy.year,
@@ -101,8 +115,8 @@ export async function generateClassified(
             classified.modelId = unknownModel.id
           }
         }
-      } catch (error) {
-        console.error('Error finding UNKNOWN make/model:', error)
+      } catch (_error) {
+        // console.error('Error finding UNKNOWN make/model:', error)
       }
     }
 

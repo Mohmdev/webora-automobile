@@ -37,9 +37,7 @@ export const ClassifiedDetailsAISchema = z.object({
     ),
   vrm: z
     .string()
-    .describe(
-      "The vehicle registration mark. If unable to detect use 'UNKNOWN'"
-    ),
+    .describe("The vehicle registration mark. If unable to detect use '-'"),
   odoReading: z.number().describe('The odometer reading of the vehicle'),
   doors: z.number().describe('The number of doors on the vhicle'),
   seats: z.number().describe('The number of seats in the vhicle'),

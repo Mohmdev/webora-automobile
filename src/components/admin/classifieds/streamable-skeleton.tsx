@@ -46,6 +46,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
     make,
     done,
   } = props
+
   return (
     <div className="container mx-auto flex flex-col py-12">
       <div className="flex flex-col md:flex-row">
@@ -79,7 +80,7 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
             )}
             <div>
               {title ? (
-                <h1 className="font-bold text-2xl">{title}</h1>
+                <h1 className="font-bold text-2xl">{title.trim()}</h1>
               ) : (
                 <Skeleton className="mb-2 h-8 w-64" />
               )}
@@ -196,14 +197,13 @@ export const StreamableSkeleton = (props: StreamableSkeletonProps) => {
             <div className="rounded-lg bg-gray-100 p-4 text-center shadow-xs">
               <GaugeIcon className="mx-auto h-6 w-6 text-zinc-400" />
               {odoReading !== undefined &&
-                odoReading !== null &&
-                odoReading > 0 &&
-                odoUnit && (
-                  <p className="mt-2 font-medium text-sm">
-                    {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
-                  </p>
-                )}
-              {(!odoReading || odoReading === 0 || !odoUnit) && done && (
+              odoReading !== null &&
+              odoReading > 0 &&
+              odoUnit ? (
+                <p className="mt-2 font-medium text-sm">
+                  {formatNumber(odoReading)} {formatOdometerUnit(odoUnit)}
+                </p>
+              ) : (
                 <p className="mt-2 font-medium text-sm">-</p>
               )}
               {(!odoReading || odoReading === 0 || !odoUnit) && !done && (

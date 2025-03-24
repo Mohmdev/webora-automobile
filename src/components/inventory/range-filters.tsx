@@ -51,7 +51,10 @@ export const RangeFilter = (props: RangeFilterProps) => {
           value: iterator,
         })
       } else if (thousandSeparator) {
-        state.push({ label: formatNumber(iterator), value: iterator })
+        state.push({
+          label: formatNumber(iterator) ?? iterator.toString(),
+          value: iterator,
+        })
       } else {
         state.push({ label: iterator.toString(), value: iterator })
       }
