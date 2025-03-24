@@ -2,7 +2,7 @@
 
 import { randomInt } from 'node:crypto'
 import { auth } from '@/auth'
-import type { StreamableSkeletonProps } from '@/components/admin/classifieds/streamable-skeleton'
+import type { GenerativeStreamProps } from '@/components/admin/classifieds/generative-stream'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
 import { generateThumbHashFromSrcUrl } from '@/lib/thumbhash-server'
@@ -135,7 +135,7 @@ const generateSlug = async (
 
 // Helper function to create classified
 const createClassified = async (
-  data: StreamableSkeletonProps,
+  data: GenerativeStreamProps,
   slug: string,
   title: string,
   make: Make,
@@ -178,7 +178,7 @@ const createClassified = async (
   })
 }
 
-export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
+export const createClassifiedAction = async (data: GenerativeStreamProps) => {
   let success = false
   let classifiedId: number | null = null
 

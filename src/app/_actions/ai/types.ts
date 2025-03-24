@@ -1,4 +1,4 @@
-import type { StreamableSkeletonProps } from '@/components/admin/classifieds/streamable-skeleton'
+import type { GenerativeStreamProps } from '@/components/admin/classifieds/generative-stream'
 import type { UserContent } from 'ai'
 import type { StreamableValue } from 'ai/rsc'
 import type { ReactNode } from 'react'
@@ -14,5 +14,5 @@ export type ClientMessage = {
   id: number
   role: 'user' | 'assistant'
   display: ReactNode
-  classified: StreamableValue<StreamableSkeletonProps>
+  classified: StreamableValue<GenerativeStreamProps>
 }

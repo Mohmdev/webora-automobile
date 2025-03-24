@@ -24,8 +24,8 @@ import { Loader2 } from 'lucide-react'
 import { useState, useTransition } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import type { GenerativeStreamProps } from './generative-stream'
 import { ImageUploader } from './single-image-uploader'
-import type { StreamableSkeletonProps } from './streamable-skeleton'
 
 export const CreateClassifiedDialog = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -38,7 +38,7 @@ export const CreateClassifiedDialog = () => {
     resolver: zodResolver(SingleImageSchema),
   })
 
-  const createForm = useForm<StreamableSkeletonProps>({
+  const createForm = useForm<GenerativeStreamProps>({
     resolver: zodResolver(
       ClassifiedAISchema.extend({
         make: z.object({
@@ -73,7 +73,7 @@ export const CreateClassifiedDialog = () => {
     })
   }
 
-  const onCreateSubmit: SubmitHandler<StreamableSkeletonProps> = (data) => {
+  const onCreateSubmit: SubmitHandler<GenerativeStreamProps> = (data) => {
     startCreateTransition(async () => {
       setMessages([])
       const { success, message, error } = await createClassifiedAction(data)

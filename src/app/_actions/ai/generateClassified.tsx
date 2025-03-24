@@ -1,9 +1,9 @@
 'use server'
 
 import {
-  StreamableSkeleton,
-  type StreamableSkeletonProps,
-} from '@/components/admin/classifieds/streamable-skeleton'
+  GenerativeStream,
+  type GenerativeStreamProps,
+} from '@/components/admin/classifieds/generative-stream'
 import { env } from '@/env'
 import { mapToTaxonomyOrCreate } from '@/lib/ai-utils'
 import { prisma } from '@/lib/prisma'
@@ -26,11 +26,11 @@ export async function generateClassified(
   image: string
 ): Promise<ClientMessage | null> {
   const uiStream = createStreamableUI()
-  const valueStream = createStreamableValue<StreamableSkeletonProps>()
+  const valueStream = createStreamableValue<GenerativeStreamProps>()
 
-  let classified = { image } as StreamableSkeletonProps
+  let classified = { image } as GenerativeStreamProps
 
-  uiStream.update(<StreamableSkeleton {...classified} />)
+  uiStream.update(<GenerativeStream {...classified} />)
 
   async function processEvents() {
     await processTaxonomy()
@@ -63,7 +63,7 @@ export async function generateClassified(
 
     generateTitle(taxonomy)
     await updateClassifiedWithTaxonomy(taxonomy)
-    uiStream.update(<StreamableSkeleton {...classified} />)
+    uiStream.update(<GenerativeStream {...classified} />)
   }
 
   function generateTitle(taxonomy: z.infer<typeof ClassifiedTaxonomyAISchema>) {
@@ -184,7 +184,7 @@ export async function generateClassified(
       ...details,
     }
 
-    uiStream.update(<StreamableSkeleton done={true} {...classified} />)
+    uiStream.update(<GenerativeStream done={true} {...classified} />)
     valueStream.update(classified)
   }
 
