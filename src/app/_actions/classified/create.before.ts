@@ -8,10 +8,9 @@ import { prisma } from '@/lib/prisma'
 import { generateThumbHashFromSrcUrl } from '@/lib/thumbhash-server'
 import { CurrencyCode } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
-import { forbidden, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import slugify from 'slugify'
 import { createPngDataUri } from 'unlazy/thumbhash'
-import type { UpdateClassifiedType } from '../schemas/classified.schema'
 
 export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
   const session = await auth()
@@ -141,138 +140,5 @@ export const createClassifiedAction = async (data: StreamableSkeletonProps) => {
     redirect(routes.admin.editClassified(classifiedId))
   } else {
     return { success: false, message: 'Failed to create classified' }
-  }
-}
-
-export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
-  const session = await auth()
-  if (!session) {
-    forbidden()
-  }
-
-  let success = false
-
-  try {
-    const makeId = Number(data.make)
-    const modelId = Number(data.model)
-    const modelVariantId = data.modelVariant ? Number(data.modelVariant) : null
-
-    const make = await prisma.make.findUnique({
-      where: { id: makeId as number },
-    })
-
-    const model = await prisma.model.findUnique({
-      where: { id: modelId as number },
-    })
-
-    // Create a filtered array of title parts
-    const updateTitleParts = [
-      data.year && Number(data.year) > 0 ? data.year.toString() : null,
-      make?.name !== 'UNKNOWN' ? make?.name : null,
-      model?.name !== 'UNKNOWN' ? model?.name : null,
-    ].filter((part) => part && part.trim().length > 0)
-
-    let title = updateTitleParts.join(' ').trim()
-
-    if (modelVariantId) {
-      const modelVariant = await prisma.modelVariant.findUnique({
-        where: { id: modelVariantId },
-      })
-
-      if (
-        modelVariant &&
-        modelVariant.name !== '-' &&
-        modelVariant.name !== 'UNKNOWN'
-      ) {
-        title = `${title} ${modelVariant.name}`.trim()
-      }
-    }
-
-    const slug = slugify(`${title} ${data.vrm}`)
-
-    const [classified, images] = await prisma.$transaction(
-      async (prisma) => {
-        await prisma.image.deleteMany({
-          where: { classifiedId: data.id },
-        })
-
-        const imagesData = await Promise.all(
-          data.images.map(async ({ src }, index) => {
-            const hash = await generateThumbHashFromSrcUrl(data.images[0].src)
-            const uri = createPngDataUri(hash)
-            return {
-              classifiedId: data.id,
-              isMain: !index,
-              blurhash: uri,
-              src,
-              alt: `${title} ${index + 1}`,
-            }
-          })
-        )
-
-        const images = await prisma.image.createManyAndReturn({
-          data: imagesData,
-        })
-
-        const classified = await prisma.classified.update({
-          where: { id: data.id },
-          data: {
-            slug,
-            title,
-            year: Number(data.year),
-            makeId,
-            modelId,
-            ...(modelVariantId && { modelVariantId }),
-            vrm: data.vrm,
-            price: data.price * 100,
-            currency: data.currency,
-            odoReading: data.odoReading,
-            odoUnit: data.odoUnit,
-            fuelType: data.fuelType,
-            bodyType: data.bodyType,
-            transmission: data.transmission,
-            colour: data.colour,
-            ulezCompliance: data.ulezCompliance,
-            description: data.description,
-            doors: data.doors,
-            seats: data.seats,
-            status: data.status,
-            images: { set: images.map((image) => ({ id: image.id })) },
-          },
-        })
-
-        return [classified, images]
-      },
-      { timeout: 10000 }
-    )
-
-    if (classified && images) {
-      success = true
-    }
-  } catch (err) {
-    if (err instanceof Error) {
-      return { success: false, message: err.message }
-    }
-    return { success: false, message: 'Something went wrong' }
-  }
-
-  if (success) {
-    revalidatePath(routes.admin.classifieds)
-    redirect(routes.admin.classifieds)
-  } else {
-    return { success: false, message: 'Failed to update classified' }
-  }
-}
-
-export const deleteClassifiedAction = async (id: number) => {
-  try {
-    await prisma.classified.delete({ where: { id } })
-    revalidatePath(routes.admin.classifieds)
-    return { success: true, message: 'Classified deleted' }
-  } catch (error) {
-    if (error instanceof Error) {
-      return { success: false, message: error.message }
-    }
-    return { success: false, message: 'Something went wrong' }
   }
 }

@@ -8,18 +8,14 @@ import { env } from '@/env'
 import { mapToTaxonomyOrCreate } from '@/lib/ai-utils'
 import { prisma } from '@/lib/prisma'
 import { createOpenAI } from '@ai-sdk/openai'
-import { type CoreMessage, type UserContent, generateObject } from 'ai'
-import {
-  type StreamableValue,
-  createAI,
-  createStreamableUI,
-  createStreamableValue,
-} from 'ai/rsc'
-import type { ReactNode } from 'react'
+import { type CoreMessage, generateObject } from 'ai'
+import { createStreamableUI, createStreamableValue } from 'ai/rsc'
+import type { z } from 'zod'
 import {
   ClassifiedDetailsAISchema,
   ClassifiedTaxonomyAISchema,
-} from '../schemas/classified-ai.schema'
+} from '../../schemas/classified-ai.schema'
+import type { ClientMessage } from './types'
 
 const openai = createOpenAI({
   apiKey: env.OPENAI_API_KEY,
@@ -37,6 +33,15 @@ export async function generateClassified(
   uiStream.update(<StreamableSkeleton {...classified} />)
 
   async function processEvents() {
+    await processTaxonomy()
+    await processDetails()
+
+    // Complete the streams
+    uiStream.done()
+    valueStream.done()
+  }
+
+  async function processTaxonomy() {
     const { object: taxonomy } = await generateObject({
       model: openai('gpt-4o-mini-2024-07-18', { structuredOutputs: true }),
       schema: ClassifiedTaxonomyAISchema,
@@ -56,23 +61,45 @@ export async function generateClassified(
       ] as CoreMessage[],
     })
 
-    const year = taxonomy.year ? taxonomy.year : null
-    const make = taxonomy.make ? taxonomy.make : null
-    const model = taxonomy.model ? taxonomy.model : null
-    const modelVariant = taxonomy.modelVariant ? taxonomy.modelVariant : null
+    generateTitle(taxonomy)
+    await updateClassifiedWithTaxonomy(taxonomy)
+    uiStream.update(<StreamableSkeleton {...classified} />)
+  }
 
-    // Create a filtered array of title parts, excluding null/undefined/empty values and invalid year (-1)
-    const titleParts = [
-      year && year > 0 ? year.toString() : null,
-      make || null,
-      model || null,
-      // Filter out '-' values from modelVariant
-      modelVariant && modelVariant !== '-' ? modelVariant : null,
-    ].filter((part) => part && part.trim().length > 0)
+  function generateTitle(taxonomy: z.infer<typeof ClassifiedTaxonomyAISchema>) {
+    const parts = getTitleParts(taxonomy)
+    classified.title = parts.join(' ').trim()
+  }
 
-    // Join the valid parts with spaces
-    classified.title = titleParts.join(' ').trim()
+  function getTitleParts(taxonomy: z.infer<typeof ClassifiedTaxonomyAISchema>) {
+    const parts: string[] = []
 
+    // Add year if valid
+    if (taxonomy.year && taxonomy.year > 0) {
+      parts.push(taxonomy.year.toString())
+    }
+
+    // Add make if present
+    if (taxonomy.make) {
+      parts.push(taxonomy.make)
+    }
+
+    // Add model if present
+    if (taxonomy.model) {
+      parts.push(taxonomy.model)
+    }
+
+    // Add modelVariant if valid
+    if (taxonomy.modelVariant && taxonomy.modelVariant !== '-') {
+      parts.push(taxonomy.modelVariant)
+    }
+
+    return parts
+  }
+
+  async function updateClassifiedWithTaxonomy(
+    taxonomy: z.infer<typeof ClassifiedTaxonomyAISchema>
+  ) {
     const foundTaxonomy = await mapToTaxonomyOrCreate({
       year: taxonomy.year,
       make: taxonomy.make,
@@ -81,47 +108,58 @@ export async function generateClassified(
     })
 
     if (foundTaxonomy) {
-      const make = await prisma.make.findUnique({
-        where: { id: foundTaxonomy.makeId },
-      })
-
-      if (make) {
-        classified = {
-          ...classified,
-          ...foundTaxonomy,
-          make,
-          makeId: make.id,
-        }
-      }
+      await updateWithFoundTaxonomy(foundTaxonomy)
     } else {
-      // If we couldn't map to a taxonomy, try to find UNKNOWN entries as fallback
-      try {
-        const unknownMake = await prisma.make.findFirst({
-          where: { name: 'UNKNOWN' },
-        })
+      await fallbackToUnknownTaxonomy()
+    }
+  }
 
-        if (unknownMake) {
-          const unknownModel = await prisma.model.findFirst({
-            where: {
-              makeId: unknownMake.id,
-              name: 'UNKNOWN',
-            },
-          })
+  async function updateWithFoundTaxonomy(
+    foundTaxonomy: NonNullable<
+      Awaited<ReturnType<typeof mapToTaxonomyOrCreate>>
+    >
+  ) {
+    const make = await prisma.make.findUnique({
+      where: { id: foundTaxonomy.makeId },
+    })
 
-          if (unknownModel) {
-            // Just update the make/model parts of classified
-            classified.make = unknownMake
-            classified.makeId = unknownMake.id
-            classified.modelId = unknownModel.id
-          }
-        }
-      } catch (_error) {
-        // console.error('Error finding UNKNOWN make/model:', error)
+    if (make) {
+      classified = {
+        ...classified,
+        ...foundTaxonomy,
+        make,
+        makeId: make.id,
       }
     }
+  }
 
-    uiStream.update(<StreamableSkeleton {...classified} />)
+  async function fallbackToUnknownTaxonomy() {
+    try {
+      const unknownMake = await prisma.make.findFirst({
+        where: { name: 'UNKNOWN' },
+      })
 
+      if (unknownMake) {
+        const unknownModel = await prisma.model.findFirst({
+          where: {
+            makeId: unknownMake.id,
+            name: 'UNKNOWN',
+          },
+        })
+
+        if (unknownModel) {
+          // Just update the make/model parts of classified
+          classified.make = unknownMake
+          classified.makeId = unknownMake.id
+          classified.modelId = unknownModel.id
+        }
+      }
+    } catch (_error) {
+      // console.error('Error finding UNKNOWN make/model:', error)
+    }
+  }
+
+  async function processDetails() {
     const { object: details } = await generateObject({
       model: openai('gpt-4o-mini-2024-07-18', { structuredOutputs: true }),
       schema: ClassifiedDetailsAISchema,
@@ -148,8 +186,6 @@ export async function generateClassified(
 
     uiStream.update(<StreamableSkeleton done={true} {...classified} />)
     valueStream.update(classified)
-    uiStream.done()
-    valueStream.done()
   }
 
   await processEvents()
@@ -161,25 +197,3 @@ export async function generateClassified(
     classified: valueStream.value,
   }
 }
-
-type ServerMessage = {
-  id?: number
-  name?: string | undefined
-  role: 'user' | 'assistant' | 'system'
-  content: UserContent
-}
-
-export type ClientMessage = {
-  id: number
-  role: 'user' | 'assistant'
-  display: ReactNode
-  classified: StreamableValue<StreamableSkeletonProps>
-}
-
-export const AI = createAI({
-  initialUIState: [] as ClientMessage[],
-  initialAIState: [] as ServerMessage[],
-  actions: {
-    generateClassified,
-  },
-})

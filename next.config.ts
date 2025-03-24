@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     optimizeServerReact: true,
     optimizePackageImports: ['lucide-react', 'date-fns'],
   },
+  serverExternalPackages: ['bcryptjs'],
   images: {
     remotePatterns: [{ hostname: '*' }],
   },

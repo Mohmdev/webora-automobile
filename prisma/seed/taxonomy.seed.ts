@@ -12,8 +12,26 @@ type Row = {
 
 const BATCH_SIZE = 100
 
-export async function seedTaxonomy(prisma: PrismaClient) {
-  const rows = await new Promise<Row[]>((resolve, reject) => {
+type MakeModelMap = {
+  [make: string]: {
+    [model: string]: {
+      variants: {
+        [variant: string]: {
+          yearStart: number
+          yearEnd: number
+        }
+      }
+    }
+  }
+}
+
+type Make = {
+  id: number
+  name: string
+}
+
+async function loadTaxonomyRows(): Promise<Row[]> {
+  return new Promise<Row[]>((resolve, reject) => {
     const eachRow: Row[] = []
 
     fs.createReadStream('taxonomy.csv')
@@ -37,22 +55,9 @@ export async function seedTaxonomy(prisma: PrismaClient) {
         resolve(eachRow)
       })
   })
+}
 
-  console.log(rows)
-
-  type MakeModelMap = {
-    [make: string]: {
-      [model: string]: {
-        variants: {
-          [variant: string]: {
-            yearStart: number
-            yearEnd: number
-          }
-        }
-      }
-    }
-  }
-
+function buildMakeModelMap(rows: Row[]): MakeModelMap {
   const result: MakeModelMap = {}
 
   for (const row of rows) {
@@ -74,9 +79,11 @@ export async function seedTaxonomy(prisma: PrismaClient) {
     }
   }
 
-  console.log({ result })
+  return result
+}
 
-  const makePromises = Object.entries(result).map(([name]) => {
+function createMakePromises(result: MakeModelMap, prisma: PrismaClient) {
+  return Object.entries(result).map(([name]) => {
     return prisma.make.upsert({
       where: {
         name,
@@ -91,10 +98,13 @@ export async function seedTaxonomy(prisma: PrismaClient) {
       },
     })
   })
+}
 
-  const makes = await Promise.all(makePromises)
-  console.log(`Seeded db with ${makes.length} makes 🌱`)
-
+function createModelPromises(
+  makes: Make[],
+  result: MakeModelMap,
+  prisma: PrismaClient
+) {
   const modelPromises: Prisma.Prisma__ModelClient<unknown, unknown>[] = []
 
   for (const make of makes) {
@@ -121,26 +131,14 @@ export async function seedTaxonomy(prisma: PrismaClient) {
     }
   }
 
-  async function insertInBatches<TUpsertArgs>(
-    items: TUpsertArgs[],
-    batchSize: number,
-    insertFunction: (batch: TUpsertArgs[]) => void
-  ) {
-    for (let i = 0; i < items.length; i += batchSize) {
-      const batch = items.slice(i, i + batchSize)
-      await insertFunction(batch)
-    }
-  }
+  return modelPromises
+}
 
-  await insertInBatches<Prisma.Prisma__ModelClient<unknown, unknown>>(
-    modelPromises,
-    BATCH_SIZE,
-    async (batch) => {
-      const models = await Promise.all(batch)
-      console.log(`Seeded batch of ${models.length} models 🌱`)
-    }
-  )
-
+async function createVariantPromises(
+  makes: Make[],
+  result: MakeModelMap,
+  prisma: PrismaClient
+) {
   const variantPromises: Prisma.Prisma__ModelVariantClient<unknown, unknown>[] =
     []
 
@@ -176,6 +174,42 @@ export async function seedTaxonomy(prisma: PrismaClient) {
     }
   }
 
+  return variantPromises
+}
+
+async function insertInBatches<TUpsertArgs>(
+  items: TUpsertArgs[],
+  batchSize: number,
+  insertFunction: (batch: TUpsertArgs[]) => Promise<void>
+) {
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize)
+    await insertFunction(batch)
+  }
+}
+
+export async function seedTaxonomy(prisma: PrismaClient) {
+  const rows = await loadTaxonomyRows()
+  console.log(rows)
+
+  const result = buildMakeModelMap(rows)
+  console.log({ result })
+
+  const makePromises = createMakePromises(result, prisma)
+  const makes = await Promise.all(makePromises)
+  console.log(`Seeded db with ${makes.length} makes 🌱`)
+
+  const modelPromises = createModelPromises(makes, result, prisma)
+  await insertInBatches<Prisma.Prisma__ModelClient<unknown, unknown>>(
+    modelPromises,
+    BATCH_SIZE,
+    async (batch) => {
+      const models = await Promise.all(batch)
+      console.log(`Seeded batch of ${models.length} models 🌱`)
+    }
+  )
+
+  const variantPromises = await createVariantPromises(makes, result, prisma)
   await insertInBatches<Prisma.Prisma__ModelVariantClient<unknown, unknown>>(
     variantPromises,
     BATCH_SIZE,

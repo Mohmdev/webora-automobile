@@ -1,5 +1,6 @@
 'use client'
-import { updateClassifiedAction } from '@/app/_actions/classified'
+
+import { updateClassifiedAction } from '@/app/_actions/classified/update'
 import {
   type UpdateClassifiedType,
   updateClassifiedSchema,

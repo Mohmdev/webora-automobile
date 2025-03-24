@@ -1,7 +1,7 @@
 'use client'
 
 import type { AI } from '@/app/_actions/ai'
-import { createClassifiedAction } from '@/app/_actions/classified'
+import { createClassifiedAction } from '@/app/_actions/classified/create'
 import { ClassifiedAISchema } from '@/app/schemas/classified-ai.schema'
 import {
   SingleImageSchema,

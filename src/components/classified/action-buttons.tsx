@@ -1,5 +1,5 @@
 'use client'
-import { deleteClassifiedAction } from '@/app/_actions/classified'
+import { deleteClassifiedAction } from '@/app/_actions/classified/delete'
 import type { ClassifiedWithImages } from '@/config/types'
 import { toast } from '@/hooks/use-toast'
 import { EyeIcon, Loader2, PencilIcon, Trash } from 'lucide-react'
