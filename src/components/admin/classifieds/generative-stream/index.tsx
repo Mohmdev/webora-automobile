@@ -18,10 +18,10 @@ import {
   UsersIcon,
 } from 'lucide-react'
 import Image from 'next/image'
-import { InfoCard } from './InfoCard'
-import { UlezCard } from './UlezCard'
 import { HeaderSection } from './header-section'
+import { InfoCard } from './info-card'
 import { SpecsSection, prepareSpecs } from './specs-section'
+import { UlezCard } from './ulez-card'
 
 export type GenerativeStreamProps = Partial<Omit<ClassifiedAI, 'make'>> & {
   make?: Make | null
