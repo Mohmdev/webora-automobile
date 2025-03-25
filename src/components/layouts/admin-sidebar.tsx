@@ -88,10 +88,10 @@ export const AdminSidebar = () => {
                   transition={{ duration: 0.4 }}
                 >
                   <Image
-                    src="/logo.svg"
+                    src="/graphics/webora-motors.svg"
                     fill={true}
                     className="object-contain object-left"
-                    alt="Majestic Motors Logo"
+                    alt="Webora Automobile Logo"
                   />
                 </motion.div>
               ) : (
@@ -105,10 +105,10 @@ export const AdminSidebar = () => {
                   transition={{ duration: 0.1 }}
                 >
                   <Image
-                    src="/logo-mob.svg"
+                    src="/graphics/we-mo.svg"
                     fill={true}
                     className="object-contain object-left"
-                    alt="Majestic Motors Mobile Logo"
+                    alt="Webora Motors Mobile Logo"
                   />
                 </motion.div>
               )}

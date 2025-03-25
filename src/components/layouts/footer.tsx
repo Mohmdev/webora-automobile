@@ -38,7 +38,7 @@ export const PublicFooter = () => {
               height={100}
               alt="logo"
               className="relative h-8"
-              src="/logo.svg"
+              src="/graphics/webora-motors.svg"
             />
           </Link>
           <div className="flex space-x-4">
@@ -79,7 +79,7 @@ export const PublicFooter = () => {
         <h4 className="font-bold text-lg text-primary">Company Info</h4>
         <p>Company No. 123456789 | VAT No. GB123456789</p>
         <p>
-          Majestic Motors is not authorised and not regulated by the Financial
+          Webora Motors is not authorised and not regulated by the Financial
           Conduct Authority
         </p>
       </div>

@@ -24,7 +24,7 @@ export const PublicHeader = async () => {
             height={100}
             alt="logo"
             className="relative"
-            src="/logo.svg"
+            src="/graphics/webora-motors.svg"
           />
         </Link>
       </div>

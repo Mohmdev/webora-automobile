@@ -58,7 +58,7 @@ const EmailLayout = ({ children, preview = '' }: EmailLayoutProps) => {
                     >
                       <Img
                         alt="logo"
-                        src={`${baseUrl}/static/logo.svg`}
+                        src={`${baseUrl}/static/webora-motors.svg`}
                         className="h-full w-[200px]"
                       />
                     </Link>
@@ -81,20 +81,20 @@ const EmailLayout = ({ children, preview = '' }: EmailLayoutProps) => {
                   <Column className="flex items-center" align="left">
                     <Img
                       className="h-16 w-16"
-                      src={`${baseUrl}/static/logo-mob.svg`}
+                      src={`${baseUrl}/static/we-mo.svg`}
                     />
                   </Column>
 
                   <Column align="right">
                     <address className="text-right text-xs not-italic">
-                      <span className="text-gray-800">Majestic Motors</span>
+                      <span className="text-gray-800">Webora Motors</span>
                       <br />1 Hacker Way, <br />
                       United Kingdom, W1 1AB <br />
                       <Link
                         className="text-blue-600 underline"
-                        href={'mailto:hello@majesticmotors.com'}
+                        href={'mailto:contact@updates.webora.app'}
                       >
-                        hello@majesticmotors.com
+                        contact@updates.webora.app
                       </Link>
                     </address>
                   </Column>
