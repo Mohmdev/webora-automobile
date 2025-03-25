@@ -49,6 +49,11 @@
       "suspicious": {
         "noConsole": "off",
         "noConsoleLog": "off"
+      },
+      "nursery": {
+        "noDuplicateProperties": "off",
+        "noUnknownTypeSelector": "off",
+        "noUnknownPseudoClass": "off"
       }
     }
   },
@@ -63,6 +68,13 @@
       "enabled": true
     },
     "linter": {
+      "enabled": true
+    },
+    "parser": {
+      "allowWrongLineComments": true,
+      "cssModules": true
+    },
+    "assists": {
       "enabled": true
     }
   }

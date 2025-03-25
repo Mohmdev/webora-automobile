@@ -1,0 +1,77 @@
+:root {
+  --radius: 0.625rem;
+  /*  */
+  --base-header-height: 63px;
+  --added-header-height: 0.625rem;
+  --full-header-height: calc(
+    var(--base-header-height) + var(--added-header-height)
+  );
+}
+
+
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --breakpoint-*: initial;
+  --breakpoint-xxs: 23.438rem; /* 375px */
+  --breakpoint-xs: 30rem; /* 480px */
+  --breakpoint-sm: 40rem; /* 640px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-2xl: 86rem; /* 1376px */
+  --breakpoint-3xl: 96rem; /* 1536px */
+}
+
+
+@layer base {
+  .full-dynamic-width {
+    width: 100%;
+    max-width: 100vw;
+    max-width: 100dvw;
+  }
+
+  .full-dynamic-height {
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .full-height-minus-header {
+    height: calc(100% - var(--full-header-height));
+  }
+
+  .container {
+    margin-inline: auto;
+    padding-inline: 1rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+
+    @media (width >= --theme(--breakpoint-xxs)) {
+      width: min(100%, calc(60vw + 50vh));
+      padding-inline: calc(1rem + 2vw);
+    }
+    @media (width >= --theme(--breakpoint-md)) {
+      padding-inline: calc(1rem + 4vw);
+    }
+    @media (width >= 120rem) {
+      padding-inline: 3rem;
+      max-width: 120rem;
+    }
+  }
+
+  /* Added container-2 for full width layout up to a max of 1920px */
+  .container-2 {
+    margin-inline: auto;
+    padding-inline: var(--gap-value);
+    width: 100%;
+    max-width: 1920px;
+    overflow-x: clip;
+  }
+
+}

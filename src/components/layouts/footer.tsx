@@ -4,6 +4,8 @@ import { SiInstagram, SiMeta, SiX } from '@icons-pack/react-simple-icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { NewsletterForm } from '../shared/newsletter-form'
+import { ThemeToggle } from '../ui/theme-toggle'
+
 const socialLinks = [
   {
     id: 1,
@@ -50,6 +52,7 @@ export const PublicFooter = () => {
               )
             })}
           </div>
+          <ThemeToggle />
         </div>
 
         <ul className="space-y-1">

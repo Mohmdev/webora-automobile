@@ -75,10 +75,10 @@ export const updateCustomerAction = async (props: {
       return { success: false, message: 'Customer not found' }
     }
 
-    // console.log({
-    //   oldStatus: customer.status,
-    //   newStatus: validProps.data.status,
-    // })
+    console.log({
+      oldStatus: customer.status,
+      newStatus: validProps.data.status,
+    })
     await prisma.customer.update({
       where: { id: customer.id },
       data: {
