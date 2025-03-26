@@ -8,11 +8,6 @@ import type React from 'react'
 
 import '@/styles/globals.css'
 
-export const metadata: Metadata = {
-  title: 'Car Dealer Website',
-  description: 'A sick car dealer website with AI.',
-}
-
 const mulish = Mulish({
   weight: 'variable',
   subsets: ['latin'],
@@ -41,4 +36,9 @@ export default function RootLayout({
       </body>
     </html>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Webora Motors',
+  description: 'A Webora App to manage your car dealership and some AI tools.',
 }
