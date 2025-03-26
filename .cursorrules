@@ -1,0 +1,52 @@
+# WEBORA MOTORS
+
+## PROJECT DESCRIPTION
+- Webora Motors is a sophisticated vehicle marketplace/dealership web application built with modern web technologies.
+- The primary goal is to provide a platform for listing, managing, and selling vehicles through both client-facing and administrative interfaces.
+- The purpose is to simplify vehicle inventory management, streamline customer relationships, and offer a seamless experience for both dealerships and customers.
+- The application features AI-powered vehicle classification, image processing, advanced search and filtering, and comprehensive administrative tools.
+- For a technical overview of the project, it's technology stack, and structure, resort to the project [readme](./README.md).
+
+## CODING STYLE AND STRUCTURE
+- The codebase follows a clean, modular structure with clear separation of concerns between components, hooks, utilities, and server actions.
+- Prefer iteration and modularization over code duplication
+- Use descriptive variable names with auxiliary verbs
+- Write concise, technical TypeScript code with accurate examples
+- Component organization follows a feature-based approach, with specialized directories for different functional areas (admin, auth, classifieds, etc.).
+- Consistent TypeScript typing across the codebase with extensive use of interfaces and type definitions.
+- Heavy use of functional components with React hooks for state management.
+- Utilities are organized in domain-specific files with clearly named, single-purpose functions.
+- Server-side code utilizes Next.js server actions with explicit error handling and rate limiting.
+- Component props consistently use TypeScript interfaces with appropriate extension of HTML element props.
+- Form handling leverages React Hook Form with Zod schema validation.
+- UI components are built on Shadcn UI, Radix UI primitives, and others. Tailwind CSS v4 is used for styling through the class-variance-authority pattern.
+- For basic motions we resort to Tailwind and tailwind-animate. But for more complex animations we use "motion/react".
+- Server-side data fetching is properly typed with Prisma client for database interactions.
+- Error handling follows a consistent pattern with proper user feedback through toast notifications.
+- AI features are implemented using streaming responses and proper state management.
+
+## Authentication and Security
+- The application implements a robust multi-layer authentication system using NextAuth.js with the Credentials provider.
+- Authentication follows a two-factor authentication (2FA) approach where users must verify their identity with a one-time password (OTP) sent to their email after initial login.
+- User passwords are securely hashed using bcrypt with salt rounds for enhanced security.
+- The application enforces security via Content Security Policy (CSP) headers set in the middleware to prevent XSS attacks and other security vulnerabilities.
+- Rate limiting is implemented using Upstash Redis to prevent brute force attacks on login and OTP verification (5 attempts per 10 minutes for login, 3 attempts per 10 minutes for OTP).
+- Sessions are managed using a database strategy with secure cookies and have a configurable expiration time.
+- The middleware implements route protection by automatically redirecting unauthenticated users trying to access admin routes to the sign-in page.
+- User authentication flow involves:
+  1. Credential validation using email/password
+  2. Password verification with bcrypt
+  3. OTP generation and delivery via email
+  4. OTP validation with additional rate limiting
+  5. Session creation with appropriate permissions
+- Customer data is stored in a dedicated schema with proper validation using Zod before processing.
+- Sensitive operations like customer management and vehicle listings are restricted to authenticated admin users.
+- The application implements strict HTTP security headers including:
+  - Strict-Transport-Security
+  - X-Frame-Options (DENY)
+  - X-Content-Type-Options (nosniff)
+  - Permissions-Policy (restrictive)
+  - Referrer-Policy (strict-origin-when-cross-origin)
+- Environment variables are strictly validated using zod-env to ensure all required security configurations are provided.
+- API routes are protected with custom authentication checks to prevent unauthorized access.
+- The codebase never exposes sensitive information like hashed passwords in API responses or client-side code.
