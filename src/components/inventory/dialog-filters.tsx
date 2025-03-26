@@ -28,7 +28,14 @@ import { type ChangeEvent, useEffect, useState } from 'react'
 import { SearchInput } from '../shared/search-input'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog'
-import { Select } from '../ui/select'
+import { FormLabel } from '../ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 import { RangeFilter } from './range-filters'
 import { TaxonomyFilters } from './taxonomy-filters'
 
@@ -68,7 +75,11 @@ const useFilterStates = (searchParams: Record<string, string> | undefined) => {
   )
 
   useEffect(() => {
-    const count = Object.entries(searchParams as Record<string, string>).filter(
+    if (!searchParams) {
+      return
+    }
+
+    const count = Object.entries(searchParams).filter(
       ([key, value]) => key !== 'page' && value
     ).length
 
@@ -100,11 +111,27 @@ const useFilterStates = (searchParams: Record<string, string> | undefined) => {
     router.refresh()
   }
 
+  const handleSelectChange = (name: string, value: string) => {
+    setQueryStates({
+      [name]: value || null,
+    })
+
+    if (name === 'make') {
+      setQueryStates({
+        model: null,
+        modelVariant: null,
+      })
+    }
+
+    router.refresh()
+  }
+
   return {
     queryStates,
     filterCount,
     clearFilters,
     handleChange,
+    handleSelectChange,
   }
 }
 
@@ -114,13 +141,47 @@ const FilterControls = ({
   searchParams,
   queryStates,
   handleChange,
+  handleSelectChange,
 }: {
   minMaxValues: SidebarProps['minMaxValues']
   searchParams: SidebarProps['searchParams']
   queryStates: Record<string, string>
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+  handleSelectChange: (name: string, value: string) => void
 }) => {
   const { _min, _max } = minMaxValues
+
+  const renderSelect = (
+    label: string,
+    name: string,
+    value: string,
+    options: { label: string; value: string }[],
+    disabled = false
+  ) => (
+    <div className="space-y-2">
+      <FormLabel htmlFor={name}>{label}</FormLabel>
+      <Select
+        name={name}
+        value={value || '_empty'}
+        disabled={disabled}
+        onValueChange={(value) =>
+          handleSelectChange(name, value === '_empty' ? '' : value)
+        }
+      >
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="_empty">Select</SelectItem>
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  )
 
   return (
     <div className="space-y-2">
@@ -133,8 +194,8 @@ const FilterControls = ({
         label="Year"
         minName="minYear"
         maxName="maxYear"
-        defaultMin={_min.year || 1925}
-        defaultMax={_max.year || new Date().getFullYear()}
+        defaultMin={_min?.year || 1925}
+        defaultMax={_max?.year || new Date().getFullYear()}
         handleChange={handleChange}
         searchParams={searchParams}
       />
@@ -142,8 +203,8 @@ const FilterControls = ({
         label="Price"
         minName="minPrice"
         maxName="maxPrice"
-        defaultMin={_min.price || 0}
-        defaultMax={_max.price || 21474836}
+        defaultMin={_min?.price || 0}
+        defaultMax={_max?.price || 21474836}
         handleChange={handleChange}
         searchParams={searchParams}
         increment={1000000}
@@ -156,103 +217,103 @@ const FilterControls = ({
         label="Odometer Reading"
         minName="minReading"
         maxName="maxReading"
-        defaultMin={_min.odoReading || 0}
-        defaultMax={_max.odoReading || 1000000}
+        defaultMin={_min?.odoReading || 0}
+        defaultMax={_max?.odoReading || 1000000}
         handleChange={handleChange}
         searchParams={searchParams}
         increment={5000}
         thousandSeparator
       />
-      <Select
-        label="Currency"
-        name="currency"
-        value={queryStates.currency || ''}
-        onChange={handleChange}
-        options={Object.values(CurrencyCode).map((value) => ({
+
+      {renderSelect(
+        'Currency',
+        'currency',
+        queryStates.currency || '',
+        Object.values(CurrencyCode).map((value) => ({
           label: value,
           value,
-        }))}
-      />
-      <Select
-        label="Odometer Unit"
-        name="odoUnit"
-        value={queryStates.odoUnit || ''}
-        onChange={handleChange}
-        options={Object.values(OdoUnit).map((value) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'Odometer Unit',
+        'odoUnit',
+        queryStates.odoUnit || '',
+        Object.values(OdoUnit).map((value) => ({
           label: formatOdometerUnit(value),
           value,
-        }))}
-      />
-      <Select
-        label="Transmission"
-        name="transmission"
-        value={queryStates.transmission || ''}
-        onChange={handleChange}
-        options={Object.values(Transmission).map((value) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'Transmission',
+        'transmission',
+        queryStates.transmission || '',
+        Object.values(Transmission).map((value) => ({
           label: formatTransmission(value),
           value,
-        }))}
-      />
-      <Select
-        label="Fuel Type"
-        name="fuelType"
-        value={queryStates.fuelType || ''}
-        onChange={handleChange}
-        options={Object.values(FuelType).map((value) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'Fuel Type',
+        'fuelType',
+        queryStates.fuelType || '',
+        Object.values(FuelType).map((value) => ({
           label: formatFuelType(value),
           value,
-        }))}
-      />
-      <Select
-        label="Body Type"
-        name="bodyType"
-        value={queryStates.bodyType || ''}
-        onChange={handleChange}
-        options={Object.values(BodyType).map((value) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'Body Type',
+        'bodyType',
+        queryStates.bodyType || '',
+        Object.values(BodyType).map((value) => ({
           label: formatBodyType(value),
           value,
-        }))}
-      />
-      <Select
-        label="Colour"
-        name="colour"
-        value={queryStates.colour || ''}
-        onChange={handleChange}
-        options={Object.values(Colour).map((value) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'Colour',
+        'colour',
+        queryStates.colour || '',
+        Object.values(Colour).map((value) => ({
           label: formatColour(value),
           value,
-        }))}
-      />
-      <Select
-        label="ULEZ Compliance"
-        name="ulezCompliance"
-        value={queryStates.ulezCompliance || ''}
-        onChange={handleChange}
-        options={Object.values(ULEZCompliance).map((value) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'ULEZ Compliance',
+        'ulezCompliance',
+        queryStates.ulezCompliance || '',
+        Object.values(ULEZCompliance).map((value) => ({
           label: formatUlezCompliance(value),
           value,
-        }))}
-      />
-      <Select
-        label="Doors"
-        name="doors"
-        value={queryStates.doors || ''}
-        onChange={handleChange}
-        options={Array.from({ length: 6 }).map((_, i) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'Doors',
+        'doors',
+        queryStates.doors || '',
+        Array.from({ length: 6 }).map((_, i) => ({
           label: Number(i + 1).toString(),
           value: Number(i + 1).toString(),
-        }))}
-      />
-      <Select
-        label="Seats"
-        name="seats"
-        value={queryStates.seats || ''}
-        onChange={handleChange}
-        options={Array.from({ length: 8 }).map((_, i) => ({
+        }))
+      )}
+
+      {renderSelect(
+        'Seats',
+        'seats',
+        queryStates.seats || '',
+        Array.from({ length: 8 }).map((_, i) => ({
           label: Number(i + 1).toString(),
           value: Number(i + 1).toString(),
-        }))}
-      />
+        }))
+      )}
     </div>
   )
 }
@@ -261,8 +322,13 @@ export const DialogFilters = (props: DialogFiltersProps) => {
   const { minMaxValues, searchParams, count } = props
   const [open, setIsOpen] = useState(false)
 
-  const { queryStates, filterCount, clearFilters, handleChange } =
-    useFilterStates(searchParams as Record<string, string>)
+  const {
+    queryStates,
+    filterCount,
+    clearFilters,
+    handleChange,
+    handleSelectChange,
+  } = useFilterStates(searchParams as Record<string, string>)
 
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
@@ -290,6 +356,7 @@ export const DialogFilters = (props: DialogFiltersProps) => {
             searchParams={searchParams}
             queryStates={queryStates}
             handleChange={handleChange}
+            handleSelectChange={handleSelectChange}
           />
 
           <div className="flex flex-col space-y-2">

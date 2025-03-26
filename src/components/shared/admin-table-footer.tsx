@@ -1,8 +1,14 @@
 'use client'
 import type { AwaitedPageProps, FilterOptions } from '@/config/types'
 import { useRouter } from 'next/navigation'
-import { type ChangeEvent, useEffect } from 'react'
-import { Select } from '../ui/select'
+import { useEffect } from 'react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 import { TableCell, TableFooter, TableRow } from '../ui/table'
 import { CustomPagination } from './custom-pagination'
 const itemsPerPageOptions: FilterOptions<string, string> = [
@@ -24,9 +30,9 @@ export const AdminTableFooter = (props: AdminTableFooterProps) => {
   const itemsPerPage = searchParams?.itemsPerPage || '10'
   const router = useRouter()
 
-  const handleItemsPerPage = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleItemsPerPage = (value: string) => {
     const currentUrlParams = new URLSearchParams(window.location.search)
-    currentUrlParams.set(e.target.name, e.target.value)
+    currentUrlParams.set('itemsPerPage', value)
     const url = new URL(window.location.href)
     url.search = currentUrlParams.toString()
     router.push(url.toString())
@@ -46,15 +52,21 @@ export const AdminTableFooter = (props: AdminTableFooterProps) => {
         <TableCell colSpan={cols}>
           <div className="flex items-center">
             <Select
-              name="itemsPerPage"
-              value={searchParams?.itemsPerPage as string}
-              onChange={handleItemsPerPage}
-              options={itemsPerPageOptions}
               disabled={disabled}
-              className="-mt-1"
-              noDefault={false}
-              selectClassName="bg-primary-800 text-muted/75 border-primary-800"
-            />
+              value={(searchParams?.itemsPerPage as string) || '10'}
+              onValueChange={handleItemsPerPage}
+            >
+              <SelectTrigger className="w-[100px] border-primary-800 bg-primary-800 text-muted/75">
+                <SelectValue placeholder="Items" />
+              </SelectTrigger>
+              <SelectContent>
+                {itemsPerPageOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <CustomPagination
               totalPages={totalPages}
               baseURL={baseURL}

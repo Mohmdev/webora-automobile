@@ -2,7 +2,7 @@ import { PageSchema } from '@/app/schemas/page.schema'
 import { ClassifiedsList } from '@/components/inventory/classifieds-list'
 import { DialogFilters } from '@/components/inventory/dialog-filters'
 import { InventorySkeleton } from '@/components/inventory/inventory-skeleton'
-import { Sidebar } from '@/components/inventory/sidebar'
+import { SidebarWrapper } from '@/components/inventory/sidebar-wrapper'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
@@ -58,7 +58,7 @@ export default async function InventoryPage(props: PageProps) {
 
   return (
     <div className="flex">
-      <Sidebar minMaxValues={minMaxResult} searchParams={searchParams} />
+      <SidebarWrapper minMaxValues={minMaxResult} searchParams={searchParams} />
 
       <div className="flex-1 p-4">
         <div className="-mt-1 flex items-center justify-between space-y-2 pb-4">

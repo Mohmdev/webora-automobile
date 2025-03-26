@@ -18,7 +18,13 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { Select } from '../ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 export const EditCustomerForm = ({ customer }: { customer: Customer }) => {
   const form = useForm<EditCustomerType>({
@@ -58,19 +64,26 @@ export const EditCustomerForm = ({ customer }: { customer: Customer }) => {
         <FormField
           control={form.control}
           name="status"
-          render={({ field: { ref, ...rest } }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel htmlFor="status">Customer Status</FormLabel>
               <FormControl>
                 <Select
-                  options={Object.values(CustomerStatus).map((value) => ({
-                    label: formatCustomerStatus(value),
-                    value,
-                  }))}
-                  noDefault={false}
-                  selectClassName="bg-primary-800 border-transparent text-muted/75"
-                  {...rest}
-                />
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  value={field.value}
+                >
+                  <SelectTrigger className="border-transparent bg-primary-800 text-muted/75">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.values(CustomerStatus).map((value) => (
+                      <SelectItem key={value} value={value}>
+                        {formatCustomerStatus(value)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>

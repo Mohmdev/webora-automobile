@@ -54,6 +54,9 @@
         "noDuplicateProperties": "off",
         "noUnknownTypeSelector": "off",
         "noUnknownPseudoClass": "off"
+      },
+      "correctness": {
+        "useHookAtTopLevel": "off"
       }
     }
   },

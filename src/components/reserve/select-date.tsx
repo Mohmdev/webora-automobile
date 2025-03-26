@@ -25,7 +25,13 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { Select } from '../ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 export const SelectDate = (props: MultiStepFormComponentProps) => {
   const { searchParams } = props
@@ -95,11 +101,26 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
           <FormField
             control={form.control}
             name="handoverDate"
-            render={({ field: { ref, ...rest } }) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel htmlFor="handoverDate">Select a Date</FormLabel>
                 <FormControl>
-                  <Select options={generateDateOptions()} {...rest} />
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    value={field.value}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a date" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {generateDateOptions().map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,11 +129,26 @@ export const SelectDate = (props: MultiStepFormComponentProps) => {
           <FormField
             control={form.control}
             name="handoverTime"
-            render={({ field: { ref, ...rest } }) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel htmlFor="handoverTime">Select a Time</FormLabel>
                 <FormControl>
-                  <Select options={generateTimeOptions()} {...rest} />
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    value={field.value}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a time" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {generateTimeOptions().map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

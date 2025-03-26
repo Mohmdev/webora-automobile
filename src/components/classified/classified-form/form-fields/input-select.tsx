@@ -8,8 +8,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form'
-import { NumberInput } from './number-input'
+} from '../../../ui/form'
+import { NumberInput } from '../../../ui/number-input'
 
 interface InputSelectProps extends NumericFormatProps {
   inputName: string

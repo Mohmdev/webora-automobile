@@ -3,8 +3,16 @@
 import { endpoints } from '@/config/endpoints'
 import type { FilterOptions, TaxonomyFiltersProps } from '@/config/types'
 import { api } from '@/lib/api-client'
+import type React from 'react'
 import { useEffect, useState } from 'react'
-import { Select } from '../ui/select'
+import { FormLabel } from '../ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
   const { searchParams, handleChange } = props
@@ -17,6 +25,10 @@ export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
 
   useEffect(() => {
     ;(async function fetchMakesOptions() {
+      if (!searchParams) {
+        return
+      }
+
       const params = new URLSearchParams()
       for (const [k, v] of Object.entries(
         searchParams as Record<string, string>
@@ -30,43 +42,103 @@ export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
 
       url.search = params.toString()
 
-      const data = await api.get<{
-        makes: FilterOptions<string, string>
-        models: FilterOptions<string, string>
-        modelVariants: FilterOptions<string, string>
-      }>(url.toString())
+      try {
+        const data = await api.get<{
+          makes: FilterOptions<string, string>
+          models: FilterOptions<string, string>
+          modelVariants: FilterOptions<string, string>
+        }>(url.toString())
 
-      setMakes(data.makes)
-      setModels(data.models)
-      setModelVariants(data.modelVariants)
+        setMakes(data.makes)
+        setModels(data.models)
+        setModelVariants(data.modelVariants)
+      } catch (error) {
+        console.error('Error fetching taxonomy data:', error)
+      }
     })()
   }, [searchParams])
 
   return (
     <>
-      <Select
-        label="Make"
-        name="make"
-        value={searchParams?.make as string}
-        onChange={handleChange}
-        options={makes}
-      />
-      <Select
-        label="Model"
-        name="model"
-        value={searchParams?.model as string}
-        options={models}
-        onChange={handleChange}
-        disabled={!models.length}
-      />
-      <Select
-        label="Model Variant"
-        name="modelVariant"
-        value={searchParams?.modelVariant as string}
-        options={modelVariants}
-        onChange={handleChange}
-        disabled={!modelVariants.length}
-      />
+      <div className="space-y-2">
+        <FormLabel htmlFor="make">Make</FormLabel>
+        <Select
+          name="make"
+          value={(searchParams?.make as string) || '_empty'}
+          onValueChange={(value) =>
+            handleChange({
+              target: { name: 'make', value: value === '_empty' ? '' : value },
+            } as React.ChangeEvent<HTMLSelectElement>)
+          }
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select make" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="_empty">Select</SelectItem>
+            {makes.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <FormLabel htmlFor="model">Model</FormLabel>
+        <Select
+          name="model"
+          value={(searchParams?.model as string) || '_empty'}
+          onValueChange={(value) =>
+            handleChange({
+              target: { name: 'model', value: value === '_empty' ? '' : value },
+            } as React.ChangeEvent<HTMLSelectElement>)
+          }
+          disabled={!models.length}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select model" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="_empty">Select</SelectItem>
+            {models.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <FormLabel htmlFor="modelVariant">Model Variant</FormLabel>
+        <Select
+          name="modelVariant"
+          value={(searchParams?.modelVariant as string) || '_empty'}
+          onValueChange={(value) =>
+            handleChange({
+              target: {
+                name: 'modelVariant',
+                value: value === '_empty' ? '' : value,
+              },
+            } as React.ChangeEvent<HTMLSelectElement>)
+          }
+          disabled={!modelVariants.length}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select model variant" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="_empty">Select</SelectItem>
+            {modelVariants.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </>
   )
 }

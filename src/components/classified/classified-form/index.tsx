@@ -14,7 +14,7 @@ import { ClassifiedStatus, CurrencyCode, OdoUnit } from '@prisma/client'
 import { Loader2 } from 'lucide-react'
 import { useTransition } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '../ui/button'
+import { Button } from '../../ui/button'
 import {
   Form,
   FormControl,
@@ -22,10 +22,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form'
-import { Select } from '../ui/select'
-import { ClassifiedFormFields } from './classified-form-fields'
-import { MultiImageUploader } from './multi-image-uploader'
+} from '../../ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../../ui/select'
+import { MultiImageUploader } from '../multi-image-uploader'
+import { ClassifiedFormFields } from './form-fields'
 
 interface ClassifiedFormProps {
   classified: ClassifiedWithImages
@@ -123,21 +129,28 @@ export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
             <FormField
               control={form.control}
               name="status"
-              render={({ field: { ref, ...rest } }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-muted" htmlFor="status">
                     Status
                   </FormLabel>
                   <FormControl>
                     <Select
-                      options={Object.values(ClassifiedStatus).map((value) => ({
-                        label: formatClassifiedStatus(value),
-                        value,
-                      }))}
-                      noDefault={false}
-                      selectClassName="bg-primary-800 border-transparent text-muted/75"
-                      {...rest}
-                    />
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                    >
+                      <SelectTrigger className="border-transparent bg-primary-800 text-muted/75">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.values(ClassifiedStatus).map((value) => (
+                          <SelectItem key={value} value={value}>
+                            {formatClassifiedStatus(value)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

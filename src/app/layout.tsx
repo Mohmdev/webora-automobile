@@ -34,13 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          'overscroll-none font-heading antialiased',
-          roboto.variable,
-          mulish.variable
-        )}
-      >
+      <body className={cn('overscroll-none', roboto.variable, mulish.variable)}>
         <NextTopLoader showSpinner={false} />
         <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />

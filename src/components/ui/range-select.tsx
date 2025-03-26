@@ -1,10 +1,20 @@
 'use client'
 
 import type { FilterOptions } from '@/config/types'
-import type { SelectHTMLAttributes } from 'react'
+import type { ChangeEvent, SelectHTMLAttributes } from 'react'
+import { FormLabel } from './form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './select'
 
-interface SelectType extends SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectType
+  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   options: FilterOptions<string, number>
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 interface RangeSelectProps {
@@ -12,40 +22,64 @@ interface RangeSelectProps {
   minSelect: SelectType
   maxSelect: SelectType
 }
+
 export const RangeSelect = (props: RangeSelectProps) => {
   const { label, minSelect, maxSelect } = props
 
   return (
-    <>
-      <h4 className="font-semibold text-sm">{label}</h4>
-      <div className="!mt-1 flex gap-2">
-        <select
-          {...minSelect}
-          className="custom-select w-full flex-1 appearance-none rounded-md border bg-no-repeat py-2 pr-12 pl-3"
+    <div className="space-y-2">
+      <FormLabel>{label}</FormLabel>
+      <div className="flex gap-2">
+        <Select
+          value={minSelect.value?.toString() || '_empty'}
+          onValueChange={(value) => {
+            minSelect.onChange({
+              target: {
+                name: minSelect.name,
+                value: value === '_empty' ? '' : value,
+              },
+            } as ChangeEvent<HTMLSelectElement>)
+          }}
+          disabled={minSelect.disabled ?? false}
         >
-          <option value="">Select</option>
-          {minSelect.options.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Min" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="_empty">Min</SelectItem>
+            {minSelect.options.map((option) => (
+              <SelectItem key={option.value} value={option.value.toString()}>
                 {option.label}
-              </option>
-            )
-          })}
-        </select>
-        <select
-          {...maxSelect}
-          className="custom-select w-full flex-1 appearance-none rounded-md border bg-no-repeat py-2 pr-12 pl-3"
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={maxSelect.value?.toString() || '_empty'}
+          onValueChange={(value) => {
+            maxSelect.onChange({
+              target: {
+                name: maxSelect.name,
+                value: value === '_empty' ? '' : value,
+              },
+            } as ChangeEvent<HTMLSelectElement>)
+          }}
+          disabled={maxSelect.disabled ?? false}
         >
-          <option value="">Select</option>
-          {maxSelect.options.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Max" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="_empty">Max</SelectItem>
+            {maxSelect.options.map((option) => (
+              <SelectItem key={option.value} value={option.value.toString()}>
                 {option.label}
-              </option>
-            )
-          })}
-        </select>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
-    </>
+    </div>
   )
 }
