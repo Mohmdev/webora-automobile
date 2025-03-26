@@ -1,8 +1,10 @@
 'use client'
 
+import { Button, type ButtonProps } from '@/components/ui/button'
 import { routes } from '@/config/routes'
 import { type ClassifiedWithImages, MultiStepFormEnum } from '@/config/types'
 import {
+  cn,
   formatColour,
   formatFuelType,
   formatNumber,
@@ -16,7 +18,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { HTMLParser } from '../shared/html-parser'
-import { Button } from '../ui/button'
 import { ImgixImage } from '../ui/imgix-image'
 import { FavouriteButton } from './favourite-button'
 
@@ -67,6 +68,11 @@ export const ClassifiedCard = (props: ClassifiedCardProps) => {
     }
   }, [isFavourite, pathname])
 
+  const formattedPrice = formatPrice({
+    price: classified.price,
+    currency: classified.currency,
+  })
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -93,17 +99,17 @@ export const ClassifiedCard = (props: ClassifiedCardProps) => {
               isFavourite={isFavourite}
               id={classified.id}
             />
-            <div className="absolute top-2.5 right-3.5 rounded bg-primary px-2 py-1 font-bold text-slate-50">
-              <p className="font-semibold text-xs lg:text-base xl:text-lg">
-                {formatPrice({
-                  price: classified.price,
-                  currency: classified.currency,
-                })}
+            <Button
+              size="sm"
+              className="absolute top-2.5 right-2.5 rounded-sm bg-accent shadow-sm backdrop-blur-sm duration-300 ease-linear hover:bg-accent/70"
+            >
+              <p className="font-semibold text-foreground/80 text-xs lg:text-base">
+                {formattedPrice}
               </p>
-            </div>
+            </Button>
           </div>
-          <div className="flex flex-col space-y-3 p-4">
-            <div>
+          <div className="flex flex-col gap-3 p-4">
+            <div className="flex flex-col gap-2">
               <Link
                 href={routes.singleClassified(classified.slug)}
                 className="line-clamp-1 font-semibold text-sm transition-colors hover:text-primary md:text-base lg:text-lg"
@@ -111,7 +117,7 @@ export const ClassifiedCard = (props: ClassifiedCardProps) => {
                 {classified.title}
               </Link>
               {classified?.description && (
-                <div className="line-clamp-2 text-gray-500 text-xs md:text-sm xl:text-base">
+                <div className="line-clamp-2 text-gray-500 text-xs md:text-sm ">
                   <HTMLParser html={classified.description} />
                   &nbsp;{' '}
                   {/* Used for equal spacing across each card in the grid */}
@@ -131,35 +137,49 @@ export const ClassifiedCard = (props: ClassifiedCardProps) => {
                   ))}
               </ul>
             </div>
-            <div className="mt-4 flex w-full flex-col space-y-2 lg:flex-row lg:gap-x-2 lg:space-y-0">
-              <Button
-                className="h-full flex-1 py-2 text-xs transition-colors hover:border-white hover:bg-primary hover:text-white md:text-sm lg:py-2.5 xl:text-base"
-                asChild
-                variant="outline"
-                size="sm"
-              >
-                <Link
-                  href={routes.reserve(
-                    classified.slug,
-                    MultiStepFormEnum.WELCOME
-                  )}
-                >
-                  Reserve
-                </Link>
-              </Button>
-              <Button
-                className="h-full flex-1 py-2 text-xs md:text-sm lg:py-2.5 xl:text-base"
-                asChild
-                size="sm"
-              >
-                <Link href={routes.singleClassified(classified.slug)}>
-                  View Details
-                </Link>
-              </Button>
+            <div className=" flex w-full flex-col space-y-2 lg:flex-row lg:gap-x-2 lg:space-y-0">
+              <CTA
+                label="Reserve"
+                href={routes.reserve(
+                  classified.slug,
+                  MultiStepFormEnum.WELCOME
+                )}
+              />
+              <CTA
+                label="View Details"
+                isPrimary
+                href={routes.singleClassified(classified.slug)}
+              />
             </div>
           </div>
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+const CTA = ({
+  href,
+  label,
+  isPrimary = false,
+  className,
+  ...props
+}: ButtonProps & { href: string; label: string; isPrimary?: boolean }) => {
+  return (
+    <Button
+      className={cn(
+        'flex-1 text-xs md:text-sm xl:text-base',
+        isPrimary
+          ? ''
+          : 'transition-colors hover:border-white hover:bg-primary hover:text-white',
+        className
+      )}
+      asChild
+      variant={isPrimary ? 'default' : 'outline'}
+      size="sm"
+      {...props}
+    >
+      <Link href={href}>{label}</Link>
+    </Button>
   )
 }

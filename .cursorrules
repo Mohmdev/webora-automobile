@@ -19,7 +19,7 @@
 - Server-side code utilizes Next.js server actions with explicit error handling and rate limiting.
 - Component props consistently use TypeScript interfaces with appropriate extension of HTML element props.
 - Form handling leverages React Hook Form with Zod schema validation.
-- UI components are built on Shadcn UI, Radix UI primitives, and others. Tailwind CSS v4 is used for styling through the class-variance-authority pattern.
+- UI components are built on Shadcn UI, Radix UI primitives, and others. Tailwind CSS v4 is used for styling through the famous cn function pattern.
 - For basic motions we resort to Tailwind and tailwind-animate. But for more complex animations we use "motion/react".
 - Server-side data fetching is properly typed with Prisma client for database interactions.
 - Error handling follows a consistent pattern with proper user feedback through toast notifications.
