@@ -91,7 +91,7 @@ export const AdminSidebar = () => {
                     src="/graphics/webora-motors.svg"
                     fill={true}
                     className="object-contain object-left"
-                    alt="Webora Automobile Logo"
+                    alt="Webora Motors Logo"
                   />
                 </motion.div>
               ) : (
