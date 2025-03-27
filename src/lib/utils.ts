@@ -62,11 +62,13 @@ export function formatPrice({ price, currency }: FormatPriceArgs) {
   const formatter = new Intl.NumberFormat('en-GB', {
     style: 'currency',
     currencyDisplay: 'narrowSymbol',
-    ...(currency && { currency }),
-    maximumFractionDigits: 0,
+    currency: currency ?? '',
+    notation: 'compact',
+    compactDisplay: 'short',
   })
 
-  return formatter.format(price / 100)
+  const formatted = formatter.format(price / 100)
+  return `${formatted.charAt(0)} ${formatted.substring(1)}`
 }
 
 export function formatNumber(

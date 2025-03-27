@@ -14,10 +14,10 @@ export function Archive({ classifieds, favourites }: ArchiveProps) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <Header className="z-20" />
+        <Header className="z-20 border-border/70 bg-background/70 backdrop-blur-md" />
         <div className="z-10 flex flex-1 flex-col gap-4 p-4">
           <ListRecords
-            template="grid"
+            template="grid-2"
             classifieds={classifieds}
             favourites={favourites}
           />

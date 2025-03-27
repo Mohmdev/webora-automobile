@@ -5,7 +5,7 @@ import { use } from 'react'
 import type { ListProps } from '.'
 import { Record } from '../record'
 
-export function GridList(props: ListProps) {
+export function GridList1(props: ListProps) {
   const { classifieds, favourites, className } = props
   const inventory = use(classifieds)
 

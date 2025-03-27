@@ -12,6 +12,8 @@
 @theme inline {
   --color-primary-800: #081a2b;
   --color-primary-900: #040f19;
+  --color-sky-500: var(----sky-500);
+  --color-sky-400: var(----sky-400);
 }
 
 @layer base {
@@ -29,4 +31,14 @@
   body {
     @apply bg-background;
   }
+}
+
+:root {
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
+}
+
+.dark {
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
 }

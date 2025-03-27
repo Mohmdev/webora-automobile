@@ -1,8 +1,9 @@
 import type { ClassifiedWithImages } from '@/config/types'
-import { GridList } from './grid'
+import { GridList1 } from './grid-1'
+import { GridList2 } from './grid-2'
 
 interface Template {
-  template?: 'grid' | 'list'
+  template?: 'grid-1' | 'grid-2' | 'list'
 }
 
 export type ListProps = {
@@ -13,11 +14,14 @@ export type ListProps = {
 
 export function ListRecords({ template, ...props }: Template & ListProps) {
   switch (template) {
-    case 'grid': {
-      return <GridList {...props} />
+    case 'grid-1': {
+      return <GridList1 {...props} />
+    }
+    case 'grid-2': {
+      return <GridList2 {...props} />
     }
     default: {
-      return <GridList {...props} />
+      return <GridList1 {...props} />
     }
   }
 }

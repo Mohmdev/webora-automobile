@@ -85,7 +85,7 @@ export function Card1(props: RecordProps) {
                   ))}
               </ul>
             </div>
-            <div className=" flex w-full flex-col space-y-2 lg:flex-row lg:gap-x-2 lg:space-y-0">
+            <div className="flex w-full flex-col space-y-2 lg:flex-row lg:gap-x-2 lg:space-y-0">
               <CTA
                 label="Reserve"
                 href={routes.reserve(

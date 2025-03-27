@@ -21,7 +21,7 @@ export default async function CatalogPage(props: PageProps) {
       attribute="class"
       defaultTheme="system"
       enableSystem
-      // disableTransitionOnChange
+      disableTransitionOnChange
     >
       <Archive {...data} />
     </ThemeProvider>

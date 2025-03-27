@@ -12,7 +12,7 @@ export const CTA = ({
   return (
     <Button
       className={cn(
-        'flex-1 text-xs md:text-sm xl:text-base',
+        'flex-1 font-heading text-xs md:text-sm',
         isPrimary
           ? ''
           : 'transition-colors hover:border-white hover:bg-primary hover:text-white',
