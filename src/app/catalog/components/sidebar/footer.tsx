@@ -18,7 +18,7 @@ export function SidebarFooter() {
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
-          <ThemeToggle />
+          <ThemeToggle className="bg-transparent!" />
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarFooterComponent>

@@ -6,10 +6,20 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
+import { cn } from '@/lib/utils'
+interface HeaderProps {
+  className?: string
+}
 
-export function Header() {
+export function Header(props: HeaderProps) {
+  const { className } = props
   return (
-    <header className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
+    <header
+      className={cn(
+        'sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4',
+        className
+      )}
+    >
       <SidebarTrigger className="-ml-1" />
       <Separator
         orientation="vertical"
