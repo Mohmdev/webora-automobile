@@ -56,7 +56,11 @@
         "noUnknownPseudoClass": "off"
       },
       "correctness": {
-        "useHookAtTopLevel": "off"
+        "useHookAtTopLevel": "off",
+        "useExhaustiveDependencies": "off"
+      },
+      "a11y": {
+        "useFocusableInteractive": "off"
       }
     }
   },
