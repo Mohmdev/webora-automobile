@@ -23,6 +23,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { type VariantProps, cva } from 'class-variance-authority'
 import { PanelLeftIcon } from 'lucide-react'
 import * as React from 'react'
+import { ScrollArea, ScrollBar } from './scroll-area'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -370,15 +371,20 @@ function SidebarSeparator({
 
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div
-      data-slot="sidebar-content"
-      data-sidebar="content"
-      className={cn(
-        'flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden',
-        className
-      )}
-      {...props}
-    />
+    <ScrollArea className="overflow-auto">
+      <div
+        data-slot="sidebar-content"
+        data-sidebar="content"
+        className={cn(
+          'flex min-h-0 flex-1 flex-col gap-2 group-data-[collapsible=icon]:overflow-hidden',
+          className
+        )}
+        {...props}
+      >
+        {props.children}
+      </div>
+      <ScrollBar />
+    </ScrollArea>
   )
 }
 

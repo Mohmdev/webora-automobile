@@ -1,17 +1,23 @@
 'use client'
 
 import { Sidebar, SidebarRail } from '@/components/ui/sidebar'
-import type * as React from 'react'
+import type { SidebarProps } from '@/config/types'
+import type React from 'react'
 import { sampleData } from '../../_data'
 import { SidebarContent } from './content'
 import { SidebarFooter } from './footer'
 import { SidebarHeader } from './header'
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export type AppSidebarProps = React.ComponentProps<typeof Sidebar> &
+  SidebarProps
+
+export function AppSidebar(props: AppSidebarProps) {
+  const { minMaxValues, searchParams } = props
+
   return (
-    <Sidebar {...props}>
+    <Sidebar variant="sidebar" collapsible="offcanvas">
       <SidebarHeader data={sampleData.user} />
-      <SidebarContent data={sampleData.calendars} />
+      <SidebarContent minMaxValues={minMaxValues} searchParams={searchParams} />
       <SidebarFooter />
       <SidebarRail />
     </Sidebar>
