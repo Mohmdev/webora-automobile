@@ -9,6 +9,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
@@ -16,12 +22,6 @@ import {
   LogOut,
   Sparkles,
 } from 'lucide-react'
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from './sidebar'
 
 export function NavUser({
   user,

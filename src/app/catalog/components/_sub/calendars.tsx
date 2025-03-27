@@ -3,8 +3,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
-import { Check, ChevronRight } from 'lucide-react'
-import * as React from 'react'
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -13,7 +11,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-} from './sidebar'
+} from '@/components/ui/sidebar'
+import { Check, ChevronRight } from 'lucide-react'
+import * as React from 'react'
 
 export function Calendars({
   calendars,

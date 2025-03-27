@@ -19,4 +19,5 @@ export const routes = {
     editCustomer: (id: number) => `/admin/customers/edit/${id}`,
     settings: '/admin/settings',
   },
+  catalog: '/catalog',
 }
