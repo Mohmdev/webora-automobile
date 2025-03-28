@@ -1,6 +1,6 @@
 import { MAX_IMAGES } from '@/config/constants'
 import { endpoints } from '@/config/endpoints'
-import type { ProgressArgs } from '@/config/types'
+import type { ProgressArgs } from '@/types'
 import { api } from './api-client'
 
 interface UploaderOptions {

@@ -1,6 +1,6 @@
 'use client'
 
-import type { ClassifiedImages } from '@/config/types'
+import type { ClassifiedImages } from '@/types'
 import {
   type Active,
   DndContext,

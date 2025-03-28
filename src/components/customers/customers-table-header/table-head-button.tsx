@@ -1,4 +1,4 @@
-import type { CustomerKeys } from '@/config/types'
+import type { CustomerKeys } from '@/types'
 import { SortIcon } from '../../shared/sort-icon'
 
 interface TableHeadButtonProps {

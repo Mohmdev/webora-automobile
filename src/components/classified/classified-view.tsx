@@ -1,5 +1,4 @@
 import { routes } from '@/config/routes'
-import { MultiStepFormEnum } from '@/config/types'
 import {
   formatBodyType,
   formatColour,
@@ -10,6 +9,7 @@ import {
   formatTransmission,
   formatUlezCompliance,
 } from '@/lib/utils'
+import { MultiStepFormEnum } from '@/types'
 import type { Prisma } from '@prisma/client'
 import {
   CarFrontIcon,

@@ -1,4 +1,4 @@
-import type { ClassifiedKeys } from '@/config/types'
+import type { ClassifiedKeys } from '@/types'
 import { SortIcon } from '../../shared/sort-icon'
 import { TableHead } from '../../ui/table'
 

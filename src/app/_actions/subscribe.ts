@@ -1,7 +1,7 @@
 'use server'
 
-import type { PrevState } from '@/config/types'
 import { prisma } from '@/lib/prisma'
+import type { PrevState } from '@/types'
 import { CustomerStatus } from '@prisma/client'
 import {
   PrismaClientKnownRequestError,

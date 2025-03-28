@@ -39,7 +39,6 @@ export const CreateClassifiedDialog = () => {
   })
 
   const createForm = useForm<GenerativeStreamProps>({
-    // @ts-expect-error - zodResolver in v4+ has stricter types but this usage is correct because we are extending the schema to match the GenerativeStreamProps type
     resolver: zodResolver(
       ClassifiedAISchema.partial().extend({
         make: z

@@ -2,8 +2,8 @@
 
 import { signIn } from '@/auth'
 import { routes } from '@/config/routes'
-import type { PrevState } from '@/config/types'
 import { genericRateLimit } from '@/lib/rate-limiter'
+import type { PrevState } from '@/types'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
 import { SignInSchema } from '../schemas/auth.schema'
 

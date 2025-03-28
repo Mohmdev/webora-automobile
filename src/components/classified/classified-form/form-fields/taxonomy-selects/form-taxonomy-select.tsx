@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import type { FilterOptions } from '@/config/types'
+import type { FilterOptions } from '@/types'
 import { useFormContext } from 'react-hook-form'
 
 interface FormTaxonomySelectProps {

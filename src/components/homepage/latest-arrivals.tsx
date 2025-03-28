@@ -1,7 +1,7 @@
-import type { Favourites } from '@/config/types'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
+import type { Favourites } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { LatestArrivalsCarousel } from './latest-arrivals-carousel'
 

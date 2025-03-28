@@ -1,7 +1,7 @@
 'use client'
 import { deleteCustomerAction } from '@/app/_actions/customer'
-import type { CustomerWithClassified } from '@/config/types'
 import { toast } from '@/hooks/use-toast'
+import type { CustomerWithClassified } from '@/types'
 import { Loader2, PencilIcon, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { useTransition } from 'react'

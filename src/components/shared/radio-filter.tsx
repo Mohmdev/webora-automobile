@@ -1,6 +1,6 @@
 'use client'
-import type { AwaitedPageProps } from '@/config/types'
 import { cn } from '@/lib/utils'
+import type { AwaitedPageProps } from '@/types'
 import type { ClassifiedStatus } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { Label } from '../ui/label'

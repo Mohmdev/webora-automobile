@@ -1,6 +1,6 @@
 'use client'
 
-import type { FilterOptions } from '@/config/types'
+import type { FilterOptions } from '@/types'
 import type { ChangeEvent, SelectHTMLAttributes } from 'react'
 import { FormLabel } from './form'
 import {

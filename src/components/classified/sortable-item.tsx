@@ -1,6 +1,6 @@
 'use client'
 
-import type { ClassifiedImages } from '@/config/types'
+import type { ClassifiedImages } from '@/types'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckCircle, XIcon } from 'lucide-react'

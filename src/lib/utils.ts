@@ -1,5 +1,5 @@
 import { ClassifiedFilterSchema } from '@/app/schemas/classified.schema'
-import type { AwaitedPageProps } from '@/config/types'
+import type { AwaitedPageProps } from '@/types'
 import {
   BodyType,
   ClassifiedStatus,

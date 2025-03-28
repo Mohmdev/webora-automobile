@@ -1,4 +1,4 @@
-import type { ClassifiedKeys } from '@/config/types'
+import type { ClassifiedKeys } from '@/types'
 
 export interface ColumnConfig {
   key: ClassifiedKeys

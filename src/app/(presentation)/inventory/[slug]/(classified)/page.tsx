@@ -1,7 +1,7 @@
 import { ClassifiedView } from '@/components/classified/classified-view'
 import { routes } from '@/config/routes'
-import type { PageProps } from '@/config/types'
 import { prisma } from '@/lib/prisma'
+import type { PageProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { notFound, redirect } from 'next/navigation'
 

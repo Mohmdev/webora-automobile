@@ -1,16 +1,16 @@
 import { PageSchema } from '@/app/schemas/page.schema'
+import { FiltersPannel1 } from '@/components/filters-pannel/panel-1/index'
+import { DialogFilters } from '@/components/filters/dialog-filters'
 import { ClassifiedsList } from '@/components/inventory/classifieds-list'
-import { DialogFilters } from '@/components/inventory/dialog-filters'
 import { InventorySkeleton } from '@/components/inventory/inventory-skeleton'
-import { SidebarWrapper } from '@/components/inventory/sidebar-wrapper'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
-import type { AwaitedPageProps, Favourites, PageProps } from '@/config/types'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
+import type { AwaitedPageProps, Favourites, PageProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { Suspense } from 'react'
 
@@ -58,7 +58,7 @@ export default async function InventoryPage(props: PageProps) {
 
   return (
     <div className="flex">
-      <SidebarWrapper minMaxValues={minMaxResult} searchParams={searchParams} />
+      <FiltersPannel1 minMaxValues={minMaxResult} searchParams={searchParams} />
 
       <div className="flex-1 p-4">
         <div className="-mt-1 flex items-center justify-between space-y-2 pb-4">

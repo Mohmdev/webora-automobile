@@ -11,11 +11,13 @@ import {
 } from '@/components/ui/card'
 import { ImageSwiper } from '@/components/ui/image-swiper'
 import { routes } from '@/config/routes'
-import { MultiStepFormEnum } from '@/config/types'
+import { useRecordData } from '@/hooks/record/useRecordData'
+import { useRecordState } from '@/hooks/record/useRecordState'
+import { cn } from '@/lib/utils'
+import { MultiStepFormEnum } from '@/types'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
-import { useRecordData, useRecordState } from './hooks'
-import { CTA } from './shared'
+import { RecordCTA } from './record-cta'
 import type { RecordProps } from './types'
 
 export function Card2(props: RecordProps) {
@@ -33,7 +35,7 @@ export function Card2(props: RecordProps) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="flex-1"
+          className={cn('flex-1', className)}
         >
           <Card className="overflow-hidden rounded-sm border-1 shadow-sm transition-all duration-200 ease-linear focus-within:shadow-lg hover:shadow-lg focus:shadow-lg focus-visible:shadow-lg">
             <div className="relative aspect-3/2 overflow-hidden rounded-b-[inherit]">
@@ -79,12 +81,6 @@ export function Card2(props: RecordProps) {
                     </li>
                   ))}
               </ul>
-
-              {/* <span className="mt-1 flex-1 font-body font-medium text-base">
-                {formattedPrice && formattedPrice !== '0'
-                  ? formattedPrice
-                  : 'Price on request'}
-              </span> */}
             </CardHeader>
             <CardContent className="">
               {classified?.description && (
@@ -97,7 +93,7 @@ export function Card2(props: RecordProps) {
             </CardContent>
 
             <CardFooter className="flex w-full flex-wrap justify-between gap-2">
-              <CTA
+              <RecordCTA
                 label="Reserve"
                 href={routes.reserve(
                   classified.slug,
@@ -105,7 +101,7 @@ export function Card2(props: RecordProps) {
                 )}
                 className="rounded-sm"
               />
-              <CTA
+              <RecordCTA
                 label="View Details"
                 isPrimary
                 href={routes.singleClassified(classified.slug)}

@@ -3,10 +3,10 @@ import { ClassifiedCard } from '@/components/inventory/classified-card'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
-import type { Favourites, PageProps } from '@/config/types'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
+import type { Favourites, PageProps } from '@/types'
 
 export default async function FavouritesPage(props: PageProps) {
   const searchParams = await props.searchParams

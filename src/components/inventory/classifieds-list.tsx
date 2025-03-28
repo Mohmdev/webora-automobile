@@ -1,6 +1,6 @@
 'use client'
 
-import type { ClassifiedWithImages } from '@/config/types'
+import type { ClassifiedWithImages } from '@/types'
 import { use } from 'react'
 import { ClassifiedCard } from './classified-card'
 

@@ -1,4 +1,4 @@
-import type { PrevState } from '@/config/types'
+import type { PrevState } from '@/types'
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 import { differenceInMinutes } from 'date-fns'

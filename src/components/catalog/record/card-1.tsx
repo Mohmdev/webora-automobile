@@ -4,12 +4,13 @@ import { FavouriteButton } from '@/components/inventory/favourite-button'
 import { HTMLParser } from '@/components/shared/html-parser'
 import { ImgixImage } from '@/components/ui/imgix-image'
 import { routes } from '@/config/routes'
-import { MultiStepFormEnum } from '@/config/types'
+import { useRecordData } from '@/hooks/record/useRecordData'
+import { useRecordState } from '@/hooks/record/useRecordState'
 import { cn } from '@/lib/utils'
+import { MultiStepFormEnum } from '@/types'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
-import { useRecordData, useRecordState } from './hooks'
-import { CTA } from './shared'
+import { RecordCTA } from './record-cta'
 import type { RecordProps } from './types'
 
 export function Card1(props: RecordProps) {
@@ -49,7 +50,7 @@ export function Card1(props: RecordProps) {
               isFavourite={isFavourite}
               id={classified.id}
             />
-            <CTA
+            <RecordCTA
               size="sm"
               className="absolute top-2.5 right-2.5 rounded-sm bg-accent shadow-sm backdrop-blur-sm duration-300 ease-linear hover:bg-accent/70"
               href="#"
@@ -86,14 +87,14 @@ export function Card1(props: RecordProps) {
               </ul>
             </div>
             <div className="flex w-full flex-col space-y-2 lg:flex-row lg:gap-x-2 lg:space-y-0">
-              <CTA
+              <RecordCTA
                 label="Reserve"
                 href={routes.reserve(
                   classified.slug,
                   MultiStepFormEnum.WELCOME
                 )}
               />
-              <CTA
+              <RecordCTA
                 label="View Details"
                 isPrimary
                 href={routes.singleClassified(classified.slug)}

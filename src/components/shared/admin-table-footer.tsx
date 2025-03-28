@@ -1,5 +1,5 @@
 'use client'
-import type { AwaitedPageProps, FilterOptions } from '@/config/types'
+import type { AwaitedPageProps, FilterOptions } from '@/types'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import {

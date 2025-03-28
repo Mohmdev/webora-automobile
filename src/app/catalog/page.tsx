@@ -1,12 +1,12 @@
 import { ThemeProvider } from '@/components/theme-provider'
-import type { Favourites, PageProps } from '@/config/types'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
+import type { Favourites, PageProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
-import { getInventory } from './_data'
-import { Archive } from './components/archive'
+import { Archive } from '../../components/catalog/archive'
+import { getInventory, sampleData } from './data'
 
 export default async function CatalogPage(props: PageProps) {
   const searchParams = await props.searchParams
@@ -31,6 +31,8 @@ export default async function CatalogPage(props: PageProps) {
     },
   })
 
+  const sampleUser = sampleData.user
+
   return (
     <ThemeProvider
       attribute="class"
@@ -43,6 +45,7 @@ export default async function CatalogPage(props: PageProps) {
         favourites={favourites ? favourites.ids : []}
         minMaxValues={minMaxResult}
         searchParams={searchParams}
+        user={sampleUser}
       />
     </ThemeProvider>
   )

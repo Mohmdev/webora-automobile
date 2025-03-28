@@ -2,8 +2,6 @@ import { Card1 } from './card-1'
 import { Card2 } from './card-2'
 import { SkeletonCard } from './card-skeleton'
 import type { RecordProps, Template } from './types'
-export { useRecordData, useRecordState } from './hooks'
-export type { RecordProps, Template, ClassifiedInfoItem } from './types'
 
 export function Record({ template, ...props }: Template & RecordProps) {
   switch (template) {

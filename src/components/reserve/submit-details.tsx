@@ -6,12 +6,9 @@ import {
   type SubmitDetailsSchemaType,
 } from '@/app/schemas/customer.schema'
 import { routes } from '@/config/routes'
-import {
-  type MultiStepFormComponentProps,
-  MultiStepFormEnum,
-} from '@/config/types'
 import { toast } from '@/hooks/use-toast'
 import { formatDate } from '@/lib/utils'
+import { type MultiStepFormComponentProps, MultiStepFormEnum } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'

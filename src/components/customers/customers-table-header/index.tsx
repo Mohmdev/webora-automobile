@@ -1,6 +1,6 @@
 'use client'
 
-import type { CustomerKeys, PageProps } from '@/config/types'
+import type { CustomerKeys, PageProps } from '@/types'
 import type { Customer } from '@prisma/client'
 import { TableHeader, TableRow } from '../../ui/table'
 import { StaticTableHead } from './static-table-head'

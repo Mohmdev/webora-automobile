@@ -1,18 +1,18 @@
 'use client'
 
-import { endpoints } from '@/config/endpoints'
-import type { FilterOptions, TaxonomyFiltersProps } from '@/config/types'
-import { api } from '@/lib/api-client'
-import type React from 'react'
-import { useEffect, useState } from 'react'
-import { FormLabel } from '../ui/form'
+import { FormLabel } from '@/components/ui/form'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select'
+} from '@/components/ui/select'
+import { endpoints } from '@/config/endpoints'
+import { api } from '@/lib/api-client'
+import type { FilterOptions, TaxonomyFiltersProps } from '@/types'
+import type React from 'react'
+import { useEffect, useState } from 'react'
 
 export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
   const { searchParams, handleChange } = props

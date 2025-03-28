@@ -1,6 +1,6 @@
 import { MAX_IMAGES, MAX_IMAGE_SIZE } from '@/config/constants'
-import type { ClassifiedImages } from '@/config/types'
 import { cn, convertToMb } from '@/lib/utils'
+import type { ClassifiedImages } from '@/types'
 import { ImagePlus, Loader2 } from 'lucide-react'
 import {
   type ChangeEvent,

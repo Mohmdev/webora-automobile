@@ -1,8 +1,8 @@
 import { PageSchema } from '@/app/schemas/page.schema'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
-import type { AwaitedPageProps } from '@/config/types'
 import { prisma } from '@/lib/prisma'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
+import type { AwaitedPageProps } from '@/types'
 
 export const getInventory = (
   searchParams: AwaitedPageProps['searchParams']

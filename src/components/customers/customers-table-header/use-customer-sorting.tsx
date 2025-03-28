@@ -1,7 +1,7 @@
 'use client'
 
 import { sortOrder } from '@/config/constants'
-import type { CustomerKeys } from '@/config/types'
+import type { CustomerKeys } from '@/types'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 
 const customerKeys = [

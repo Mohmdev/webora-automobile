@@ -6,9 +6,9 @@ import {
   updateClassifiedSchema,
 } from '@/app/schemas/classified.schema'
 import { MAX_IMAGES } from '@/config/constants'
-import type { ClassifiedWithImages } from '@/config/types'
 import { useToast } from '@/hooks/use-toast'
 import { formatClassifiedStatus } from '@/lib/utils'
+import type { ClassifiedWithImages } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ClassifiedStatus, CurrencyCode, OdoUnit } from '@prisma/client'
 import { Loader2 } from 'lucide-react'

@@ -1,5 +1,5 @@
-import type { FilterOptions, TaxonomyFiltersProps } from '@/config/types'
 import { formatNumber, formatPrice } from '@/lib/utils'
+import type { FilterOptions, TaxonomyFiltersProps } from '@/types'
 import type { CurrencyCode } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { RangeSelect } from '../ui/range-select'
@@ -71,7 +71,6 @@ export const RangeFilter = (props: RangeFilterProps) => {
     initialState.toReversed()
   )
 
-  // biome-ignore lint:
   useEffect(() => {
     if (searchParams?.[minName]) {
       setMaxOptions(

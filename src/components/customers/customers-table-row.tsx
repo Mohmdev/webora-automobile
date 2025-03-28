@@ -1,6 +1,6 @@
 import { CustomerBadgeMap } from '@/config/constants'
-import type { CustomerWithClassified } from '@/config/types'
 import { formatCustomerStatus } from '@/lib/utils'
+import type { CustomerWithClassified } from '@/types'
 import { format } from 'date-fns'
 import { Badge } from '../ui/badge'
 import { TableCell, TableRow } from '../ui/table'

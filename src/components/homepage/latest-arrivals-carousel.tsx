@@ -1,6 +1,6 @@
 'use client'
 
-import type { ClassifiedWithImages } from '@/config/types'
+import type { ClassifiedWithImages } from '@/types'
 import dynamic from 'next/dynamic'
 import 'swiper/css'
 import { Navigation } from 'swiper/modules'

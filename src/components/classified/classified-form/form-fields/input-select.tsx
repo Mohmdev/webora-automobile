@@ -1,5 +1,5 @@
-import type { FilterOptions } from '@/config/types'
 import { cn } from '@/lib/utils'
+import type { FilterOptions } from '@/types'
 import { useFormContext } from 'react-hook-form'
 import type { NumericFormatProps } from 'react-number-format'
 import {

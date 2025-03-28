@@ -1,5 +1,5 @@
 import { RadioFilter } from '@/components/shared/radio-filter'
-import type { AwaitedPageProps } from '@/config/types'
+import type { AwaitedPageProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { CreateClassifiedDialog } from './create-classified-dialog'
 

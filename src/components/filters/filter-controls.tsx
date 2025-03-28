@@ -1,7 +1,7 @@
 'use client'
 
-import { RangeFilter } from '@/components/inventory/range-filters'
-import { TaxonomyFilters } from '@/components/inventory/taxonomy-filters'
+import { RangeFilter } from '@/components/filters/range-filters'
+import { TaxonomyFilters } from '@/components/filters/taxonomy-filters'
 import { FormLabel } from '@/components/ui/form'
 import {
   Select,
@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import type { SidebarProps } from '@/config/types'
 import {
   formatBodyType,
   formatColour,
@@ -19,6 +18,7 @@ import {
   formatTransmission,
   formatUlezCompliance,
 } from '@/lib/utils'
+import type { SidebarProps } from '@/types'
 import {
   BodyType,
   Colour,

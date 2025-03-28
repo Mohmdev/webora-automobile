@@ -1,9 +1,6 @@
 'use client'
 
-import {
-  type MultiStepFormComponentProps,
-  MultiStepFormEnum,
-} from '@/config/types'
+import { type MultiStepFormComponentProps, MultiStepFormEnum } from '@/types'
 import {
   ArrowRightIcon,
   CircleCheckIcon,

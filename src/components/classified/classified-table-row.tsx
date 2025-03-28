@@ -1,6 +1,6 @@
 import { ClassifiedBadgeMap } from '@/config/constants'
-import type { ClassifiedWithImages } from '@/config/types'
 import { formatClassifiedStatus, formatColour, formatPrice } from '@/lib/utils'
+import type { ClassifiedWithImages } from '@/types'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { Badge } from '../ui/badge'

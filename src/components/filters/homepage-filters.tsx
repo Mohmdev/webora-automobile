@@ -1,10 +1,10 @@
 'use client'
 
-import type { SidebarProps } from '@/config/types'
+import type { SidebarProps } from '@/types'
 import { parseAsString, useQueryStates } from 'nuqs'
 import type React from 'react'
-import { RangeFilter } from '../inventory/range-filters'
-import { TaxonomyFilters } from '../inventory/taxonomy-filters'
+import { RangeFilter } from './range-filters'
+import { TaxonomyFilters } from './taxonomy-filters'
 
 interface HomepageTaxonomyFiltersProps extends SidebarProps {}
 export const HomepageTaxonomyFilters = ({

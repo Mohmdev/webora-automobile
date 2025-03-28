@@ -1,4 +1,4 @@
-import type { ClassifiedWithImages } from '@/config/types'
+import type { ClassifiedWithImages } from '@/types'
 import { GridList1 } from './grid-1'
 import { GridList2 } from './grid-2'
 

@@ -1,51 +1,12 @@
-import { routes } from '@/config/routes'
-import type { ClassifiedWithImages } from '@/config/types'
 import {
   formatColour,
   formatFuelType,
   formatNumber,
   formatOdometerUnit,
-  formatPrice,
   formatTransmission,
 } from '@/lib/utils'
+import type { ClassifiedWithImages } from '@/types'
 import { Cog, Fuel, GaugeCircle, Paintbrush2 } from 'lucide-react'
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-
-export function useRecordState(
-  classified: ClassifiedWithImages,
-  favourites: number[]
-) {
-  const pathname = usePathname()
-  const [isFavourite, setIsFavourite] = useState(
-    favourites.includes(classified.id)
-  )
-  const [isVisible, setIsVisible] = useState(true)
-
-  useEffect(() => {
-    if (!isFavourite && pathname === routes.favourites) {
-      setIsVisible(false)
-    }
-  }, [isFavourite, pathname])
-
-  return {
-    isFavourite,
-    setIsFavourite,
-    isVisible,
-  }
-}
-
-export function useRecordData(classified: ClassifiedWithImages) {
-  const formattedPrice = formatPrice({
-    price: classified.price,
-    currency: classified.currency,
-  })
-
-  return {
-    formattedPrice,
-    classifiedInfo: getKeyClassifiedInfo(classified),
-  }
-}
 
 export const getKeyClassifiedInfo = (classified: ClassifiedWithImages) => {
   return [

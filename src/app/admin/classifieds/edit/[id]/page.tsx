@@ -1,7 +1,7 @@
 import { validateIdSchema } from '@/app/schemas/id.schema'
 import { routes } from '@/config/routes'
-import type { PageProps } from '@/config/types'
 import { prisma } from '@/lib/prisma'
+import type { PageProps } from '@/types'
 import { redirect } from 'next/navigation'
 import { ClassifiedForm } from '../../../../../components/classified/classified-form'
 

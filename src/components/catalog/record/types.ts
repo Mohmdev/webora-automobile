@@ -1,4 +1,4 @@
-import type { ClassifiedWithImages } from '@/config/types'
+import type { ClassifiedWithImages } from '@/types'
 import type React from 'react'
 
 export interface Template {

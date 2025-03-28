@@ -2,7 +2,6 @@
 
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { routes } from '@/config/routes'
-import { type ClassifiedWithImages, MultiStepFormEnum } from '@/config/types'
 import {
   cn,
   formatColour,
@@ -12,6 +11,7 @@ import {
   formatPrice,
   formatTransmission,
 } from '@/lib/utils'
+import { type ClassifiedWithImages, MultiStepFormEnum } from '@/types'
 import { Cog, Fuel, GaugeCircle, Paintbrush2 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'

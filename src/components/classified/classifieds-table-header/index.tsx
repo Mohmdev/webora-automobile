@@ -1,7 +1,7 @@
 'use client'
 
 import { sortOrder } from '@/config/constants'
-import type { ClassifiedKeys, PageProps } from '@/config/types'
+import type { ClassifiedKeys, PageProps } from '@/types'
 import type { Classified } from '@prisma/client'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { TableHeader, TableRow } from '../../ui/table'

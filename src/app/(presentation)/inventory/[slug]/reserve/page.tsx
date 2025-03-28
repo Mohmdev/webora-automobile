@@ -2,8 +2,8 @@ import { MultiStepFormSchema } from '@/app/schemas/form.schema'
 import { SelectDate } from '@/components/reserve/select-date'
 import { SubmitDetails } from '@/components/reserve/submit-details'
 import { Welcome } from '@/components/reserve/welcome'
-import { MultiStepFormEnum, type PageProps } from '@/config/types'
 import { prisma } from '@/lib/prisma'
+import { MultiStepFormEnum, type PageProps } from '@/types'
 import { notFound } from 'next/navigation'
 
 const MAP_STEP_TO_COMPONENT = {

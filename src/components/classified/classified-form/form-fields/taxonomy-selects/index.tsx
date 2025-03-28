@@ -1,8 +1,8 @@
 'use client'
 
 import { endpoints } from '@/config/endpoints'
-import type { FilterOptions } from '@/config/types'
 import { api } from '@/lib/api-client'
+import type { FilterOptions } from '@/types'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { FormTaxonomySelect } from './form-taxonomy-select'

@@ -1,7 +1,6 @@
 'use client'
 
 import { routes } from '@/config/routes'
-import type { SidebarProps } from '@/config/types'
 import { env } from '@/env'
 import {
   cn,
@@ -12,6 +11,7 @@ import {
   formatTransmission,
   formatUlezCompliance,
 } from '@/lib/utils'
+import type { SidebarProps } from '@/types'
 import {
   BodyType,
   Colour,

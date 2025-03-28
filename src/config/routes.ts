@@ -1,4 +1,4 @@
-import type { MultiStepFormType } from './types'
+import type { MultiStepFormType } from '../types'
 
 export const routes = {
   home: '/',

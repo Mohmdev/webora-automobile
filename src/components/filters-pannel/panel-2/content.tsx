@@ -1,12 +1,15 @@
 'use client'
 
-import { SidebarFilterControls } from '@/app/catalog/components/sidebar/filter-controls'
-import { useSidebarFilters } from '@/app/catalog/components/sidebar/useSidebarFilters'
-import type { SidebarProps } from '@/config/types'
+import { SearchInput } from '@/components/shared/search-input'
+import {
+  SidebarContent as SidebarContentComponent,
+  SidebarSeparator,
+} from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
-import { SearchInput } from '../shared/search-input'
-
-export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
+import type { SidebarProps } from '@/types'
+import { SidebarFilterControls } from '../../filters/filter-controls'
+import { useSidebarFilters } from '../../filters/useSidebarFilters'
+export function SidebarContent({ minMaxValues, searchParams }: SidebarProps) {
   const {
     queryStates,
     filterCount,
@@ -16,7 +19,7 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
   } = useSidebarFilters(searchParams as Record<string, string>)
 
   return (
-    <div className="hidden w-[21.25rem] border-muted border-r py-4 lg:block">
+    <SidebarContentComponent>
       <div>
         <div className="flex justify-between px-4 font-semibold text-lg">
           <span>Filters</span>
@@ -50,6 +53,10 @@ export const Sidebar = ({ minMaxValues, searchParams }: SidebarProps) => {
         handleChange={handleChange}
         handleSelectChange={handleSelectChange}
       />
-    </div>
+
+      <SidebarSeparator className="mx-0" />
+      {/* <DatePicker />
+      <Calendars calendars={data ?? []} /> */}
+    </SidebarContentComponent>
   )
 }

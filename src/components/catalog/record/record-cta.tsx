@@ -2,13 +2,13 @@ import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
-export const CTA = ({
+export function RecordCTA({
   href,
   label,
   isPrimary = false,
   className,
   ...props
-}: ButtonProps & { href: string; label: string; isPrimary?: boolean }) => {
+}: ButtonProps & { href: string; label: string; isPrimary?: boolean }) {
   return (
     <Button
       className={cn(

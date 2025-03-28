@@ -1,4 +1,4 @@
-import { MultiStepFormEnum } from '@/config/types'
+import { MultiStepFormEnum } from '@/types'
 import { z } from 'zod'
 
 export const MultiStepFormSchema = z.object({
