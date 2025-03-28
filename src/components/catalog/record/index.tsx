@@ -1,7 +1,11 @@
+import type { RecordProps } from '@/types'
 import { Card1 } from './card-1'
 import { Card2 } from './card-2'
 import { SkeletonCard } from './card-skeleton'
-import type { RecordProps, Template } from './types'
+
+interface Template {
+  template?: 'card-1' | 'card-2' | 'skeleton'
+}
 
 export function Record({ template, ...props }: Template & RecordProps) {
   switch (template) {

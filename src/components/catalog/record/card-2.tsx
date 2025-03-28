@@ -14,14 +14,12 @@ import { routes } from '@/config/routes'
 import { useRecordData } from '@/hooks/record/useRecordData'
 import { useRecordState } from '@/hooks/record/useRecordState'
 import { cn } from '@/lib/utils'
-import { MultiStepFormEnum } from '@/types'
+import { MultiStepFormEnum, type RecordProps } from '@/types'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { RecordCTA } from './record-cta'
-import type { RecordProps } from './types'
 
-export function Card2(props: RecordProps) {
-  const { classified, favourites, className } = props
+export function Card2({ classified, favourites, className }: RecordProps) {
   const { isFavourite, setIsFavourite, isVisible } = useRecordState(
     classified,
     favourites

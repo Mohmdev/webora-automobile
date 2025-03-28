@@ -11,7 +11,11 @@ import {
   formatPrice,
   formatTransmission,
 } from '@/lib/utils'
-import { type ClassifiedWithImages, MultiStepFormEnum } from '@/types'
+import {
+  type ClassifiedCardProps,
+  type ClassifiedWithImages,
+  MultiStepFormEnum,
+} from '@/types'
 import { Cog, Fuel, GaugeCircle, Paintbrush2 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
@@ -20,11 +24,6 @@ import { useEffect, useState } from 'react'
 import { HTMLParser } from '../shared/html-parser'
 import { ImgixImage } from '../ui/imgix-image'
 import { FavouriteButton } from './favourite-button'
-
-interface ClassifiedCardProps {
-  classified: ClassifiedWithImages
-  favourites: number[]
-}
 
 const getKeyClassifiedInfo = (classified: ClassifiedWithImages) => {
   return [

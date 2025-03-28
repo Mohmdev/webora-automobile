@@ -1,12 +1,10 @@
 import { cn } from '@/lib/utils'
 
-// Using a subset of RecordProps since skeleton doesn't need all the data
-interface SkeletonCardProps {
+export function SkeletonCard({
+  className,
+}: {
   className?: string
-}
-
-export function SkeletonCard(props: SkeletonCardProps) {
-  const { className } = props
+}) {
   return (
     <div
       className={cn(

@@ -1,5 +1,5 @@
 import { PageSchema } from '@/app/schemas/page.schema'
-import { FiltersPannel1 } from '@/components/filters-pannel/panel-1/index'
+import { FiltersPanel } from '@/components/catalog/archive/filters-panel'
 import { DialogFilters } from '@/components/filters/dialog-filters'
 import { ClassifiedsList } from '@/components/inventory/classifieds-list'
 import { InventorySkeleton } from '@/components/inventory/inventory-skeleton'
@@ -58,7 +58,11 @@ export default async function InventoryPage(props: PageProps) {
 
   return (
     <div className="flex">
-      <FiltersPannel1 minMaxValues={minMaxResult} searchParams={searchParams} />
+      <FiltersPanel
+        template="panel-1"
+        minMaxValues={minMaxResult}
+        searchParams={searchParams}
+      />
 
       <div className="flex-1 p-4">
         <div className="-mt-1 flex items-center justify-between space-y-2 pb-4">

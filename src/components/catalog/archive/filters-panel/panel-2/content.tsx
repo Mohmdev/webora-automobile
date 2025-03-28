@@ -1,15 +1,16 @@
 'use client'
 
 import { SidebarFilterControls } from '@/components/filters/filter-controls'
-import { useSidebarFilters } from '@/components/filters/useSidebarFilters'
 import { SearchInput } from '@/components/shared/search-input'
+import {
+  SidebarContent as SidebarContentComponent,
+  SidebarSeparator,
+} from '@/components/ui/sidebar'
+import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
 import { cn } from '@/lib/utils'
 import type { SidebarProps } from '@/types'
 
-export function FiltersPannelClientWrapper({
-  minMaxValues,
-  searchParams,
-}: SidebarProps) {
+export function SidebarContent({ minMaxValues, searchParams }: SidebarProps) {
   const {
     queryStates,
     filterCount,
@@ -19,7 +20,7 @@ export function FiltersPannelClientWrapper({
   } = useSidebarFilters(searchParams as Record<string, string>)
 
   return (
-    <div className="hidden w-[21.25rem] border-muted border-r py-4 lg:block">
+    <SidebarContentComponent>
       <div>
         <div className="flex justify-between px-4 font-semibold text-lg">
           <span>Filters</span>
@@ -53,6 +54,10 @@ export function FiltersPannelClientWrapper({
         handleChange={handleChange}
         handleSelectChange={handleSelectChange}
       />
-    </div>
+
+      <SidebarSeparator className="mx-0" />
+      {/* <DatePicker />
+      <Calendars calendars={data ?? []} /> */}
+    </SidebarContentComponent>
   )
 }

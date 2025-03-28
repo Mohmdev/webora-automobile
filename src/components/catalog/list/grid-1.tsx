@@ -1,12 +1,11 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import type { ListProps } from '@/types'
 import { use } from 'react'
-import type { ListProps } from '.'
 import { Record } from '../record'
 
-export function GridList1(props: ListProps) {
-  const { classifieds, favourites, className } = props
+export function GridList1({ classifieds, favourites, className }: ListProps) {
   const inventory = use(classifieds)
 
   return (

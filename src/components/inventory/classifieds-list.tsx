@@ -1,13 +1,8 @@
 'use client'
 
-import type { ClassifiedWithImages } from '@/types'
+import type { ClassifiedsListProps } from '@/types'
 import { use } from 'react'
 import { ClassifiedCard } from './classified-card'
-
-interface ClassifiedsListProps {
-  classifieds: Promise<ClassifiedWithImages[]>
-  favourites: number[]
-}
 
 export const ClassifiedsList = (props: ClassifiedsListProps) => {
   const { classifieds, favourites } = props

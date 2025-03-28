@@ -7,12 +7,12 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
-interface HeaderProps {
-  className?: string
-}
 
-export function Header(props: HeaderProps) {
-  const { className } = props
+export function Header({
+  className,
+}: {
+  className?: string
+}) {
   return (
     <header
       className={cn(
