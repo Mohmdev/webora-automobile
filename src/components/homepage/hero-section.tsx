@@ -3,14 +3,14 @@ import { routes } from '@/config/routes'
 import { imgixLoader } from '@/lib/imgix-loader'
 import { prisma } from '@/lib/prisma'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
-import type { AwaitedPageProps } from '@/types'
+import type { SearchAwaitedProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import Link from 'next/link'
 import { HomepageTaxonomyFilters } from '../filters/homepage-filters'
 import { Button } from '../ui/button'
 import { SearchButton } from './search-button'
 
-export const HeroSection = async (props: AwaitedPageProps) => {
+export const HeroSection = async (props: SearchAwaitedProps) => {
   const { searchParams } = props
   const totalFiltersApplied = Object.keys(searchParams || {}).length
   const isFilterApplied = totalFiltersApplied > 0

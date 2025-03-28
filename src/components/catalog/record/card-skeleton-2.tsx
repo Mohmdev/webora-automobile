@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-export function SkeletonCard({
+export function SkeletonCard2({
   className,
 }: {
   className?: string

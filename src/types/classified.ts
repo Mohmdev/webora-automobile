@@ -1,22 +1,13 @@
 import type { UpdateClassifiedType } from '@/app/schemas/classified.schema'
-import type { Classified, Prisma } from '@prisma/client'
-
-export type ClassifiedWithImages = Prisma.ClassifiedGetPayload<{
-  include: {
-    images: true
-  }
-}>
-
-export interface Favourites {
-  ids: number[]
-}
+import type { Classified } from '@prisma/client'
 
 export type FilterOptions<LType, VType> = Array<{
   label: LType
   value: VType
 }>
 
-export type ClassifiedImages = UpdateClassifiedType['images']
+export type UpdateClassifiedImages = UpdateClassifiedType['images']
+export type UpdateClassifiedImage = UpdateClassifiedType['images'][number]
 
 export type ClassifiedKeys = keyof Pick<
   Classified,

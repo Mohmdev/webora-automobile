@@ -1,6 +1,6 @@
 'use client'
 
-import type { ClassifiedImages } from '@/types'
+import type { UpdateClassifiedImage } from '@/types'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckCircle, XIcon } from 'lucide-react'
@@ -9,7 +9,7 @@ import { ImgixImage } from '../ui/imgix-image'
 
 interface SortableItemProps {
   index: number
-  item: ClassifiedImages[number]
+  item: UpdateClassifiedImage
   remove: (index: number) => void
   progress?: number
 }

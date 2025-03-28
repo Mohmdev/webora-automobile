@@ -1,6 +1,6 @@
 import { MAX_IMAGES, MAX_IMAGE_SIZE } from '@/config/constants'
 import { cn, convertToMb } from '@/lib/utils'
-import type { ClassifiedImages } from '@/types'
+import type { UpdateClassifiedImages } from '@/types'
 import { ImagePlus, Loader2 } from 'lucide-react'
 import {
   type ChangeEvent,
@@ -13,7 +13,7 @@ import {
 interface DragAndDropProps {
   isUploading: boolean
   setIsUploading: (loading: boolean) => void
-  items: ClassifiedImages
+  items: UpdateClassifiedImages
   setFiles: (validFile: File[]) => void
 }
 

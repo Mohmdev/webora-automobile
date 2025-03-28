@@ -2,7 +2,7 @@ import { validateIdSchema } from '@/app/schemas/id.schema'
 import { routes } from '@/config/routes'
 import { redis } from '@/lib/redis-store'
 import { setSourceId } from '@/lib/source-id'
-import type { Favourites } from '@/types'
+import type { FavouriteIds } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 
@@ -23,22 +23,22 @@ export const POST = async (req: NextRequest) => {
   const sourceId = await setSourceId()
 
   // retrieve the existing favourites from redis session
-  const storedFavourites = await redis.get<Favourites>(sourceId)
-  const favourites: Favourites = storedFavourites || { ids: [] }
+  const storedFavourites = await redis.get<FavouriteIds>(sourceId)
+  let favouriteIds: FavouriteIds = storedFavourites || []
 
-  if (favourites.ids.includes(data.id)) {
+  if (favouriteIds.includes(data.id)) {
     // add or remove the ID based on its current presence in the favourites
     // remove the ID if it already exists
-    favourites.ids = favourites.ids.filter((favId) => favId !== data.id)
+    favouriteIds = favouriteIds.filter((favId) => favId !== data.id)
   } else {
     // add the id of it does not exist
-    favourites.ids.push(data.id)
+    favouriteIds.push(data.id)
   }
 
   // update the redis store with the new list of ids
-  await redis.set(sourceId, favourites)
+  await redis.set(sourceId, favouriteIds)
 
   revalidatePath(routes.favourites)
 
-  return NextResponse.json({ ids: favourites.ids }, { status: 200 })
+  return NextResponse.json({ ids: favouriteIds }, { status: 200 })
 }

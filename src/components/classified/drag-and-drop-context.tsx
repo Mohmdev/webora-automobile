@@ -1,6 +1,6 @@
 'use client'
 
-import type { ClassifiedImages } from '@/types'
+import type { UpdateClassifiedImage, UpdateClassifiedImages } from '@/types'
 import {
   type Active,
   DndContext,
@@ -18,12 +18,11 @@ import {
 } from '@dnd-kit/sortable'
 import { type JSX, useCallback, useMemo, useState } from 'react'
 import { SortableOverlay } from './sortable-overlay'
-type ClassifiedImage = ClassifiedImages[number]
 
 interface DragAndDropContextProps {
-  replace: (items: ClassifiedImages) => void
-  items: ClassifiedImages
-  renderItem: (item: ClassifiedImage) => JSX.Element
+  replace: (items: UpdateClassifiedImages) => void
+  items: UpdateClassifiedImages
+  renderItem: (item: UpdateClassifiedImage) => JSX.Element
 }
 
 export const DragAndDropContext = (props: DragAndDropContextProps) => {

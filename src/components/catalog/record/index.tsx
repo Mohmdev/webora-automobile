@@ -1,25 +1,39 @@
-import type { RecordProps } from '@/types'
+import type { ClassifiedProps, FavouritesProps } from '@/types'
 import { Card1 } from './card-1'
 import { Card2 } from './card-2'
-import { SkeletonCard } from './card-skeleton'
-
+import { SkeletonCard1 } from './card-skeleton-1'
+import { SkeletonCard2 } from './card-skeleton-2'
 interface Template {
-  template?: 'card-1' | 'card-2' | 'skeleton'
+  template?: 'card-1' | 'card-2' | 'skeleton-1' | 'skeleton-2'
 }
 
-export function Record({ template, ...props }: Template & RecordProps) {
+export function Record({
+  template,
+  classified,
+  favouriteIds,
+  className,
+}: Template & ClassifiedProps & FavouritesProps & { className?: string }) {
+  const recordProps = {
+    classified,
+    favouriteIds,
+    className,
+  }
+
   switch (template) {
     case 'card-1': {
-      return <Card1 {...props} />
+      return <Card1 {...recordProps} />
     }
     case 'card-2': {
-      return <Card2 {...props} />
+      return <Card2 {...recordProps} />
     }
-    case 'skeleton': {
-      return <SkeletonCard {...props} />
+    case 'skeleton-1': {
+      return <SkeletonCard1 />
+    }
+    case 'skeleton-2': {
+      return <SkeletonCard2 />
     }
     default: {
-      return <Card1 {...props} />
+      return <Card2 {...recordProps} />
     }
   }
 }

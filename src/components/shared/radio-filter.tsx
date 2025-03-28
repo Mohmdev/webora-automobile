@@ -1,16 +1,16 @@
 'use client'
 import { cn } from '@/lib/utils'
-import type { AwaitedPageProps } from '@/types'
+import type { SearchAwaitedProps } from '@/types'
 import type { ClassifiedStatus } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { Label } from '../ui/label'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 
-interface RadioFilterProps extends AwaitedPageProps {
+type RadioMinMaxProps = SearchAwaitedProps & {
   items: string[]
 }
 
-export const RadioFilter = (props: RadioFilterProps) => {
+export const RadioFilter = (props: RadioMinMaxProps) => {
   const { items, searchParams } = props
   const router = useRouter()
   const status = (searchParams?.status as string) || 'all'

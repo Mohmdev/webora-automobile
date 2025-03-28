@@ -1,7 +1,7 @@
 'use client'
 import { deleteClassifiedAction } from '@/app/_actions/classified/delete'
 import { toast } from '@/hooks/use-toast'
-import type { ClassifiedWithImages } from '@/types'
+import type { ClassifiedData, ClassifiedImages } from '@/types'
 import { EyeIcon, Loader2, PencilIcon, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { useTransition } from 'react'
@@ -11,7 +11,7 @@ import { Button } from '../ui/button'
 
 export const ActionButtons = ({
   classified,
-}: { classified: ClassifiedWithImages }) => {
+}: { classified: ClassifiedImages & ClassifiedData }) => {
   const [isPending, startTransition] = useTransition()
   const deleteClassified = (id: number) => {
     startTransition(async () => {

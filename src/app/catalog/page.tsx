@@ -1,19 +1,20 @@
+import { Catalog } from '@/components/catalog'
 import { ThemeProvider } from '@/components/theme-provider'
+import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
-import type { Favourites, PageProps } from '@/types'
+import type { FavouritesProps, PageProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
-import { Archive } from '../../components/catalog/archive'
 import { getInventory, sampleData } from './data'
 
 export default async function CatalogPage(props: PageProps) {
   const searchParams = await props.searchParams
   const classifieds = getInventory(searchParams)
   const sourceId = await getSourceId()
-  const favourites = await redis.get<Favourites>(sourceId ?? '')
-  const count = await prisma.classified.count({
+  const favourites = await redis.get<FavouritesProps>(sourceId ?? '')
+  const resultCount = await prisma.classified.count({
     where: buildClassifiedFilterQuery(searchParams),
   })
 
@@ -31,6 +32,10 @@ export default async function CatalogPage(props: PageProps) {
     },
   })
 
+  const totalPages = resultCount
+    ? Math.ceil(resultCount / CLASSIFIEDS_PER_PAGE)
+    : 0
+
   const sampleUser = sampleData.user
 
   return (
@@ -40,12 +45,15 @@ export default async function CatalogPage(props: PageProps) {
       enableSystem
       disableTransitionOnChange
     >
-      <Archive
-        classifieds={classifieds}
-        favourites={favourites ? favourites.ids : []}
+      <Catalog
+        template="catalog-2"
+        classifiedsArray={classifieds}
+        favouriteIds={favourites?.favouriteIds ?? []}
         minMaxValues={minMaxResult}
         searchParams={searchParams}
         user={sampleUser}
+        resultCount={resultCount}
+        totalPages={totalPages}
       />
     </ThemeProvider>
   )

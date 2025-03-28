@@ -1,12 +1,12 @@
 import { PageSchema } from '@/app/schemas/page.schema'
-import { ClassifiedCard } from '@/components/inventory/classified-card'
+import { Record } from '@/components/catalog/record'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import type { Favourites, PageProps } from '@/types'
+import type { FavouritesProps, PageProps } from '@/types'
 
 export default async function FavouritesPage(props: PageProps) {
   const searchParams = await props.searchParams
@@ -19,17 +19,17 @@ export default async function FavouritesPage(props: PageProps) {
   const offset = (page - 1) * CLASSIFIEDS_PER_PAGE
 
   const sourceId = await getSourceId()
-  const favourites = await redis.get<Favourites>(sourceId ?? '')
+  const getFavourites = await redis.get<FavouritesProps>(sourceId ?? '')
 
   const classifieds = await prisma.classified.findMany({
-    where: { id: { in: favourites ? favourites.ids : [] } },
+    where: { id: { in: getFavourites ? getFavourites.favouriteIds : [] } },
     include: { images: { take: 1 } },
     skip: offset,
     take: CLASSIFIEDS_PER_PAGE,
   })
 
   const count = await prisma.classified.count({
-    where: { id: { in: favourites ? favourites.ids : [] } },
+    where: { id: { in: getFavourites ? getFavourites.favouriteIds : [] } },
   })
 
   const totalPages = Math.ceil(count / CLASSIFIEDS_PER_PAGE)
@@ -40,10 +40,11 @@ export default async function FavouritesPage(props: PageProps) {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
         {classifieds.map((classified) => {
           return (
-            <ClassifiedCard
+            <Record
               key={classified.id}
+              template="card-1"
               classified={classified}
-              favourites={favourites ? favourites.ids : []}
+              favouriteIds={getFavourites?.favouriteIds ?? []}
             />
           )
         })}

@@ -1,6 +1,6 @@
 'use client'
 
-import { FavouriteButton } from '@/components/inventory/favourite-button'
+import { FavouriteButton } from '@/components/catalog/record/favourite-button'
 import { HTMLParser } from '@/components/shared/html-parser'
 import {
   Card,
@@ -14,15 +14,27 @@ import { routes } from '@/config/routes'
 import { useRecordData } from '@/hooks/record/useRecordData'
 import { useRecordState } from '@/hooks/record/useRecordState'
 import { cn } from '@/lib/utils'
-import { MultiStepFormEnum, type RecordProps } from '@/types'
+import {
+  type ClassifiedProps,
+  type FavouritesProps,
+  MultiStepFormEnum,
+} from '@/types'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { RecordCTA } from './record-cta'
 
-export function Card2({ classified, favourites, className }: RecordProps) {
+export function Card2({
+  classified,
+  favouriteIds,
+  className,
+}: FavouritesProps & ClassifiedProps & { className?: string }) {
+  if (!classified) {
+    return null
+  }
+
   const { isFavourite, setIsFavourite, isVisible } = useRecordState(
     classified,
-    favourites
+    favouriteIds
   )
   const { formattedPrice, classifiedInfo } = useRecordData(classified)
 

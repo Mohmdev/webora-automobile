@@ -1,13 +1,15 @@
 import { ClassifiedBadgeMap } from '@/config/constants'
 import { formatClassifiedStatus, formatColour, formatPrice } from '@/lib/utils'
-import type { ClassifiedWithImages } from '@/types'
+import type { ClassifiedData, ClassifiedImages } from '@/types'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { Badge } from '../ui/badge'
 import { TableCell, TableRow } from '../ui/table'
 import { ActionButtons } from './action-buttons'
 
-export const ClassifiedsTableRow = (classified: ClassifiedWithImages) => {
+export const ClassifiedsTableRow = (
+  classified: ClassifiedImages & ClassifiedData
+) => {
   return (
     <TableRow className="border-white/5 text-muted/75 hover:bg-primary-300">
       <TableCell className="font-medium">{classified.id}</TableCell>

@@ -11,7 +11,7 @@ import {
   formatTransmission,
   formatUlezCompliance,
 } from '@/lib/utils'
-import type { SidebarProps } from '@/types'
+import type { MinMaxProps, SearchAwaitedProps } from '@/types'
 import {
   BodyType,
   Colour,
@@ -39,9 +39,10 @@ import {
 import { RangeFilter } from './range-filters'
 import { TaxonomyFilters } from './taxonomy-filters'
 
-interface DialogFiltersProps extends SidebarProps {
-  count: number
-}
+type DialogFiltersProps = MinMaxProps &
+  SearchAwaitedProps & {
+    count: number
+  }
 
 // Extract filter states to reduce component complexity
 const useFilterStates = (searchParams: Record<string, string> | undefined) => {
@@ -143,8 +144,8 @@ const FilterControls = ({
   handleChange,
   handleSelectChange,
 }: {
-  minMaxValues: SidebarProps['minMaxValues']
-  searchParams: SidebarProps['searchParams']
+  minMaxValues: MinMaxProps['minMaxValues']
+  searchParams: SearchAwaitedProps['searchParams']
   queryStates: Record<string, string>
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
   handleSelectChange: (name: string, value: string) => void

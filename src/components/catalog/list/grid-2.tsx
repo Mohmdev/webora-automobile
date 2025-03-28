@@ -1,12 +1,19 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import type { ListProps } from '@/types'
+import type { ClassifiedsArrayProps, FavouritesProps } from '@/types'
 import { use } from 'react'
 import { Record } from '../record'
 
-export function GridList2({ classifieds, favourites, className }: ListProps) {
-  const inventory = use(classifieds)
+export function GridList2({
+  classifiedsArray,
+  favouriteIds,
+  className,
+}: ClassifiedsArrayProps & FavouritesProps & { className?: string }) {
+  if (!classifiedsArray) {
+    return null
+  }
+  const classifieds = use(classifiedsArray)
 
   return (
     <div
@@ -15,13 +22,13 @@ export function GridList2({ classifieds, favourites, className }: ListProps) {
         className
       )}
     >
-      {inventory.map((classified) => {
+      {classifieds.map((classified) => {
         return (
           <Record
             key={classified.id}
             template="card-2"
             classified={classified}
-            favourites={favourites}
+            favouriteIds={favouriteIds}
           />
         )
       })}

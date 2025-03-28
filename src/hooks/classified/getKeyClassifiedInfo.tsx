@@ -5,10 +5,10 @@ import {
   formatOdometerUnit,
   formatTransmission,
 } from '@/lib/utils'
-import type { ClassifiedWithImages } from '@/types'
+import type { ClassifiedData } from '@/types'
 import { Cog, Fuel, GaugeCircle, Paintbrush2 } from 'lucide-react'
 
-export const getKeyClassifiedInfo = (classified: ClassifiedWithImages) => {
+export const getKeyClassifiedInfo = (classified: ClassifiedData) => {
   return [
     {
       id: 'odoReading',

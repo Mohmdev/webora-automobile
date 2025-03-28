@@ -8,7 +8,7 @@ import {
 import { MAX_IMAGES } from '@/config/constants'
 import { useToast } from '@/hooks/use-toast'
 import { formatClassifiedStatus } from '@/lib/utils'
-import type { ClassifiedWithImages } from '@/types'
+import type { ClassifiedData, ClassifiedImages } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ClassifiedStatus, CurrencyCode, OdoUnit } from '@prisma/client'
 import { Loader2 } from 'lucide-react'
@@ -34,7 +34,7 @@ import { MultiImageUploader } from '../multi-image-uploader'
 import { ClassifiedFormFields } from './form-fields'
 
 interface ClassifiedFormProps {
-  classified: ClassifiedWithImages
+  classified: ClassifiedImages & ClassifiedData
 }
 
 const UPLOADS_REGEX = /uploads\/.+/

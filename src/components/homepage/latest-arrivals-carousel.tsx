@@ -1,17 +1,16 @@
 'use client'
 
-import type { ClassifiedWithImages } from '@/types'
+import type { ClassifiedData, ClassifiedImages } from '@/types'
 import dynamic from 'next/dynamic'
 import 'swiper/css'
 import { Navigation } from 'swiper/modules'
 import { SwiperSlide } from 'swiper/react'
-import { ClassifiedCard } from '../inventory/classified-card'
-import { ClassifiedCardSkeleton } from '../inventory/classified-card-skeleton'
+import { Record } from '../catalog/record'
 import { SwiperButtons } from '../shared/swiper-button'
 
 interface CarouselProps {
-  classifieds: ClassifiedWithImages[]
-  favourites: number[]
+  classifieds: (ClassifiedData & ClassifiedImages)[]
+  favouriteIds: number[]
 }
 
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
@@ -19,14 +18,14 @@ const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   loading: () => (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
       {[1, 2, 3, 4].map((i) => (
-        <ClassifiedCardSkeleton key={i} />
+        <Record key={i} template="skeleton-1" />
       ))}
     </div>
   ),
 })
 
 export const LatestArrivalsCarousel = (props: CarouselProps) => {
-  const { classifieds, favourites } = props
+  const { classifieds, favouriteIds } = props
 
   return (
     <div className="relative mt-8">
@@ -55,7 +54,11 @@ export const LatestArrivalsCarousel = (props: CarouselProps) => {
         {classifieds.map((classified) => {
           return (
             <SwiperSlide key={classified.id}>
-              <ClassifiedCard classified={classified} favourites={favourites} />
+              <Record
+                template="card-1"
+                classified={classified}
+                favouriteIds={favouriteIds}
+              />
             </SwiperSlide>
           )
         })}

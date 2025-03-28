@@ -3,7 +3,7 @@ import { env } from '@/env'
 import { generateThumbHashFromFile } from '@/lib/thumbhash-client'
 import { Uploader } from '@/lib/uploader'
 import { cn } from '@/lib/utils'
-import type { ClassifiedImages, ProgressArgs } from '@/types'
+import type { ProgressArgs, UpdateClassifiedImages } from '@/types'
 import dynamic from 'next/dynamic'
 import type React from 'react'
 import { useCallback, useState } from 'react'
@@ -48,7 +48,7 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
     keyName: 'uuid',
   })
 
-  const [items, setItems] = useState<ClassifiedImages>(fields)
+  const [items, setItems] = useState<UpdateClassifiedImages>(fields)
   const [progress, setProgress] = useState<ImageProgress[]>([])
   const [isUploading, setIsUploading] = useState(false)
 
@@ -65,7 +65,7 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
   }, [])
 
   const handleItemsUpdate = useCallback(
-    (newItems: ClassifiedImages) => {
+    (newItems: UpdateClassifiedImages) => {
       replace(newItems)
       setItems(newItems)
     },
@@ -78,7 +78,7 @@ export const MultiImageUploader = (props: MultiImageUploaderProps) => {
       setIsUploading(files.length > 0)
 
       let id = items.length + 1
-      const newImageData: ClassifiedImages = []
+      const newImageData: UpdateClassifiedImages = []
 
       for (const file of files) {
         const uuid = uuidv4()

@@ -1,7 +1,7 @@
+import type { SearchAwaitedProps } from '@/types'
 import type { Prisma } from '@prisma/client'
-import type { AwaitedPageProps } from './page'
 
-export interface MultiStepFormComponentProps extends AwaitedPageProps {
+export type MultiStepFormComponentProps = SearchAwaitedProps & {
   classified: Prisma.ClassifiedGetPayload<{
     include: { make: true }
   }>

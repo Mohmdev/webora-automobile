@@ -2,10 +2,10 @@ import { PageSchema } from '@/app/schemas/page.schema'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { prisma } from '@/lib/prisma'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
-import type { AwaitedPageProps } from '@/types'
+import type { SearchAwaitedProps } from '@/types'
 
 export const getInventory = (
-  searchParams: AwaitedPageProps['searchParams']
+  searchParams: SearchAwaitedProps['searchParams']
 ) => {
   const validPage = PageSchema.parse(searchParams?.page)
 
@@ -35,7 +35,7 @@ export const sampleData = {
       items: ['Personal', 'Work', 'Family'],
     },
     {
-      name: 'Favorites',
+      name: 'Favourites',
       items: ['Holidays', 'Birthdays'],
     },
     {

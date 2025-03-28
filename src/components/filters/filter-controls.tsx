@@ -18,7 +18,7 @@ import {
   formatTransmission,
   formatUlezCompliance,
 } from '@/lib/utils'
-import type { SidebarProps } from '@/types'
+import type { MinMaxProps, SearchAwaitedProps } from '@/types'
 import {
   BodyType,
   Colour,
@@ -37,8 +37,8 @@ export function SidebarFilterControls({
   handleChange,
   handleSelectChange,
 }: {
-  minMaxValues: SidebarProps['minMaxValues']
-  searchParams: SidebarProps['searchParams']
+  minMaxValues: MinMaxProps['minMaxValues']
+  searchParams: SearchAwaitedProps['searchParams']
   queryStates: Record<string, string>
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
   handleSelectChange: (name: string, value: string) => void

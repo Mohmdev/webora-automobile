@@ -3,7 +3,7 @@ import { navLinks } from '@/config/constants'
 import { routes } from '@/config/routes'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import type { Favourites } from '@/types'
+import type { FavouritesProps } from '@/types'
 import { HeartIcon, MenuIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,7 +14,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '../ui/sheet'
 export const PublicHeader = async () => {
   const session = await auth()
   const sourceId = await getSourceId()
-  const favourites = await redis.get<Favourites>(sourceId ?? '')
+  const favourites = await redis.get<FavouritesProps>(sourceId ?? '')
   return (
     <header className="flex h-16 items-center justify-between gap-x-6 bg-transparent px-4">
       <div className="flex flex-1 items-center">
@@ -59,7 +59,7 @@ export const PublicHeader = async () => {
             </div>
             <div className="-top-1 5 -right-1.5 absolute flex h-5 w-5 items-center justify-center rounded-full bg-pink-500 text-white group-hover:bg-primary">
               <span className="text-xs">
-                {favourites ? favourites.ids.length : 0}
+                {favourites ? favourites.favouriteIds?.length : 0}
               </span>
             </div>
           </Link>

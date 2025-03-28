@@ -8,9 +8,12 @@ import {
 } from '@/components/ui/sidebar'
 import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
 import { cn } from '@/lib/utils'
-import type { SidebarProps } from '@/types'
+import type { MinMaxProps, SearchAwaitedProps } from '@/types'
 
-export function SidebarContent({ minMaxValues, searchParams }: SidebarProps) {
+export function SidebarContent({
+  minMaxValues,
+  searchParams,
+}: MinMaxProps & SearchAwaitedProps) {
   const {
     queryStates,
     filterCount,

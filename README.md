@@ -24,7 +24,7 @@ Webora Motors is a vehicle marketplace/dealership web application built with Nex
 
 ### Source Code (`src/`)
 - `app/` - Next.js App Router pages and API routes
-  - `(presentation)/` - Client-facing pages (inventory, auth, favorites)
+  - `(presentation)/` - Client-facing pages (inventory, auth, favourites)
   - `admin/` - Admin dashboard and management pages
   - `api/` - API endpoints
   - `_actions/` - Server actions
@@ -69,7 +69,7 @@ Webora Motors is a vehicle marketplace/dealership web application built with Nex
 - **Client Routes**:
   - `/` - Homepage
   - `/inventory` - Vehicle listings
-  - `/favourites` - User's favorite vehicles
+  - `/favourites` - User's favourite vehicles
   - `/auth` - Authentication pages
 
 - **Admin Routes**:

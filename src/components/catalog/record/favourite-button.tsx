@@ -1,12 +1,12 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { endpoints } from '@/config/endpoints'
 import { api } from '@/lib/api-client'
 import { cn } from '@/lib/utils'
 import type { FavouriteButtonProps } from '@/types'
 import { HeartIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { Button } from '../ui/button'
 
 export const FavouriteButton = (props: FavouriteButtonProps) => {
   const { setIsFavourite, isFavourite, id } = props

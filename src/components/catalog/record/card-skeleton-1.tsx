@@ -1,9 +1,14 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/lib/utils'
 
-export const ClassifiedCardSkeleton = () => {
+export function SkeletonCard1({
+  className,
+}: {
+  className?: string
+}) {
   return (
-    <Card className="border border-muted">
+    <Card className={cn('border border-muted', className)}>
       <div className="relative w-full">
         <Skeleton className="aspect-3/2 h-full w-full" />
       </div>

@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import type { Favourites } from '@/types'
+import type { FavouriteIds } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { LatestArrivalsCarousel } from './latest-arrivals-carousel'
 
@@ -13,7 +13,7 @@ export const LatestArrivals = async () => {
   })
 
   const sourceId = await getSourceId()
-  const favourites = await redis.get<Favourites>(sourceId || '')
+  const getFavouriteIds = await redis.get<FavouriteIds>(sourceId || '')
   return (
     <section className="py-16 sm:py-24">
       <div className="container mx-auto max-w-[80vw]">
@@ -22,7 +22,7 @@ export const LatestArrivals = async () => {
         </h2>
         <LatestArrivalsCarousel
           classifieds={classifieds}
-          favourites={favourites ? favourites.ids : []}
+          favouriteIds={getFavouriteIds ?? []}
         />
       </div>
     </section>

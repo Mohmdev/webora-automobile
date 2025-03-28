@@ -1,16 +1,7 @@
 export type {
-  AwaitedPageProps,
-  PageProps,
-  PrevState,
-  SidebarProps,
-  TaxonomyFiltersProps,
-} from './page'
-
-export type {
-  ClassifiedImages,
   ClassifiedKeys,
-  ClassifiedWithImages,
-  Favourites,
+  UpdateClassifiedImages,
+  UpdateClassifiedImage,
   FilterOptions,
 } from './classified'
 
@@ -26,17 +17,22 @@ export type {
 } from './form'
 
 export type {
-  RecordProps,
-  ListProps,
-  ArchiveProps,
-  FiltersPanelProps,
-} from './catalog'
-
-export type {
-  ClassifiedCardProps,
-  ClassifiedsListProps,
+  ClassifiedProps,
+  ClassifiedsArrayProps,
+  FavouritesProps,
+  FavouriteIds,
   FavouriteButtonProps,
-} from './inventory'
+  SearchAwaitedProps,
+  SearchResultProps,
+  UserProps,
+  MinMaxProps,
+  PageProps,
+  PrevState,
+  TaxonomyFiltersProps,
+  RecordDataProps,
+  ClassifiedData,
+  ClassifiedImages,
+} from './catalog'
 
 // Enums
 export { MultiStepFormEnum } from './form'

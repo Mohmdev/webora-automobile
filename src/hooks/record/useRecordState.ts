@@ -1,15 +1,15 @@
 import { routes } from '@/config/routes'
-import type { ClassifiedWithImages } from '@/types'
+import type { ClassifiedData, FavouriteIds } from '@/types'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export function useRecordState(
-  classified: ClassifiedWithImages,
-  favourites: number[]
+  classified: ClassifiedData | undefined,
+  favouriteIds: FavouriteIds = []
 ) {
   const pathname = usePathname()
   const [isFavourite, setIsFavourite] = useState(
-    favourites.includes(classified.id)
+    classified ? favouriteIds.includes(classified.id) : false
   )
   const [isVisible, setIsVisible] = useState(true)
 

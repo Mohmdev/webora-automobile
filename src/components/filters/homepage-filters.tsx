@@ -1,12 +1,13 @@
 'use client'
 
-import type { SidebarProps } from '@/types'
+import type { MinMaxProps, SearchAwaitedProps } from '@/types'
 import { parseAsString, useQueryStates } from 'nuqs'
 import type React from 'react'
 import { RangeFilter } from './range-filters'
 import { TaxonomyFilters } from './taxonomy-filters'
 
-interface HomepageTaxonomyFiltersProps extends SidebarProps {}
+type HomepageTaxonomyFiltersProps = MinMaxProps & SearchAwaitedProps
+
 export const HomepageTaxonomyFilters = ({
   searchParams,
   minMaxValues,

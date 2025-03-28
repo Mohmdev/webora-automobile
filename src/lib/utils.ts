@@ -1,5 +1,5 @@
 import { ClassifiedFilterSchema } from '@/app/schemas/classified.schema'
-import type { AwaitedPageProps } from '@/types'
+import type { SearchAwaitedProps } from '@/types'
 import {
   BodyType,
   ClassifiedStatus,
@@ -169,7 +169,7 @@ function mapRangeFilter(
 }
 
 export const buildClassifiedFilterQuery = (
-  searchParams: AwaitedPageProps['searchParams'] | undefined
+  searchParams: SearchAwaitedProps['searchParams'] | undefined
 ): Prisma.ClassifiedWhereInput => {
   const { data } = ClassifiedFilterSchema.safeParse(searchParams)
 

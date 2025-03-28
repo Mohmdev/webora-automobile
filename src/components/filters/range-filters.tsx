@@ -4,7 +4,7 @@ import type { CurrencyCode } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { RangeSelect } from '../ui/range-select'
 
-interface RangeFilterProps extends TaxonomyFiltersProps {
+interface RangeMinMaxProps extends TaxonomyFiltersProps {
   label: string
   minName: string
   maxName: string
@@ -17,7 +17,7 @@ interface RangeFilterProps extends TaxonomyFiltersProps {
   }
 }
 
-export const RangeFilter = (props: RangeFilterProps) => {
+export const RangeFilter = (props: RangeMinMaxProps) => {
   const {
     label,
     minName,
