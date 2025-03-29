@@ -8,7 +8,7 @@ export function RecordCTA({
   isPrimary = false,
   className,
   ...props
-}: ButtonProps & { href: string; label: string; isPrimary?: boolean }) {
+}: ButtonProps & { href?: string; label: string; isPrimary?: boolean }) {
   return (
     <Button
       className={cn(
@@ -23,7 +23,7 @@ export function RecordCTA({
       size="sm"
       {...props}
     >
-      <Link href={href}>{label}</Link>
+      {href ? <Link href={href}>{label}</Link> : <span>{label}</span>}
     </Button>
   )
 }

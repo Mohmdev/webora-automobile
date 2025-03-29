@@ -5,7 +5,6 @@ import type {
   FavouritesProps,
   MinMaxProps,
   SearchAwaitedProps,
-  SearchResultProps,
   UserProps,
 } from '@/types'
 import { ContentPanel } from '../archive/content-panel'
@@ -20,29 +19,25 @@ export function Catalog2({
   },
   user,
   className,
-  totalPages,
-  resultCount,
 }: SearchAwaitedProps &
   ClassifiedsArrayProps &
   FavouritesProps &
   MinMaxProps &
-  SearchResultProps &
   UserProps & { className?: string }) {
   return (
     <SidebarProvider className={className}>
       <FiltersPanel
-        template="panel-2"
+        template="template-2"
         user={user}
         minMaxValues={minMaxValues}
         searchParams={searchParams}
       />
       <ContentPanel
-        template="panel-2"
+        template="template-2"
         classifiedsArray={classifiedsArray}
         favouriteIds={favouriteIds}
-        totalPages={totalPages}
-        resultCount={resultCount}
         minMaxValues={minMaxValues}
+        searchParams={searchParams}
       />
     </SidebarProvider>
   )

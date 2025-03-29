@@ -1,5 +1,5 @@
 import {
-  SidebarFooter as SidebarFooterComponent,
+  SidebarFooter,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -7,9 +7,9 @@ import {
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Plus } from 'lucide-react'
 
-export function SidebarFooter() {
+export function PanelFooter() {
   return (
-    <SidebarFooterComponent>
+    <SidebarFooter className="mt-auto mb-0 border-t">
       <SidebarMenu className="flex-row justify-between gap-2">
         <SidebarMenuItem>
           <SidebarMenuButton>
@@ -21,6 +21,6 @@ export function SidebarFooter() {
           <ThemeToggle className="bg-transparent!" />
         </SidebarMenuItem>
       </SidebarMenu>
-    </SidebarFooterComponent>
+    </SidebarFooter>
   )
 }

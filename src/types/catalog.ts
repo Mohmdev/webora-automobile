@@ -60,11 +60,6 @@ export type TaxonomyFiltersProps = SearchAwaitedProps & {
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
-export type SearchResultProps = {
-  resultCount?: number
-  totalPages?: number
-}
-
 export type MinMaxProps = {
   minMaxValues: Prisma.GetClassifiedAggregateType<{
     _min: {

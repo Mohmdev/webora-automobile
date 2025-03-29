@@ -3,13 +3,12 @@ import type {
   FavouritesProps,
   MinMaxProps,
   SearchAwaitedProps,
-  SearchResultProps,
 } from '@/types'
-import { ContentPanel1 } from './panel-1'
-import { ContentPanel2 } from './panel-2'
+import { ContentPanel1 } from './template-1'
+import { ContentPanel2 } from './template-2'
 
 interface Template {
-  template?: 'panel-1' | 'panel-2'
+  template?: 'template-1' | 'template-2'
 }
 
 export function ContentPanel({
@@ -17,37 +16,33 @@ export function ContentPanel({
   classifiedsArray,
   favouriteIds,
   className,
-  resultCount,
   minMaxValues,
   searchParams,
-  totalPages,
 }: Template &
   SearchAwaitedProps &
   ClassifiedsArrayProps &
   FavouritesProps &
-  MinMaxProps &
-  SearchResultProps & { className?: string }) {
+  MinMaxProps & { className?: string }) {
   const panel1Props = {
     classifiedsArray,
     favouriteIds,
     className,
-    resultCount,
     minMaxValues,
     searchParams,
-    totalPages,
   }
 
   const panel2Props = {
+    searchParams,
     classifiedsArray,
     favouriteIds,
     className,
   }
 
   switch (template) {
-    case 'panel-1': {
+    case 'template-1': {
       return <ContentPanel1 {...panel1Props} />
     }
-    case 'panel-2': {
+    case 'template-2': {
       return <ContentPanel2 {...panel2Props} />
     }
     default: {

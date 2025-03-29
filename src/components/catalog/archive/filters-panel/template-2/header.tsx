@@ -1,7 +1,7 @@
 import { NavUser } from '@/components/catalog/_sub/nav-user'
-import { SidebarHeader as SidebarHeaderComponent } from '@/components/ui/sidebar'
+import { SidebarHeader } from '@/components/ui/sidebar'
 
-interface SidebarHeaderProps {
+interface PanelHeaderProps {
   user?: {
     name: string
     email: string
@@ -9,9 +9,9 @@ interface SidebarHeaderProps {
   }
 }
 
-export function SidebarHeader({ user }: SidebarHeaderProps) {
+export function PanelHeader({ user }: PanelHeaderProps) {
   return (
-    <SidebarHeaderComponent className="h-16 border-sidebar-border border-b">
+    <SidebarHeader className="h-16 border-sidebar-border border-b">
       <NavUser
         user={{
           name: user?.name ?? '',
@@ -19,6 +19,6 @@ export function SidebarHeader({ user }: SidebarHeaderProps) {
           avatar: user?.avatar ?? '',
         }}
       />
-    </SidebarHeaderComponent>
+    </SidebarHeader>
   )
 }

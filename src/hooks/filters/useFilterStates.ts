@@ -1,14 +1,22 @@
+import { routes } from '@/config/routes'
 import { env } from '@/env'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { parseAsString, useQueryStates } from 'nuqs'
 import { type ChangeEvent, useEffect, useState } from 'react'
 
-export function useSidebarFilters(
+export interface FilterState {
+  queryStates: Record<string, string>
+  filterCount: number
+  clearFilters: () => void
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+  handleSelectChange: (name: string, value: string) => void
+}
+
+export function useFilterStates(
   searchParams: Record<string, string> | undefined
-) {
-  const router = useRouter()
-  const pathname = usePathname()
+): FilterState {
   const [filterCount, setFilterCount] = useState(0)
+  const router = useRouter()
 
   const [queryStates, setQueryStates] = useQueryStates(
     {
@@ -37,7 +45,11 @@ export function useSidebarFilters(
   )
 
   useEffect(() => {
-    const count = Object.entries(searchParams as Record<string, string>).filter(
+    if (!searchParams) {
+      return
+    }
+
+    const count = Object.entries(searchParams).filter(
       ([key, value]) => key !== 'page' && value
     ).length
 
@@ -45,8 +57,8 @@ export function useSidebarFilters(
   }, [searchParams])
 
   const clearFilters = () => {
-    const url = new URL(pathname, env.NEXT_PUBLIC_APP_URL)
-    window.location.replace(url.toString())
+    const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL)
+    router.replace(url.toString())
     setFilterCount(0)
   }
 

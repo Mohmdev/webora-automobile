@@ -2,9 +2,9 @@
 
 import { Sidebar, SidebarRail } from '@/components/ui/sidebar'
 import type { MinMaxProps, SearchAwaitedProps, UserProps } from '@/types'
-import { SidebarContent } from './content'
-import { SidebarFooter } from './footer'
-import { SidebarHeader } from './header'
+import { PanelBody } from './body'
+import { PanelFooter } from './footer'
+import { PanelHeader } from './header'
 
 export function FiltersPanel2({
   minMaxValues,
@@ -13,9 +13,9 @@ export function FiltersPanel2({
 }: SearchAwaitedProps & MinMaxProps & UserProps) {
   return (
     <Sidebar variant="sidebar" collapsible="offcanvas">
-      <SidebarHeader user={user} />
-      <SidebarContent minMaxValues={minMaxValues} searchParams={searchParams} />
-      <SidebarFooter />
+      <PanelHeader user={user} />
+      <PanelBody minMaxValues={minMaxValues} searchParams={searchParams} />
+      <PanelFooter />
       <SidebarRail />
     </Sidebar>
   )

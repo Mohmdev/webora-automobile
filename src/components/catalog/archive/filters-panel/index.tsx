@@ -1,9 +1,9 @@
 import type { MinMaxProps, SearchAwaitedProps, UserProps } from '@/types'
-import { FiltersPanel1 } from './panel-1'
-import { FiltersPanel2 } from './panel-2'
+import { FiltersPanel1 } from './template-1'
+import { FiltersPanel2 } from './template-2'
 
 interface Template {
-  template?: 'panel-1' | 'panel-2'
+  template?: 'template-1' | 'template-2'
 }
 
 export function FiltersPanel({
@@ -24,10 +24,10 @@ export function FiltersPanel({
   }
 
   switch (template) {
-    case 'panel-1': {
+    case 'template-1': {
       return <FiltersPanel1 {...panel1Props} />
     }
-    case 'panel-2': {
+    case 'template-2': {
       return <FiltersPanel2 {...panel2Props} />
     }
     default: {

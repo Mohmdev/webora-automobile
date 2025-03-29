@@ -1,15 +1,6 @@
-'use client'
-
 import { RangeFilter } from '@/components/filters/range-filters'
+import { SelectFilter } from '@/components/filters/select-filter'
 import { TaxonomyFilters } from '@/components/filters/taxonomy-filters'
-import { FormLabel } from '@/components/ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import {
   formatBodyType,
   formatColour,
@@ -44,38 +35,6 @@ export function SidebarFilterControls({
   handleSelectChange: (name: string, value: string) => void
 }) {
   const { _min, _max } = minMaxValues
-
-  const renderSelect = (
-    label: string,
-    name: string,
-    value: string,
-    options: { label: string; value: string }[],
-    disabled = false
-  ) => (
-    <div className="space-y-2">
-      <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Select
-        name={name}
-        value={value || '_empty'}
-        disabled={disabled}
-        onValueChange={(value) =>
-          handleSelectChange(name, value === '_empty' ? '' : value)
-        }
-      >
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="_empty">Select</SelectItem>
-          {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
-  )
 
   return (
     <div className="space-y-2 p-4">
@@ -119,95 +78,104 @@ export function SidebarFilterControls({
         thousandSeparator
       />
 
-      {renderSelect(
-        'Currency',
-        'currency',
-        queryStates.currency || '',
-        Object.values(CurrencyCode).map((value) => ({
+      <SelectFilter
+        label="Currency"
+        name="currency"
+        value={queryStates.currency || ''}
+        options={Object.values(CurrencyCode).map((value) => ({
           label: value,
           value,
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'Odometer Unit',
-        'odoUnit',
-        queryStates.odoUnit || '',
-        Object.values(OdoUnit).map((value) => ({
+      <SelectFilter
+        label="Odometer Unit"
+        name="odoUnit"
+        value={queryStates.odoUnit || ''}
+        options={Object.values(OdoUnit).map((value) => ({
           label: formatOdometerUnit(value),
           value,
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'Transmission',
-        'transmission',
-        queryStates.transmission || '',
-        Object.values(Transmission).map((value) => ({
+      <SelectFilter
+        label="Transmission"
+        name="transmission"
+        value={queryStates.transmission || ''}
+        options={Object.values(Transmission).map((value) => ({
           label: formatTransmission(value),
           value,
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'Fuel Type',
-        'fuelType',
-        queryStates.fuelType || '',
-        Object.values(FuelType).map((value) => ({
+      <SelectFilter
+        label="Fuel Type"
+        name="fuelType"
+        value={queryStates.fuelType || ''}
+        options={Object.values(FuelType).map((value) => ({
           label: formatFuelType(value),
           value,
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'Body Type',
-        'bodyType',
-        queryStates.bodyType || '',
-        Object.values(BodyType).map((value) => ({
+      <SelectFilter
+        label="Body Type"
+        name="bodyType"
+        value={queryStates.bodyType || ''}
+        options={Object.values(BodyType).map((value) => ({
           label: formatBodyType(value),
           value,
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'Colour',
-        'colour',
-        queryStates.colour || '',
-        Object.values(Colour).map((value) => ({
+      <SelectFilter
+        label="Colour"
+        name="colour"
+        value={queryStates.colour || ''}
+        options={Object.values(Colour).map((value) => ({
           label: formatColour(value),
           value,
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'ULEZ Compliance',
-        'ulezCompliance',
-        queryStates.ulezCompliance || '',
-        Object.values(ULEZCompliance).map((value) => ({
+      <SelectFilter
+        label="ULEZ Compliance"
+        name="ulezCompliance"
+        value={queryStates.ulezCompliance || ''}
+        options={Object.values(ULEZCompliance).map((value) => ({
           label: formatUlezCompliance(value),
           value,
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'Doors',
-        'doors',
-        queryStates.doors || '',
-        Array.from({ length: 6 }).map((_, i) => ({
+      <SelectFilter
+        label="Doors"
+        name="doors"
+        value={queryStates.doors || ''}
+        options={Array.from({ length: 6 }).map((_, i) => ({
           label: Number(i + 1).toString(),
           value: Number(i + 1).toString(),
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
 
-      {renderSelect(
-        'Seats',
-        'seats',
-        queryStates.seats || '',
-        Array.from({ length: 8 }).map((_, i) => ({
+      <SelectFilter
+        label="Seats"
+        name="seats"
+        value={queryStates.seats || ''}
+        options={Array.from({ length: 8 }).map((_, i) => ({
           label: Number(i + 1).toString(),
           value: Number(i + 1).toString(),
-        }))
-      )}
+        }))}
+        handleSelectChange={handleSelectChange}
+      />
     </div>
   )
 }

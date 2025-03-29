@@ -1,10 +1,8 @@
 import { getInventory } from '@/app/catalog/data'
 import { Catalog } from '@/components/catalog'
-import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import { buildClassifiedFilterQuery } from '@/lib/utils'
 import type { FavouritesProps, PageProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 
@@ -18,10 +16,6 @@ export default async function InventoryPage(props: PageProps) {
   const favouriteIds = Array.isArray(getFavourites?.favouriteIds)
     ? getFavourites.favouriteIds
     : []
-
-  const resultCount = await prisma.classified.count({
-    where: buildClassifiedFilterQuery(searchParams),
-  })
 
   const minMaxResult = await prisma.classified.aggregate({
     where: { status: ClassifiedStatus.LIVE },
@@ -37,10 +31,6 @@ export default async function InventoryPage(props: PageProps) {
     },
   })
 
-  const totalPages = resultCount
-    ? Math.ceil(resultCount / CLASSIFIEDS_PER_PAGE)
-    : 0
-
   return (
     <Catalog
       template="catalog-1"
@@ -48,8 +38,6 @@ export default async function InventoryPage(props: PageProps) {
       favouriteIds={favouriteIds}
       minMaxValues={minMaxResult}
       searchParams={searchParams}
-      resultCount={resultCount}
-      totalPages={totalPages}
     />
   )
 }

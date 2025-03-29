@@ -8,55 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { endpoints } from '@/config/endpoints'
-import { api } from '@/lib/api-client'
-import type { FilterOptions, TaxonomyFiltersProps } from '@/types'
+import { useTaxonomyOptions } from '@/hooks/filters/useTaxonomyOptions'
+import type { TaxonomyFiltersProps } from '@/types'
 import type React from 'react'
-import { useEffect, useState } from 'react'
 
 export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
   const { searchParams, handleChange } = props
-
-  const [makes, setMakes] = useState<FilterOptions<string, string>>([])
-  const [models, setModels] = useState<FilterOptions<string, string>>([])
-  const [modelVariants, setModelVariants] = useState<
-    FilterOptions<string, string>
-  >([])
-
-  useEffect(() => {
-    ;(async function fetchMakesOptions() {
-      if (!searchParams) {
-        return
-      }
-
-      const params = new URLSearchParams()
-      for (const [k, v] of Object.entries(
-        searchParams as Record<string, string>
-      )) {
-        if (v) {
-          params.set(k, v as string)
-        }
-      }
-
-      const url = new URL(endpoints.taxonomy, window.location.href)
-
-      url.search = params.toString()
-
-      try {
-        const data = await api.get<{
-          makes: FilterOptions<string, string>
-          models: FilterOptions<string, string>
-          modelVariants: FilterOptions<string, string>
-        }>(url.toString())
-
-        setMakes(data.makes)
-        setModels(data.models)
-        setModelVariants(data.modelVariants)
-      } catch (error) {
-        console.error('Error fetching taxonomy data:', error)
-      }
-    })()
-  }, [searchParams])
+  const { makes, models, modelVariants, isLoading } = useTaxonomyOptions(
+    searchParams as Record<string, string> | undefined
+  )
 
   return (
     <>
@@ -70,6 +30,7 @@ export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
               target: { name: 'make', value: value === '_empty' ? '' : value },
             } as React.ChangeEvent<HTMLSelectElement>)
           }
+          disabled={isLoading}
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select make" />
@@ -95,7 +56,7 @@ export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
               target: { name: 'model', value: value === '_empty' ? '' : value },
             } as React.ChangeEvent<HTMLSelectElement>)
           }
-          disabled={!models.length}
+          disabled={!models.length || isLoading}
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select model" />
@@ -124,7 +85,7 @@ export const TaxonomyFilters = (props: TaxonomyFiltersProps) => {
               },
             } as React.ChangeEvent<HTMLSelectElement>)
           }
-          disabled={!modelVariants.length}
+          disabled={!modelVariants.length || isLoading}
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select model variant" />

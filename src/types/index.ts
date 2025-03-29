@@ -23,7 +23,6 @@ export type {
   FavouriteIds,
   FavouriteButtonProps,
   SearchAwaitedProps,
-  SearchResultProps,
   UserProps,
   MinMaxProps,
   PageProps,

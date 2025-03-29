@@ -3,7 +3,6 @@ import type {
   FavouritesProps,
   MinMaxProps,
   SearchAwaitedProps,
-  SearchResultProps,
   UserProps,
 } from '@/types'
 import { Catalog1 } from './templates/catalog-1'
@@ -21,23 +20,18 @@ export function Catalog({
   minMaxValues,
   user,
   className,
-  totalPages,
-  resultCount,
 }: Template &
   SearchAwaitedProps &
   MinMaxProps &
   ClassifiedsArrayProps &
   FavouritesProps &
-  UserProps &
-  SearchResultProps & { className?: string }) {
+  UserProps & { className?: string }) {
   const catalog1Props = {
     searchParams,
     classifiedsArray,
     minMaxValues,
     className,
-    resultCount,
     favouriteIds,
-    totalPages,
   }
 
   const catalog2Props = {
@@ -47,8 +41,6 @@ export function Catalog({
     minMaxValues,
     user,
     className,
-    totalPages,
-    resultCount,
   }
 
   switch (template) {

@@ -1,36 +1,38 @@
-'use client'
-
 import { ListRecords } from '@/components/catalog/list'
 import { DialogFilters } from '@/components/filters/dialog-filters'
 import { CustomPagination } from '@/components/shared/custom-pagination'
+import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
-import { cn } from '@/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { buildClassifiedFilterQuery, cn } from '@/lib/utils'
 import type {
   ClassifiedsArrayProps,
   FavouritesProps,
   MinMaxProps,
   SearchAwaitedProps,
-  SearchResultProps,
 } from '@/types'
 import { Suspense } from 'react'
 
-export function ContentPanel1({
+export async function ContentPanel1({
   classifiedsArray,
   favouriteIds,
   className,
-  resultCount,
   minMaxValues,
   searchParams,
-  totalPages,
 }: SearchAwaitedProps &
   ClassifiedsArrayProps &
   FavouritesProps &
-  MinMaxProps &
-  SearchResultProps & { className?: string }) {
+  MinMaxProps & { className?: string }) {
   if (!classifiedsArray) {
     return null
   }
+  const resultCount = await prisma.classified.count({
+    where: buildClassifiedFilterQuery(searchParams),
+  })
 
+  const totalPages = resultCount
+    ? Math.ceil(resultCount / CLASSIFIEDS_PER_PAGE)
+    : 0
   return (
     <div className={cn('flex-1 p-4', className)}>
       <div className="-mt-1 flex items-center justify-between space-y-2 pb-4">

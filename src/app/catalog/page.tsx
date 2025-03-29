@@ -1,10 +1,8 @@
 import { Catalog } from '@/components/catalog'
 import { ThemeProvider } from '@/components/theme-provider'
-import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import { buildClassifiedFilterQuery } from '@/lib/utils'
 import type { FavouritesProps, PageProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { getInventory, sampleData } from './data'
@@ -20,10 +18,6 @@ export default async function CatalogPage(props: PageProps) {
     ? favourites.favouriteIds
     : []
 
-  const resultCount = await prisma.classified.count({
-    where: buildClassifiedFilterQuery(searchParams),
-  })
-
   const minMaxResult = await prisma.classified.aggregate({
     where: { status: ClassifiedStatus.LIVE },
     _min: {
@@ -37,10 +31,6 @@ export default async function CatalogPage(props: PageProps) {
       odoReading: true,
     },
   })
-
-  const totalPages = resultCount
-    ? Math.ceil(resultCount / CLASSIFIEDS_PER_PAGE)
-    : 0
 
   const sampleUser = sampleData.user
 
@@ -58,8 +48,6 @@ export default async function CatalogPage(props: PageProps) {
         minMaxValues={minMaxResult}
         searchParams={searchParams}
         user={sampleUser}
-        resultCount={resultCount}
-        totalPages={totalPages}
       />
     </ThemeProvider>
   )

@@ -1,3 +1,4 @@
+import { ClearFilters } from '@/components/filters/clear-filters'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,13 +7,21 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
-import { cn } from '@/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { buildClassifiedFilterQuery, cn } from '@/lib/utils'
+import type { SearchAwaitedProps } from '@/types'
 
-export function Header({
+export async function Header({
   className,
+  searchParams,
 }: {
   className?: string
+  searchParams: SearchAwaitedProps['searchParams']
 }) {
+  const resultCount = await prisma.classified.count({
+    where: buildClassifiedFilterQuery(searchParams),
+  })
+
   return (
     <header
       className={cn(
@@ -28,10 +37,14 @@ export function Header({
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbPage>March 2025</BreadcrumbPage>
+            <BreadcrumbPage>{resultCount} Vehicles</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+      <ClearFilters
+        searchParams={searchParams}
+        className="mr-0 ml-auto h-full"
+      />
     </header>
   )
 }

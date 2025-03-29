@@ -38,7 +38,7 @@ export function Card1({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className={cn(
-            'overflow-hiddem relative flex flex-col rounded-md bg-white shadow-md',
+            'overflow-hiddem relative flex flex-col rounded-md border bg-card shadow-md',
             className
           )}
         >
@@ -61,9 +61,9 @@ export function Card1({
             />
             <RecordCTA
               size="sm"
-              className="absolute top-2.5 right-2.5 rounded-sm bg-accent shadow-sm backdrop-blur-sm duration-300 ease-linear hover:bg-accent/70"
-              href="#"
+              className="absolute top-2.5 right-2.5 rounded-sm bg-[oklch(0.269_0_0)] text-white duration-300 ease-linear hover:bg-[oklch(0.269_0_0)]/60"
               label={formattedPrice}
+              variant="unstyled"
             />
           </div>
           <div className="flex flex-col gap-3 p-4">
