@@ -1,38 +1,38 @@
-'use client'
-
-// import { sampleData } from '@/app/catalog/data'
-// import { Calendars } from '@/components/catalog/_sub/calendars'
-// import { DatePicker } from '@/components/catalog/_sub/date-picker'
-import { TaxonomyFilters } from '@/components/filters/taxonomy-filters'
 import { SidebarContent, SidebarSeparator } from '@/components/ui/sidebar'
-import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
 import type { MinMaxProps, SearchAwaitedProps } from '@/types'
 import { Block1 } from './block-1'
+import { Block2 } from './block-2'
+import { Block3 } from './block-3'
+import { Block4 } from './block-4'
+import { Block5 } from './block-5'
 
 export function PanelBody({
+  // Found the bug here
   minMaxValues,
   searchParams,
 }: MinMaxProps & SearchAwaitedProps) {
-  const { queryStates, handleChange, handleSelectChange } = useSidebarFilters(
-    searchParams as Record<string, string>
-  )
+  // const { queryStates, handleChange, handleSelectChange } = useSidebarFilters(
+  //   searchParams as Record<string, string>
+  // )
 
   return (
-    <SidebarContent>
+    <SidebarContent className="py-2">
       <Block1 searchParams={searchParams} />
 
       {/* Filter controls */}
-      <div className="space-y-2 p-4">
-        <TaxonomyFilters
-          searchParams={searchParams}
-          handleChange={handleChange}
-        />
-      </div>
-      {/*  */}
-
+      <Block2 searchParams={searchParams} />
       <SidebarSeparator className="mx-0" />
-      {/* <DatePicker />
-      <Calendars calendars={sampleData.calendars ?? []} /> */}
+
+      {/* Appearance */}
+      <Block3 searchParams={searchParams} />
+      <SidebarSeparator className="mx-0" />
+
+      {/* Vehicle details */}
+      <Block4 searchParams={searchParams} minMaxValues={minMaxValues} />
+      <SidebarSeparator className="mx-0" />
+
+      {/* Additional filters */}
+      <Block5 searchParams={searchParams} />
     </SidebarContent>
   )
 }

@@ -25,7 +25,7 @@ export function SelectFilter({
   handleSelectChange,
 }: SelectFilterProps) {
   return (
-    <div className="space-y-2">
+    <div className="flex-1 space-y-2">
       <FormLabel htmlFor={name}>{label}</FormLabel>
       <Select
         name={name}
