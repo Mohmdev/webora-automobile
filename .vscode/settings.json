@@ -23,5 +23,8 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
+  "[html]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "css.customData": [".vscode/tailwind.json"]
 }

@@ -21,15 +21,20 @@ export default async function FavouritesPage(props: PageProps) {
   const sourceId = await getSourceId()
   const getFavourites = await redis.get<FavouritesProps>(sourceId ?? '')
 
+  // Ensure favouriteIds is always an array
+  const favouriteIds = Array.isArray(getFavourites?.favouriteIds)
+    ? getFavourites.favouriteIds
+    : []
+
   const classifieds = await prisma.classified.findMany({
-    where: { id: { in: getFavourites ? getFavourites.favouriteIds : [] } },
+    where: { id: { in: favouriteIds } },
     include: { images: { take: 1 } },
     skip: offset,
     take: CLASSIFIEDS_PER_PAGE,
   })
 
   const count = await prisma.classified.count({
-    where: { id: { in: getFavourites ? getFavourites.favouriteIds : [] } },
+    where: { id: { in: favouriteIds } },
   })
 
   const totalPages = Math.ceil(count / CLASSIFIEDS_PER_PAGE)
@@ -44,7 +49,7 @@ export default async function FavouritesPage(props: PageProps) {
               key={classified.id}
               template="card-1"
               classified={classified}
-              favouriteIds={getFavourites?.favouriteIds ?? []}
+              favouriteIds={favouriteIds}
             />
           )
         })}

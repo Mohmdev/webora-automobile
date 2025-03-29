@@ -9,7 +9,9 @@ export function useRecordState(
 ) {
   const pathname = usePathname()
   const [isFavourite, setIsFavourite] = useState(
-    classified ? favouriteIds.includes(classified.id) : false
+    classified && Array.isArray(favouriteIds)
+      ? favouriteIds.includes(classified.id)
+      : false
   )
   const [isVisible, setIsVisible] = useState(true)
 

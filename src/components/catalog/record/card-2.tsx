@@ -1,6 +1,6 @@
 'use client'
 
-import { FavouriteButton } from '@/components/catalog/record/favourite-button'
+import { FavouriteButton } from '@/components/shared/favourite-button'
 import { HTMLParser } from '@/components/shared/html-parser'
 import {
   Card,
@@ -25,7 +25,7 @@ import { RecordCTA } from './record-cta'
 
 export function Card2({
   classified,
-  favouriteIds,
+  favouriteIds = [],
   className,
 }: FavouritesProps & ClassifiedProps & { className?: string }) {
   if (!classified) {
@@ -45,9 +45,9 @@ export function Card2({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className={cn('flex-1', className)}
+          className={cn('h-full flex-1', className)}
         >
-          <Card className="overflow-hidden rounded-sm border-1 shadow-sm transition-all duration-200 ease-linear focus-within:shadow-lg hover:shadow-lg focus:shadow-lg focus-visible:shadow-lg">
+          <Card className="flex h-full flex-col overflow-hidden rounded-sm border-1 shadow-sm transition-all duration-200 ease-linear focus-within:shadow-lg hover:shadow-lg focus:shadow-lg focus-visible:shadow-lg">
             <div className="relative aspect-3/2 overflow-hidden rounded-b-[inherit]">
               <ImageSwiper
                 placeholder="blur"
@@ -92,7 +92,7 @@ export function Card2({
                   ))}
               </ul>
             </CardHeader>
-            <CardContent className="">
+            <CardContent className="mt-auto mb-0">
               {classified?.description && (
                 <div className="line-clamp-2 text-muted-foreground text-xs">
                   <HTMLParser html={classified.description} />
@@ -102,7 +102,7 @@ export function Card2({
               )}
             </CardContent>
 
-            <CardFooter className="flex w-full flex-wrap justify-between gap-2">
+            <CardFooter className="flex h-max w-full flex-wrap justify-between gap-2">
               <RecordCTA
                 label="Reserve"
                 href={routes.reserve(

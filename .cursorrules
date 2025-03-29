@@ -12,6 +12,7 @@
 - Prefer iteration and modularization over code duplication
 - Use descriptive variable names with auxiliary verbs
 - Write concise, technical TypeScript code with accurate examples
+- Use named function declarations with destructured parameters directly in the function signature rather than arrow functions with separate parameter destructuring
 - Component organization follows a feature-based approach, with specialized directories for different functional areas (admin, auth, classifieds, etc.).
 - Consistent TypeScript typing across the codebase with extensive use of interfaces and type definitions.
 - Heavy use of functional components with React hooks for state management.

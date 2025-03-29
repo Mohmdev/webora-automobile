@@ -19,11 +19,11 @@ export const SwiperButtons = (props: SwiperButtonsProps) => {
         size="icon"
         className={cn(
           prevClassName,
-          'swiper-button-prev -translate-y-1/2 absolute top-1/2 z-10 flex items-center rounded-full'
+          'swiper-button-prev -translate-y-1/2 absolute top-1/2 z-10 size-8 rounded-full border-none p-1.5 shadow-md dark:shadow-white/10 dark:hover:shadow-white/0'
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <ChevronLeft className="h-8 w-8" color="black" />
+        <ChevronLeft className="size-full" />
       </Button>
       <Button
         variant="ghost"
@@ -32,11 +32,11 @@ export const SwiperButtons = (props: SwiperButtonsProps) => {
         size="icon"
         className={cn(
           nextClassName,
-          'swiper-button-next -translate-y-1/2 absolute top-1/2 z-10 flex items-center rounded-full'
+          'swiper-button-next -translate-y-1/2 absolute top-1/2 z-10 size-8 rounded-full border-none p-1.5 shadow-md dark:shadow-white/10 dark:hover:shadow-white/0'
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <ChevronRight className="h-8 w-8" color="black" />
+        <ChevronRight className="size-5" />
       </Button>
     </>
   )

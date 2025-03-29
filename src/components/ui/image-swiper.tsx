@@ -46,34 +46,33 @@ export function ImageSwiper({
       {...props}
     >
       <div className="pointer-events-none absolute inset-0 z-10">
+        {/* Left Indicator */}
         {imgIndex > 0 && (
-          <div className="-translate-y-1/2 absolute top-1/2 left-5">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="pointer-events-auto h-8 w-8 rounded-full bg-white/80 opacity-0 transition-opacity group-hover:opacity-100"
-              onClick={() => setImgIndex((prev) => prev - 1)}
-            >
-              <ChevronLeft className="h-4 w-4 text-neutral-600" />
-            </Button>
-          </div>
+          <Button
+            variant="unstyled"
+            size="icon"
+            className="-translate-y-1/2 pointer-events-auto absolute top-1/2 left-3 grid size-6 cursor-pointer place-items-center rounded-full bg-accent/10 p-0.5 opacity-0 backdrop-blur-lg transition-all duration-200 ease-linear hover:bg-white/50 group-hover:opacity-100"
+            onClick={() => setImgIndex((prev) => prev - 1)}
+          >
+            <ChevronLeft className="size-full text-white" />
+          </Button>
         )}
 
+        {/* Right Indicator */}
         {imgIndex < images.length - 1 && (
-          <div className="-translate-y-1/2 absolute top-1/2 right-5">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="pointer-events-auto h-8 w-8 rounded-full bg-white/80 opacity-0 transition-opacity group-hover:opacity-100"
-              onClick={() => setImgIndex((prev) => prev + 1)}
-            >
-              <ChevronRight className="h-4 w-4 text-neutral-600" />
-            </Button>
-          </div>
+          <Button
+            variant="unstyled"
+            size="icon"
+            className="-translate-y-1/2 pointer-events-auto absolute top-1/2 right-3 grid size-6 cursor-pointer place-items-center rounded-full bg-accent/10 p-0.5 opacity-0 backdrop-blur-lg transition-all duration-200 ease-linear hover:bg-white/50 group-hover:opacity-100"
+            onClick={() => setImgIndex((prev) => prev + 1)}
+          >
+            <ChevronRight className="size-full text-white" />
+          </Button>
         )}
 
-        <div className="absolute bottom-2 flex w-full justify-center">
-          <div className="flex min-w-9 items-center justify-center rounded-md bg-black/80 px-2 py-0.5 text-white text-xs opacity-0 transition-opacity group-hover:opacity-100">
+        {/* Image Index */}
+        <div className="pointer-events-none absolute bottom-2 flex w-full justify-center">
+          <div className="flex min-w-9 items-center justify-center rounded-md bg-black/80 px-2 py-0.5 text-white text-xs opacity-0 transition-all duration-200 ease-linear group-hover:opacity-100">
             {imgIndex + 1}/{images.length}
           </div>
         </div>
@@ -105,7 +104,7 @@ export function ImageSwiper({
           return (
             <motion.div
               key={i}
-              className="size-full shrink-0 overflow-hidden bg-neutral-800 object-cover first:rounded-l-[inherit] last:rounded-r-[inherit]"
+              className="relative size-full shrink-0 overflow-hidden bg-neutral-800 object-cover first:rounded-l-[inherit] last:rounded-r-[inherit]"
             >
               <ImgixImage
                 src={src}

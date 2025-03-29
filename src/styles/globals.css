@@ -33,6 +33,11 @@
   }
 }
 
+.swiper-slide {
+  height: auto !important;
+  align-self: stretch !important;
+}
+
 :root {
   --sky-400: #38bdf8;
   --sky-500: #0ea5e9;

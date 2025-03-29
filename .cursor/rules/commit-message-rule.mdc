@@ -1,5 +1,5 @@
 ---
-description: 
+description: Thise guidelines provide a clear, structured approach that's easy to follow while maintaining consistency across all commit messages.
 globs: 
 alwaysApply: false
 ---
@@ -28,6 +28,7 @@ ___
 - `docs`: Documentation only changes
 - `test`: Adding missing tests or correcting existing tests
 - `chore`: Changes to the build process or auxiliary tools
+- `wip`: Work in progress
 
 ## Scope
 - Optional but recommended
@@ -38,14 +39,13 @@ ___
 - Don't capitalize first letter
 - No period (.) at the end
 - Keep it under 50 characters
-- Be clear and descriptive
+- Be clear and concise
 
 ## Body (Optional)
 - Use bullet points for multiple changes
 - Each point should start with a hyphen (-)
-- Keep points concise and clear
-- Separate from subject with a blank line
-- Always keep the body as short as possible.
+- Keep points short, concise and clear
+- Always keep the body as short but concise.
 
 ___
 

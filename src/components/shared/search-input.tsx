@@ -59,6 +59,12 @@ export const SearchInput = (props: SearchInputProps) => {
         className={cn(className, 'pl-8')}
         onChange={onChange}
         type="text"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            e.currentTarget.blur()
+          }
+        }}
         {...rest}
       />
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { FavouriteButton } from '@/components/catalog/record/favourite-button'
+import { FavouriteButton } from '@/components/shared/favourite-button'
 import { HTMLParser } from '@/components/shared/html-parser'
 import { ImgixImage } from '@/components/ui/imgix-image'
 import { routes } from '@/config/routes'
@@ -18,7 +18,7 @@ import { RecordCTA } from './record-cta'
 
 export function Card1({
   classified,
-  favouriteIds,
+  favouriteIds = [],
   className,
 }: ClassifiedProps & FavouritesProps & { className?: string }) {
   if (!classified) {

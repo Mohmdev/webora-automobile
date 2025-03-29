@@ -3,6 +3,7 @@
 import type { ClassifiedData, ClassifiedImages } from '@/types'
 import dynamic from 'next/dynamic'
 import 'swiper/css'
+import { cn } from '@/lib/utils'
 import { Navigation } from 'swiper/modules'
 import { SwiperSlide } from 'swiper/react'
 import { Record } from '../catalog/record'
@@ -11,6 +12,7 @@ import { SwiperButtons } from '../shared/swiper-button'
 interface CarouselProps {
   classifieds: (ClassifiedData & ClassifiedImages)[]
   favouriteIds: number[]
+  className?: string
 }
 
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
@@ -24,11 +26,13 @@ const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   ),
 })
 
-export const LatestArrivalsCarousel = (props: CarouselProps) => {
-  const { classifieds, favouriteIds } = props
-
+export function LatestArrivalsCarousel({
+  classifieds,
+  favouriteIds,
+  className,
+}: CarouselProps) {
   return (
-    <div className="relative mt-8">
+    <div className={cn('relative', className)}>
       <Swiper
         navigation={{
           prevEl: '.swiper-button-prev',
@@ -50,12 +54,18 @@ export const LatestArrivalsCarousel = (props: CarouselProps) => {
             slidesPerView: 4,
           },
         }}
+        // className="h-full! *:*:h-full! *:h-full!"
+        // style={{
+        //   '--swiper-pagination-bottom': '10px',
+        // }}
+        setWrapperSize={false}
+        autoHeight={false}
       >
         {classifieds.map((classified) => {
           return (
-            <SwiperSlide key={classified.id}>
+            <SwiperSlide key={classified.id} className="">
               <Record
-                template="card-1"
+                template="card-2"
                 classified={classified}
                 favouriteIds={favouriteIds}
               />

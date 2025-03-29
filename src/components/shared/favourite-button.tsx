@@ -14,16 +14,22 @@ export const FavouriteButton = (props: FavouriteButtonProps) => {
   const router = useRouter()
 
   const handleFavourite = async () => {
-    const { ids } = await api.post<{ ids: number[] }>(endpoints.favourites, {
-      json: { id },
-    })
+    try {
+      const response = await api.post<{ ids: number[] }>(endpoints.favourites, {
+        json: { id },
+      })
 
-    if (ids.includes(id)) {
-      setIsFavourite(true)
-    } else {
-      setIsFavourite(false)
+      const { ids } = response || { ids: [] }
+
+      if (Array.isArray(ids) && ids.includes(id)) {
+        setIsFavourite(true)
+      } else {
+        setIsFavourite(false)
+      }
+      setTimeout(() => router.refresh(), 250)
+    } catch (error) {
+      console.error('Error toggling favourite:', error)
     }
-    setTimeout(() => router.refresh(), 250)
   }
 
   return (

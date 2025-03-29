@@ -59,7 +59,9 @@ export const PublicHeader = async () => {
             </div>
             <div className="-top-1 5 -right-1.5 absolute flex h-5 w-5 items-center justify-center rounded-full bg-pink-500 text-white group-hover:bg-primary">
               <span className="text-xs">
-                {favourites ? favourites.favouriteIds?.length : 0}
+                {favourites && Array.isArray(favourites.favouriteIds)
+                  ? favourites.favouriteIds.length
+                  : 0}
               </span>
             </div>
           </Link>

@@ -14,6 +14,12 @@ export default async function CatalogPage(props: PageProps) {
   const classifieds = getInventory(searchParams)
   const sourceId = await getSourceId()
   const favourites = await redis.get<FavouritesProps>(sourceId ?? '')
+
+  // Ensure favouriteIds is always an array
+  const favouriteIds = Array.isArray(favourites?.favouriteIds)
+    ? favourites.favouriteIds
+    : []
+
   const resultCount = await prisma.classified.count({
     where: buildClassifiedFilterQuery(searchParams),
   })
@@ -48,7 +54,7 @@ export default async function CatalogPage(props: PageProps) {
       <Catalog
         template="catalog-2"
         classifiedsArray={classifieds}
-        favouriteIds={favourites?.favouriteIds ?? []}
+        favouriteIds={favouriteIds}
         minMaxValues={minMaxResult}
         searchParams={searchParams}
         user={sampleUser}
