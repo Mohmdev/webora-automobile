@@ -1,5 +1,4 @@
 import { Catalog } from '@/components/catalog'
-import { ThemeProvider } from '@/components/theme-provider'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
@@ -35,20 +34,13 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
   const sampleUser = sampleData.user
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <Catalog
-        template="catalog-2"
-        records={classifieds}
-        favouriteIds={favouriteIds}
-        minMaxValues={minMaxResult}
-        searchParams={searchParams}
-        user={sampleUser}
-      />
-    </ThemeProvider>
+    <Catalog
+      template="catalog-2"
+      records={classifieds}
+      favouriteIds={favouriteIds}
+      minMaxValues={minMaxResult}
+      searchParams={searchParams}
+      user={sampleUser}
+    />
   )
 }

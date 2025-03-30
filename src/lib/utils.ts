@@ -28,7 +28,7 @@ export function cn(...inputs: ClassValue[]) {
 
 interface FormatPriceArgs {
   price: number | null
-  currency: CurrencyCode | null
+  currency?: CurrencyCode | null
 }
 
 export function formatUlezCompliance(ulezCompliance: ULEZCompliance) {
@@ -63,6 +63,21 @@ export function formatPrice({ price, currency }: FormatPriceArgs) {
     style: 'currency',
     currencyDisplay: 'narrowSymbol',
     currency: currency ?? '',
+    notation: 'compact',
+    compactDisplay: 'short',
+  })
+
+  const formatted = formatter.format(price / 100)
+  return `${formatted.charAt(0)} ${formatted.substring(1)}`
+}
+export function formatPriceWithoutSymbol({ price }: FormatPriceArgs) {
+  if (!price) {
+    return '0'
+  }
+
+  const formatter = new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currencyDisplay: 'narrowSymbol',
     notation: 'compact',
     compactDisplay: 'short',
   })

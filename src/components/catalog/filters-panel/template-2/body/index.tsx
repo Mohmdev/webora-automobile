@@ -7,17 +7,12 @@ import { Block4 } from './block-4'
 import { Block5 } from './block-5'
 
 export function PanelBody({
-  // Found the bug here
   minMaxValues,
   searchParams,
 }: MinMaxProps & ParamsAwaitedProps) {
-  // const { queryStates, handleChange, handleSelectChange } = useSidebarFilters(
-  //   searchParams as Record<string, string>
-  // )
-
   return (
     <SidebarContent className="py-2">
-      <Block1 searchParams={searchParams} />
+      <Block1 searchParams={searchParams} minMaxValues={minMaxValues} />
 
       {/* Filter controls */}
       <Block2 searchParams={searchParams} />

@@ -49,7 +49,7 @@ export async function ContentPanel1({
           />
         </div>
         <CustomPagination
-          baseURL={routes.inventory}
+          baseURL={routes.catalog}
           totalPages={totalPages ?? 0}
           styles={{
             paginationRoot: 'justify-end hidden lg:flex',
@@ -70,7 +70,7 @@ export async function ContentPanel1({
       </Suspense>
 
       <CustomPagination
-        baseURL={routes.inventory}
+        baseURL={routes.catalog}
         totalPages={totalPages ?? 0}
         styles={{
           paginationRoot: 'justify-center lg:hidden pt-12',

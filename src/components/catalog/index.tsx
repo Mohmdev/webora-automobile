@@ -43,8 +43,6 @@ export function Catalog({
     className,
   }
 
-  console.log('records in catalog:', records)
-
   switch (template) {
     case 'catalog-1': {
       return <Catalog1 {...catalog1Props} />

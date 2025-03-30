@@ -49,7 +49,7 @@ export const OurBrandsSection = async () => {
           {brands.map(({ id, image, name }) => (
             <Link
               key={id}
-              href={`${routes.inventory}?make=${id}`}
+              href={`${routes.catalog}?make=${id}`}
               className="relative flex h-24 items-center justify-center transition-all duration-100 ease-in-out hover:scale-110"
             >
               <Image

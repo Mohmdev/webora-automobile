@@ -14,7 +14,7 @@ type UseSliderWithInputProps = {
 
 export function useSliderWithInput({
   minValue = 0,
-  maxValue = 100,
+  maxValue = 1000000,
   initialValue = [minValue],
   defaultValue = [minValue],
 }: UseSliderWithInputProps) {

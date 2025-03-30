@@ -1,4 +1,3 @@
-import { imageSources } from '@/config/constants'
 import { faker } from '@faker-js/faker'
 import type { Prisma, PrismaClient } from '@prisma/client'
 import { createPngDataUri } from 'unlazy/thumbhash'
@@ -10,7 +9,7 @@ export async function seedImages(prisma: PrismaClient) {
 
   for (const classifiedId of classifiedIds) {
     const image: Prisma.ImageCreateInput = {
-      src: imageSources.classifiedPlaceholder,
+      src: '/aesthetic/g-class-1.jpg',
       alt: faker.lorem.words(2),
       classified: { connect: { id: classifiedId } },
       blurhash: createPngDataUri('jPcJDYCndnZwl4h6Z2eYhWZ/c/VI'),

@@ -154,8 +154,8 @@ export async function generateClassified(
           classified.modelId = unknownModel.id
         }
       }
-    } catch (_error) {
-      // console.error('Error finding UNKNOWN make/model:', error)
+    } catch (error) {
+      console.error('Error finding UNKNOWN make/model:', error)
     }
   }
 

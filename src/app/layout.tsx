@@ -7,6 +7,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import type React from 'react'
 
 import '@/styles/globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const mulish = Mulish({
   weight: 'variable',
@@ -28,11 +29,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn('overscroll-none', roboto.variable, mulish.variable)}>
-        <NextTopLoader showSpinner={false} />
-        <NuqsAdapter>{children}</NuqsAdapter>
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextTopLoader showSpinner={false} />
+          <NuqsAdapter>{children}</NuqsAdapter>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
@@ -40,5 +48,6 @@ export default function RootLayout({
 
 export const metadata: Metadata = {
   title: 'Webora Motors',
-  description: 'A Webora App to manage your car dealership and some AI tools.',
+  description:
+    'A Webora App to manage your car dealership with an AI assistant.',
 }
