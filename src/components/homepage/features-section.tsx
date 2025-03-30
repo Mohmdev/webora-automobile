@@ -1,5 +1,4 @@
-import { imageSources } from '@/config/constants'
-import { imgixLoader } from '@/lib/imgix-loader'
+import Image from 'next/image'
 
 export const FeaturesSection = () => {
   return (
@@ -19,12 +18,15 @@ export const FeaturesSection = () => {
         </div>
       </div>
       <div className="-mb-16 sm:-mb-24 relative overflow-hidden pt-16 xl:mb-0">
-        <div
-          className="mx-auto h-[300px] max-w-7xl bg-bottom bg-cover bg-no-repeat shadow-2xl xl:rounded-t-xl"
-          style={{
-            backgroundImage: `url(${imgixLoader({ src: imageSources.featureSection, width: 1280, quality: 100 })})`,
-          }}
-        />
+        <div className="relative mx-auto h-[700px] max-w-7xl bg-bottom bg-cover bg-no-repeat shadow-2xl xl:rounded-t-xl">
+          <Image
+            src="/aesthetic/g-class-1.jpeg"
+            alt="G-Class"
+            width={1280}
+            height={300}
+            className="object-cover"
+          />
+        </div>
         <div aria-hidden="true" className="relative hidden xl:block">
           <div className="-inset-x-20 absolute bottom-0 bg-linear-to-t from-background to-transparent pt-[3%]" />
         </div>

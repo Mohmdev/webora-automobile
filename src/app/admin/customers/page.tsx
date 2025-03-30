@@ -12,9 +12,9 @@ import { AdminTableFooter } from '@/components/shared/admin-table-footer'
 import { Table, TableBody } from '@/components/ui/table'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
-import type { CustomerKeys, PageProps } from '@/types'
+import type { CustomerKeys, ParamsPromisedProps } from '@/types'
 
-export default async function CustomersPage(props: PageProps) {
+export default async function CustomersPage(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
 
   const { page, itemsPerPage } = validatePagination({

@@ -1,4 +1,4 @@
-import type { ClassifiedProps, FavouritesProps } from '@/types'
+import type { FavouritesProps, RecordDataProps } from '@/types'
 import { Card1 } from './card-1'
 import { Card2 } from './card-2'
 import { SkeletonCard1 } from './card-skeleton-1'
@@ -9,12 +9,12 @@ interface Template {
 
 export function Record({
   template,
-  classified,
+  record,
   favouriteIds,
   className,
-}: Template & ClassifiedProps & FavouritesProps & { className?: string }) {
+}: Template & RecordDataProps & FavouritesProps & { className?: string }) {
   const recordProps = {
-    classified,
+    record,
     favouriteIds,
     className,
   }

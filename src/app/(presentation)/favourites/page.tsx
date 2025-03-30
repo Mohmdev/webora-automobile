@@ -6,9 +6,9 @@ import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import type { FavouritesProps, PageProps } from '@/types'
+import type { FavouritesProps, ParamsPromisedProps } from '@/types'
 
-export default async function FavouritesPage(props: PageProps) {
+export default async function FavouritesPage(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
   const validPage = PageSchema.parse(searchParams?.page)
 
@@ -48,7 +48,7 @@ export default async function FavouritesPage(props: PageProps) {
             <Record
               key={classified.id}
               template="card-1"
-              classified={classified}
+              record={classified}
               favouriteIds={favouriteIds}
             />
           )

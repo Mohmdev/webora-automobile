@@ -1,16 +1,16 @@
-import { FiltersPanel } from '@/components/catalog/archive/filters-panel'
+import { FiltersPanel } from '@/components/catalog/filters-panel'
 import { cn } from '@/lib/utils'
 import type {
-  ClassifiedsArrayProps,
   FavouritesProps,
   MinMaxProps,
-  SearchAwaitedProps,
+  ParamsAwaitedProps,
+  RecordsPromiseProps,
 } from '@/types'
-import { ContentPanel } from '../archive/content-panel'
+import { ContentPanel } from '../content-panel'
 
 export function Catalog1({
   searchParams,
-  classifiedsArray,
+  records,
   minMaxValues = {
     _min: { year: 0, price: 0, odoReading: 0 },
     _max: { year: 0, price: 0, odoReading: 0 },
@@ -18,8 +18,8 @@ export function Catalog1({
   className,
   favouriteIds,
 }: MinMaxProps &
-  SearchAwaitedProps &
-  ClassifiedsArrayProps &
+  ParamsAwaitedProps &
+  RecordsPromiseProps &
   FavouritesProps & { className?: string }) {
   return (
     <div className={cn('flex', className)}>
@@ -31,7 +31,7 @@ export function Catalog1({
 
       <ContentPanel
         template="template-1"
-        classifiedsArray={classifiedsArray}
+        records={records}
         favouriteIds={favouriteIds}
         minMaxValues={minMaxValues}
         searchParams={searchParams}

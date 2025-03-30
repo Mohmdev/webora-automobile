@@ -15,28 +15,28 @@ import { useRecordData } from '@/hooks/record/useRecordData'
 import { useRecordState } from '@/hooks/record/useRecordState'
 import { cn } from '@/lib/utils'
 import {
-  type ClassifiedProps,
   type FavouritesProps,
   MultiStepFormEnum,
+  type RecordDataProps,
 } from '@/types'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { RecordCTA } from './record-cta'
 
 export function Card2({
-  classified,
+  record,
   favouriteIds = [],
   className,
-}: FavouritesProps & ClassifiedProps & { className?: string }) {
-  if (!classified) {
+}: FavouritesProps & RecordDataProps & { className?: string }) {
+  if (!record) {
     return null
   }
 
   const { isFavourite, setIsFavourite, isVisible } = useRecordState(
-    classified,
+    record,
     favouriteIds
   )
-  const { formattedPrice, classifiedInfo } = useRecordData(classified)
+  const { formattedPrice, recordInfo } = useRecordData(record)
 
   return (
     <AnimatePresence>
@@ -51,9 +51,9 @@ export function Card2({
             <div className="relative aspect-3/2 overflow-hidden rounded-b-[inherit]">
               <ImageSwiper
                 placeholder="blur"
-                images={classified.images.map((image) => image.src)}
-                blurhash={classified.images[0]?.blurhash}
-                alt={classified.images[0]?.alt}
+                images={record.images.map((image) => image.src)}
+                blurhash={record.images[0]?.blurhash}
+                alt={record.images[0]?.alt}
                 className="rounded-none border-none object-cover"
                 fill={true}
                 quality={25}
@@ -61,7 +61,7 @@ export function Card2({
               <FavouriteButton
                 setIsFavourite={setIsFavourite}
                 isFavourite={isFavourite}
-                id={classified.id}
+                id={record.id}
               />
             </div>
 
@@ -69,10 +69,10 @@ export function Card2({
               <CardTitle className="font-medium text-lg transition-colors hover:text-primary">
                 <div className="flex flex-row flex-nowrap items-center justify-between gap-2">
                   <Link
-                    href={routes.singleClassified(classified.slug)}
+                    href={routes.singleClassified(record.slug)}
                     className="line-clamp-1"
                   >
-                    {classified.title}
+                    {record.title}
                   </Link>
                   <span className="text-nowrap font-body">
                     {formattedPrice && formattedPrice !== '0'
@@ -83,7 +83,7 @@ export function Card2({
               </CardTitle>
 
               <ul className="flex w-full flex-wrap justify-between gap-1 text-muted-foreground text-xs">
-                {classifiedInfo
+                {recordInfo
                   .filter((v) => v.value)
                   .map(({ id, icon, value }) => (
                     <li key={id} className="flex items-center gap-1.5">
@@ -93,9 +93,9 @@ export function Card2({
               </ul>
             </CardHeader>
             <CardContent className="mt-auto mb-0">
-              {classified?.description && (
+              {record?.description && (
                 <div className="line-clamp-2 text-muted-foreground text-xs">
-                  <HTMLParser html={classified.description} />
+                  <HTMLParser html={record.description} />
                   &nbsp;{' '}
                   {/* Used for equal spacing across each card in the grid */}
                 </div>
@@ -105,16 +105,13 @@ export function Card2({
             <CardFooter className="flex h-max w-full flex-wrap justify-between gap-2">
               <RecordCTA
                 label="Reserve"
-                href={routes.reserve(
-                  classified.slug,
-                  MultiStepFormEnum.WELCOME
-                )}
+                href={routes.reserve(record.slug, MultiStepFormEnum.WELCOME)}
                 className="rounded-sm"
               />
               <RecordCTA
                 label="View Details"
                 isPrimary
-                href={routes.singleClassified(classified.slug)}
+                href={routes.singleClassified(record.slug)}
                 className="rounded-sm text-sm"
               />
             </CardFooter>

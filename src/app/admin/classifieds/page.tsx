@@ -11,10 +11,10 @@ import { AdminTableFooter } from '@/components/shared/admin-table-footer'
 import { Table, TableBody } from '@/components/ui/table'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
-import type { ClassifiedKeys, PageProps } from '@/types'
+import type { ClassifiedKeys, ParamsPromisedProps } from '@/types'
 import { ClassifiedsTableHeader } from '../../../components/classified/classifieds-table-header'
 
-export default async function ClassifiedsPage(props: PageProps) {
+export default async function ClassifiedsPage(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
 
   const { page, itemsPerPage } = validatePagination({

@@ -8,27 +8,27 @@ import { useRecordData } from '@/hooks/record/useRecordData'
 import { useRecordState } from '@/hooks/record/useRecordState'
 import { cn } from '@/lib/utils'
 import {
-  type ClassifiedProps,
   type FavouritesProps,
   MultiStepFormEnum,
+  type RecordDataProps,
 } from '@/types'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { RecordCTA } from './record-cta'
 
 export function Card1({
-  classified,
+  record,
   favouriteIds = [],
   className,
-}: ClassifiedProps & FavouritesProps & { className?: string }) {
-  if (!classified) {
+}: RecordDataProps & FavouritesProps & { className?: string }) {
+  if (!record) {
     return null
   }
   const { isFavourite, setIsFavourite, isVisible } = useRecordState(
-    classified,
+    record,
     favouriteIds
   )
-  const { formattedPrice, classifiedInfo } = useRecordData(classified)
+  const { formattedPrice, recordInfo } = useRecordData(record)
 
   return (
     <AnimatePresence>
@@ -43,12 +43,12 @@ export function Card1({
           )}
         >
           <div className="relative aspect-3/2">
-            <Link href={routes.singleClassified(classified.slug)}>
+            <Link href={routes.singleClassified(record.slug)}>
               <ImgixImage
                 placeholder="blur"
-                blurDataURL={classified.images[0]?.blurhash}
-                src={classified.images[0]?.src}
-                alt={classified.images[0]?.alt}
+                blurDataURL={record.images[0]?.blurhash}
+                src={record.images[0]?.src}
+                alt={record.images[0]?.alt}
                 className="rounded-t-md object-cover"
                 fill={true}
                 quality={25}
@@ -57,7 +57,7 @@ export function Card1({
             <FavouriteButton
               setIsFavourite={setIsFavourite}
               isFavourite={isFavourite}
-              id={classified.id}
+              id={record.id}
             />
             <RecordCTA
               size="sm"
@@ -69,21 +69,21 @@ export function Card1({
           <div className="flex flex-col gap-3 p-4">
             <div className="flex flex-col gap-2">
               <Link
-                href={routes.singleClassified(classified.slug)}
+                href={routes.singleClassified(record.slug)}
                 className="line-clamp-1 font-semibold text-sm transition-colors hover:text-primary md:text-base lg:text-lg"
               >
-                {classified.title}
+                {record.title}
               </Link>
-              {classified?.description && (
+              {record?.description && (
                 <div className="line-clamp-2 text-gray-500 text-xs md:text-sm ">
-                  <HTMLParser html={classified.description} />
+                  <HTMLParser html={record.description} />
                   &nbsp;{' '}
                   {/* Used for equal spacing across each card in the grid */}
                 </div>
               )}
 
               <ul className="grid w-full grid-cols-1 grid-rows-4 items-center justify-between text-gray-600 text-xs md:grid-cols-2 md:grid-rows-4 md:text-sm xl:flex">
-                {classifiedInfo
+                {recordInfo
                   .filter((v) => v.value)
                   .map(({ id, icon, value }) => (
                     <li
@@ -98,15 +98,12 @@ export function Card1({
             <div className="flex w-full flex-col space-y-2 lg:flex-row lg:gap-x-2 lg:space-y-0">
               <RecordCTA
                 label="Reserve"
-                href={routes.reserve(
-                  classified.slug,
-                  MultiStepFormEnum.WELCOME
-                )}
+                href={routes.reserve(record.slug, MultiStepFormEnum.WELCOME)}
               />
               <RecordCTA
                 label="View Details"
                 isPrimary
-                href={routes.singleClassified(classified.slug)}
+                href={routes.singleClassified(record.slug)}
               />
             </div>
           </div>

@@ -1,11 +1,11 @@
 import { validateIdSchema } from '@/app/schemas/id.schema'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
-import type { PageProps } from '@/types'
+import type { ParamsPromisedProps } from '@/types'
 import { redirect } from 'next/navigation'
 import { ClassifiedForm } from '../../../../../components/classified/classified-form'
 
-export default async function EditClassified(props: PageProps) {
+export default async function EditClassified(props: ParamsPromisedProps) {
   const params = await props.params
 
   const { data, success } = validateIdSchema.safeParse({

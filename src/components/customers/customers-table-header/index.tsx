@@ -1,13 +1,13 @@
 'use client'
 
-import type { CustomerKeys, PageProps } from '@/types'
+import type { CustomerKeys, ParamsPromisedProps } from '@/types'
 import type { Customer } from '@prisma/client'
 import { TableHeader, TableRow } from '../../ui/table'
 import { StaticTableHead } from './static-table-head'
 import { TableHeadButton } from './table-head-button'
 import { useCustomerSorting } from './use-customer-sorting'
 
-interface CustomerTableProps extends PageProps {
+interface CustomerTableProps extends ParamsPromisedProps {
   customers: Customer[]
   sort: CustomerKeys
   order: 'asc' | 'desc'

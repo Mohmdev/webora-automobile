@@ -1,11 +1,11 @@
 import { ClassifiedView } from '@/components/classified/classified-view'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
-import type { PageProps } from '@/types'
+import type { ParamsPromisedProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { notFound, redirect } from 'next/navigation'
 
-export default async function ClassifiedPage(props: PageProps) {
+export default async function ClassifiedPage(props: ParamsPromisedProps) {
   const params = await props?.params
 
   const slug = decodeURIComponent(params?.slug as string)

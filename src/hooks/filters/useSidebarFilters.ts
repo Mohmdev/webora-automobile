@@ -1,3 +1,5 @@
+'use client'
+
 import { env } from '@/env'
 import { usePathname, useRouter } from 'next/navigation'
 import { parseAsString, useQueryStates } from 'nuqs'

@@ -13,12 +13,12 @@ export type ClassifiedImages = Prisma.ClassifiedGetPayload<{
   }
 }>
 
-export type ClassifiedProps = {
-  classified?: ClassifiedData & ClassifiedImages
+export type RecordDataProps = {
+  record?: ClassifiedData & ClassifiedImages
 }
 
-export type ClassifiedsArrayProps = {
-  classifiedsArray?: Promise<(ClassifiedData & ClassifiedImages)[]>
+export type RecordsPromiseProps = {
+  records?: Promise<(ClassifiedData & ClassifiedImages)[]>
 }
 
 export type FavouriteIds = number[]
@@ -46,17 +46,17 @@ export type UserProps = {
 type Params = {
   [x: string]: string | string[]
 }
-export type PageProps = {
+export type ParamsPromisedProps = {
   params?: Promise<Params>
   searchParams?: Promise<{ [x: string]: string | string[] | undefined }>
 }
 
-export type SearchAwaitedProps = {
-  params?: Awaited<PageProps['params']>
-  searchParams?: Awaited<PageProps['searchParams']>
+export type ParamsAwaitedProps = {
+  params?: Awaited<ParamsPromisedProps['params']>
+  searchParams?: Awaited<ParamsPromisedProps['searchParams']>
 }
 
-export type TaxonomyFiltersProps = SearchAwaitedProps & {
+export type TaxonomyFiltersProps = ParamsAwaitedProps & {
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
@@ -79,7 +79,3 @@ export type PrevState = {
   success: boolean
   message: string
 }
-
-// Constructed props
-
-export type RecordDataProps = ClassifiedProps & FavouritesProps

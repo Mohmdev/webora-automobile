@@ -3,16 +3,16 @@ import { Catalog } from '@/components/catalog'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import type { FavouritesProps, PageProps } from '@/types'
+import type { FavouritesProps, ParamsPromisedProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 
-export default async function InventoryPage(props: PageProps) {
+export default async function InventoryPage(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
   const classifieds = getInventory(searchParams)
   const sourceId = await getSourceId()
   const getFavourites = await redis.get<FavouritesProps>(sourceId ?? '')
 
-  // Ensure favouriteIds is always an array
+  // favouriteIds is always an array
   const favouriteIds = Array.isArray(getFavourites?.favouriteIds)
     ? getFavourites.favouriteIds
     : []
@@ -34,7 +34,7 @@ export default async function InventoryPage(props: PageProps) {
   return (
     <Catalog
       template="catalog-1"
-      classifiedsArray={classifieds}
+      records={classifieds}
       favouriteIds={favouriteIds}
       minMaxValues={minMaxResult}
       searchParams={searchParams}

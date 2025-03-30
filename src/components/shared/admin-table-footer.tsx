@@ -1,5 +1,5 @@
 'use client'
-import type { FilterOptions, SearchAwaitedProps } from '@/types'
+import type { FilterOptions, ParamsAwaitedProps } from '@/types'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import {
@@ -18,7 +18,7 @@ const itemsPerPageOptions: FilterOptions<string, string> = [
   { label: '100', value: '100' },
 ]
 
-interface AdminTableFooterProps extends SearchAwaitedProps {
+interface AdminTableFooterProps extends ParamsAwaitedProps {
   disabled: boolean
   totalPages: number
   baseURL: string

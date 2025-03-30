@@ -1,3 +1,5 @@
+'use client'
+
 import { endpoints } from '@/config/endpoints'
 import { api } from '@/lib/api-client'
 import type { FilterOptions } from '@/types'

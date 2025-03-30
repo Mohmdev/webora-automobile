@@ -9,12 +9,6 @@ import { SwiperSlide } from 'swiper/react'
 import { Record } from '../catalog/record'
 import { SwiperButtons } from '../shared/swiper-button'
 
-interface CarouselProps {
-  classifieds: (ClassifiedData & ClassifiedImages)[]
-  favouriteIds: number[]
-  className?: string
-}
-
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   ssr: false,
   loading: () => (
@@ -30,7 +24,11 @@ export function LatestArrivalsCarousel({
   classifieds,
   favouriteIds,
   className,
-}: CarouselProps) {
+}: {
+  classifieds: (ClassifiedData & ClassifiedImages)[]
+  favouriteIds: number[]
+  className?: string
+}) {
   return (
     <div className={cn('relative', className)}>
       <Swiper
@@ -54,10 +52,6 @@ export function LatestArrivalsCarousel({
             slidesPerView: 4,
           },
         }}
-        // className="h-full! *:*:h-full! *:h-full!"
-        // style={{
-        //   '--swiper-pagination-bottom': '10px',
-        // }}
         setWrapperSize={false}
         autoHeight={false}
       >
@@ -66,7 +60,7 @@ export function LatestArrivalsCarousel({
             <SwiperSlide key={classified.id} className="">
               <Record
                 template="card-2"
-                classified={classified}
+                record={classified}
                 favouriteIds={favouriteIds}
               />
             </SwiperSlide>

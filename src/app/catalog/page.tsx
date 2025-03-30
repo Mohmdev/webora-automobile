@@ -3,11 +3,11 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
-import type { FavouritesProps, PageProps } from '@/types'
+import type { FavouritesProps, ParamsPromisedProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 import { getInventory, sampleData } from './data'
 
-export default async function CatalogPage(props: PageProps) {
+export default async function CatalogPage(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
   const classifieds = getInventory(searchParams)
   const sourceId = await getSourceId()
@@ -43,7 +43,7 @@ export default async function CatalogPage(props: PageProps) {
     >
       <Catalog
         template="catalog-2"
-        classifiedsArray={classifieds}
+        records={classifieds}
         favouriteIds={favouriteIds}
         minMaxValues={minMaxResult}
         searchParams={searchParams}

@@ -1,19 +1,19 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import type { ClassifiedsArrayProps, FavouritesProps } from '@/types'
+import type { FavouritesProps, RecordsPromiseProps } from '@/types'
 import { use } from 'react'
 import { Record } from '../record'
 
 export function GridList2({
-  classifiedsArray,
+  records,
   favouriteIds,
   className,
-}: ClassifiedsArrayProps & FavouritesProps & { className?: string }) {
-  if (!classifiedsArray) {
+}: RecordsPromiseProps & FavouritesProps & { className?: string }) {
+  if (!records) {
     return null
   }
-  const classifieds = use(classifiedsArray)
+  const classifieds = use(records)
 
   return (
     <div
@@ -27,7 +27,7 @@ export function GridList2({
           <Record
             key={classified.id}
             template="card-2"
-            classified={classified}
+            record={classified}
             favouriteIds={favouriteIds}
           />
         )

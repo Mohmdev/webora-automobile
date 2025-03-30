@@ -1,17 +1,17 @@
-import { FiltersPanel } from '@/components/catalog/archive/filters-panel'
+import { FiltersPanel } from '@/components/catalog/filters-panel'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import type {
-  ClassifiedsArrayProps,
   FavouritesProps,
   MinMaxProps,
-  SearchAwaitedProps,
+  ParamsAwaitedProps,
+  RecordsPromiseProps,
   UserProps,
 } from '@/types'
-import { ContentPanel } from '../archive/content-panel'
+import { ContentPanel } from '../content-panel'
 
 export function Catalog2({
   searchParams,
-  classifiedsArray,
+  records,
   favouriteIds,
   minMaxValues = {
     _min: { year: 0, price: 0, odoReading: 0 },
@@ -19,8 +19,8 @@ export function Catalog2({
   },
   user,
   className,
-}: SearchAwaitedProps &
-  ClassifiedsArrayProps &
+}: ParamsAwaitedProps &
+  RecordsPromiseProps &
   FavouritesProps &
   MinMaxProps &
   UserProps & { className?: string }) {
@@ -34,7 +34,7 @@ export function Catalog2({
       />
       <ContentPanel
         template="template-2"
-        classifiedsArray={classifiedsArray}
+        records={records}
         favouriteIds={favouriteIds}
         minMaxValues={minMaxValues}
         searchParams={searchParams}

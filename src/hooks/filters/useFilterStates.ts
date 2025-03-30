@@ -1,6 +1,7 @@
-import { routes } from '@/config/routes'
+'use client'
+
 import { env } from '@/env'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { parseAsString, useQueryStates } from 'nuqs'
 import { type ChangeEvent, useEffect, useState } from 'react'
 
@@ -17,6 +18,7 @@ export function useFilterStates(
 ): FilterState {
   const [filterCount, setFilterCount] = useState(0)
   const router = useRouter()
+  const pathname = usePathname()
 
   const [queryStates, setQueryStates] = useQueryStates(
     {
@@ -57,7 +59,7 @@ export function useFilterStates(
   }, [searchParams])
 
   const clearFilters = () => {
-    const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL)
+    const url = new URL(pathname, env.NEXT_PUBLIC_APP_URL)
     router.replace(url.toString())
     setFilterCount(0)
   }

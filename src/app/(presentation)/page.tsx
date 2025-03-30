@@ -2,9 +2,9 @@ import { FeaturesSection } from '@/components/homepage/features-section'
 import { HeroSection } from '@/components/homepage/hero-section'
 import { LatestArrivals } from '@/components/homepage/latest-arrivals'
 import { OurBrandsSection } from '@/components/homepage/our-brands-section'
-import type { PageProps } from '@/types'
+import type { ParamsPromisedProps } from '@/types'
 
-export default async function Home(props: PageProps) {
+export default async function Home(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
   return (
     <div className="min-h-screen w-full">

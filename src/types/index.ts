@@ -17,15 +17,14 @@ export type {
 } from './form'
 
 export type {
-  ClassifiedProps,
-  ClassifiedsArrayProps,
+  RecordsPromiseProps,
   FavouritesProps,
   FavouriteIds,
   FavouriteButtonProps,
-  SearchAwaitedProps,
+  ParamsAwaitedProps,
   UserProps,
   MinMaxProps,
-  PageProps,
+  ParamsPromisedProps,
   PrevState,
   TaxonomyFiltersProps,
   RecordDataProps,

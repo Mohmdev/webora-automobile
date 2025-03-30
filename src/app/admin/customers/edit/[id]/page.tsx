@@ -13,12 +13,12 @@ import { CustomerBadgeMap } from '@/config/constants'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
 import { formatCustomerStatus } from '@/lib/utils'
-import type { PageProps } from '@/types'
+import type { ParamsPromisedProps } from '@/types'
 import { format } from 'date-fns'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
-export default async function EditCustomerPage(props: PageProps) {
+export default async function EditCustomerPage(props: ParamsPromisedProps) {
   const params = await props.params
 
   const { data, success } = z.object({ id: z.number() }).safeParse({

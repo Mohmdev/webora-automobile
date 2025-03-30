@@ -2,21 +2,21 @@ import { formatPrice } from '@/lib/utils'
 import type { ClassifiedData } from '@/types'
 import { getKeyClassifiedInfo } from '../classified/getKeyClassifiedInfo'
 
-export function useRecordData(classified: ClassifiedData | undefined) {
-  if (!classified) {
+export function useRecordData(record: ClassifiedData | undefined) {
+  if (!record) {
     return {
       formattedPrice: '0',
-      classifiedInfo: [],
+      recordInfo: [],
     }
   }
 
   const formattedPrice = formatPrice({
-    price: classified.price,
-    currency: classified.currency,
+    price: record.price,
+    currency: record.currency,
   })
 
   return {
     formattedPrice,
-    classifiedInfo: getKeyClassifiedInfo(classified),
+    recordInfo: getKeyClassifiedInfo(record),
   }
 }

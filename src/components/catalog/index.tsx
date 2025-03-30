@@ -1,8 +1,8 @@
 import type {
-  ClassifiedsArrayProps,
   FavouritesProps,
   MinMaxProps,
-  SearchAwaitedProps,
+  ParamsAwaitedProps,
+  RecordsPromiseProps,
   UserProps,
 } from '@/types'
 import { Catalog1 } from './templates/catalog-1'
@@ -15,20 +15,20 @@ interface Template {
 export function Catalog({
   template,
   searchParams,
-  classifiedsArray,
+  records,
   favouriteIds,
   minMaxValues,
   user,
   className,
 }: Template &
-  SearchAwaitedProps &
+  ParamsAwaitedProps &
   MinMaxProps &
-  ClassifiedsArrayProps &
+  RecordsPromiseProps &
   FavouritesProps &
   UserProps & { className?: string }) {
   const catalog1Props = {
     searchParams,
-    classifiedsArray,
+    records,
     minMaxValues,
     className,
     favouriteIds,
@@ -36,12 +36,14 @@ export function Catalog({
 
   const catalog2Props = {
     searchParams,
-    classifiedsArray,
+    records,
     favouriteIds,
     minMaxValues,
     user,
     className,
   }
+
+  console.log('records in catalog:', records)
 
   switch (template) {
     case 'catalog-1': {

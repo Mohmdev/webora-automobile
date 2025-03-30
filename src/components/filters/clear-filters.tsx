@@ -1,19 +1,41 @@
 'use client'
 
-import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
+import { Button } from '@/components/ui/button'
+import { useFilterStates } from '@/hooks/filters/useFilterStates'
 import { cn } from '@/lib/utils'
-import type { SearchAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
+import { type VariantProps, cva } from 'class-variance-authority'
 import type { ButtonHTMLAttributes } from 'react'
 
+const buttonVariants = cva('flex-1 py-1 text-sm', {
+  variants: {
+    look: {
+      nonpersistent:
+        'pointer-events-none max-h-max cursor-default text-gray-500 opacity-0 transition-opacity duration-200 ease-linear hover:underline',
+      persistent:
+        'border bg-background opacity-100 shadow-xs hover:bg-accent hover:text-accent-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
+    },
+  },
+  defaultVariants: {
+    look: 'persistent',
+  },
+})
+
+type ClearFiltersProps = ParamsAwaitedProps &
+  VariantProps<typeof buttonVariants> &
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    label?: string
+  }
+
 export function ClearFilters({
-  label = 'Clear all',
+  label = 'Clear Filters',
+  look,
   className,
   searchParams,
   ...props
-}: SearchAwaitedProps &
-  ButtonHTMLAttributes<HTMLButtonElement> & { label?: string }) {
-  const { filterCount, clearFilters } = useSidebarFilters(
-    searchParams as Record<string, string>
+}: ClearFiltersProps) {
+  const { filterCount = 0, clearFilters } = useFilterStates(
+    searchParams as Record<string, string> | undefined
   )
 
   if (!clearFilters) {
@@ -23,21 +45,24 @@ export function ClearFilters({
   }
 
   return (
-    <div className={cn('flex items-center', className)}>
-      <button
-        type="button"
+    <div className={cn('inline-flex items-center', className)}>
+      <Button
+        variant="unstyled"
         onClick={clearFilters}
         aria-disabled={!filterCount}
         className={cn(
-          'pointer-events-none max-h-max cursor-default py-1 text-gray-500 text-sm opacity-0 transition-opacity duration-200 ease-linear hover:underline',
-          filterCount && filterCount > 0
+          buttonVariants({ look }),
+          look === 'persistent' && filterCount < 1
+            ? 'disabled pointer-events-none cursor-default opacity-50'
+            : '',
+          look === 'nonpersistent' && filterCount > 0
             ? 'pointer-events-auto cursor-pointer opacity-100'
             : ''
         )}
         {...props}
       >
         {label} {filterCount ? `(${filterCount})` : '(0)'}
-      </button>
+      </Button>
     </div>
   )
 }
