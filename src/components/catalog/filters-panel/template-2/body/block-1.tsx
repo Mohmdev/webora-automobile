@@ -1,27 +1,18 @@
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import {
   PriceFilter,
   PriceRangeSliderWithInput,
 } from '@/components/filters/render-filters'
 import { SearchInput } from '@/components/shared/search-input'
 import { SidebarGroup, SidebarGroupContent } from '@/components/ui/sidebar'
-import { prisma } from '@/lib/prisma'
-import { buildClassifiedFilterQuery } from '@/lib/utils'
-import type { MinMaxProps, ParamsAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 
-export async function Block1({
+export function Block1({
   searchParams,
   minMaxValues,
-}: ParamsAwaitedProps & MinMaxProps) {
-  const resultCount = await prisma.classified.count({
-    where: buildClassifiedFilterQuery(searchParams),
-  })
-  const classifiedsWithPrice = await prisma.classified.findMany({
-    where: buildClassifiedFilterQuery(searchParams),
-    select: {
-      price: true,
-    },
-  })
-
+  resultsCount,
+  recordsWithPrice,
+}: ParamsAwaitedProps & QueryReturnMetaProps) {
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col justify-between gap-4">
@@ -32,8 +23,8 @@ export async function Block1({
         <PriceRangeSliderWithInput
           minMaxValues={minMaxValues}
           searchParams={searchParams}
-          resultCount={resultCount}
-          items={classifiedsWithPrice}
+          resultsCount={resultsCount}
+          recordsWithPrice={recordsWithPrice}
         />
         <PriceFilter minMaxValues={minMaxValues} searchParams={searchParams} />
       </SidebarGroupContent>

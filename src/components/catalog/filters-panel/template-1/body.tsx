@@ -1,3 +1,4 @@
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import {
   BodyTypeFilter,
   ColourFilter,
@@ -14,12 +15,12 @@ import {
   YearFilter,
 } from '@/components/filters/render-filters'
 import { SearchInput } from '@/components/shared/search-input'
-import type { MinMaxProps, ParamsAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 
 export function PanelBody({
   minMaxValues,
   searchParams,
-}: MinMaxProps & ParamsAwaitedProps) {
+}: QueryReturnMetaProps & ParamsAwaitedProps) {
   return (
     <>
       <div className="p-4">

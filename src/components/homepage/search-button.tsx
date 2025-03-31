@@ -1,12 +1,13 @@
 'use client'
 
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { routes } from '@/config/routes'
 import { env } from '@/env'
 import Link from 'next/link'
 import { parseAsString, useQueryStates } from 'nuqs'
 import { Button } from '../ui/button'
 
-export const SearchButton = ({ count }: { count: number }) => {
+export const SearchButton = ({ resultsCount }: QueryReturnMetaProps) => {
   const [{ make, model, modelVariant, minYear, maxYear, minPrice, maxPrice }] =
     useQueryStates(
       {
@@ -51,7 +52,7 @@ export const SearchButton = ({ count }: { count: number }) => {
   return (
     <Button className="w-full" asChild>
       <Link href={url.toString()}>
-        Search{count > 0 ? ` (${count})` : null}
+        Search{resultsCount && resultsCount > 0 ? ` (${resultsCount})` : null}
       </Link>
     </Button>
   )

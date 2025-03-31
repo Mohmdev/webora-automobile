@@ -1,5 +1,6 @@
 'use client'
 
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { ClearFilters } from '@/components/filters/clear-filters'
 import {
   BodyTypeFilter,
@@ -25,7 +26,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
-import type { MinMaxProps, ParamsAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 import { Settings2 } from 'lucide-react'
 import { useState } from 'react'
 import { CloseDialogButton } from './close-dialog-button'
@@ -33,9 +34,9 @@ import { CloseDialogButton } from './close-dialog-button'
 export function FiltersDialog({
   minMaxValues,
   searchParams,
-  count,
+  resultsCount,
   className,
-}: MinMaxProps & ParamsAwaitedProps & { count: number; className?: string }) {
+}: QueryReturnMetaProps & ParamsAwaitedProps & { className?: string }) {
   const [open, setIsOpen] = useState(false)
 
   return (
@@ -101,7 +102,10 @@ export function FiltersDialog({
           </div>
 
           <div className="flex flex-col space-y-2">
-            <CloseDialogButton count={count} onClose={() => setIsOpen(false)} />
+            <CloseDialogButton
+              resultsCount={resultsCount ?? 0}
+              onClose={() => setIsOpen(false)}
+            />
 
             <ClearFilters
               label="Clear Filters"

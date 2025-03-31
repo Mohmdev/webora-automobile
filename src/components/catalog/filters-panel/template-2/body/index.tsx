@@ -1,5 +1,7 @@
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { SidebarContent, SidebarSeparator } from '@/components/ui/sidebar'
-import type { MinMaxProps, ParamsAwaitedProps } from '@/types'
+import { cn } from '@/lib/utils'
+import type { ParamsAwaitedProps } from '@/types'
 import { Block1 } from './block-1'
 import { Block2 } from './block-2'
 import { Block3 } from './block-3'
@@ -9,10 +11,16 @@ import { Block5 } from './block-5'
 export function PanelBody({
   minMaxValues,
   searchParams,
-}: MinMaxProps & ParamsAwaitedProps) {
+  recordsWithPrice,
+  className,
+}: ParamsAwaitedProps & QueryReturnMetaProps & { className?: string }) {
   return (
-    <SidebarContent className="py-2">
-      <Block1 searchParams={searchParams} minMaxValues={minMaxValues} />
+    <SidebarContent className={cn('py-2', className)}>
+      <Block1
+        searchParams={searchParams}
+        minMaxValues={minMaxValues}
+        recordsWithPrice={recordsWithPrice}
+      />
 
       {/* Filter controls */}
       <Block2 searchParams={searchParams} />

@@ -2,13 +2,13 @@ import type { MultiStepFormType } from '../types'
 
 export const routes = {
   home: '/',
-  singleClassified: (slug: string) => `/inventory/${slug}`,
+  singleClassified: (slug: string) => `/catalog/${slug}`,
   reserve: (slug: string, step: MultiStepFormType) =>
-    `/inventory/${slug}/reserve?step=${step}`,
-  success: (slug: string) => `/inventory/${slug}/success`,
+    `/catalog/${slug}/reserve?step=${step}`,
+  success: (slug: string) => `/catalog/${slug}/success`,
   favourites: '/favourites',
-  // inventory: '/inventory',
-  notAvailable: (slug: string) => `/inventory/${slug}/not-available`,
+  catalog: '/catalog',
+  notAvailable: (slug: string) => `/catalog/${slug}/not-available`,
   signIn: '/auth/sign-in',
   challenge: '/auth/challenge',
   admin: {
@@ -19,5 +19,4 @@ export const routes = {
     editCustomer: (id: number) => `/admin/customers/edit/${id}`,
     settings: '/admin/settings',
   },
-  catalog: '/catalog',
 }

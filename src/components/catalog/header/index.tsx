@@ -7,21 +7,18 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
-import { prisma } from '@/lib/prisma'
-import { buildClassifiedFilterQuery, cn } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 
-export async function Header({
+export function Header({
   className,
   searchParams,
+  resultsCount,
 }: {
   className?: string
   searchParams: ParamsAwaitedProps['searchParams']
+  resultsCount: number | null
 }) {
-  const resultCount = await prisma.classified.count({
-    where: buildClassifiedFilterQuery(searchParams),
-  })
-
   return (
     <header
       className={cn(
@@ -37,7 +34,11 @@ export async function Header({
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbPage>{resultCount} Vehicles</BreadcrumbPage>
+            <BreadcrumbPage>
+              {resultsCount && resultsCount > 0
+                ? `${resultsCount} Vehicles`
+                : 'Vehicles'}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

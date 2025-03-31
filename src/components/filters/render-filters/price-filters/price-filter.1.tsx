@@ -11,7 +11,7 @@ export function PriceFilter({
   const { handleChange } = useSidebarFilters(
     searchParams as Record<string, string>
   )
-  const { _min, _max } = minMaxValues
+  // const { _min, _max } = minMaxValues
   const [activeTab, setActiveTab] = useState<string>('slider')
 
   return (

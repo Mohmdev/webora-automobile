@@ -1,8 +1,8 @@
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { FiltersPanel } from '@/components/catalog/filters-panel'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import type {
   FavouritesProps,
-  MinMaxProps,
   ParamsAwaitedProps,
   RecordsPromiseProps,
   UserProps,
@@ -19,10 +19,11 @@ export function Catalog2({
   },
   user,
   className,
+  recordsWithPrice,
 }: ParamsAwaitedProps &
   RecordsPromiseProps &
   FavouritesProps &
-  MinMaxProps &
+  QueryReturnMetaProps &
   UserProps & { className?: string }) {
   return (
     <SidebarProvider className={className}>

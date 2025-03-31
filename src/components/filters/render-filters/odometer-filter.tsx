@@ -11,15 +11,14 @@ export function OdometerFilter({
   const { handleChange } = useSidebarFilters(
     searchParams as Record<string, string>
   )
-  const { _min, _max } = minMaxValues
 
   return (
     <RangeFilter
       label="Odometer Reading"
       minName="minReading"
       maxName="maxReading"
-      defaultMin={_min.odoReading || 0}
-      defaultMax={_max.odoReading || 1000000}
+      defaultMin={minMaxValues?._min.odoReading || 0}
+      defaultMax={minMaxValues?._max.odoReading || 1000000}
       handleChange={handleChange}
       searchParams={searchParams}
       increment={5000}

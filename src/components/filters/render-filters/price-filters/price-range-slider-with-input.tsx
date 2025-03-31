@@ -1,31 +1,32 @@
 'use client'
 
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
 import { useSliderWithInput } from '@/hooks/use-slider-with-input'
-import type { MinMaxProps, ParamsAwaitedProps } from '@/types'
+import { cn } from '@/lib/utils'
+import type { ParamsAwaitedProps } from '@/types'
 import type React from 'react'
 import { useId } from 'react'
 import { useEffect } from 'react'
-import { demoItems } from './price-range-slider-with-input.demo'
 
 export function PriceRangeSliderWithInput({
   minMaxValues,
   searchParams,
-  resultCount,
-  items,
-}: ParamsAwaitedProps &
-  MinMaxProps & { resultCount: number; items: { price: number }[] }) {
+  resultsCount,
+  recordsWithPrice,
+  className,
+}: ParamsAwaitedProps & QueryReturnMetaProps & { className?: string }) {
   const id = useId()
   const { handleChange } = useSidebarFilters(
     searchParams as Record<string, string>
   )
 
   // Use actual min/max values from props instead of demo data
-  const minValue = (minMaxValues._min.price ?? 0) / 100
-  const maxValue = (minMaxValues._max.price ?? 100000000) / 100
+  const minValue = (minMaxValues?._min.price ?? 0) / 100
+  const maxValue = (minMaxValues?._max.price ?? 100000000) / 100
 
   // Get initial values from searchParams or use defaults
   // const initialMin = Number(searchParams?.minPrice) || minValue
@@ -43,21 +44,23 @@ export function PriceRangeSliderWithInput({
     initialValue: [minValue, maxValue],
   })
 
-  const tick_count = resultCount
+  const tick_count = resultsCount ?? 0
   // const tick_count = 40
   const priceStep = (maxValue - minValue) / tick_count
 
   // Still using demo data for histogram visualization
   // Could be replaced with actual data distribution in the future
-  const itemCounts = new Array(tick_count).fill(0).map((_, tick) => {
+  const recordsCounts = new Array(tick_count).fill(0).map((_, tick) => {
     const rangeMin = minValue + tick * priceStep
     const rangeMax = minValue + (tick + 1) * priceStep
-    return items.filter(
-      (item) => item.price >= rangeMin && item.price < rangeMax
-    ).length
+    return (
+      recordsWithPrice?.filter(
+        (record) => record.price >= rangeMin && record.price < rangeMax
+      ).length ?? 0
+    )
   })
 
-  const maxCount = Math.max(...itemCounts)
+  const maxCount = Math.max(...recordsCounts)
 
   const handleSliderValueChange = (values: number[]) => {
     handleSliderChange(values)
@@ -96,8 +99,11 @@ export function PriceRangeSliderWithInput({
   }
 
   const countItemsInRange = (min: number, max: number) => {
-    return demoItems.filter((item) => item.price >= min && item.price <= max)
-      .length
+    return (
+      recordsWithPrice?.filter(
+        (record) => record.price >= min && record.price <= max
+      ).length ?? 0
+    )
   }
 
   const isBarInSelectedRange = (
@@ -126,10 +132,10 @@ export function PriceRangeSliderWithInput({
   }, [searchParams?.minPrice, searchParams?.maxPrice])
 
   return (
-    <div className="flex-1 space-y-4">
+    <div className={cn('flex-1 space-y-4', className)}>
       <div>
         <div className="flex h-12 w-full items-end px-3" aria-hidden="true">
-          {itemCounts.map((count, i) => (
+          {recordsCounts.map((count, i) => (
             <div
               key={i}
               className="flex flex-1 justify-center"

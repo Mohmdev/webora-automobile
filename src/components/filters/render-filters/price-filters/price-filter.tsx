@@ -11,15 +11,14 @@ export function PriceFilter({
   const { handleChange } = useSidebarFilters(
     searchParams as Record<string, string>
   )
-  const { _min, _max } = minMaxValues
 
   return (
     <RangeFilter
       label="Price"
       minName="minPrice"
       maxName="maxPrice"
-      defaultMin={_min.price || 0}
-      defaultMax={_max.price || 21474836}
+      defaultMin={minMaxValues?._min.price || 0}
+      defaultMax={minMaxValues?._max.price || 21474836}
       handleChange={handleChange}
       searchParams={searchParams}
       increment={1000000}

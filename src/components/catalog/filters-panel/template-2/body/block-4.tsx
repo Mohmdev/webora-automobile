@@ -1,3 +1,4 @@
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import {
   FuelTypeFilter,
   TransmissionFilter,
@@ -13,13 +14,13 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
 } from '@/components/ui/sidebar'
-import type { MinMaxProps, ParamsAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 import { ChevronRight } from 'lucide-react'
 
 export function Block4({
   searchParams,
   minMaxValues,
-}: ParamsAwaitedProps & MinMaxProps) {
+}: ParamsAwaitedProps & QueryReturnMetaProps) {
   return (
     <SidebarGroup>
       <Collapsible defaultOpen={true} className="group/collapsible">

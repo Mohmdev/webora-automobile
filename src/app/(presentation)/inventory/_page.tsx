@@ -1,4 +1,4 @@
-import { getInventory } from '@/app/catalog/data'
+import { getRecords } from '@/_data/catalog'
 import { Catalog } from '@/components/catalog'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
@@ -8,7 +8,7 @@ import { ClassifiedStatus } from '@prisma/client'
 
 export default async function InventoryPage(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
-  const classifieds = getInventory(searchParams)
+  const classifieds = getRecords(searchParams)
   const sourceId = await getSourceId()
   const getFavourites = await redis.get<FavouritesProps>(sourceId ?? '')
 

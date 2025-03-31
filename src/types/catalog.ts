@@ -61,18 +61,21 @@ export type TaxonomyFiltersProps = ParamsAwaitedProps & {
 }
 
 export type MinMaxProps = {
-  minMaxValues: Prisma.GetClassifiedAggregateType<{
-    _min: {
-      year: true
-      price: true
-      odoReading: true
-    }
-    _max: {
-      year: true
-      odoReading: true
-      price: true
-    }
-  }>
+  minMaxValues:
+    | Prisma.GetClassifiedAggregateType<{
+        _min: {
+          year: true
+          price: true
+          odoReading: true
+        }
+        _max: {
+          year: true
+          odoReading: true
+          price: true
+        }
+      }>
+    | undefined
+    | null
 }
 
 export type PrevState = {

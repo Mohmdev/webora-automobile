@@ -1,8 +1,6 @@
+import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { routes } from '@/config/routes'
-import { prisma } from '@/lib/prisma'
-import { buildClassifiedFilterQuery } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
-import { ClassifiedStatus } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -13,27 +11,13 @@ import {
 import { Button } from '../ui/button'
 import { SearchButton } from './search-button'
 
-export const HeroSection = async ({ searchParams }: ParamsAwaitedProps) => {
+export const HeroSection = ({
+  searchParams,
+  resultsCount,
+  minMaxValues,
+}: ParamsAwaitedProps & QueryReturnMetaProps) => {
   const totalFiltersApplied = Object.keys(searchParams || {}).length
   const isFilterApplied = totalFiltersApplied > 0
-
-  const classifiedsCount = await prisma.classified.count({
-    where: buildClassifiedFilterQuery(searchParams),
-  })
-
-  const minMaxResult = await prisma.classified.aggregate({
-    where: { status: ClassifiedStatus.LIVE },
-    _min: {
-      year: true,
-      price: true,
-      odoReading: true,
-    },
-    _max: {
-      price: true,
-      year: true,
-      odoReading: true,
-    },
-  })
 
   return (
     <section className="relative flex h-[calc(100vh-4rem)] items-center justify-center bg-center bg-cover">
@@ -57,16 +41,16 @@ export const HeroSection = async ({ searchParams }: ParamsAwaitedProps) => {
             <div className="flex w-full flex-col gap-x-4 space-y-2 text-white">
               <TaxonomyFiltersBlock searchParams={searchParams} />
               <YearFilter
-                minMaxValues={minMaxResult}
+                minMaxValues={minMaxValues}
                 searchParams={searchParams}
               />
 
               <PriceFilter
-                minMaxValues={minMaxResult}
+                minMaxValues={minMaxValues}
                 searchParams={searchParams}
               />
             </div>
-            <SearchButton count={classifiedsCount} />
+            <SearchButton resultsCount={resultsCount} />
             {isFilterApplied && (
               <Button
                 asChild

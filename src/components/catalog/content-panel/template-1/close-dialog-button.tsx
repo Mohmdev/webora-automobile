@@ -4,14 +4,14 @@ import type { ButtonHTMLAttributes } from 'react'
 
 interface CloseDialogButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  count?: number
+  resultsCount?: number
   className?: string
   onClose?: () => void
   label?: string
 }
 
 export function CloseDialogButton({
-  count = 0,
+  resultsCount = 0,
   className,
   onClose,
   label = 'View results',
@@ -25,7 +25,7 @@ export function CloseDialogButton({
       {...props}
     >
       {label}
-      {count > 0 ? ` (${count})` : null}
+      {resultsCount > 0 ? ` (${resultsCount})` : null}
     </Button>
   )
 }

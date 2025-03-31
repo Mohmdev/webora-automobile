@@ -1,3 +1,4 @@
+import { getMinMaxValues, getResultsCount } from '@/_data/catalog'
 import { FeaturesSection } from '@/components/homepage/features-section'
 import { HeroSection } from '@/components/homepage/hero-section'
 import { LatestArrivals } from '@/components/homepage/latest-arrivals'
@@ -6,9 +7,16 @@ import type { ParamsPromisedProps } from '@/types'
 
 export default async function Home(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
+  const resultsCount = await getResultsCount(searchParams)
+  const minMaxValues = await getMinMaxValues()
+
   return (
     <div className="min-h-screen w-full">
-      <HeroSection searchParams={searchParams} />
+      <HeroSection
+        searchParams={searchParams}
+        resultsCount={resultsCount}
+        minMaxValues={minMaxValues}
+      />
       <FeaturesSection />
       <LatestArrivals />
       <OurBrandsSection />
