@@ -1,7 +1,7 @@
 'use client'
 
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { routes } from '@/config/routes'
+import type { QueryReturnMetaProps } from '@/data/catalog'
 import { env } from '@/env'
 import Link from 'next/link'
 import { parseAsString, useQueryStates } from 'nuqs'

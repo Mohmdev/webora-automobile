@@ -1,4 +1,3 @@
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import {
   BodyTypeFilter,
   ColourFilter,
@@ -17,10 +16,7 @@ import {
 import { SearchInput } from '@/components/shared/search-input'
 import type { ParamsAwaitedProps } from '@/types'
 
-export function PanelBody({
-  minMaxValues,
-  searchParams,
-}: QueryReturnMetaProps & ParamsAwaitedProps) {
+export function PanelBody({ searchParams }: ParamsAwaitedProps) {
   return (
     <>
       <div className="p-4">
@@ -33,14 +29,11 @@ export function PanelBody({
       <div className="space-y-2 p-4">
         <TaxonomyFiltersBlock searchParams={searchParams} />
 
-        <YearFilter minMaxValues={minMaxValues} searchParams={searchParams} />
+        <YearFilter searchParams={searchParams} />
 
-        <PriceFilter minMaxValues={minMaxValues} searchParams={searchParams} />
+        <PriceFilter searchParams={searchParams} />
 
-        <OdometerFilter
-          minMaxValues={minMaxValues}
-          searchParams={searchParams}
-        />
+        <OdometerFilter searchParams={searchParams} />
 
         <CurrencyFilter searchParams={searchParams} />
 

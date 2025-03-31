@@ -1,5 +1,5 @@
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { routes } from '@/config/routes'
+import type { QueryReturnMetaProps } from '@/data/catalog'
 import type { ParamsAwaitedProps } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,7 +14,6 @@ import { SearchButton } from './search-button'
 export const HeroSection = ({
   searchParams,
   resultsCount,
-  minMaxValues,
 }: ParamsAwaitedProps & QueryReturnMetaProps) => {
   const totalFiltersApplied = Object.keys(searchParams || {}).length
   const isFilterApplied = totalFiltersApplied > 0
@@ -40,15 +39,9 @@ export const HeroSection = ({
           <div className="space-y-4">
             <div className="flex w-full flex-col gap-x-4 space-y-2 text-white">
               <TaxonomyFiltersBlock searchParams={searchParams} />
-              <YearFilter
-                minMaxValues={minMaxValues}
-                searchParams={searchParams}
-              />
+              <YearFilter searchParams={searchParams} />
 
-              <PriceFilter
-                minMaxValues={minMaxValues}
-                searchParams={searchParams}
-              />
+              <PriceFilter searchParams={searchParams} />
             </div>
             <SearchButton resultsCount={resultsCount} />
             {isFilterApplied && (

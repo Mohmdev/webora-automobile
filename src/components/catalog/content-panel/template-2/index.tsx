@@ -1,21 +1,15 @@
 import { ListRecords } from '@/components/catalog/list'
 import { SidebarInset } from '@/components/ui/sidebar'
 import type { QueryReturnMetaProps } from '@/data/catalog'
-import type {
-  FavouritesProps,
-  ParamsAwaitedProps,
-  RecordsPromiseProps,
-} from '@/types'
+import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { Header } from '../../header'
 
 export function ContentPanel2({
-  records,
   favouriteIds,
   className,
   searchParams,
   resultsCount,
-}: RecordsPromiseProps &
-  FavouritesProps &
+}: FavouritesProps &
   ParamsAwaitedProps &
   QueryReturnMetaProps & { className?: string }) {
   return (
@@ -28,8 +22,8 @@ export function ContentPanel2({
       <div className="z-10 flex flex-1 flex-col gap-4 p-4">
         <ListRecords
           template="grid-2"
-          records={records}
           favouriteIds={favouriteIds}
+          searchParams={searchParams}
         />
       </div>
     </SidebarInset>

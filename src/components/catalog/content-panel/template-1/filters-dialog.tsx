@@ -1,6 +1,5 @@
 'use client'
 
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { ClearFilters } from '@/components/filters/clear-filters'
 import {
   BodyTypeFilter,
@@ -25,6 +24,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import type { QueryReturnMetaProps } from '@/data/catalog'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 import { Settings2 } from 'lucide-react'
@@ -32,7 +32,6 @@ import { useState } from 'react'
 import { CloseDialogButton } from './close-dialog-button'
 
 export function FiltersDialog({
-  minMaxValues,
   searchParams,
   resultsCount,
   className,
@@ -67,20 +66,11 @@ export function FiltersDialog({
           <div className="space-y-2">
             <TaxonomyFiltersBlock searchParams={searchParams} />
 
-            <YearFilter
-              minMaxValues={minMaxValues}
-              searchParams={searchParams}
-            />
+            <YearFilter searchParams={searchParams} />
 
-            <PriceFilter
-              minMaxValues={minMaxValues}
-              searchParams={searchParams}
-            />
+            <PriceFilter searchParams={searchParams} />
 
-            <OdometerFilter
-              minMaxValues={minMaxValues}
-              searchParams={searchParams}
-            />
+            <OdometerFilter searchParams={searchParams} />
 
             <CurrencyFilter searchParams={searchParams} />
 

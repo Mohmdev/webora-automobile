@@ -1,6 +1,6 @@
 {
   "name": "webora-motors",
-  "version": "v1.0.0-beta.1",
+  "version": "v1.1.0-beta.2",
   "private": true,
   "license": "MIT",
   "author": "Mohmdev",
@@ -60,6 +60,7 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@react-email/components": "^0.0.34",
     "@t3-oss/env-nextjs": "^0.12.0",
+    "@tanstack/react-query": "^5.71.0",
     "@tinymce/tinymce-react": "^6.0.0",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.6",

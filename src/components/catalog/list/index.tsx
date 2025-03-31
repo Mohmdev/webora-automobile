@@ -1,4 +1,4 @@
-import type { FavouritesProps, RecordsPromiseProps } from '@/types'
+import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { GridList1 } from './grid-1'
 import { GridList2 } from './grid-2'
 import { GridSkeleton1 } from './grid-skeleton-1'
@@ -9,11 +9,11 @@ interface Template {
 
 export function ListRecords({
   template,
-  records,
   favouriteIds,
   className,
-}: Template & RecordsPromiseProps & FavouritesProps & { className?: string }) {
-  const listProps = { records, favouriteIds, className }
+  searchParams,
+}: Template & ParamsAwaitedProps & FavouritesProps & { className?: string }) {
+  const listProps = { favouriteIds, className, searchParams }
 
   switch (template) {
     case 'grid-1': {

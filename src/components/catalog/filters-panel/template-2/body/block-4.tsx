@@ -1,4 +1,3 @@
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import {
   FuelTypeFilter,
   TransmissionFilter,
@@ -17,10 +16,7 @@ import {
 import type { ParamsAwaitedProps } from '@/types'
 import { ChevronRight } from 'lucide-react'
 
-export function Block4({
-  searchParams,
-  minMaxValues,
-}: ParamsAwaitedProps & QueryReturnMetaProps) {
+export function Block4({ searchParams }: ParamsAwaitedProps) {
   return (
     <SidebarGroup>
       <Collapsible defaultOpen={true} className="group/collapsible">
@@ -35,10 +31,7 @@ export function Block4({
         </SidebarGroupLabel>
         <CollapsibleContent>
           <SidebarGroupContent>
-            <YearFilter
-              minMaxValues={minMaxValues}
-              searchParams={searchParams}
-            />
+            <YearFilter searchParams={searchParams} />
 
             <div className="flex flex-row flex-nowrap items-center justify-between gap-2">
               <FuelTypeFilter searchParams={searchParams} />

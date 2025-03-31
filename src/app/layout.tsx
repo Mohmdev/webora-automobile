@@ -8,6 +8,7 @@ import type React from 'react'
 
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import ReactQueryProvider from '@/providers/react-query'
 
 const mulish = Mulish({
   weight: 'variable',
@@ -38,7 +39,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NextTopLoader showSpinner={false} />
-          <NuqsAdapter>{children}</NuqsAdapter>
+          <ReactQueryProvider>
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </ReactQueryProvider>
           <Toaster />
         </ThemeProvider>
       </body>

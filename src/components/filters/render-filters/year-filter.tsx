@@ -1,13 +1,19 @@
 'use client'
 
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { RangeFilter } from '@/components/filters/ui/range-filters'
+import { getMinMaxValues } from '@/data/catalog'
 import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
 import type { ParamsAwaitedProps } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 
-type YearFilterProps = QueryReturnMetaProps & ParamsAwaitedProps
+type YearFilterProps = ParamsAwaitedProps
 
-export function YearFilter({ minMaxValues, searchParams }: YearFilterProps) {
+export function YearFilter({ searchParams }: YearFilterProps) {
+  const { data: minMaxValues } = useQuery({
+    queryKey: ['minMaxValues'],
+    queryFn: getMinMaxValues,
+  })
+
   const { handleChange } = useSidebarFilters(
     searchParams as Record<string, string>
   )

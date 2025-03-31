@@ -1,31 +1,20 @@
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { ListRecords } from '@/components/catalog/list'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
+import type { QueryReturnMetaProps } from '@/data/catalog'
 import { cn } from '@/lib/utils'
-import type {
-  FavouritesProps,
-  ParamsAwaitedProps,
-  RecordsPromiseProps,
-} from '@/types'
-import { Suspense } from 'react'
+import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { FiltersDialog } from './filters-dialog'
+
 export function ContentPanel1({
-  records,
   favouriteIds,
   className,
-  minMaxValues,
   searchParams,
   resultsCount,
 }: ParamsAwaitedProps &
-  RecordsPromiseProps &
   FavouritesProps &
   QueryReturnMetaProps & { className?: string }) {
-  if (!records) {
-    return null
-  }
-
   const totalPages = resultsCount
     ? Math.ceil(resultsCount / CLASSIFIEDS_PER_PAGE)
     : 0
@@ -39,7 +28,6 @@ export function ContentPanel1({
           </h2>
           {/* Mobile filters dialog */}
           <FiltersDialog
-            minMaxValues={minMaxValues}
             resultsCount={resultsCount ?? 0}
             searchParams={searchParams}
             className="lg:hidden"
@@ -58,13 +46,11 @@ export function ContentPanel1({
         />
       </div>
 
-      <Suspense fallback={<ListRecords template="skeleton-1" />}>
-        <ListRecords
-          template="grid-1"
-          records={records}
-          favouriteIds={favouriteIds}
-        />
-      </Suspense>
+      <ListRecords
+        template="grid-1"
+        favouriteIds={favouriteIds}
+        searchParams={searchParams}
+      />
 
       <CustomPagination
         baseURL={routes.catalog}

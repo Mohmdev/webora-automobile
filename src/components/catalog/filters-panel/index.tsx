@@ -1,4 +1,3 @@
-import type { QueryReturnMetaProps } from '@/data/catalog'
 import type { ParamsAwaitedProps, UserProps } from '@/types'
 import { FiltersPanel1 } from './template-1'
 import { FiltersPanel2 } from './template-2'
@@ -9,21 +8,16 @@ interface Template {
 
 export function FiltersPanel({
   template,
-  minMaxValues,
   searchParams,
-  recordsWithPrice,
   user,
-}: Template & ParamsAwaitedProps & UserProps & QueryReturnMetaProps) {
+}: Template & ParamsAwaitedProps & UserProps) {
   const panel1Props = {
-    minMaxValues,
     searchParams,
   }
 
   const panel2Props = {
-    minMaxValues,
     searchParams,
     user,
-    recordsWithPrice,
   }
 
   switch (template) {

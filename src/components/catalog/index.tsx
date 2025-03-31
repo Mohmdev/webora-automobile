@@ -1,10 +1,5 @@
 import type { QueryReturnMetaProps } from '@/data/catalog'
-import type {
-  FavouritesProps,
-  ParamsAwaitedProps,
-  RecordsPromiseProps,
-  UserProps,
-} from '@/types'
+import type { FavouritesProps, ParamsAwaitedProps, UserProps } from '@/types'
 import { Catalog1 } from './templates/catalog-1'
 import { Catalog2 } from './templates/catalog-2'
 
@@ -15,28 +10,21 @@ interface Template {
 export function Catalog({
   template,
   searchParams,
-  records,
   favouriteIds,
   user,
   className,
-  minMaxValues,
   resultsCount,
-  recordsWithPrice,
 }: Template &
   QueryReturnMetaProps &
   ParamsAwaitedProps &
-  RecordsPromiseProps &
   FavouritesProps &
   UserProps & { className?: string }) {
   const props = {
     searchParams,
-    records,
     favouriteIds,
-    minMaxValues,
     user,
     className,
     resultsCount,
-    recordsWithPrice,
   }
 
   switch (template) {

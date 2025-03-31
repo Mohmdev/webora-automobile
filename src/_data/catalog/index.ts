@@ -28,18 +28,6 @@ export async function getRecords(
 
 export type QueryReturnMetaProps = {
   resultsCount?: number | null
-  minMaxValues?: {
-    _min: {
-      year: number | null
-      price: number | null
-      odoReading: number | null
-    }
-    _max: {
-      year: number | null
-      price: number | null
-      odoReading: number | null
-    }
-  }
   recordsWithPrice?: { price: number }[] | null
 }
 
@@ -83,3 +71,21 @@ export async function getMinMaxValues() {
 
   return minMaxResult
 }
+
+// export const getMinMaxValues = cache(async () => {
+//   const minMaxResult = await prisma.classified.aggregate({
+//     where: { status: ClassifiedStatus.LIVE },
+//     _min: {
+//       year: true,
+//       price: true,
+//       odoReading: true,
+//     },
+//     _max: {
+//       price: true,
+//       year: true,
+//       odoReading: true,
+//     },
+//   })
+
+//   return minMaxResult
+// })

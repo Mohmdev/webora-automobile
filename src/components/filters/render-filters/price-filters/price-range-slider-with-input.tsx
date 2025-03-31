@@ -1,24 +1,29 @@
 'use client'
 
-import type { QueryReturnMetaProps } from '@/_data/catalog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
+import { type QueryReturnMetaProps, getMinMaxValues } from '@/data/catalog'
 import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
 import { useSliderWithInput } from '@/hooks/use-slider-with-input'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 import type React from 'react'
 import { useId } from 'react'
 import { useEffect } from 'react'
 
 export function PriceRangeSliderWithInput({
-  minMaxValues,
   searchParams,
   resultsCount,
   recordsWithPrice,
   className,
 }: ParamsAwaitedProps & QueryReturnMetaProps & { className?: string }) {
+  const { data: minMaxValues } = useQuery({
+    queryKey: ['minMaxValues'],
+    queryFn: getMinMaxValues,
+  })
+
   const id = useId()
   const { handleChange } = useSidebarFilters(
     searchParams as Record<string, string>

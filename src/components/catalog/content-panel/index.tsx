@@ -1,9 +1,5 @@
 import type { QueryReturnMetaProps } from '@/data/catalog'
-import type {
-  FavouritesProps,
-  ParamsAwaitedProps,
-  RecordsPromiseProps,
-} from '@/types'
+import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { ContentPanel1 } from './template-1'
 import { ContentPanel2 } from './template-2'
 interface Template {
@@ -12,22 +8,17 @@ interface Template {
 
 export function ContentPanel({
   template,
-  records,
   favouriteIds,
   className,
-  minMaxValues,
   searchParams,
   resultsCount,
 }: Template &
   ParamsAwaitedProps &
-  RecordsPromiseProps &
   FavouritesProps &
   QueryReturnMetaProps & { className?: string }) {
   const props = {
-    records,
     favouriteIds,
     className,
-    minMaxValues,
     searchParams,
     resultsCount,
   }
