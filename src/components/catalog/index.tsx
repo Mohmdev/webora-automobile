@@ -1,5 +1,5 @@
 import type { QueryReturnMetaProps } from '@/data/catalog'
-import type { FavouritesProps, ParamsAwaitedProps, UserProps } from '@/types'
+import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { Catalog1 } from './templates/catalog-1'
 import { Catalog2 } from './templates/catalog-2'
 
@@ -11,20 +11,15 @@ export function Catalog({
   template,
   searchParams,
   favouriteIds,
-  user,
   className,
-  resultsCount,
 }: Template &
   QueryReturnMetaProps &
   ParamsAwaitedProps &
-  FavouritesProps &
-  UserProps & { className?: string }) {
+  FavouritesProps & { className?: string }) {
   const props = {
     searchParams,
     favouriteIds,
-    user,
     className,
-    resultsCount,
   }
 
   switch (template) {

@@ -1,3 +1,5 @@
+'use client'
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -14,6 +16,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { getSampleUser } from '@/data/catalog/sampleData'
+import { useQuery } from '@tanstack/react-query'
 import {
   BadgeCheck,
   Bell,
@@ -23,16 +27,18 @@ import {
   Sparkles,
 } from 'lucide-react'
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+export function NavUser() {
+  const { data: userData } = useQuery({
+    queryKey: ['userData'],
+    queryFn: getSampleUser,
+  })
   const { isMobile } = useSidebar()
+
+  const user = userData?.user ?? {
+    name: '',
+    email: '',
+    avatar: '',
+  }
 
   return (
     <SidebarMenu>

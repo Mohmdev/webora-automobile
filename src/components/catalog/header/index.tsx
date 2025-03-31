@@ -1,3 +1,6 @@
+'use client'
+
+import { getResultsCount } from '@/_data/catalog'
 import { ClearFilters } from '@/components/filters/clear-filters'
 import {
   Breadcrumb,
@@ -9,16 +12,17 @@ import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 
 export function Header({
-  className,
   searchParams,
-  resultsCount,
-}: {
-  className?: string
-  searchParams: ParamsAwaitedProps['searchParams']
-  resultsCount: number | null
-}) {
+  className,
+}: ParamsAwaitedProps & { className?: string }) {
+  const { data: resultsCount } = useQuery({
+    queryKey: ['resultsCount', searchParams],
+    queryFn: () => getResultsCount(searchParams),
+  })
+
   return (
     <header
       className={cn(

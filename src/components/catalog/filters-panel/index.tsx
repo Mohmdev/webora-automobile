@@ -1,4 +1,4 @@
-import type { ParamsAwaitedProps, UserProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 import { FiltersPanel1 } from './template-1'
 import { FiltersPanel2 } from './template-2'
 
@@ -9,26 +9,16 @@ interface Template {
 export function FiltersPanel({
   template,
   searchParams,
-  user,
-}: Template & ParamsAwaitedProps & UserProps) {
-  const panel1Props = {
-    searchParams,
-  }
-
-  const panel2Props = {
-    searchParams,
-    user,
-  }
-
+}: Template & ParamsAwaitedProps) {
   switch (template) {
     case 'template-1': {
-      return <FiltersPanel1 {...panel1Props} />
+      return <FiltersPanel1 searchParams={searchParams} />
     }
     case 'template-2': {
-      return <FiltersPanel2 {...panel2Props} />
+      return <FiltersPanel2 searchParams={searchParams} />
     }
     default: {
-      return <FiltersPanel2 {...panel2Props} />
+      return <FiltersPanel2 searchParams={searchParams} />
     }
   }
 }

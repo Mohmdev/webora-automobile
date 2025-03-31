@@ -8,7 +8,6 @@ export function ContentPanel2({
   favouriteIds,
   className,
   searchParams,
-  resultsCount,
 }: FavouritesProps &
   ParamsAwaitedProps &
   QueryReturnMetaProps & { className?: string }) {
@@ -17,7 +16,6 @@ export function ContentPanel2({
       <Header
         className="z-20 border-border/70 bg-background/70 backdrop-blur-md"
         searchParams={searchParams}
-        resultsCount={resultsCount ?? null}
       />
       <div className="z-10 flex flex-1 flex-col gap-4 p-4">
         <ListRecords

@@ -1,22 +1,29 @@
+import { getResultsCount } from '@/_data/catalog'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import type { ParamsAwaitedProps } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 import type { ButtonHTMLAttributes } from 'react'
 
 interface CloseDialogButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  resultsCount?: number
   className?: string
   onClose?: () => void
   label?: string
 }
 
 export function CloseDialogButton({
-  resultsCount = 0,
+  searchParams,
   className,
   onClose,
   label = 'View results',
   ...props
-}: CloseDialogButtonProps) {
+}: CloseDialogButtonProps & ParamsAwaitedProps) {
+  const { data: resultsCount } = useQuery({
+    queryKey: ['resultsCount', searchParams],
+    queryFn: () => getResultsCount(searchParams),
+  })
+
   return (
     <Button
       type="button"
@@ -25,7 +32,7 @@ export function CloseDialogButton({
       {...props}
     >
       {label}
-      {resultsCount > 0 ? ` (${resultsCount})` : null}
+      {resultsCount && resultsCount > 0 ? ` (${resultsCount})` : null}
     </Button>
   )
 }

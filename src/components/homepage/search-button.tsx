@@ -1,13 +1,20 @@
 'use client'
 
 import { routes } from '@/config/routes'
-import type { QueryReturnMetaProps } from '@/data/catalog'
+import { getResultsCount } from '@/data/catalog'
 import { env } from '@/env'
+import type { ParamsAwaitedProps } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { parseAsString, useQueryStates } from 'nuqs'
 import { Button } from '../ui/button'
 
-export const SearchButton = ({ resultsCount }: QueryReturnMetaProps) => {
+export const SearchButton = ({ searchParams }: ParamsAwaitedProps) => {
+  const { data: resultsCount } = useQuery({
+    queryKey: ['resultsCount', searchParams],
+    queryFn: () => getResultsCount(searchParams),
+  })
+
   const [{ make, model, modelVariant, minYear, maxYear, minPrice, maxPrice }] =
     useQueryStates(
       {

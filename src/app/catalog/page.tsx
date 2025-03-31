@@ -1,6 +1,11 @@
 import { Catalog } from '@/components/catalog'
-import { getMinMaxValues, getRecords, getResultsCount } from '@/data/catalog'
-import { sampleData } from '@/data/catalog/sampleData'
+import {
+  getMinMaxValues,
+  getRecords,
+  getRecordsWithPriceSelect,
+  getResultsCount,
+} from '@/data/catalog'
+import { getSampleUser } from '@/data/catalog/sampleData'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
@@ -11,13 +16,6 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
   const queryClient = getQueryClient()
 
   const searchParams = await props.searchParams
-  // const classifieds = getRecords(searchParams)
-  const resultsCount = await getResultsCount(searchParams)
-
-  // const resolvedClassifieds = await classifieds
-  // const recordsWithPrice = resolvedClassifieds.map((classified) => ({
-  //   price: classified.price,
-  // }))
 
   const sourceId = await getSourceId()
 
@@ -26,10 +24,10 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
     ? favourites.favouriteIds
     : []
 
-  const sampleUser = sampleData.user
-
-  //
-  //
+  await queryClient.prefetchQuery({
+    queryKey: ['userData'],
+    queryFn: getSampleUser,
+  })
   await queryClient.prefetchQuery({
     queryKey: ['minMaxValues'],
     queryFn: getMinMaxValues,
@@ -38,9 +36,14 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
     queryKey: ['records', searchParams],
     queryFn: () => getRecords(searchParams),
   })
-
-  //
-  //
+  await queryClient.prefetchQuery({
+    queryKey: ['recordsWithPrice', searchParams],
+    queryFn: () => getRecordsWithPriceSelect(searchParams),
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['resultsCount', searchParams],
+    queryFn: () => getResultsCount(searchParams),
+  })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -48,8 +51,6 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
         template="catalog-2"
         favouriteIds={favouriteIds}
         searchParams={searchParams}
-        resultsCount={resultsCount}
-        user={sampleUser}
       />
     </HydrationBoundary>
   )

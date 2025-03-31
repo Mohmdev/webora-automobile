@@ -3,7 +3,11 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
-import { type QueryReturnMetaProps, getMinMaxValues } from '@/data/catalog'
+import {
+  getMinMaxValues,
+  getRecordsWithPriceSelect,
+  getResultsCount,
+} from '@/data/catalog'
 import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
 import { useSliderWithInput } from '@/hooks/use-slider-with-input'
 import { cn } from '@/lib/utils'
@@ -15,14 +19,26 @@ import { useEffect } from 'react'
 
 export function PriceRangeSliderWithInput({
   searchParams,
-  resultsCount,
-  recordsWithPrice,
   className,
-}: ParamsAwaitedProps & QueryReturnMetaProps & { className?: string }) {
+}: ParamsAwaitedProps & { className?: string }) {
   const { data: minMaxValues } = useQuery({
     queryKey: ['minMaxValues'],
     queryFn: getMinMaxValues,
   })
+
+  const { data: recordsWithPrice } = useQuery({
+    queryKey: ['recordsWithPrice', searchParams],
+    queryFn: () => getRecordsWithPriceSelect(searchParams),
+  })
+
+  const { data: resultsCount } = useQuery({
+    queryKey: ['resultsCount', searchParams],
+    queryFn: () => getResultsCount(searchParams),
+  })
+
+  // console.log('resultsCount', resultsCount)
+  // console.log('recordsWithPrice', recordsWithPrice)
+  // console.log('minMaxValues', minMaxValues)
 
   const id = useId()
   const { handleChange } = useSidebarFilters(

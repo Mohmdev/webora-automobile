@@ -1,5 +1,4 @@
 import { routes } from '@/config/routes'
-import type { QueryReturnMetaProps } from '@/data/catalog'
 import type { ParamsAwaitedProps } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,10 +10,7 @@ import {
 import { Button } from '../ui/button'
 import { SearchButton } from './search-button'
 
-export const HeroSection = ({
-  searchParams,
-  resultsCount,
-}: ParamsAwaitedProps & QueryReturnMetaProps) => {
+export const HeroSection = ({ searchParams }: ParamsAwaitedProps) => {
   const totalFiltersApplied = Object.keys(searchParams || {}).length
   const isFilterApplied = totalFiltersApplied > 0
 
@@ -43,7 +39,7 @@ export const HeroSection = ({
 
               <PriceFilter searchParams={searchParams} />
             </div>
-            <SearchButton resultsCount={resultsCount} />
+            <SearchButton searchParams={searchParams} />
             {isFilterApplied && (
               <Button
                 asChild

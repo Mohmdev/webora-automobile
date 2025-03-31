@@ -1,4 +1,3 @@
-import type { QueryReturnMetaProps } from '@/data/catalog'
 import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { ContentPanel1 } from './template-1'
 import { ContentPanel2 } from './template-2'
@@ -11,16 +10,11 @@ export function ContentPanel({
   favouriteIds,
   className,
   searchParams,
-  resultsCount,
-}: Template &
-  ParamsAwaitedProps &
-  FavouritesProps &
-  QueryReturnMetaProps & { className?: string }) {
+}: Template & ParamsAwaitedProps & FavouritesProps & { className?: string }) {
   const props = {
     favouriteIds,
     className,
     searchParams,
-    resultsCount,
   }
 
   switch (template) {

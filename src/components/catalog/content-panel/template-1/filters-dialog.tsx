@@ -24,7 +24,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import type { QueryReturnMetaProps } from '@/data/catalog'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 import { Settings2 } from 'lucide-react'
@@ -33,9 +32,8 @@ import { CloseDialogButton } from './close-dialog-button'
 
 export function FiltersDialog({
   searchParams,
-  resultsCount,
   className,
-}: QueryReturnMetaProps & ParamsAwaitedProps & { className?: string }) {
+}: ParamsAwaitedProps & { className?: string }) {
   const [open, setIsOpen] = useState(false)
 
   return (
@@ -93,7 +91,7 @@ export function FiltersDialog({
 
           <div className="flex flex-col space-y-2">
             <CloseDialogButton
-              resultsCount={resultsCount ?? 0}
+              searchParams={searchParams}
               onClose={() => setIsOpen(false)}
             />
 

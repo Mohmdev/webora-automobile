@@ -2,19 +2,22 @@ import { ListRecords } from '@/components/catalog/list'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
-import type { QueryReturnMetaProps } from '@/data/catalog'
+import { getResultsCount } from '@/data/catalog'
 import { cn } from '@/lib/utils'
 import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 import { FiltersDialog } from './filters-dialog'
 
 export function ContentPanel1({
   favouriteIds,
   className,
   searchParams,
-  resultsCount,
-}: ParamsAwaitedProps &
-  FavouritesProps &
-  QueryReturnMetaProps & { className?: string }) {
+}: ParamsAwaitedProps & FavouritesProps & { className?: string }) {
+  const { data: resultsCount } = useQuery({
+    queryKey: ['resultsCount', searchParams],
+    queryFn: () => getResultsCount(searchParams),
+  })
+
   const totalPages = resultsCount
     ? Math.ceil(resultsCount / CLASSIFIEDS_PER_PAGE)
     : 0
@@ -27,11 +30,7 @@ export function ContentPanel1({
             We have found {resultsCount} classifieds
           </h2>
           {/* Mobile filters dialog */}
-          <FiltersDialog
-            resultsCount={resultsCount ?? 0}
-            searchParams={searchParams}
-            className="lg:hidden"
-          />
+          <FiltersDialog searchParams={searchParams} className="lg:hidden" />
         </div>
         <CustomPagination
           baseURL={routes.catalog}
