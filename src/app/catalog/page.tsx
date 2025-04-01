@@ -6,6 +6,7 @@ import {
   getResultsCount,
 } from '@/data/catalog'
 import { getSampleUser } from '@/data/catalog/sampleData'
+import { fetchTaxonomyData } from '@/data/fetchTaxonomyData'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
@@ -24,6 +25,11 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
     ? favourites.favouriteIds
     : []
 
+  await queryClient.prefetchQuery({
+    queryKey: ['taxonomy', undefined, undefined],
+    queryFn: fetchTaxonomyData,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  })
   await queryClient.prefetchQuery({
     queryKey: ['userData'],
     queryFn: getSampleUser,

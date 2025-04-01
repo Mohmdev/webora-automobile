@@ -36,7 +36,7 @@
 - Use descriptive variable names with auxiliary verbs
 - Write concise, technical TypeScript code with accurate examples
 - Use named function declarations with destructured parameters directly in the function signature rather than arrow functions with separate parameter destructuring
-- Use React hooks for state management
+- Prioritize using `nuqs` hooks for state management and query parameters over React hooks for simplicity and performance
 - Use Zod schemas for validation (e.g., `@file src/schemas/classified.schema.ts`)
 - Component organization follows a feature-based approach, with specialized directories for different functional areas (admin, auth, classifieds, etc.).
 - Consistent TypeScript typing across the codebase with extensive use of interfaces and type definitions.

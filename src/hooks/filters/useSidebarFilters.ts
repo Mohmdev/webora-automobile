@@ -1,6 +1,7 @@
 'use client'
 
 import { env } from '@/env'
+import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useRouter } from 'next/navigation'
 import { parseAsString, useQueryStates } from 'nuqs'
 import { type ChangeEvent, useEffect, useState } from 'react'
@@ -11,6 +12,7 @@ export function useSidebarFilters(
   const router = useRouter()
   const pathname = usePathname()
   const [filterCount, setFilterCount] = useState(0)
+  const queryClient = useQueryClient()
 
   const [queryStates, setQueryStates] = useQueryStates(
     {
@@ -50,6 +52,11 @@ export function useSidebarFilters(
     const url = new URL(pathname, env.NEXT_PUBLIC_APP_URL)
     window.location.replace(url.toString())
     setFilterCount(0)
+    // Invalidate queries that depend on filters
+    queryClient.invalidateQueries({ queryKey: ['taxonomy'] })
+    queryClient.invalidateQueries({ queryKey: ['records'] })
+    queryClient.invalidateQueries({ queryKey: ['recordsWithPrice'] })
+    queryClient.invalidateQueries({ queryKey: ['resultsCount'] })
   }
 
   const handleChange = (
@@ -66,6 +73,9 @@ export function useSidebarFilters(
         model: null,
         modelVariant: null,
       })
+
+      // Invalidate relevant queries when make changes
+      queryClient.invalidateQueries({ queryKey: ['taxonomy'] })
     }
 
     router.refresh()
@@ -81,6 +91,9 @@ export function useSidebarFilters(
         model: null,
         modelVariant: null,
       })
+
+      // Invalidate relevant queries when make changes
+      queryClient.invalidateQueries({ queryKey: ['taxonomy'] })
     }
 
     router.refresh()
