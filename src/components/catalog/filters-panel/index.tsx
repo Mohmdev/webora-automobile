@@ -9,16 +9,19 @@ interface Template {
 export function FiltersPanel({
   template,
   searchParams,
-}: Template & ParamsAwaitedProps) {
+  className,
+}: Template & ParamsAwaitedProps & { className?: string }) {
+  const props = { searchParams, className }
+
   switch (template) {
     case 'template-1': {
-      return <FiltersPanel1 searchParams={searchParams} />
+      return <FiltersPanel1 {...props} />
     }
     case 'template-2': {
-      return <FiltersPanel2 searchParams={searchParams} />
+      return <FiltersPanel2 {...props} />
     }
     default: {
-      return <FiltersPanel2 searchParams={searchParams} />
+      return <FiltersPanel2 {...props} />
     }
   }
 }

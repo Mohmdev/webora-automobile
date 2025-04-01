@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { useFilterStates } from '@/hooks/filters/use-filter-states'
+import { useFilters } from '@/hooks/filters/use-filters'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 import { type VariantProps, cva } from 'class-variance-authority'
@@ -34,7 +34,7 @@ export function ClearFilters({
   searchParams,
   ...props
 }: ClearFiltersProps) {
-  const { filterCount = 0, clearFilters } = useFilterStates(
+  const { filterCount = 0, clearFilters } = useFilters(
     searchParams as Record<string, string> | undefined
   )
 

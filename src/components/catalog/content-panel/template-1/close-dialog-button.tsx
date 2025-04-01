@@ -1,4 +1,6 @@
-import { fetchResultsCount } from '@/_data'
+'use client'
+
+import { fetchRecordsCount } from '@/_data'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
@@ -19,9 +21,11 @@ export function CloseDialogButton({
   label = 'View results',
   ...props
 }: CloseDialogButtonProps & ParamsAwaitedProps) {
-  const { data: resultsCount } = useQuery({
-    queryKey: ['resultsCount', searchParams],
-    queryFn: () => fetchResultsCount(searchParams),
+  const {
+    data: { count } = { count: 0 },
+  } = useQuery({
+    queryKey: ['recordsCount', searchParams],
+    queryFn: () => fetchRecordsCount(searchParams),
   })
 
   return (
@@ -32,7 +36,7 @@ export function CloseDialogButton({
       {...props}
     >
       {label}
-      {resultsCount && resultsCount > 0 ? ` (${resultsCount})` : null}
+      {count && count > 0 ? ` (${count})` : null}
     </Button>
   )
 }

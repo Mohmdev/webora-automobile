@@ -1,40 +1,21 @@
-import { fetchResultsCount } from '@/_data'
 import { ListRecords } from '@/components/catalog/list'
 import { CustomPagination } from '@/components/shared/custom-pagination'
-import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
 import { cn } from '@/lib/utils'
-import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
-import { useQuery } from '@tanstack/react-query'
-import { FiltersDialog } from './filters-dialog'
+import type { ParamsAwaitedProps } from '@/types'
+import { Header } from './header'
 
 export function ContentPanel1({
-  favouriteIds,
   className,
   searchParams,
-}: ParamsAwaitedProps & FavouritesProps & { className?: string }) {
-  const { data: resultsCount } = useQuery({
-    queryKey: ['resultsCount', searchParams],
-    queryFn: () => fetchResultsCount(searchParams),
-  })
-
-  const totalPages = resultsCount
-    ? Math.ceil(resultsCount / CLASSIFIEDS_PER_PAGE)
-    : 0
-
+}: ParamsAwaitedProps & { className?: string }) {
   return (
     <div className={cn('flex-1 p-4', className)}>
       <div className="-mt-1 flex items-center justify-between space-y-2 pb-4">
-        <div className="flex w-full items-center justify-between">
-          <h2 className="min-w-fit font-semibold text-sm md:text-base lg:text-xl">
-            We have found {resultsCount} classifieds
-          </h2>
-          {/* Mobile filters dialog */}
-          <FiltersDialog searchParams={searchParams} className="lg:hidden" />
-        </div>
+        <Header searchParams={searchParams} />
         <CustomPagination
           baseURL={routes.catalog}
-          totalPages={totalPages ?? 0}
+          searchParams={searchParams}
           styles={{
             paginationRoot: 'justify-end hidden lg:flex',
             paginationPrevious: '',
@@ -45,15 +26,11 @@ export function ContentPanel1({
         />
       </div>
 
-      <ListRecords
-        template="grid-1"
-        favouriteIds={favouriteIds}
-        searchParams={searchParams}
-      />
+      <ListRecords template="grid-1" searchParams={searchParams} />
 
       <CustomPagination
         baseURL={routes.catalog}
-        totalPages={totalPages ?? 0}
+        searchParams={searchParams}
         styles={{
           paginationRoot: 'justify-center lg:hidden pt-12',
           paginationPrevious: '',

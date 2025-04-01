@@ -1,4 +1,5 @@
 'use client'
+
 import type { FilterOptions, ParamsAwaitedProps } from '@/types'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -25,8 +26,12 @@ interface AdminTableFooterProps extends ParamsAwaitedProps {
   cols: number
 }
 
-export const AdminTableFooter = (props: AdminTableFooterProps) => {
-  const { disabled, totalPages, baseURL, cols, searchParams } = props
+export const AdminTableFooter = ({
+  disabled,
+  baseURL,
+  cols,
+  searchParams,
+}: AdminTableFooterProps) => {
   const itemsPerPage = searchParams?.itemsPerPage || '10'
   const router = useRouter()
 
@@ -68,7 +73,7 @@ export const AdminTableFooter = (props: AdminTableFooterProps) => {
               </SelectContent>
             </Select>
             <CustomPagination
-              totalPages={totalPages}
+              searchParams={searchParams}
               baseURL={baseURL}
               styles={{
                 paginationRoot: 'justify-end',

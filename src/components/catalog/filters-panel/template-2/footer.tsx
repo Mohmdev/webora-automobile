@@ -5,11 +5,12 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { cn } from '@/lib/utils'
 import { Plus } from 'lucide-react'
 
-export function PanelFooter() {
+export function PanelFooter({ className }: { className?: string }) {
   return (
-    <SidebarFooter className="mt-auto mb-0 border-t">
+    <SidebarFooter className={cn('mt-auto mb-0 border-t', className)}>
       <SidebarMenu className="flex-row justify-between gap-2">
         <SidebarMenuItem>
           <SidebarMenuButton>

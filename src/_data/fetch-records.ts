@@ -1,26 +1,31 @@
-import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
+import { RECORDS_PER_PAGE } from '@/config/constants'
 import { prisma } from '@/lib/prisma'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
 import { PageSchema } from '@/schemas/page.schema'
-import type { ParamsAwaitedProps } from '@/types'
+import type { FavouriteIds, ParamsAwaitedProps } from '@/types'
 
 export async function fetchRecords(
-  searchParams: ParamsAwaitedProps['searchParams']
+  searchParams: ParamsAwaitedProps['searchParams'],
+  options?: {
+    favouriteIds?: FavouriteIds
+    includedImagesCount?: number
+  }
 ) {
   const validPage = PageSchema.parse(searchParams?.page)
 
-  // get the current page
-  const page = validPage ? validPage : 1
+  const page = validPage ? validPage : 1 // get the current page
+  const offset = (page - 1) * RECORDS_PER_PAGE // calculate the offset
 
-  // calculate the offset
-  const offset = (page - 1) * CLASSIFIEDS_PER_PAGE
+  const whereClause = options?.favouriteIds
+    ? { id: { in: options.favouriteIds } }
+    : buildClassifiedFilterQuery(searchParams)
 
-  const classifieds = await prisma.classified.findMany({
-    where: buildClassifiedFilterQuery(searchParams),
-    include: { images: { take: 1 } },
+  const records = await prisma.classified.findMany({
+    where: whereClause,
+    include: { images: { take: options?.includedImagesCount ?? 5 } },
     skip: offset,
-    take: CLASSIFIEDS_PER_PAGE,
+    take: RECORDS_PER_PAGE,
   })
 
-  return classifieds
+  return records
 }

@@ -1,13 +1,12 @@
 import { ListRecords } from '@/components/catalog/list'
 import { SidebarInset } from '@/components/ui/sidebar'
-import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
-import { Header } from '../../header'
+import type { ParamsAwaitedProps } from '@/types'
+import { Header } from './header'
 
 export function ContentPanel2({
-  favouriteIds,
   className,
   searchParams,
-}: FavouritesProps & ParamsAwaitedProps & { className?: string }) {
+}: ParamsAwaitedProps & { className?: string }) {
   return (
     <SidebarInset className={className}>
       <Header
@@ -15,11 +14,7 @@ export function ContentPanel2({
         searchParams={searchParams}
       />
       <div className="z-10 flex flex-1 flex-col gap-4 p-4">
-        <ListRecords
-          template="grid-2"
-          favouriteIds={favouriteIds}
-          searchParams={searchParams}
-        />
+        <ListRecords template="grid-2" searchParams={searchParams} />
       </div>
     </SidebarInset>
   )

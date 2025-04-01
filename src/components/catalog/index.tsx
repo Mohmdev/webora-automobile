@@ -1,4 +1,4 @@
-import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 import { Catalog1 } from './templates/catalog-1'
 import { Catalog2 } from './templates/catalog-2'
 
@@ -9,12 +9,10 @@ interface Template {
 export function Catalog({
   template,
   searchParams,
-  favouriteIds,
   className,
-}: Template & ParamsAwaitedProps & FavouritesProps & { className?: string }) {
+}: Template & ParamsAwaitedProps & { className?: string }) {
   const props = {
     searchParams,
-    favouriteIds,
     className,
   }
 

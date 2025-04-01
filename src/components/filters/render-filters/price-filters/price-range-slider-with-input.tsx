@@ -2,13 +2,13 @@
 
 import {
   fetchMinMaxValues,
+  fetchRecordsCount,
   fetchRecordsWithPriceSelect,
-  fetchResultsCount,
 } from '@/_data'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
-import { useSidebarFilters } from '@/hooks/filters/use-sidebar-filters'
+import { useFilters } from '@/hooks/filters/use-filters'
 import { useSliderWithInput } from '@/hooks/use-slider-with-input'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
@@ -31,19 +31,15 @@ export function PriceRangeSliderWithInput({
     queryFn: () => fetchRecordsWithPriceSelect(searchParams),
   })
 
-  const { data: resultsCount } = useQuery({
-    queryKey: ['resultsCount', searchParams],
-    queryFn: () => fetchResultsCount(searchParams),
+  const {
+    data: { count } = { count: 0 },
+  } = useQuery({
+    queryKey: ['recordsCount', searchParams],
+    queryFn: () => fetchRecordsCount(searchParams),
   })
 
-  // console.log('resultsCount', resultsCount)
-  // console.log('recordsWithPrice', recordsWithPrice)
-  // console.log('minMaxValues', minMaxValues)
-
   const id = useId()
-  const { handleChange } = useSidebarFilters(
-    searchParams as Record<string, string>
-  )
+  const { handleChange } = useFilters(searchParams as Record<string, string>)
 
   // Use actual min/max values from props instead of demo data
   const minValue = (minMaxValues?._min.price ?? 0) / 100
@@ -65,7 +61,7 @@ export function PriceRangeSliderWithInput({
     initialValue: [minValue, maxValue],
   })
 
-  const tick_count = resultsCount ?? 0
+  const tick_count = count ?? 0
   // const tick_count = 40
   const priceStep = (maxValue - minValue) / tick_count
 

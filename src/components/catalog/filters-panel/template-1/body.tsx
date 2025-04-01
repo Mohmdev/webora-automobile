@@ -14,11 +14,15 @@ import {
   YearFilter,
 } from '@/components/filters/render-filters'
 import { SearchInput } from '@/components/shared/search-input'
+import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 
-export function PanelBody({ searchParams }: ParamsAwaitedProps) {
+export function PanelBody({
+  searchParams,
+  className,
+}: ParamsAwaitedProps & { className?: string }) {
   return (
-    <>
+    <div className={cn(className)}>
       <div className="p-4">
         <SearchInput
           placeholder="Search classifieds..."
@@ -53,6 +57,6 @@ export function PanelBody({ searchParams }: ParamsAwaitedProps) {
 
         <SeatsFilter searchParams={searchParams} />
       </div>
-    </>
+    </div>
   )
 }

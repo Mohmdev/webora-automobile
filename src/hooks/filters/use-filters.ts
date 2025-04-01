@@ -5,20 +5,10 @@ import { usePathname, useRouter } from 'next/navigation'
 import { parseAsString, useQueryStates } from 'nuqs'
 import { type ChangeEvent, useEffect, useState } from 'react'
 
-export interface FilterState {
-  queryStates: Record<string, string>
-  filterCount: number
-  clearFilters: () => void
-  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
-  handleSelectChange: (name: string, value: string) => void
-}
-
-export function useFilterStates(
-  searchParams: Record<string, string> | undefined
-): FilterState {
-  const [filterCount, setFilterCount] = useState(0)
+export function useFilters(searchParams: Record<string, string> | undefined) {
   const router = useRouter()
   const pathname = usePathname()
+  const [filterCount, setFilterCount] = useState(0)
 
   const [queryStates, setQueryStates] = useQueryStates(
     {
@@ -47,11 +37,7 @@ export function useFilterStates(
   )
 
   useEffect(() => {
-    if (!searchParams) {
-      return
-    }
-
-    const count = Object.entries(searchParams).filter(
+    const count = Object.entries(searchParams as Record<string, string>).filter(
       ([key, value]) => key !== 'page' && value
     ).length
 
@@ -78,6 +64,9 @@ export function useFilterStates(
         model: null,
         modelVariant: null,
       })
+
+      // Invalidate relevant queries when make changes
+      // queryClient.invalidateQueries({ queryKey: ['taxonomy'] })
     }
 
     router.refresh()
@@ -93,6 +82,9 @@ export function useFilterStates(
         model: null,
         modelVariant: null,
       })
+
+      // Invalidate relevant queries when make changes
+      // queryClient.invalidateQueries({ queryKey: ['taxonomy'] })
     }
 
     router.refresh()

@@ -1,5 +1,6 @@
 'use client'
 
+import { fetchFavourites, fetchRecordsCount } from '@/_data'
 import {
   PaginationContent,
   PaginationItem,
@@ -10,13 +11,16 @@ import {
 } from '@/components/ui/pagination'
 import { env } from '@/env'
 import { cn } from '@/lib/utils'
+import type { ParamsAwaitedProps } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 import { useQueryState } from 'nuqs'
 import { useEffect, useState } from 'react'
 
 interface PaginationProps {
   baseURL: string
-  totalPages: number
   maxVisiblePages?: number
+  searchParams: ParamsAwaitedProps['searchParams']
+  isFavouritesList?: boolean
   styles: {
     paginationRoot: string
     paginationPrevious: string
@@ -26,8 +30,34 @@ interface PaginationProps {
   }
 }
 
-export const CustomPagination = (props: PaginationProps) => {
-  const { baseURL, totalPages, maxVisiblePages = 5, styles } = props
+export const CustomPagination = ({
+  baseURL,
+  searchParams,
+  maxVisiblePages = 5,
+  isFavouritesList = false,
+  styles,
+}: PaginationProps) => {
+  const { data: favouriteIds = [] } = useQuery({
+    queryKey: ['favourites'],
+    queryFn: fetchFavourites,
+    enabled: isFavouritesList, // Only fetch if we're on the favorites page
+  })
+
+  const {
+    data: { totalPages } = { totalPages: 0 },
+    isLoading,
+  } = useQuery({
+    queryKey: ['recordsCount', searchParams],
+    queryFn: () => {
+      if (isFavouritesList) {
+        return fetchRecordsCount(searchParams, { favouriteIds })
+      }
+      return fetchRecordsCount(searchParams)
+    },
+
+    enabled: !isFavouritesList || favouriteIds !== undefined, // Dont run query until we have favorites if we're on the favorites page
+  })
+
   const [currentPage, setPage] = useQueryState('page', {
     defaultValue: 1,
     parse: (value) => {
@@ -52,6 +82,10 @@ export const CustomPagination = (props: PaginationProps) => {
     const newEnd = Math.min(newStart + maxVisiblePages - 1, totalPages)
     setVisibleRange({ start: newStart, end: newEnd })
   }, [currentPage, totalPages, maxVisiblePages])
+
+  if (isLoading || totalPages <= 1) {
+    return null
+  }
 
   const createPageUrl = (pageNumber: number) => {
     const url = new URL(baseURL, env.NEXT_PUBLIC_APP_URL)

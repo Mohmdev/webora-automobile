@@ -2,13 +2,7 @@ import type { BadgeProps } from '@/components/ui/badge'
 import { ClassifiedStatus, CustomerStatus } from '@prisma/client'
 import { routes } from './routes'
 
-// export const imageSources = {
-//   classifiedPlaceholder:
-//     'https://majestic-motors.s3.eu-west-2.amazonaws.com/uploads/classified-placeholder.jpeg',
-//   carLinup:
-//     'https://majestic-motors.s3.eu-west-2.amazonaws.com/uploads/car-lineup.jpeg',
-// }
-export const CLASSIFIEDS_PER_PAGE = 12
+export const RECORDS_PER_PAGE = 12
 
 export const navLinks = [
   { id: 1, href: routes.home, label: 'Home' },

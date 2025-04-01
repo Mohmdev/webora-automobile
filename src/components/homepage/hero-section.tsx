@@ -7,8 +7,8 @@ import {
   TaxonomyFiltersBlock,
   YearFilter,
 } from '../filters/render-filters'
+import { SearchButton } from '../shared/search-button'
 import { Button } from '../ui/button'
-import { SearchButton } from './search-button'
 
 export const HeroSection = ({ searchParams }: ParamsAwaitedProps) => {
   const totalFiltersApplied = Object.keys(searchParams || {}).length

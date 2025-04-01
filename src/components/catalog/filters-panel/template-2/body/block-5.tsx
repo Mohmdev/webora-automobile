@@ -12,13 +12,20 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
 } from '@/components/ui/sidebar'
+import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 import { ChevronRight } from 'lucide-react'
 
-export function Block5({ searchParams }: ParamsAwaitedProps) {
+export function Block5({
+  searchParams,
+  className,
+}: ParamsAwaitedProps & { className?: string }) {
   return (
     <SidebarGroup>
-      <Collapsible defaultOpen={false} className="group/collapsible">
+      <Collapsible
+        defaultOpen={false}
+        className={cn('group/collapsible', className)}
+      >
         <SidebarGroupLabel
           asChild
           className="group/label w-full text-sidebar-foreground text-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"

@@ -1,5 +1,4 @@
 'use client'
-
 import { FavouriteButton } from '@/components/shared/favourite-button'
 import { HTMLParser } from '@/components/shared/html-parser'
 import {
@@ -15,7 +14,7 @@ import { useRecordData } from '@/hooks/record/use-record-data'
 import { useRecordState } from '@/hooks/record/use-record-state'
 import { cn } from '@/lib/utils'
 import {
-  type FavouritesProps,
+  type FavouriteIds,
   MultiStepFormEnum,
   type RecordDataProps,
 } from '@/types'
@@ -25,9 +24,12 @@ import { RecordCTA } from './record-cta'
 
 export function Card2({
   record,
-  favouriteIds = [],
   className,
-}: FavouritesProps & RecordDataProps & { className?: string }) {
+  favouriteIds,
+}: RecordDataProps & {
+  className?: string
+  favouriteIds?: FavouriteIds
+}) {
   if (!record) {
     return null
   }

@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useSidebarFilters } from '@/hooks/filters/use-sidebar-filters'
+import { useFilters } from '@/hooks/filters/use-filters'
 import { useTaxonomyOptions } from '@/hooks/filters/use-taxonomy-options'
 import type { ParamsAwaitedProps } from '@/types'
 import type React from 'react'
@@ -17,9 +17,7 @@ export function ModelFilter({ searchParams }: ParamsAwaitedProps) {
   const { models, isLoading } = useTaxonomyOptions(
     searchParams as Record<string, string> | undefined
   )
-  const { handleChange } = useSidebarFilters(
-    searchParams as Record<string, string>
-  )
+  const { handleChange } = useFilters(searchParams as Record<string, string>)
 
   return (
     <div className="space-y-2">

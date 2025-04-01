@@ -4,11 +4,15 @@ import {
 } from '@/components/filters/render-filters'
 import { SearchInput } from '@/components/shared/search-input'
 import { SidebarGroup, SidebarGroupContent } from '@/components/ui/sidebar'
+import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 
-export function Block1({ searchParams }: ParamsAwaitedProps) {
+export function Block1({
+  searchParams,
+  className,
+}: ParamsAwaitedProps & { className?: string }) {
   return (
-    <SidebarGroup>
+    <SidebarGroup className={cn(className)}>
       <SidebarGroupContent className="flex flex-col justify-between gap-4">
         <SearchInput
           placeholder="Search vehicles..."

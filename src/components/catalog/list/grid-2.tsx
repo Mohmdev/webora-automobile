@@ -1,27 +1,45 @@
 'use client'
 
-import { fetchRecords } from '@/_data'
+import { fetchFavourites, fetchRecords } from '@/_data'
 import { cn } from '@/lib/utils'
-import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import { SearchX } from 'lucide-react'
 import { Record } from '../record'
 
 export function GridList2({
-  favouriteIds,
-  className,
   searchParams,
-}: ParamsAwaitedProps & FavouritesProps & { className?: string }) {
+  isFavouritesList = false,
+  className,
+}: ParamsAwaitedProps & {
+  isFavouritesList?: boolean
+  className?: string
+}) {
+  const { data: favouriteIds = [], isLoading: isFavouritesLoading } = useQuery({
+    queryKey: ['favourites'],
+    queryFn: fetchFavourites,
+  })
+
   const {
     data: records,
-    isLoading,
+    isLoading: isRecordsLoading,
     isFetching,
   } = useQuery({
     queryKey: ['records', searchParams],
-    queryFn: () => fetchRecords(searchParams),
+    queryFn: () => {
+      if (isFavouritesList) {
+        if (!favouriteIds || favouriteIds.length === 0) {
+          return []
+        }
+        return fetchRecords(searchParams, { favouriteIds })
+      }
+      return fetchRecords(searchParams)
+    },
+    enabled: !isFavouritesList || !isFavouritesLoading,
   })
 
-  const notReady = isLoading || isFetching
+  const notReady =
+    isRecordsLoading || isFetching || (isFavouritesList && isFavouritesLoading)
   if (notReady) {
     return (
       <div
@@ -45,7 +63,9 @@ export function GridList2({
         </div>
         <h3 className="mb-1 font-semibold text-lg">No vehicles found</h3>
         <p className="text-gray-500 text-sm">
-          Try adjusting your search filters to find what you're looking for.
+          {isFavouritesList
+            ? "You haven't added any vehicles to your favorites yet."
+            : "Try adjusting your search filters to find what you're looking for."}
         </p>
       </div>
     )

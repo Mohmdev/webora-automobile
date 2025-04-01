@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchResultsCount } from '@/_data'
+import { fetchRecordsCount } from '@/_data'
 import { routes } from '@/config/routes'
 import { env } from '@/env'
 import type { ParamsAwaitedProps } from '@/types'
@@ -10,9 +10,11 @@ import { parseAsString, useQueryStates } from 'nuqs'
 import { Button } from '../ui/button'
 
 export const SearchButton = ({ searchParams }: ParamsAwaitedProps) => {
-  const { data: resultsCount } = useQuery({
-    queryKey: ['resultsCount', searchParams],
-    queryFn: () => fetchResultsCount(searchParams),
+  const {
+    data: { count } = { count: 0 },
+  } = useQuery({
+    queryKey: ['recordsCount', searchParams],
+    queryFn: () => fetchRecordsCount(searchParams),
   })
 
   const [{ make, model, modelVariant, minYear, maxYear, minPrice, maxPrice }] =
@@ -59,7 +61,7 @@ export const SearchButton = ({ searchParams }: ParamsAwaitedProps) => {
   return (
     <Button className="w-full" asChild>
       <Link href={url.toString()}>
-        Search{resultsCount && resultsCount > 0 ? ` (${resultsCount})` : null}
+        Search{count && count > 0 ? ` (${count})` : null}
       </Link>
     </Button>
   )

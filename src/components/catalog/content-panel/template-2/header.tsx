@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchResultsCount } from '@/_data'
+import { fetchRecordsCount } from '@/_data'
 import { ClearFilters } from '@/components/filters/clear-filters'
 import {
   Breadcrumb,
@@ -18,9 +18,9 @@ export function Header({
   searchParams,
   className,
 }: ParamsAwaitedProps & { className?: string }) {
-  const { data: resultsCount } = useQuery({
-    queryKey: ['resultsCount', searchParams],
-    queryFn: () => fetchResultsCount(searchParams),
+  const { data = { count: 0 } } = useQuery({
+    queryKey: ['recordsCount', searchParams],
+    queryFn: () => fetchRecordsCount(searchParams),
   })
 
   return (
@@ -39,8 +39,8 @@ export function Header({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbPage>
-              {resultsCount && resultsCount > 0
-                ? `${resultsCount} Vehicles`
+              {data.count && data.count > 0
+                ? `${data.count} Vehicles`
                 : 'Vehicles'}
             </BreadcrumbPage>
           </BreadcrumbItem>

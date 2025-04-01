@@ -1,4 +1,4 @@
-import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
+import type { ParamsAwaitedProps } from '@/types'
 import { ContentPanel1 } from './template-1'
 import { ContentPanel2 } from './template-2'
 interface Template {
@@ -7,12 +7,10 @@ interface Template {
 
 export function ContentPanel({
   template,
-  favouriteIds,
   className,
   searchParams,
-}: Template & ParamsAwaitedProps & FavouritesProps & { className?: string }) {
+}: Template & ParamsAwaitedProps & { className?: string }) {
   const props = {
-    favouriteIds,
     className,
     searchParams,
   }
