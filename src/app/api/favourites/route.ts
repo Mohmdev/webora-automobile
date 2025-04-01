@@ -1,7 +1,7 @@
-import { validateIdSchema } from '@/app/schemas/id.schema'
 import { routes } from '@/config/routes'
 import { redis } from '@/lib/redis-store'
 import { setSourceId } from '@/lib/source-id'
+import { validateIdSchema } from '@/schemas/id.schema'
 import type { FavouritesProps } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'

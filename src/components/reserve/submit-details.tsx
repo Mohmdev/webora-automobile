@@ -1,13 +1,13 @@
 'use client'
 
 import { createCustomerAction } from '@/app/_actions/customer'
-import {
-  SubmitDetailsSchema,
-  type SubmitDetailsSchemaType,
-} from '@/app/schemas/customer.schema'
 import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
 import { formatDate } from '@/lib/utils'
+import {
+  SubmitDetailsSchema,
+  type SubmitDetailsSchemaType,
+} from '@/schemas/customer.schema'
 import { type MultiStepFormComponentProps, MultiStepFormEnum } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'

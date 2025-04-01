@@ -1,11 +1,11 @@
 'use client'
 import { updateCustomerAction } from '@/app/_actions/customer'
+import { toast } from '@/hooks/use-toast'
+import { formatCustomerStatus } from '@/lib/utils'
 import {
   EditCustomerSchema,
   type EditCustomerType,
-} from '@/app/schemas/customer.schema'
-import { toast } from '@/hooks/use-toast'
-import { formatCustomerStatus } from '@/lib/utils'
+} from '@/schemas/customer.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type Customer, CustomerStatus } from '@prisma/client'
 import { useTransition } from 'react'

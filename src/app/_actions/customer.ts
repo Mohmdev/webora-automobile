@@ -8,7 +8,7 @@ import {
   CreateCustomerSchema,
   type CreateCustomerType,
   UpdateCustomerSchema,
-} from '../schemas/customer.schema'
+} from '../../schemas/customer.schema'
 
 export const createCustomerAction = async (props: CreateCustomerType) => {
   try {

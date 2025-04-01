@@ -1,4 +1,4 @@
-import { ClassifiedFilterSchema } from '@/app/schemas/classified.schema'
+import { ClassifiedFilterSchema } from '@/schemas/classified.schema'
 import type { ParamsAwaitedProps } from '@/types'
 import {
   BodyType,

@@ -1,12 +1,9 @@
 'use client'
 
-import {
-  SelectDateSchema,
-  type SelectDateType,
-} from '@/app/schemas/form.schema'
 import { routes } from '@/config/routes'
 import { env } from '@/env'
 import { generateDateOptions, generateTimeOptions } from '@/lib/utils'
+import { SelectDateSchema, type SelectDateType } from '@/schemas/form.schema'
 import { type MultiStepFormComponentProps, MultiStepFormEnum } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'

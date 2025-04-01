@@ -1,7 +1,7 @@
-import { PageSchema } from '@/app/schemas/page.schema'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { prisma } from '@/lib/prisma'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
+import { PageSchema } from '@/schemas/page.schema'
 import type { ParamsAwaitedProps } from '@/types'
 import { ClassifiedStatus } from '@prisma/client'
 

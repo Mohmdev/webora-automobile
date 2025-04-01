@@ -1,16 +1,16 @@
-import { validatePagination } from '@/app/schemas/pagination.schema'
-import { AdminClassifiedFilterSchema } from '@/app/schemas/table-filters.schema'
-import {
-  ClassifiedsTableSortSchema,
-  type ClassifiedsTableSortType,
-  validateSortOrder,
-} from '@/app/schemas/table-sort.schema'
 import { AdminClassifiedsHeader } from '@/components/admin/classifieds/classifeds-header'
 import { ClassifiedsTableRow } from '@/components/classified/classified-table-row'
 import { AdminTableFooter } from '@/components/shared/admin-table-footer'
 import { Table, TableBody } from '@/components/ui/table'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
+import { validatePagination } from '@/schemas/pagination.schema'
+import { AdminClassifiedFilterSchema } from '@/schemas/table-filters.schema'
+import {
+  ClassifiedsTableSortSchema,
+  type ClassifiedsTableSortType,
+  validateSortOrder,
+} from '@/schemas/table-sort.schema'
 import type { ClassifiedKeys, ParamsPromisedProps } from '@/types'
 import { ClassifiedsTableHeader } from '../../../components/classified/classifieds-table-header'
 

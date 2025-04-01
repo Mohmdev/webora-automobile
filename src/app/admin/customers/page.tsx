@@ -1,10 +1,3 @@
-import { validatePagination } from '@/app/schemas/pagination.schema'
-import { AdminCustomerFilterSchema } from '@/app/schemas/table-filters.schema'
-import {
-  CustomersTableSortSchema,
-  type CustomersTableSortType,
-  validateSortOrder,
-} from '@/app/schemas/table-sort.schema'
 import { AdminCustomersHeader } from '@/components/customers/customers-header'
 import { CustomersTableHeader } from '@/components/customers/customers-table-header'
 import { CustomerTableRow } from '@/components/customers/customers-table-row'
@@ -12,6 +5,13 @@ import { AdminTableFooter } from '@/components/shared/admin-table-footer'
 import { Table, TableBody } from '@/components/ui/table'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
+import { validatePagination } from '@/schemas/pagination.schema'
+import { AdminCustomerFilterSchema } from '@/schemas/table-filters.schema'
+import {
+  CustomersTableSortSchema,
+  type CustomersTableSortType,
+  validateSortOrder,
+} from '@/schemas/table-sort.schema'
 import type { CustomerKeys, ParamsPromisedProps } from '@/types'
 
 export default async function CustomersPage(props: ParamsPromisedProps) {

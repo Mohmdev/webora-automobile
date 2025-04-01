@@ -1,4 +1,3 @@
-import type { ClassifiedAI } from '@/app/schemas/classified-ai.schema'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   formatBodyType,
@@ -7,6 +6,7 @@ import {
   formatOdometerUnit,
   formatTransmission,
 } from '@/lib/utils'
+import type { ClassifiedAI } from '@/schemas/classified-ai.schema'
 import type { BodyType, FuelType, Make, Transmission } from '@prisma/client'
 import {
   CarFrontIcon,

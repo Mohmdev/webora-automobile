@@ -1,13 +1,13 @@
 'use client'
 
 import { updateClassifiedAction } from '@/app/_actions/classified/update'
-import {
-  type UpdateClassifiedType,
-  updateClassifiedSchema,
-} from '@/app/schemas/classified.schema'
 import { MAX_IMAGES } from '@/config/constants'
 import { useToast } from '@/hooks/use-toast'
 import { formatClassifiedStatus } from '@/lib/utils'
+import {
+  type UpdateClassifiedType,
+  updateClassifiedSchema,
+} from '@/schemas/classified.schema'
 import type { ClassifiedData, ClassifiedImages } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ClassifiedStatus, CurrencyCode, OdoUnit } from '@prisma/client'

@@ -4,12 +4,9 @@ import {
   completeChallengeAction,
   resendChallengeAction,
 } from '@/app/_actions/challenge'
-import {
-  OneTimePasswordSchema,
-  type OtpSchemaType,
-} from '@/app/schemas/otp.schema'
 import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
+import { OneTimePasswordSchema, type OtpSchemaType } from '@/schemas/otp.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'

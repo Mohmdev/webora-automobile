@@ -1,7 +1,7 @@
-import { InitialiseMultipartUploadSchema } from '@/app/schemas/images.schema'
 import { auth } from '@/auth'
 import { env } from '@/env'
 import { s3 } from '@/lib/s3'
+import { InitialiseMultipartUploadSchema } from '@/schemas/images.schema'
 import type { CreateMultipartUploadCommandInput } from '@aws-sdk/client-s3'
 import { forbidden } from 'next/navigation'
 import { type NextRequest, NextResponse } from 'next/server'

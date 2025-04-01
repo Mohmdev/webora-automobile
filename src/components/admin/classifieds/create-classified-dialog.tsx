@@ -2,11 +2,6 @@
 
 import type { AI } from '@/app/_actions/ai'
 import { createClassifiedAction } from '@/app/_actions/classified/create'
-import { ClassifiedAISchema } from '@/app/schemas/classified-ai.schema'
-import {
-  SingleImageSchema,
-  type SingleImageType,
-} from '@/app/schemas/images.schema'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -18,6 +13,11 @@ import {
 import { Form } from '@/components/ui/form'
 import { toast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
+import { ClassifiedAISchema } from '@/schemas/classified-ai.schema'
+import {
+  SingleImageSchema,
+  type SingleImageType,
+} from '@/schemas/images.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { readStreamableValue, useActions, useUIState } from 'ai/rsc'
 import { Loader2 } from 'lucide-react'

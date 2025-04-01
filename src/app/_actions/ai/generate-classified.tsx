@@ -14,7 +14,7 @@ import type { z } from 'zod'
 import {
   ClassifiedDetailsAISchema,
   ClassifiedTaxonomyAISchema,
-} from '../../schemas/classified-ai.schema'
+} from '../../../schemas/classified-ai.schema'
 import type { ClientMessage } from './types'
 
 const openai = createOpenAI({

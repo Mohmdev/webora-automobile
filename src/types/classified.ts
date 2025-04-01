@@ -1,4 +1,4 @@
-import type { UpdateClassifiedType } from '@/app/schemas/classified.schema'
+import type { UpdateClassifiedType } from '@/schemas/classified.schema'
 import type { Classified } from '@prisma/client'
 
 export type FilterOptions<LType, VType> = Array<{

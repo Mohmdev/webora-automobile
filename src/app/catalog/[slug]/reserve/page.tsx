@@ -1,8 +1,8 @@
-import { MultiStepFormSchema } from '@/app/schemas/form.schema'
 import { SelectDate } from '@/components/reserve/select-date'
 import { SubmitDetails } from '@/components/reserve/submit-details'
 import { Welcome } from '@/components/reserve/welcome'
 import { prisma } from '@/lib/prisma'
+import { MultiStepFormSchema } from '@/schemas/form.schema'
 import { MultiStepFormEnum, type ParamsPromisedProps } from '@/types'
 import { notFound } from 'next/navigation'
 

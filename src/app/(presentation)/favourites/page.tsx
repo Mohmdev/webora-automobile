@@ -1,4 +1,3 @@
-import { PageSchema } from '@/app/schemas/page.schema'
 import { Record } from '@/components/catalog/record'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
@@ -6,6 +5,7 @@ import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
+import { PageSchema } from '@/schemas/page.schema'
 import type { FavouritesProps, ParamsPromisedProps } from '@/types'
 
 export default async function FavouritesPage(props: ParamsPromisedProps) {

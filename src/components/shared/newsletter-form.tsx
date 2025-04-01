@@ -1,7 +1,7 @@
 'use client'
 
 import { subscribeAction } from '@/app/_actions/subscribe'
-import { SubscribeSchema } from '@/app/schemas/subscribe.schema'
+import { SubscribeSchema } from '@/schemas/subscribe.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CircleCheckIcon, CircleX, Loader2 } from 'lucide-react'
 import { useActionState, useEffect, useRef } from 'react'

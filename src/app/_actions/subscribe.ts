@@ -7,7 +7,7 @@ import {
   PrismaClientKnownRequestError,
   PrismaClientValidationError,
 } from '@prisma/client/runtime/library'
-import { SubscribeSchema } from '../schemas/subscribe.schema'
+import { SubscribeSchema } from '../../schemas/subscribe.schema'
 
 export const subscribeAction = async (_: PrevState, formData: FormData) => {
   try {

@@ -5,7 +5,7 @@ import { routes } from '@/config/routes'
 import { genericRateLimit } from '@/lib/rate-limiter'
 import type { PrevState } from '@/types'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
-import { SignInSchema } from '../schemas/auth.schema'
+import { SignInSchema } from '../../schemas/auth.schema'
 
 export const signInAction = async (_: PrevState, formData: FormData) => {
   try {

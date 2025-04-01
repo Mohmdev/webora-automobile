@@ -1,6 +1,6 @@
-import { validateIdSchema } from '@/app/schemas/id.schema'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
+import { validateIdSchema } from '@/schemas/id.schema'
 import type { ParamsPromisedProps } from '@/types'
 import { redirect } from 'next/navigation'
 import { ClassifiedForm } from '../../../../../components/classified/classified-form'
