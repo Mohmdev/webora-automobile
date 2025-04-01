@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 
 // Fetch taxonomy data for prefetching with server-side Redis caching
-export async function fetchTaxonomyData() {
+export async function fetchTaxonomiesData() {
   try {
     // Check Redis cache first
     const makesCacheKey = 'taxonomy:makes'

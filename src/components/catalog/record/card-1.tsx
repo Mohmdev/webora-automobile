@@ -4,8 +4,8 @@ import { FavouriteButton } from '@/components/shared/favourite-button'
 import { HTMLParser } from '@/components/shared/html-parser'
 import { ImgixImage } from '@/components/ui/imgix-image'
 import { routes } from '@/config/routes'
-import { useRecordData } from '@/hooks/record/useRecordData'
-import { useRecordState } from '@/hooks/record/useRecordState'
+import { useRecordData } from '@/hooks/record/use-record-data'
+import { useRecordState } from '@/hooks/record/use-record-state'
 import { cn } from '@/lib/utils'
 import {
   type FavouritesProps,

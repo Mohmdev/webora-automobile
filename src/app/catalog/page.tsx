@@ -1,12 +1,12 @@
-import { Catalog } from '@/components/catalog'
 import {
-  getMinMaxValues,
-  getRecords,
-  getRecordsWithPriceSelect,
-  getResultsCount,
-} from '@/data/catalog'
-import { getSampleUser } from '@/data/catalog/sampleData'
-import { fetchTaxonomyData } from '@/data/fetchTaxonomyData'
+  fetchMinMaxValues,
+  fetchRecords,
+  fetchRecordsWithPriceSelect,
+  fetchResultsCount,
+  fetchTaxonomiesData,
+  fetchUserData,
+} from '@/_data'
+import { Catalog } from '@/components/catalog'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
@@ -27,28 +27,28 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
 
   await queryClient.prefetchQuery({
     queryKey: ['taxonomy', undefined, undefined],
-    queryFn: fetchTaxonomyData,
+    queryFn: fetchTaxonomiesData,
     staleTime: 5 * 60 * 1000, // 5 minutes
   })
   await queryClient.prefetchQuery({
     queryKey: ['userData'],
-    queryFn: getSampleUser,
+    queryFn: fetchUserData,
   })
   await queryClient.prefetchQuery({
     queryKey: ['minMaxValues'],
-    queryFn: getMinMaxValues,
+    queryFn: fetchMinMaxValues,
   })
   await queryClient.prefetchQuery({
     queryKey: ['records', searchParams],
-    queryFn: () => getRecords(searchParams),
+    queryFn: () => fetchRecords(searchParams),
   })
   await queryClient.prefetchQuery({
     queryKey: ['recordsWithPrice', searchParams],
-    queryFn: () => getRecordsWithPriceSelect(searchParams),
+    queryFn: () => fetchRecordsWithPriceSelect(searchParams),
   })
   await queryClient.prefetchQuery({
     queryKey: ['resultsCount', searchParams],
-    queryFn: () => getResultsCount(searchParams),
+    queryFn: () => fetchResultsCount(searchParams),
   })
 
   return (

@@ -22,7 +22,6 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/data/*": ["./src/_data/*"],
       "@/emails/*": ["./emails/*"],
       "@/env": ["./env.mjs"],
       "@/auth": ["./auth"]

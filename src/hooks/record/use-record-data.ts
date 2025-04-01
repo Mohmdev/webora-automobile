@@ -1,6 +1,6 @@
 import { formatPrice } from '@/lib/utils'
 import type { ClassifiedData } from '@/types'
-import { getKeyClassifiedInfo } from '../classified/getKeyClassifiedInfo'
+import { IconizeVehicleSpecs } from './iconize-vehicle-specs'
 
 export function useRecordData(record: ClassifiedData | undefined) {
   if (!record) {
@@ -17,6 +17,6 @@ export function useRecordData(record: ClassifiedData | undefined) {
 
   return {
     formattedPrice,
-    recordInfo: getKeyClassifiedInfo(record),
+    recordInfo: IconizeVehicleSpecs(record),
   }
 }

@@ -1,8 +1,8 @@
+import { fetchResultsCount } from '@/_data'
 import { ListRecords } from '@/components/catalog/list'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { CLASSIFIEDS_PER_PAGE } from '@/config/constants'
 import { routes } from '@/config/routes'
-import { getResultsCount } from '@/data/catalog'
 import { cn } from '@/lib/utils'
 import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { useQuery } from '@tanstack/react-query'
@@ -15,7 +15,7 @@ export function ContentPanel1({
 }: ParamsAwaitedProps & FavouritesProps & { className?: string }) {
   const { data: resultsCount } = useQuery({
     queryKey: ['resultsCount', searchParams],
-    queryFn: () => getResultsCount(searchParams),
+    queryFn: () => fetchResultsCount(searchParams),
   })
 
   const totalPages = resultsCount

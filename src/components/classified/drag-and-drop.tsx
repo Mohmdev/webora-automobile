@@ -119,7 +119,6 @@ export const DragAndDrop = (props: DragAndDropProps) => {
     setDraggingOver(true)
   }
 
-  // biome-ignore lint:
   useEffect(() => {
     const div = dropRef.current
     if (div) {

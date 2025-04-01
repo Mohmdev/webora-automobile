@@ -1,7 +1,7 @@
 'use client'
 
+import { fetchResultsCount } from '@/_data'
 import { routes } from '@/config/routes'
-import { getResultsCount } from '@/data/catalog'
 import { env } from '@/env'
 import type { ParamsAwaitedProps } from '@/types'
 import { useQuery } from '@tanstack/react-query'
@@ -12,7 +12,7 @@ import { Button } from '../ui/button'
 export const SearchButton = ({ searchParams }: ParamsAwaitedProps) => {
   const { data: resultsCount } = useQuery({
     queryKey: ['resultsCount', searchParams],
-    queryFn: () => getResultsCount(searchParams),
+    queryFn: () => fetchResultsCount(searchParams),
   })
 
   const [{ make, model, modelVariant, minYear, maxYear, minPrice, maxPrice }] =

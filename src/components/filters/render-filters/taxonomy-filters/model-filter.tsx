@@ -8,8 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
-import { useTaxonomyOptions } from '@/hooks/filters/useTaxonomyOptions'
+import { useSidebarFilters } from '@/hooks/filters/use-sidebar-filters'
+import { useTaxonomyOptions } from '@/hooks/filters/use-taxonomy-options'
 import type { ParamsAwaitedProps } from '@/types'
 import type React from 'react'
 

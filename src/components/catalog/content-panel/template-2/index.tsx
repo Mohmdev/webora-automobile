@@ -1,6 +1,5 @@
 import { ListRecords } from '@/components/catalog/list'
 import { SidebarInset } from '@/components/ui/sidebar'
-import type { QueryReturnMetaProps } from '@/data/catalog'
 import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { Header } from '../../header'
 
@@ -8,9 +7,7 @@ export function ContentPanel2({
   favouriteIds,
   className,
   searchParams,
-}: FavouritesProps &
-  ParamsAwaitedProps &
-  QueryReturnMetaProps & { className?: string }) {
+}: FavouritesProps & ParamsAwaitedProps & { className?: string }) {
   return (
     <SidebarInset className={className}>
       <Header

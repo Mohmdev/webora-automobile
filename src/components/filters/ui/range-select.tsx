@@ -1,15 +1,15 @@
 'use client'
 
-import type { FilterOptions } from '@/types'
-import type { ChangeEvent, SelectHTMLAttributes } from 'react'
-import { FormLabel } from './form'
+import { FormLabel } from '@/components/ui/form'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './select'
+} from '@/components/ui/select'
+import type { FilterOptions } from '@/types'
+import type { ChangeEvent, SelectHTMLAttributes } from 'react'
 
 interface SelectType
   extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {

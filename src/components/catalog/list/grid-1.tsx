@@ -1,6 +1,6 @@
 'use client'
 
-import { getRecords } from '@/data/catalog'
+import { fetchRecords } from '@/_data'
 import { cn } from '@/lib/utils'
 import type { FavouritesProps, ParamsAwaitedProps } from '@/types'
 import { useQuery } from '@tanstack/react-query'
@@ -18,7 +18,7 @@ export function GridList1({
     isFetching,
   } = useQuery({
     queryKey: ['records', searchParams],
-    queryFn: () => getRecords(searchParams),
+    queryFn: () => fetchRecords(searchParams),
   })
 
   const notReady = isLoading || isFetching

@@ -1,7 +1,7 @@
 'use client'
 
 import { SelectFilter } from '@/components/filters/ui/select-filter'
-import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
+import { useSidebarFilters } from '@/hooks/filters/use-sidebar-filters'
 import type { ParamsAwaitedProps } from '@/types'
 import { CurrencyCode } from '@prisma/client'
 

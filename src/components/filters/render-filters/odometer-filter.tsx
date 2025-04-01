@@ -1,15 +1,15 @@
 'use client'
 
+import { fetchMinMaxValues } from '@/_data'
 import { RangeFilter } from '@/components/filters/ui/range-filters'
-import { getMinMaxValues } from '@/data/catalog'
-import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
+import { useSidebarFilters } from '@/hooks/filters/use-sidebar-filters'
 import type { ParamsAwaitedProps } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 
 export function OdometerFilter({ searchParams }: ParamsAwaitedProps) {
   const { data: minMaxValues } = useQuery({
     queryKey: ['minMaxValues'],
-    queryFn: getMinMaxValues,
+    queryFn: fetchMinMaxValues,
   })
 
   const { handleChange } = useSidebarFilters(

@@ -1,6 +1,6 @@
 'use client'
 
-import { getResultsCount } from '@/_data/catalog'
+import { fetchResultsCount } from '@/_data'
 import { ClearFilters } from '@/components/filters/clear-filters'
 import {
   Breadcrumb,
@@ -20,7 +20,7 @@ export function Header({
 }: ParamsAwaitedProps & { className?: string }) {
   const { data: resultsCount } = useQuery({
     queryKey: ['resultsCount', searchParams],
-    queryFn: () => getResultsCount(searchParams),
+    queryFn: () => fetchResultsCount(searchParams),
   })
 
   return (

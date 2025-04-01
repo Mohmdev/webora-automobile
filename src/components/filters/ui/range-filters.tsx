@@ -1,7 +1,7 @@
-import { useRangeOptions } from '@/hooks/filters/useRangeOptions'
+import { RangeSelect } from '@/components/filters/ui/range-select'
+import { useRangeOptions } from '@/hooks/filters/use-range-options'
 import type { TaxonomyFiltersProps } from '@/types'
 import type { CurrencyCode } from '@prisma/client'
-import { RangeSelect } from '../../ui/range-select'
 
 interface RangeMinMaxProps extends TaxonomyFiltersProps {
   label: string

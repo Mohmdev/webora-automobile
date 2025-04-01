@@ -1,14 +1,14 @@
 'use client'
 
+import {
+  fetchMinMaxValues,
+  fetchRecordsWithPriceSelect,
+  fetchResultsCount,
+} from '@/_data'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
-import {
-  getMinMaxValues,
-  getRecordsWithPriceSelect,
-  getResultsCount,
-} from '@/data/catalog'
-import { useSidebarFilters } from '@/hooks/filters/useSidebarFilters'
+import { useSidebarFilters } from '@/hooks/filters/use-sidebar-filters'
 import { useSliderWithInput } from '@/hooks/use-slider-with-input'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
@@ -23,17 +23,17 @@ export function PriceRangeSliderWithInput({
 }: ParamsAwaitedProps & { className?: string }) {
   const { data: minMaxValues } = useQuery({
     queryKey: ['minMaxValues'],
-    queryFn: getMinMaxValues,
+    queryFn: fetchMinMaxValues,
   })
 
   const { data: recordsWithPrice } = useQuery({
     queryKey: ['recordsWithPrice', searchParams],
-    queryFn: () => getRecordsWithPriceSelect(searchParams),
+    queryFn: () => fetchRecordsWithPriceSelect(searchParams),
   })
 
   const { data: resultsCount } = useQuery({
     queryKey: ['resultsCount', searchParams],
-    queryFn: () => getResultsCount(searchParams),
+    queryFn: () => fetchResultsCount(searchParams),
   })
 
   // console.log('resultsCount', resultsCount)

@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { useFilterStates } from '@/hooks/filters/useFilterStates'
+import { useFilterStates } from '@/hooks/filters/use-filter-states'
 import { cn } from '@/lib/utils'
 import type { ParamsAwaitedProps } from '@/types'
 import { type VariantProps, cva } from 'class-variance-authority'
