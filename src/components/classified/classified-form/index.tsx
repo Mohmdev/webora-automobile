@@ -1,7 +1,26 @@
 'use client'
 
-import { updateClassifiedAction } from '@/app/_actions/classified/update'
+import { updateClassified } from '@/_data/classified/mutations'
+import { ClassifiedFormFields } from '@/components/classified/classified-form/form-fields'
+import { MultiImageUploader } from '@/components/classified/multi-image-uploader'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { MAX_IMAGES } from '@/config/constants'
+import { routes } from '@/config/routes'
 import { useToast } from '@/hooks/use-toast'
 import { formatClassifiedStatus } from '@/lib/utils'
 import {
@@ -12,26 +31,9 @@ import type { ClassifiedData, ClassifiedImages } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ClassifiedStatus, CurrencyCode, OdoUnit } from '@prisma/client'
 import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '../../ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../../ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../../ui/select'
-import { MultiImageUploader } from '../multi-image-uploader'
-import { ClassifiedFormFields } from './form-fields'
 
 interface ClassifiedFormProps {
   classified: ClassifiedImages & ClassifiedData
@@ -51,6 +53,7 @@ function extractKey(url: string) {
 export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
   const [isPending, startTransition] = useTransition()
   const { toast } = useToast()
+  const router = useRouter()
 
   const form = useForm<UpdateClassifiedType>({
     resolver: zodResolver(updateClassifiedSchema),
@@ -90,8 +93,20 @@ export const ClassifiedForm = ({ classified }: ClassifiedFormProps) => {
 
   const classifiedFormSubmit: SubmitHandler<UpdateClassifiedType> = (data) => {
     startTransition(async () => {
-      const { success, message } = await updateClassifiedAction(data)
-      if (!success) {
+      const {
+        success,
+        message,
+        data: _responseData,
+      } = await updateClassified(data)
+      if (success) {
+        toast({
+          title: 'Success',
+          description: 'Classified updated successfully',
+          type: 'background',
+          duration: 2500,
+        })
+        router.push(routes.admin.classifieds)
+      } else {
         toast({
           title: 'Error',
           description: message,

@@ -1,20 +1,23 @@
 'use server'
 
 import {
+  fetchMakeById,
+  fetchUnknownTaxonomy,
+  mapToTaxonomyOrCreate,
+} from '@/_data'
+import {
   GenerativeStream,
   type GenerativeStreamProps,
 } from '@/components/admin/classifieds/generative-stream'
 import { env } from '@/env'
-import { mapToTaxonomyOrCreate } from '@/lib/ai-utils'
-import { prisma } from '@/lib/prisma'
+import {
+  ClassifiedDetailsAISchema,
+  ClassifiedTaxonomyAISchema,
+} from '@/schemas/classified-ai.schema'
 import { createOpenAI } from '@ai-sdk/openai'
 import { type CoreMessage, generateObject } from 'ai'
 import { createStreamableUI, createStreamableValue } from 'ai/rsc'
 import type { z } from 'zod'
-import {
-  ClassifiedDetailsAISchema,
-  ClassifiedTaxonomyAISchema,
-} from '../../../schemas/classified-ai.schema'
 import type { ClientMessage } from './types'
 
 const openai = createOpenAI({
@@ -119,9 +122,7 @@ export async function generateClassified(
       Awaited<ReturnType<typeof mapToTaxonomyOrCreate>>
     >
   ) {
-    const make = await prisma.make.findUnique({
-      where: { id: foundTaxonomy.makeId },
-    })
+    const make = await fetchMakeById(foundTaxonomy.makeId)
 
     if (make) {
       classified = {
@@ -135,24 +136,14 @@ export async function generateClassified(
 
   async function fallbackToUnknownTaxonomy() {
     try {
-      const unknownMake = await prisma.make.findFirst({
-        where: { name: 'UNKNOWN' },
-      })
+      const { make: unknownMake, model: unknownModel } =
+        await fetchUnknownTaxonomy()
 
-      if (unknownMake) {
-        const unknownModel = await prisma.model.findFirst({
-          where: {
-            makeId: unknownMake.id,
-            name: 'UNKNOWN',
-          },
-        })
-
-        if (unknownModel) {
-          // Just update the make/model parts of classified
-          classified.make = unknownMake
-          classified.makeId = unknownMake.id
-          classified.modelId = unknownModel.id
-        }
+      if (unknownMake && unknownModel) {
+        // Just update the make/model parts of classified
+        classified.make = unknownMake
+        classified.makeId = unknownMake.id
+        classified.modelId = unknownModel.id
       }
     } catch (error) {
       console.error('Error finding UNKNOWN make/model:', error)

@@ -1,6 +1,4 @@
 'use client'
-
-import type { ChartDataType } from '@/app/admin/dashboard/page'
 import {
   Card,
   CardContent,
@@ -21,7 +19,7 @@ import {
 } from 'recharts'
 
 interface SalesChartProps {
-  data: ChartDataType
+  data: Promise<Array<{ month: string; sales: number }>>
 }
 
 export const SalesChart = (props: SalesChartProps) => {

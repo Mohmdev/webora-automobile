@@ -1,15 +1,8 @@
 'use client'
 
-import { endpoints } from '@/config/endpoints'
-import { api } from '@/lib/api-client'
+import { fetchTaxonomyDataFromApi } from '@/_data'
 import type { FilterOptions } from '@/types'
 import { useQuery } from '@tanstack/react-query'
-
-export interface TaxonomyResponse {
-  makes: FilterOptions<string, string>
-  models: FilterOptions<string, string>
-  modelVariants: FilterOptions<string, string>
-}
 
 export interface TaxonomyOptionsState {
   makes: FilterOptions<string, string>
@@ -22,31 +15,9 @@ export interface TaxonomyOptionsState {
 export function useTaxonomyOptions(
   searchParams: Record<string, string> | undefined
 ): TaxonomyOptionsState {
-  const fetchTaxonomyData = () => {
-    if (!searchParams) {
-      return {
-        makes: [],
-        models: [],
-        modelVariants: [],
-      }
-    }
-
-    const params = new URLSearchParams()
-    for (const [k, v] of Object.entries(searchParams)) {
-      if (v) {
-        params.set(k, v)
-      }
-    }
-
-    const url = new URL(endpoints.taxonomy, window.location.href)
-    url.search = params.toString()
-
-    return api.get<TaxonomyResponse>(url.toString())
-  }
-
   const { data, isLoading, error } = useQuery({
     queryKey: ['taxonomy', searchParams?.make, searchParams?.model],
-    queryFn: fetchTaxonomyData,
+    queryFn: () => fetchTaxonomyDataFromApi(searchParams),
     enabled: !!searchParams,
     staleTime: 5 * 60 * 1000, // 5 minutes
   })

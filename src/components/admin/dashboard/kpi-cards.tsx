@@ -1,4 +1,4 @@
-import type { DashboardDataType } from '@/app/admin/dashboard/page'
+import type { DashboardDataType } from '@/_data'
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import type React from 'react'
 import { use } from 'react'
 
 type KpiCardDataProps = {
-  data: DashboardDataType
+  data: Promise<DashboardDataType>
 }
 
 interface DashboardItem {

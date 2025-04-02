@@ -1,7 +1,7 @@
+import { fetchClassifiedBySlug } from '@/_data'
 import { SelectDate } from '@/components/reserve/select-date'
 import { SubmitDetails } from '@/components/reserve/submit-details'
 import { Welcome } from '@/components/reserve/welcome'
-import { prisma } from '@/lib/prisma'
 import { MultiStepFormSchema } from '@/schemas/form.schema'
 import { MultiStepFormEnum, type ParamsPromisedProps } from '@/types'
 import { notFound } from 'next/navigation'
@@ -28,10 +28,7 @@ export default async function ReservePage(props: ParamsPromisedProps) {
     notFound()
   }
 
-  const classified = await prisma.classified.findUnique({
-    where: { slug: data.slug },
-    include: { make: true },
-  })
+  const classified = await fetchClassifiedBySlug(data.slug)
 
   if (!classified) {
     notFound()

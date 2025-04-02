@@ -4,7 +4,7 @@ import {
   fetchRecords,
   fetchRecordsCount,
   fetchRecordsWithPriceSelect,
-  fetchTaxonomiesData,
+  fetchTaxonomiesDataFromRedis,
   fetchUserData,
 } from '@/_data'
 import { Catalog } from '@/components/catalog'
@@ -18,7 +18,7 @@ export default async function CatalogPage(props: ParamsPromisedProps) {
 
   await queryClient.prefetchQuery({
     queryKey: ['taxonomy', undefined, undefined],
-    queryFn: fetchTaxonomiesData,
+    queryFn: fetchTaxonomiesDataFromRedis,
     staleTime: 5 * 60 * 1000, // 5 minutes
   })
   await queryClient.prefetchQuery({

@@ -1,12 +1,10 @@
+import { fetchCustomers } from '@/_data/customer'
 import { AdminCustomersHeader } from '@/components/customers/customers-header'
 import { CustomersTableHeader } from '@/components/customers/customers-table-header'
 import { CustomerTableRow } from '@/components/customers/customers-table-row'
 import { AdminTableFooter } from '@/components/shared/admin-table-footer'
 import { Table, TableBody } from '@/components/ui/table'
 import { routes } from '@/config/routes'
-import { prisma } from '@/lib/prisma'
-import { validatePagination } from '@/schemas/pagination.schema'
-import { AdminCustomerFilterSchema } from '@/schemas/table-filters.schema'
 import {
   CustomersTableSortSchema,
   type CustomersTableSortType,
@@ -17,44 +15,14 @@ import type { CustomerKeys, ParamsPromisedProps } from '@/types'
 export default async function CustomersPage(props: ParamsPromisedProps) {
   const searchParams = await props.searchParams
 
-  const { page, itemsPerPage } = validatePagination({
-    page: (searchParams?.page as string) || '1',
-    itemsPerPage: (searchParams?.itemsPerPage as '10') || '10',
-  })
+  const { customers, pagination } = await fetchCustomers(searchParams)
 
+  // Get sort and order for the table header
   const { sort, order } = validateSortOrder<CustomersTableSortType>({
     sort: searchParams?.sort as CustomerKeys,
     order: searchParams?.order as 'asc' | 'desc',
     schema: CustomersTableSortSchema,
   })
-
-  const offset = (Number(page) - 1) * Number(itemsPerPage)
-
-  const { data, error } = AdminCustomerFilterSchema.safeParse(searchParams)
-
-  if (error) {
-    console.log('Validation error: ', error)
-  }
-
-  const customers = await prisma.customer.findMany({
-    where: {
-      ...(data?.q && { title: { contains: data.q, mode: 'insensitive' } }),
-      ...(data?.status && data.status !== 'ALL' && { status: data.status }),
-    },
-    orderBy: { [sort as string]: order as 'asc' | 'desc' },
-    include: { classified: true },
-    skip: offset,
-    take: Number(itemsPerPage),
-  })
-
-  const count = await prisma.customer.count({
-    where: {
-      ...(data?.q && { title: { contains: data.q, mode: 'insensitive' } }),
-      ...(data?.status && data.status !== 'ALL' && { status: data.status }),
-    },
-  })
-
-  const totalPages = Math.ceil(count / Number(itemsPerPage))
 
   return (
     <>
@@ -73,7 +41,7 @@ export default async function CustomersPage(props: ParamsPromisedProps) {
           baseURL={routes.admin.customers}
           searchParams={searchParams}
           disabled={!customers.length}
-          totalPages={totalPages}
+          totalPages={pagination.totalPages}
           cols={10}
         />
       </Table>

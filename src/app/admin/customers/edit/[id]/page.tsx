@@ -1,3 +1,4 @@
+import { fetchCustomerById } from '@/_data/customer'
 import { EditCustomerForm } from '@/components/customers/edit-customer-form'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/table'
 import { CustomerBadgeMap } from '@/config/constants'
 import { routes } from '@/config/routes'
-import { prisma } from '@/lib/prisma'
 import { formatCustomerStatus } from '@/lib/utils'
 import type { ParamsPromisedProps } from '@/types'
 import { format } from 'date-fns'
@@ -29,10 +29,7 @@ export default async function EditCustomerPage(props: ParamsPromisedProps) {
     redirect(routes.admin.customers)
   }
 
-  const customer = await prisma.customer.findUnique({
-    where: { id: data.id },
-    include: { classified: true, lifecycle: true },
-  })
+  const customer = await fetchCustomerById(data.id)
 
   if (!customer) {
     redirect(routes.admin.customers)

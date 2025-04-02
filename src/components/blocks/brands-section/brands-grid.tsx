@@ -1,5 +1,5 @@
+import { fetchBrands } from '@/_data'
 import { routes } from '@/config/routes'
-import { prisma } from '@/lib/prisma'
 import { cn } from '@/lib/utils'
 import { BrandIcon } from './brand-icon'
 
@@ -7,36 +7,7 @@ export async function BrandsGrid({
   enablePopover = false,
   iconHeight = 'h-18',
 }: { enablePopover?: boolean; iconHeight?: string }) {
-  const brands = await prisma.make.findMany({
-    where: {
-      name: {
-        in: [
-          'Rolls-Royce',
-          'Aston Martin',
-          'Porsche',
-          'Lamborghini',
-          'Audi',
-          'Jaguar',
-          'Land Rover',
-          'Mercedes-Benz',
-          'Ferrari',
-          'Bentley',
-          'Toyota',
-          'Ford',
-          'Volkswagen',
-          'Maserati',
-          'Lexus',
-          'Volvo',
-          'Hyundai',
-          'Kia',
-          'Peugeot',
-          'Renault',
-          'Skoda',
-        ],
-        mode: 'insensitive',
-      },
-    },
-  })
+  const brands = await fetchBrands()
 
   return (
     <div

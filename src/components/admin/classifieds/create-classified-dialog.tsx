@@ -1,7 +1,7 @@
 'use client'
 
+import { createClassified } from '@/_data'
 import type { AI } from '@/app/_actions/ai'
-import { createClassifiedAction } from '@/app/_actions/classified/create'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Form } from '@/components/ui/form'
+import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
 import { ClassifiedAISchema } from '@/schemas/classified-ai.schema'
@@ -21,6 +22,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { readStreamableValue, useActions, useUIState } from 'ai/rsc'
 import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -28,6 +30,7 @@ import type { GenerativeStreamProps } from './generative-stream'
 import { ImageUploader } from './single-image-uploader'
 
 export const CreateClassifiedDialog = () => {
+  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isUploading, startUploadTransition] = useTransition()
   const [isCreating, startCreateTransition] = useTransition()
@@ -80,7 +83,8 @@ export const CreateClassifiedDialog = () => {
   const onCreateSubmit: SubmitHandler<GenerativeStreamProps> = (data) => {
     startCreateTransition(async () => {
       setMessages([])
-      const { success, message, error } = await createClassifiedAction(data)
+      const { success, message, error, classifiedId } =
+        await createClassified(data)
 
       if (error) {
         toast({
@@ -98,8 +102,23 @@ export const CreateClassifiedDialog = () => {
           duration: 2500,
           variant: 'destructive',
         })
-
         return
+      }
+
+      // Success case - redirect to edit page
+      toast({
+        title: 'Success',
+        description: 'Classified created successfully',
+        type: 'background',
+        duration: 2500,
+      })
+
+      setIsModalOpen(false)
+
+      if (classifiedId) {
+        router.push(routes.admin.editClassified(classifiedId))
+      } else {
+        router.push(routes.admin.classifieds)
       }
     })
   }

@@ -1,13 +1,14 @@
 'use server'
+
 import { auth } from '@/auth'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
 import { generateThumbHashFromSrcUrl } from '@/lib/thumbhash-server'
+import type { UpdateClassifiedType } from '@/schemas/classified.schema'
 import {
   BodyType,
   ClassifiedStatus,
   Colour,
-  type CurrencyCode,
   FuelType,
   type Make,
   type Model,
@@ -17,46 +18,18 @@ import {
   ULEZCompliance,
 } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import slugify from 'slugify'
 import { createPngDataUri } from 'unlazy/thumbhash'
 
-// Define the type for the update classified data
-interface UpdateClassifiedType {
-  id: number
-  make: number | string
-  model: number | string
-  modelVariant?: number | string | null | undefined
-  year?: number | string
-  vrm?: string
-  price: number
-  currency: CurrencyCode
-  odoReading?: number
-  odoUnit?: OdoUnit
-  fuelType?: FuelType
-  bodyType?: BodyType
-  transmission?: Transmission
-  colour?: Colour
-  ulezCompliance?: ULEZCompliance
-  description?: string | null
-  doors?: number
-  seats?: number
-  status?: ClassifiedStatus
-  images: Array<{ src: string }>
-}
-
-// Results type for the finder functions
-// type FindResult<_TypeOfOutcome> = {
-//   success: boolean
-//   make?: Make
-//   model?: Model
-//   error?: string
-// }
-
-// Helper function to find make
-const findMake = async (
+/**
+ * Finds a vehicle make by ID
+ *
+ * @param makeId - The ID of the make to find
+ * @returns The make record or null if not found
+ */
+export async function findMake(
   makeId: number | null | undefined
-): Promise<Make | null> => {
+): Promise<Make | null> {
   if (!makeId) {
     return null
   }
@@ -65,10 +38,15 @@ const findMake = async (
   })
 }
 
-// Helper function to find model
-const findModel = async (
+/**
+ * Finds a vehicle model by ID
+ *
+ * @param modelId - The ID of the model to find
+ * @returns The model record or null if not found
+ */
+export async function findModel(
   modelId: number | null | undefined
-): Promise<Model | null> => {
+): Promise<Model | null> {
   if (!modelId) {
     return null
   }
@@ -78,10 +56,15 @@ const findModel = async (
   })
 }
 
-// Helper function to get model variant
-const getModelVariant = async (
+/**
+ * Finds a vehicle model variant by ID
+ *
+ * @param modelVariantId - The ID of the model variant to find
+ * @returns The model variant record or null if not found
+ */
+export async function getModelVariant(
   modelVariantId: number | null | undefined
-): Promise<ModelVariant | null> => {
+): Promise<ModelVariant | null> {
   if (!modelVariantId) {
     return null
   }
@@ -91,7 +74,15 @@ const getModelVariant = async (
   })
 }
 
-// Helper function to generate title
+/**
+ * Generates a title for a classified listing
+ *
+ * @param year - The vehicle year
+ * @param make - The vehicle make
+ * @param model - The vehicle model
+ * @param modelVariant - The vehicle model variant
+ * @returns A formatted title string
+ */
 const generateTitle = (
   year: number | string | undefined,
   make: Make | null,
@@ -119,20 +110,36 @@ const generateTitle = (
   return title
 }
 
-// Helper function to generate slug
+/**
+ * Generates a URL-friendly slug for a classified listing
+ *
+ * @param title - The listing title
+ * @param vrm - The vehicle registration mark
+ * @returns A URL-friendly slug string
+ */
 const generateSlug = (title: string, vrm: string | undefined): string => {
   return slugify(`${title} ${vrm || ''}`)
 }
 
-// Helper function to process images
-const processImages = async (
+/**
+ * Processes images for a classified listing
+ *
+ * Generates thumbhash blurry placeholders for each image and prepares the image data
+ * for database storage.
+ *
+ * @param images - Array of image sources
+ * @param classifiedId - The ID of the classified listing
+ * @param title - The title of the classified listing
+ * @returns Array of processed image data
+ */
+export async function processImages(
   images: Array<{ src: string }>,
   classifiedId: number,
   title: string
-) => {
+) {
   const imagesData = await Promise.all(
     images.map(async ({ src }, index) => {
-      const hash = await generateThumbHashFromSrcUrl(images[0].src)
+      const hash = await generateThumbHashFromSrcUrl(src)
       const uri = createPngDataUri(hash)
       return {
         classifiedId,
@@ -147,15 +154,30 @@ const processImages = async (
   return imagesData
 }
 
-// Helper function to update classified with transaction
-const updateClassifiedWithTransaction = async (
+/**
+ * Updates a classified listing with transaction safety
+ *
+ * Handles the complete update process including:
+ * - Deleting existing images
+ * - Processing and creating new images
+ * - Updating all classified fields
+ *
+ * @param data - The classified data to update
+ * @param slug - The generated URL-friendly slug
+ * @param title - The generated title
+ * @param makeId - The make ID
+ * @param modelId - The model ID
+ * @param modelVariantId - The model variant ID
+ * @returns The updated classified and its images
+ */
+export async function updateClassifiedWithTransaction(
   data: UpdateClassifiedType,
   slug: string,
   title: string,
   makeId: number,
   modelId: number,
   modelVariantId: number | null
-) => {
+) {
   return await prisma.$transaction(
     async (prisma) => {
       await prisma.image.deleteMany({
@@ -201,7 +223,22 @@ const updateClassifiedWithTransaction = async (
   )
 }
 
-export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
+/**
+ * Updates a classified advertisement
+ *
+ * This is the main function for updating a classified listing. It coordinates
+ * the update process by:
+ * 1. Finding the necessary taxonomy data (make, model, variant)
+ * 2. Generating title and slug
+ * 3. Processing the update in a transaction
+ * 4. Revalidating affected routes
+ *
+ * Used in admin dashboard for vehicle listing management.
+ *
+ * @param data - The classified data to update
+ * @returns Object with success status and optional message
+ */
+export async function updateClassified(data: UpdateClassifiedType) {
   const session = await auth()
   if (!session) {
     return { success: false, error: 'Unauthorized' }
@@ -235,18 +272,14 @@ export const updateClassifiedAction = async (data: UpdateClassifiedType) => {
 
     if (classified && images) {
       success = true
+      revalidatePath(routes.admin.classifieds)
     }
+
+    return { success, data: { classified, images } }
   } catch (err) {
     if (err instanceof Error) {
       return { success: false, message: err.message }
     }
     return { success: false, message: 'Something went wrong' }
-  }
-
-  if (success) {
-    revalidatePath(routes.admin.classifieds)
-    redirect(routes.admin.classifieds)
-  } else {
-    return { success: false, message: 'Failed to update classified' }
   }
 }

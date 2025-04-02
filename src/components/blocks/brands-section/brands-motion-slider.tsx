@@ -1,5 +1,5 @@
+import { fetchBrands } from '@/_data'
 import { routes } from '@/config/routes'
-import { prisma } from '@/lib/prisma'
 import { LogoCloud } from '../logo-cloud'
 import { BrandIcon } from './brand-icon'
 
@@ -14,36 +14,7 @@ export async function BrandsMotionSlider({
   staticText?: string
   className?: string
 }) {
-  const brands = await prisma.make.findMany({
-    where: {
-      name: {
-        in: [
-          'Rolls-Royce',
-          'Aston Martin',
-          'Porsche',
-          'Lamborghini',
-          'Audi',
-          'Jaguar',
-          'Land Rover',
-          'Mercedes-Benz',
-          'Ferrari',
-          'Bentley',
-          'Toyota',
-          'Ford',
-          'Volkswagen',
-          'Maserati',
-          'Lexus',
-          'Volvo',
-          'Hyundai',
-          'Kia',
-          'Peugeot',
-          'Renault',
-          'Skoda',
-        ],
-        mode: 'insensitive',
-      },
-    },
-  })
+  const brands = await fetchBrands()
 
   return (
     <LogoCloud

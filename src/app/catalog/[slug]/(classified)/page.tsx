@@ -1,9 +1,7 @@
+import { fetchDetailedClassifiedBySlug } from '@/_data'
 import { ClassifiedView } from '@/components/classified/classified-view'
-import { routes } from '@/config/routes'
-import { prisma } from '@/lib/prisma'
 import type { ParamsPromisedProps } from '@/types'
-import { ClassifiedStatus } from '@prisma/client'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export default async function ClassifiedPage(props: ParamsPromisedProps) {
   const params = await props?.params
@@ -14,17 +12,10 @@ export default async function ClassifiedPage(props: ParamsPromisedProps) {
     notFound()
   }
 
-  const classified = await prisma.classified.findUnique({
-    where: { slug },
-    include: { make: true, images: true },
-  })
+  const classified = await fetchDetailedClassifiedBySlug(slug)
 
   if (!classified) {
     notFound()
-  }
-
-  if (classified.status === ClassifiedStatus.SOLD) {
-    redirect(routes.notAvailable(classified.slug))
   }
 
   return <ClassifiedView {...classified} />

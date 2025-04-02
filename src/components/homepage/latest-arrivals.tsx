@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { fetchClassifiedsByStatus } from '@/_data'
 import { redis } from '@/lib/redis-store'
 import { getSourceId } from '@/lib/source-id'
 import type { FavouritesProps } from '@/types'
@@ -6,11 +6,12 @@ import { ClassifiedStatus } from '@prisma/client'
 import { LatestArrivalsCarousel } from './latest-arrivals-carousel'
 
 export async function LatestArrivals() {
-  const classifieds = await prisma.classified.findMany({
-    where: { status: ClassifiedStatus.LIVE },
-    take: 6,
-    include: { images: true },
-  })
+  const classifieds = await fetchClassifiedsByStatus(ClassifiedStatus.LIVE, 6)
+
+  // If no classifieds found, don't render the section
+  if (!classifieds.length) {
+    return null
+  }
 
   const sourceId = await getSourceId()
   const getFavouriteIds = await redis.get<FavouritesProps>(sourceId || '')

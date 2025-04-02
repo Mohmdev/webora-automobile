@@ -19,7 +19,7 @@ const itemsPerPageOptions: FilterOptions<string, string> = [
   { label: '100', value: '100' },
 ]
 
-interface AdminTableFooterProps extends ParamsAwaitedProps {
+type AdminTableFooterProps = ParamsAwaitedProps & {
   disabled: boolean
   totalPages: number
   baseURL: string

@@ -2,23 +2,51 @@
 
 import { randomInt } from 'node:crypto'
 import { auth } from '@/auth'
-import type { GenerativeStreamProps } from '@/components/admin/classifieds/generative-stream'
 import { routes } from '@/config/routes'
 import { prisma } from '@/lib/prisma'
 import { generateThumbHashFromSrcUrl } from '@/lib/thumbhash-server'
 import {
+  BodyType,
+  Colour,
   CurrencyCode,
+  FuelType,
   type Make,
   type Model,
   type ModelVariant,
+  OdoUnit,
+  Transmission,
+  ULEZCompliance,
 } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import slugify from 'slugify'
 import { createPngDataUri } from 'unlazy/thumbhash'
 
-// Results type for the finder functions
-type FindResult<_TypeOfOutcome> = {
+/**
+ * Type for generative classified data
+ */
+export interface GenerativeClassifiedData {
+  year?: number | null
+  makeId?: number | null
+  modelId?: number | null
+  modelVariantId?: number | null
+  vrm?: string | null
+  image?: string | null
+  description?: string | null
+  odoReading?: number | null
+  odoUnit?: OdoUnit | null
+  fuelType?: FuelType | null
+  bodyType?: BodyType | null
+  transmission?: Transmission | null
+  colour?: Colour | null
+  ulezCompliance?: ULEZCompliance | null
+  doors?: number | null
+  seats?: number | null
+}
+
+/**
+ * Type for finder function results
+ */
+export type FindResult<_T> = {
   success: boolean
   make?: Make
   model?: Model
@@ -26,10 +54,15 @@ type FindResult<_TypeOfOutcome> = {
   message?: string
 }
 
-// Helper function to find make
-const findMake = async (
+/**
+ * Finds a vehicle make by ID with fallback to UNKNOWN
+ *
+ * @param makeId - The ID of the make to find
+ * @returns Object with success status and make data if found
+ */
+export async function findMake(
   makeId: number | null | undefined
-): Promise<FindResult<Make>> => {
+): Promise<FindResult<Make>> {
   let make = makeId
     ? await prisma.make.findUnique({ where: { id: Number(makeId) } })
     : null
@@ -48,11 +81,17 @@ const findMake = async (
   return { success: true, make }
 }
 
-// Helper function to find model
-const findModel = async (
+/**
+ * Finds a vehicle model by ID with fallback to UNKNOWN
+ *
+ * @param modelId - The ID of the model to find
+ * @param makeId - The ID of the make the model belongs to
+ * @returns Object with success status and model data if found
+ */
+export async function findModel(
   modelId: number | null | undefined,
   makeId: number
-): Promise<FindResult<Model>> => {
+): Promise<FindResult<Model>> {
   let model = modelId
     ? await prisma.model.findUnique({ where: { id: Number(modelId) } })
     : null
@@ -76,10 +115,15 @@ const findModel = async (
   return { success: true, model }
 }
 
-// Helper function to get model variant
-const getModelVariant = async (
+/**
+ * Finds a vehicle model variant by ID
+ *
+ * @param modelVariantId - The ID of the model variant to find
+ * @returns The model variant record or null if not found
+ */
+export async function getModelVariant(
   modelVariantId: number | null | undefined
-): Promise<ModelVariant | null> => {
+): Promise<ModelVariant | null> {
   if (!modelVariantId) {
     return null
   }
@@ -89,13 +133,21 @@ const getModelVariant = async (
   })
 }
 
-// Helper function to generate title
-const generateTitle = (
+/**
+ * Generates a title for a classified listing
+ *
+ * @param year - The vehicle year
+ * @param make - The vehicle make
+ * @param model - The vehicle model
+ * @param modelVariant - The vehicle model variant
+ * @returns A formatted title string
+ */
+export async function generateTitle(
   year: number | undefined,
   make: Make,
   model: Model,
   modelVariant: ModelVariant | null
-): string => {
+): Promise<string> {
   const titleParts = [
     year && year > 0 ? year.toString() : null,
     make.name !== 'UNKNOWN' ? make.name : null,
@@ -115,11 +167,17 @@ const generateTitle = (
   return title
 }
 
-// Helper function to generate slug
-const generateSlug = async (
+/**
+ * Generates a unique URL-friendly slug for a classified listing
+ *
+ * @param title - The listing title
+ * @param vrm - The vehicle registration mark
+ * @returns A URL-friendly slug string
+ */
+export async function generateSlug(
   title: string,
   vrm: string | undefined
-): Promise<string> => {
+): Promise<string> {
   let slug = slugify(`${title} ${vrm ?? randomInt(100000, 999999)}`)
 
   const slugLikeFound = await prisma.classified.count({
@@ -133,16 +191,27 @@ const generateSlug = async (
   return slug
 }
 
-// Helper function to create classified
-const createClassified = async (
-  data: GenerativeStreamProps,
+/**
+ * Creates a new classified listing
+ *
+ * @param data - The classified data
+ * @param slug - The generated URL-friendly slug
+ * @param title - The generated title
+ * @param make - The vehicle make
+ * @param model - The vehicle model
+ * @param modelVariant - The vehicle model variant
+ * @param thumbhashUri - The thumbhash URI for the main image
+ * @returns The created classified record
+ */
+export async function createClassifiedRecord(
+  data: GenerativeClassifiedData,
   slug: string,
   title: string,
   make: Make,
   model: Model,
   modelVariant: ModelVariant | null,
   thumbhashUri: string
-) => {
+) {
   return await prisma.classified.create({
     data: {
       slug,
@@ -157,12 +226,12 @@ const createClassified = async (
       price: 0,
       currency: CurrencyCode.GBP,
       odoReading: data.odoReading ?? 0,
-      odoUnit: data.odoUnit ?? 'KILOMETERS',
-      fuelType: data.fuelType ?? 'PETROL',
-      bodyType: data.bodyType ?? 'SEDAN',
-      colour: data.colour ?? 'BLACK',
-      transmission: data.transmission ?? 'MANUAL',
-      ulezCompliance: data.ulezCompliance ?? 'EXEMPT',
+      odoUnit: data.odoUnit ?? OdoUnit.KILOMETERS,
+      fuelType: data.fuelType ?? FuelType.PETROL,
+      bodyType: data.bodyType ?? BodyType.SEDAN,
+      colour: data.colour ?? Colour.BLACK,
+      transmission: data.transmission ?? Transmission.MANUAL,
+      ulezCompliance: data.ulezCompliance ?? ULEZCompliance.EXEMPT,
       description: data.description ?? null,
       doors: data.doors ?? 0,
       seats: data.seats ?? 0,
@@ -178,13 +247,29 @@ const createClassified = async (
   })
 }
 
-export const createClassifiedAction = async (data: GenerativeStreamProps) => {
+/**
+ * Creates a new classified advertisement
+ *
+ * This is the main function for creating a classified listing. It coordinates
+ * the creation process by:
+ * 1. Finding the necessary taxonomy data (make, model, variant)
+ * 2. Generating title and slug
+ * 3. Processing the image
+ * 4. Creating the classified record
+ * 5. Revalidating affected routes
+ *
+ * Used in admin dashboard for vehicle listing creation.
+ *
+ * @param data - The generative classified data
+ * @returns Object with success status, optional message, and created ID
+ */
+export async function createClassified(data: GenerativeClassifiedData) {
   let success = false
   let classifiedId: number | null = null
 
   const session = await auth()
   if (!session) {
-    return { success: false, error: 'Unauthorized', message: 'Unauthorized' }
+    return { success: false, error: 'Unauthorized' }
   }
 
   try {
@@ -214,17 +299,22 @@ export const createClassifiedAction = async (data: GenerativeStreamProps) => {
     const modelVariant = await getModelVariant(data.modelVariantId)
 
     // Generate title
-    const title = generateTitle(data.year, make, model, modelVariant)
+    const title = await generateTitle(
+      data.year ?? undefined,
+      make,
+      model,
+      modelVariant
+    )
 
     // Generate slug
-    const slug = await generateSlug(title, data.vrm)
+    const slug = await generateSlug(title, data.vrm ?? undefined)
 
     // Generate thumbhash
     const thumbhash = await generateThumbHashFromSrcUrl(data.image as string)
     const uri = createPngDataUri(thumbhash)
 
     // Create classified
-    const classified = await createClassified(
+    const classified = await createClassifiedRecord(
       data,
       slug,
       title,
@@ -237,23 +327,19 @@ export const createClassifiedAction = async (data: GenerativeStreamProps) => {
     if (classified) {
       classifiedId = classified.id
       success = true
+      revalidatePath(routes.admin.classifieds)
+    }
+
+    return {
+      success,
+      classifiedId,
+      data: classified,
     }
   } catch (error) {
     return {
       success: false,
       message: `Something went wrong: ${error}`,
       error: `Something went wrong: ${error}`,
-    }
-  }
-
-  if (success && classifiedId) {
-    revalidatePath(routes.admin.classifieds)
-    redirect(routes.admin.editClassified(classifiedId))
-  } else {
-    return {
-      success: false,
-      message: 'Failed to create classified',
-      error: 'Failed to create classified',
     }
   }
 }

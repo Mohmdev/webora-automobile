@@ -1,5 +1,5 @@
+import { prisma } from '@/lib/prisma'
 import type { ModelVariant } from '@prisma/client'
-import { prisma } from './prisma'
 
 interface MapToTaxonomyOrCreateType {
   year: number
@@ -8,6 +8,27 @@ interface MapToTaxonomyOrCreateType {
   modelVariant: string | null
 }
 
+/**
+ * Maps vehicle information to existing taxonomy or creates new records
+ *
+ * This function attempts to match provided vehicle information (make, model, variant)
+ * to existing taxonomy records in the database. If matches aren't found, it will
+ * create new records when possible or fall back to "UNKNOWN" placeholders to
+ * maintain referential integrity.
+ *
+ * Process:
+ * 1. Attempts to find the make (case-insensitive)
+ * 2. Falls back to "UNKNOWN" make if not found
+ * 3. Attempts to find the model within that make
+ * 4. Creates a new model if not found, or falls back to "UNKNOWN" model
+ * 5. Optionally finds or creates a model variant if provided
+ *
+ * Used in vehicle classification workflows, data imports, and AI-powered
+ * vehicle identification processes.
+ *
+ * @param object Object containing vehicle year, make, model and optional modelVariant
+ * @returns Mapped taxonomy data with IDs, or null if critical lookups fail
+ */
 export async function mapToTaxonomyOrCreate(object: MapToTaxonomyOrCreateType) {
   // attempt to find the make
   let make = await prisma.make.findFirst({

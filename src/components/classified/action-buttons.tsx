@@ -1,5 +1,5 @@
 'use client'
-import { deleteClassifiedAction } from '@/app/_actions/classified/delete'
+import { deleteClassified } from '@/_data/classified/mutations'
 import { toast } from '@/hooks/use-toast'
 import type { ClassifiedData, ClassifiedImages } from '@/types'
 import { EyeIcon, Loader2, PencilIcon, Trash } from 'lucide-react'
@@ -13,9 +13,9 @@ export const ActionButtons = ({
   classified,
 }: { classified: ClassifiedImages & ClassifiedData }) => {
   const [isPending, startTransition] = useTransition()
-  const deleteClassified = (id: number) => {
+  const handleDelete = (id: number) => {
     startTransition(async () => {
-      const result = await deleteClassifiedAction(id)
+      const result = await deleteClassified(id)
       if (result.success) {
         toast({
           title: 'Classified Deleted',
@@ -38,7 +38,7 @@ export const ActionButtons = ({
         className="h-fit p-2"
         data-tooltip-id="trash-tooltip"
         data-tooltip-content="Delete"
-        onClick={() => deleteClassified(classified.id)}
+        onClick={() => handleDelete(classified.id)}
       >
         <Tooltip id="trash-tooltip" />
         {isPending ? (
