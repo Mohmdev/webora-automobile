@@ -1,3 +1,4 @@
+import { imageSources } from '@/config/constants'
 import { routes } from '@/config/routes'
 import type { ParamsAwaitedProps } from '@/types'
 import Image from 'next/image'
@@ -17,7 +18,7 @@ export const HeroSection = ({ searchParams }: ParamsAwaitedProps) => {
   return (
     <section className="relative flex h-[calc(100vh-4rem)] items-center justify-center bg-center bg-cover">
       <Image
-        src="/aesthetic/g-class-1.jpeg"
+        src={imageSources.gClass3}
         alt="G-Class"
         fill
         className="absolute inset-0 object-cover"

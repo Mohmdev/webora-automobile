@@ -1,5 +1,6 @@
 'use client'
 
+import { Label } from '@/components/ui/label'
 import { env } from '@/env'
 import type { IAllProps } from '@tinymce/tinymce-react'
 import {
@@ -7,7 +8,6 @@ import {
   type InitOptions,
 } from '@tinymce/tinymce-react/lib/cjs/main/ts/components/Editor'
 import { useFormContext } from 'react-hook-form'
-import { FormLabel } from '../ui/form'
 
 // Define regex pattern
 const AUTOLINK_PATTERN = /^(https?:\/\/|www\.)(.+)$/i
@@ -79,7 +79,7 @@ export const RichTextEditor = (props: TextEditorProps) => {
 
   return (
     <div className="space-y-2">
-      <FormLabel htmlFor={name}>{label}</FormLabel>
+      <Label htmlFor={name}>{label}</Label>
 
       <Editor
         {...props.config}

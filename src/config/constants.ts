@@ -1,6 +1,29 @@
 import type { BadgeProps } from '@/components/ui/badge'
 import { ClassifiedStatus, CustomerStatus } from '@prisma/client'
+import { createPngDataUri } from 'unlazy/blurhash'
 import { routes } from './routes'
+
+export const imageSources = {
+  gClass0: 'https://webora-s3.imgix.net/uploads/protected/g-class-0.jpg',
+  gClass1: 'https://webora-s3.imgix.net/uploads/protected/g-class-1.jpg',
+  gClass2: 'https://webora-s3.imgix.net/uploads/protected/g-class-2.jpg',
+  gClass3: 'https://webora-s3.imgix.net/uploads/protected/g-class-3.jpg',
+  gClass4: 'https://webora-s3.imgix.net/uploads/protected/g-class-4.jpg',
+  gClass5: 'https://webora-s3.imgix.net/uploads/protected/g-class-5.jpg',
+  gClass6: 'https://webora-s3.imgix.net/uploads/protected/g-class-6.jpg',
+  gClass7: 'https://webora-s3.imgix.net/uploads/protected/g-class-7.jpg',
+  gClass8: 'https://webora-s3.imgix.net/uploads/protected/g-class-8.jpg',
+  gClass9: 'https://webora-s3.imgix.net/uploads/protected/g-class-9.jpg',
+  gClass10: 'https://webora-s3.imgix.net/uploads/protected/g-class-10.jpg',
+  gClass11: 'https://webora-s3.imgix.net/uploads/protected/g-class-11.jpg',
+  gClass12: 'https://webora-s3.imgix.net/uploads/protected/g-class-12.jpg',
+  gClass13: 'https://webora-s3.imgix.net/uploads/protected/g-class-13.jpg',
+  gClass14: 'https://webora-s3.imgix.net/uploads/protected/g-class-14.jpg',
+  gClass15: 'https://webora-s3.imgix.net/uploads/protected/g-class-15.jpg',
+  gClass16: 'https://webora-s3.imgix.net/uploads/protected/g-class-16.jpg',
+  gClass17: 'https://webora-s3.imgix.net/uploads/protected/g-class-17.jpg',
+  blurhash: createPngDataUri('LDB3g6~WR6I:~C-;s:S29ZI:x[xa'),
+}
 
 export const RECORDS_PER_PAGE = 12
 

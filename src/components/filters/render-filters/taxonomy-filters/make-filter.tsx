@@ -1,6 +1,6 @@
 'use client'
 
-import { FormLabel } from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -21,7 +21,7 @@ export function MakeFilter({ searchParams }: ParamsAwaitedProps) {
 
   return (
     <div className="space-y-2">
-      <FormLabel htmlFor="make">Make</FormLabel>
+      <Label htmlFor="make">Make</Label>
       <Select
         name="make"
         value={(searchParams?.make as string) || '_empty'}

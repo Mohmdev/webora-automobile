@@ -1,6 +1,6 @@
 'use client'
 
-import { FormLabel } from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -21,7 +21,7 @@ export function ModelFilter({ searchParams }: ParamsAwaitedProps) {
 
   return (
     <div className="space-y-2">
-      <FormLabel htmlFor="model">Model</FormLabel>
+      <Label htmlFor="model">Model</Label>
       <Select
         name="model"
         value={(searchParams?.model as string) || '_empty'}

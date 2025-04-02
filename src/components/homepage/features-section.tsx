@@ -1,8 +1,10 @@
+import { imageSources } from '@/config/constants'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 
-export const FeaturesSection = () => {
+export const FeaturesSection = ({ className }: { className?: string }) => {
   return (
-    <div className="bg-background py-16 sm:py-24">
+    <div className={cn('my-8 flex flex-col gap-10 bg-background', className)}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-8xl sm:text-center">
           <h2 className="font-semibold text-base leading-7 md:text-2xl">
@@ -17,19 +19,18 @@ export const FeaturesSection = () => {
           </p>
         </div>
       </div>
-      <div className="-mb-16 sm:-mb-24 relative overflow-hidden pt-16 xl:mb-0">
-        <div className="relative mx-auto h-[700px] max-w-7xl bg-bottom bg-cover bg-no-repeat shadow-2xl xl:rounded-t-xl">
-          <Image
-            src="/aesthetic/g-class-1.jpeg"
-            alt="G-Class"
-            width={1280}
-            height={300}
-            className="object-cover"
-          />
-        </div>
-        <div aria-hidden="true" className="relative hidden xl:block">
-          <div className="-inset-x-20 absolute bottom-0 bg-linear-to-t from-background to-transparent pt-[3%]" />
-        </div>
+      <div className="relative h-[400px] overflow-hidden md:h-[600px] lg:h-[700px]">
+        <Image
+          src={imageSources.gClass16}
+          alt="G-Class"
+          fill
+          className="mx-auto max-w-7xl scale-x-[-1] bg-bottom bg-no-repeat object-cover object-center shadow-2xl lg:rounded-t-xl"
+        />
+
+        <div
+          aria-hidden="true"
+          className="-inset-x-20 absolute bottom-0 bg-linear-to-t from-background to-transparent pt-[3%]"
+        />
       </div>
     </div>
   )

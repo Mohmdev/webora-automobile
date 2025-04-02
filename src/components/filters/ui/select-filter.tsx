@@ -1,4 +1,4 @@
-import { FormLabel } from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ export function SelectFilter({
 }: SelectFilterProps) {
   return (
     <div className="flex-1 space-y-2">
-      <FormLabel htmlFor={name}>{label}</FormLabel>
+      <Label htmlFor={name}>{label}</Label>
       <Select
         name={name}
         value={value || '_empty'}

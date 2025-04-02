@@ -1,6 +1,6 @@
 'use client'
 
-import { FormLabel } from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -28,7 +28,7 @@ export const RangeSelect = (props: RangeSelectProps) => {
 
   return (
     <div className="space-y-2">
-      <FormLabel>{label}</FormLabel>
+      <Label>{label}</Label>
       <div className="flex gap-2">
         <Select
           value={minSelect.value?.toString() || '_empty'}
