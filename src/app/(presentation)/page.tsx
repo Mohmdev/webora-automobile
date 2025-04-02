@@ -1,7 +1,7 @@
-import { FeaturesSection } from '@/components/homepage/features-section'
+import { BrandsMotionSlider } from '@/components/blocks/brands-section/brands-motion-slider'
+import { FeaturedSection } from '@/components/blocks/featured-section'
 import { HeroSection } from '@/components/homepage/hero-section'
 import { LatestArrivals } from '@/components/homepage/latest-arrivals'
-import { OurBrandsSection } from '@/components/homepage/our-brands-section'
 import type { ParamsPromisedProps } from '@/types'
 
 export default async function Home(props: ParamsPromisedProps) {
@@ -10,9 +10,9 @@ export default async function Home(props: ParamsPromisedProps) {
   return (
     <div className="min-h-screen w-full">
       <HeroSection searchParams={searchParams} />
-      <FeaturesSection />
+      <BrandsMotionSlider iconHeight="h-18" enableStaticText={true} />
+      <FeaturedSection />
       <LatestArrivals />
-      <OurBrandsSection />
     </div>
   )
 }

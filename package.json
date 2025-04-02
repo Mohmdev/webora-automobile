@@ -95,6 +95,7 @@
     "react-hook-form": "^7.55.0",
     "react-number-format": "^5.4.3",
     "react-tooltip": "^5.28.0",
+    "react-use-measure": "^2.1.7",
     "recharts": "^2.15.1",
     "resend": "^4.2.0",
     "sanitize-html": "^2.15.0",

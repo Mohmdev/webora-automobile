@@ -50,6 +50,10 @@ const nextConfig: NextConfig = {
         hostname: 'bucket-webora-automobile.s3.eu-central-1.amazonaws.com',
         protocol: 'https',
       },
+      {
+        hostname: 'html.tailus.io',
+        protocol: 'https',
+      },
     ],
   },
   async headers() {
