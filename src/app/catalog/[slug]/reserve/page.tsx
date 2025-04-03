@@ -3,7 +3,7 @@ import { SelectDate } from '@/components/reserve/select-date'
 import { SubmitDetails } from '@/components/reserve/submit-details'
 import { Welcome } from '@/components/reserve/welcome'
 import { MultiStepFormSchema } from '@/schemas/form.schema'
-import { MultiStepFormEnum, type ParamsPromisedProps } from '@/types'
+import { MultiStepFormEnum, type PromisedParams } from '@/types'
 import { notFound } from 'next/navigation'
 
 const MAP_STEP_TO_COMPONENT = {
@@ -12,7 +12,7 @@ const MAP_STEP_TO_COMPONENT = {
   [MultiStepFormEnum.SUBMIT_DETAILS]: SubmitDetails,
 }
 
-export default async function ReservePage(props: ParamsPromisedProps) {
+export default async function ReservePage(props: PromisedParams) {
   const searchParams = await props.searchParams
   const params = await props.params
   const slug = params?.slug

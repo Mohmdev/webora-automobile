@@ -9,10 +9,10 @@ import {
 } from '@/_data'
 import { Catalog } from '@/components/catalog'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
-import type { ParamsPromisedProps } from '@/types'
+import type { PromisedParams } from '@/types'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
-export default async function CatalogPage(props: ParamsPromisedProps) {
+export default async function CatalogPage(props: PromisedParams) {
   const searchParams = await props.searchParams
   const queryClient = getQueryClient()
 

@@ -3,10 +3,10 @@
 import { fetchMinMaxValues } from '@/_data'
 import { RangeFilter } from '@/components/filters/ui/range-filters'
 import { useFilters } from '@/hooks/filters/use-filters'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 
-export function OdometerFilter({ searchParams }: ParamsAwaitedProps) {
+export function OdometerFilter({ searchParams }: ResolvedParams) {
   const { data: minMaxValues } = useQuery({
     queryKey: ['minMaxValues'],
     queryFn: fetchMinMaxValues,

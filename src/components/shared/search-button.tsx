@@ -3,13 +3,13 @@
 import { fetchRecordsCount } from '@/_data'
 import { routes } from '@/config/routes'
 import { env } from '@/env'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { parseAsString, useQueryStates } from 'nuqs'
 import { Button } from '../ui/button'
 
-export const SearchButton = ({ searchParams }: ParamsAwaitedProps) => {
+export const SearchButton = ({ searchParams }: ResolvedParams) => {
   const {
     data: { count } = { count: 0 },
   } = useQuery({

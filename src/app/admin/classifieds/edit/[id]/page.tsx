@@ -2,10 +2,10 @@ import { fetchClassifiedById } from '@/_data'
 import { ClassifiedForm } from '@/components/classified/classified-form'
 import { routes } from '@/config/routes'
 import { validateIdSchema } from '@/schemas/id.schema'
-import type { ParamsPromisedProps } from '@/types'
+import type { PromisedParams } from '@/types'
 import { redirect } from 'next/navigation'
 
-export default async function EditClassified(props: ParamsPromisedProps) {
+export default async function EditClassified(props: PromisedParams) {
   const params = await props.params
 
   const { data, success } = validateIdSchema.safeParse({

@@ -1,12 +1,12 @@
 import { FiltersPanel } from '@/components/catalog/filters-panel'
 import { SidebarProvider } from '@/components/ui/sidebar'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { ContentPanel } from '../content-panel'
 
 export function Catalog2({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <SidebarProvider className={className}>
       <FiltersPanel template="template-2" searchParams={searchParams} />

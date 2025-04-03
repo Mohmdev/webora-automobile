@@ -2,7 +2,7 @@
 
 import { fetchFavourites, fetchRecords } from '@/_data'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import { SearchX } from 'lucide-react'
 import { Record } from '../record'
@@ -11,7 +11,7 @@ export function GridList2({
   searchParams,
   isFavouritesList = false,
   className,
-}: ParamsAwaitedProps & {
+}: ResolvedParams & {
   isFavouritesList?: boolean
   className?: string
 }) {

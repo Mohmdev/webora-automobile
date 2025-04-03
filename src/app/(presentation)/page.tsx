@@ -1,19 +1,36 @@
-import { fetchRecordsCount } from '@/_data'
+import {
+  fetchBrands,
+  fetchFavourites,
+  fetchRecords,
+  fetchRecordsCount,
+} from '@/_data'
 import { BrandsMotionSlider } from '@/components/blocks/brands-section/brands-motion-slider'
 import { FeaturedSection } from '@/components/blocks/featured-section'
 import { HeroSection } from '@/components/blocks/hero-section/templates/hero-1'
-import { LatestRecordsCarousel } from '@/components/blocks/latest-records-section/latest-records-carousel'
+import { LatestRecordsCarousel } from '@/components/blocks/latest-records-section'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
-import type { ParamsPromisedProps } from '@/types'
+import type { PromisedParams } from '@/types'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
-export default async function Home(props: ParamsPromisedProps) {
+export default async function Home(props: PromisedParams) {
   const searchParams = await props.searchParams
   const queryClient = getQueryClient()
 
   await queryClient.prefetchQuery({
+    queryKey: ['records', searchParams],
+    queryFn: () => fetchRecords(searchParams),
+  })
+  await queryClient.prefetchQuery({
     queryKey: ['recordsCount', searchParams],
     queryFn: () => fetchRecordsCount(searchParams),
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['favourites'],
+    queryFn: fetchFavourites,
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['brands'],
+    queryFn: fetchBrands,
   })
 
   return (
@@ -22,7 +39,7 @@ export default async function Home(props: ParamsPromisedProps) {
         <HeroSection searchParams={searchParams} />
         <BrandsMotionSlider iconHeight="h-18" enableStaticText={true} />
         <FeaturedSection />
-        <LatestRecordsCarousel />
+        <LatestRecordsCarousel searchParams={searchParams} />
       </div>
     </HydrationBoundary>
   )

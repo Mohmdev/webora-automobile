@@ -1,4 +1,4 @@
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { GridList1 } from './grid-1'
 import { GridList2 } from './grid-2'
 import { GridSkeleton1 } from './grid-skeleton-1'
@@ -13,7 +13,7 @@ export function ListRecords({
   searchParams,
   isFavouritesList = false,
 }: Template &
-  ParamsAwaitedProps & { className?: string; isFavouritesList?: boolean }) {
+  ResolvedParams & { className?: string; isFavouritesList?: boolean }) {
   const props = { className, searchParams, isFavouritesList }
 
   switch (template) {

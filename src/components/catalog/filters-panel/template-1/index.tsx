@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { PanelBody } from './body'
 import { PanelHeader } from './header'
 
 export function FiltersPanel1({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <div
       className={cn(

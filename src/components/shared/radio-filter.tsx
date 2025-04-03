@@ -1,12 +1,12 @@
 'use client'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import type { ClassifiedStatus } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { Label } from '../ui/label'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 
-type RadioMinMaxProps = ParamsAwaitedProps & {
+type RadioMinMaxProps = ResolvedParams & {
   items: string[]
 }
 

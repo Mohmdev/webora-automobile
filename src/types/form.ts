@@ -1,7 +1,7 @@
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import type { Prisma } from '@prisma/client'
 
-export type MultiStepFormComponentProps = ParamsAwaitedProps & {
+export type MultiStepFormComponentProps = ResolvedParams & {
   classified: Prisma.ClassifiedGetPayload<{
     include: { make: true }
   }>

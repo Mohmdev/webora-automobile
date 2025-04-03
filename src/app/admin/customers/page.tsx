@@ -10,9 +10,9 @@ import {
   type CustomersTableSortType,
   validateSortOrder,
 } from '@/schemas/table-sort.schema'
-import type { CustomerKeys, ParamsPromisedProps } from '@/types'
+import type { CustomerKeys, PromisedParams } from '@/types'
 
-export default async function CustomersPage(props: ParamsPromisedProps) {
+export default async function CustomersPage(props: PromisedParams) {
   const searchParams = await props.searchParams
 
   const { customers, pagination } = await fetchCustomers(searchParams)

@@ -1,11 +1,11 @@
 import { ClearFilters } from '@/components/filters/clear-filters'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 
 export function PanelHeader({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <div
       className={cn(

@@ -1,4 +1,4 @@
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { Catalog1 } from './templates/catalog-1'
 import { Catalog2 } from './templates/catalog-2'
 
@@ -10,7 +10,7 @@ export function Catalog({
   template,
   searchParams,
   className,
-}: Template & ParamsAwaitedProps & { className?: string }) {
+}: Template & ResolvedParams & { className?: string }) {
   const props = {
     searchParams,
     className,

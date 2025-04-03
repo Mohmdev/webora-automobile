@@ -6,7 +6,7 @@ import {
   type CustomersTableSortType,
   validateSortOrder,
 } from '@/schemas/table-sort.schema'
-import type { CustomerKeys, ParamsAwaitedProps } from '@/types'
+import type { CustomerKeys, ResolvedParams } from '@/types'
 
 /**
  * Fetches customers with pagination, sorting, and filtering capabilities
@@ -15,7 +15,7 @@ import type { CustomerKeys, ParamsAwaitedProps } from '@/types'
  * @returns An object containing the customers, total count, and pagination info
  */
 export async function fetchCustomers(
-  searchParams: ParamsAwaitedProps['searchParams'] = {}
+  searchParams: ResolvedParams['searchParams'] = {}
 ) {
   const { page, itemsPerPage } = validatePagination({
     page: (searchParams?.page as string) || '1',

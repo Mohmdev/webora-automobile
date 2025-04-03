@@ -1,12 +1,12 @@
 import { ListRecords } from '@/components/catalog/list'
 import { SidebarInset } from '@/components/ui/sidebar'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { Header } from './header'
 
 export function ContentPanel2({
   className,
   searchParams,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <SidebarInset className={className}>
       <Header

@@ -25,7 +25,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { Settings2 } from 'lucide-react'
 import { useState } from 'react'
 import { CloseDialogButton } from './close-dialog-button'
@@ -33,7 +33,7 @@ import { CloseDialogButton } from './close-dialog-button'
 export function FiltersDialog({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   const [open, setIsOpen] = useState(false)
 
   return (

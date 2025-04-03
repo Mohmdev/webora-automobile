@@ -10,7 +10,7 @@ import { prisma } from '@/lib/prisma'
  * @returns Array of Make objects containing id, image, and name
  */
 export async function fetchBrands() {
-  return await prisma.make.findMany({
+  const brands = await prisma.make.findMany({
     where: {
       name: {
         in: [
@@ -40,4 +40,6 @@ export async function fetchBrands() {
       },
     },
   })
+
+  return brands
 }

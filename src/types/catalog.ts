@@ -46,17 +46,17 @@ export type UserProps = {
 type Params = {
   [x: string]: string | string[]
 }
-export type ParamsPromisedProps = {
+export type PromisedParams = {
   params?: Promise<Params>
   searchParams?: Promise<{ [x: string]: string | string[] | undefined }>
 }
 
-export type ParamsAwaitedProps = {
-  params?: Awaited<ParamsPromisedProps['params']>
-  searchParams?: Awaited<ParamsPromisedProps['searchParams']>
+export type ResolvedParams = {
+  params?: Awaited<PromisedParams['params']>
+  searchParams?: Awaited<PromisedParams['searchParams']>
 }
 
-export type TaxonomyFiltersProps = ParamsAwaitedProps & {
+export type TaxonomyFiltersProps = ResolvedParams & {
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 

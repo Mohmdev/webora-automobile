@@ -1,9 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { buildClassifiedFilterQuery } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 
 export async function fetchRecordsWithPriceSelect(
-  searchParams: ParamsAwaitedProps['searchParams']
+  searchParams: ResolvedParams['searchParams']
 ) {
   const recordsWithPrice = await prisma.classified.findMany({
     where: buildClassifiedFilterQuery(searchParams),

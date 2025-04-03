@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { MakeFilter } from './make-filter'
 import { ModelFilter } from './model-filter'
 import { ModelVariantFilter } from './model-variant-filter'
@@ -7,7 +7,7 @@ import { ModelVariantFilter } from './model-variant-filter'
 function TaxonomyFiltersBlock({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <div className={cn('space-y-2', className)}>
       <MakeFilter searchParams={searchParams} />

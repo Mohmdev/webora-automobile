@@ -15,12 +15,12 @@ import {
 } from '@/components/filters/render-filters'
 import { SearchInput } from '@/components/shared/search-input'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 
 export function PanelBody({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <div className={cn(className)}>
       <div className="p-4">

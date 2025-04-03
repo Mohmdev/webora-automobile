@@ -3,10 +3,10 @@
 import { fetchMinMaxValues } from '@/_data'
 import { RangeFilter } from '@/components/filters/ui/range-filters'
 import { useFilters } from '@/hooks/filters/use-filters'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 
-type YearFilterProps = ParamsAwaitedProps
+type YearFilterProps = ResolvedParams
 
 export function YearFilter({ searchParams }: YearFilterProps) {
   const { data: minMaxValues } = useQuery({

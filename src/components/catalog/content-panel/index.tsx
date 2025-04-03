@@ -1,4 +1,4 @@
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { ContentPanel1 } from './template-1'
 import { ContentPanel2 } from './template-2'
 interface Template {
@@ -9,7 +9,7 @@ export function ContentPanel({
   template,
   className,
   searchParams,
-}: Template & ParamsAwaitedProps & { className?: string }) {
+}: Template & ResolvedParams & { className?: string }) {
   const props = {
     className,
     searchParams,

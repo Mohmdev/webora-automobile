@@ -3,10 +3,10 @@
 import { SelectFilter } from '@/components/filters/ui/select-filter'
 import { useFilters } from '@/hooks/filters/use-filters'
 import { formatUlezCompliance } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { ULEZCompliance } from '@prisma/client'
 
-export function UlezComplianceFilter({ searchParams }: ParamsAwaitedProps) {
+export function UlezComplianceFilter({ searchParams }: ResolvedParams) {
   const { queryStates, handleSelectChange } = useFilters(
     searchParams as Record<string, string>
   )

@@ -11,7 +11,7 @@ import { Slider } from '@/components/ui/slider'
 import { useFilters } from '@/hooks/filters/use-filters'
 import { useSliderWithInput } from '@/hooks/use-slider-with-input'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import type React from 'react'
 import { useId } from 'react'
@@ -20,7 +20,7 @@ import { useEffect } from 'react'
 export function PriceRangeSliderWithInput({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   const { data: minMaxValues } = useQuery({
     queryKey: ['minMaxValues'],
     queryFn: fetchMinMaxValues,

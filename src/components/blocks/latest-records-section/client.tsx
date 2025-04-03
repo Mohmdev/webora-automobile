@@ -1,15 +1,12 @@
 'use client'
 
-import { fetchClassifiedsByStatus } from '@/_data'
-import { redis } from '@/lib/redis-store'
-import { getSourceId } from '@/lib/source-id'
+import { fetchFavourites, fetchRecords } from '@/_data'
 import { cn } from '@/lib/utils'
-import type { ClassifiedData, ClassifiedImages, FavouritesProps } from '@/types'
-import { ClassifiedStatus } from '@prisma/client'
+import type { ResolvedParams } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { Navigation } from 'swiper/modules'
 import { SwiperSlide } from 'swiper/react'
-import 'swiper/css'
 import { Record } from '../../catalog/record'
 import { SwiperButtons } from '../../shared/swiper-button'
 
@@ -24,15 +21,24 @@ const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   ),
 })
 
-function SwiperCarousel({
-  records,
-  favouriteIds,
+export function SwiperCarousel({
+  searchParams,
   className,
-}: {
-  records: (ClassifiedData & ClassifiedImages)[]
-  favouriteIds: number[]
-  className?: string
-}) {
+}: ResolvedParams & { className?: string }) {
+  const { data: favouriteIds = [] } = useQuery({
+    queryKey: ['favourites'],
+    queryFn: fetchFavourites,
+  })
+
+  const { data: records } = useQuery({
+    queryKey: ['records', searchParams],
+    queryFn: () => fetchRecords(searchParams),
+  })
+
+  if (!records || records.length === 0) {
+    return null
+  }
+
   return (
     <div className={cn('relative', className)}>
       <Swiper
@@ -76,33 +82,5 @@ function SwiperCarousel({
         nextClassName="-right-16 border border-2 border-border hidden lg:flex"
       />
     </div>
-  )
-}
-
-export async function LatestRecordsCarousel() {
-  const records = await fetchClassifiedsByStatus(ClassifiedStatus.LIVE, 6)
-
-  // If no classifieds found, don't render the section
-  if (!records.length) {
-    return null
-  }
-
-  const sourceId = await getSourceId()
-  const getFavouriteIds = await redis.get<FavouritesProps>(sourceId || '')
-
-  // Ensure favouriteIds is always an array
-  const favouriteIds = Array.isArray(getFavouriteIds?.favouriteIds)
-    ? getFavouriteIds.favouriteIds
-    : []
-
-  return (
-    <section className="py-16 sm:py-24">
-      <div className="container mx-auto flex max-w-[80vw] flex-col gap-8">
-        <h2 className="mt-2 font-bold text-2xl text-foreground uppercase tracking-tight sm:text-4xl">
-          Latest Arrivals
-        </h2>
-        <SwiperCarousel records={records} favouriteIds={favouriteIds} />
-      </div>
-    </section>
   )
 }

@@ -3,7 +3,7 @@
 import { fetchRecordsCount } from '@/_data'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import type { ButtonHTMLAttributes } from 'react'
 
@@ -20,7 +20,7 @@ export function CloseDialogButton({
   onClose,
   label = 'View results',
   ...props
-}: CloseDialogButtonProps & ParamsAwaitedProps) {
+}: CloseDialogButtonProps & ResolvedParams) {
   const {
     data: { count } = { count: 0 },
   } = useQuery({

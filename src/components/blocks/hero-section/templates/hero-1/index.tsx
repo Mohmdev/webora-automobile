@@ -1,6 +1,6 @@
 import { imageSources } from '@/config/constants'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import Image from 'next/image'
 import { HeroFiltersPanel } from '../../hero-filters-panel'
 import { HeroHeading } from './heading'
@@ -11,7 +11,7 @@ export const HeroSection = ({
   h2,
   searchParams,
   className,
-}: ParamsAwaitedProps & {
+}: ResolvedParams & {
   imgSrc?: string
   h1?: string
   h2?: string

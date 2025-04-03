@@ -1,6 +1,6 @@
 import { SidebarContent, SidebarSeparator } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { Block1 } from './block-1'
 import { Block2 } from './block-2'
 import { Block3 } from './block-3'
@@ -10,7 +10,7 @@ import { Block5 } from './block-5'
 export function PanelBody({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <SidebarContent className={cn('py-2', className)}>
       <Block1 searchParams={searchParams} />

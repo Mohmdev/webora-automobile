@@ -1,8 +1,8 @@
 import { RadioFilter } from '@/components/shared/radio-filter'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { CustomerStatus } from '@prisma/client'
 
-export const AdminCustomersHeader = ({ searchParams }: ParamsAwaitedProps) => {
+export const AdminCustomersHeader = ({ searchParams }: ResolvedParams) => {
   return (
     <div className="flex flex-col space-y-4 p-6 text-muted">
       <div className="flex items-center justify-between">

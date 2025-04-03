@@ -5,9 +5,9 @@ import { ClassifiedsTableHeader } from '@/components/classified/classifieds-tabl
 import { AdminTableFooter } from '@/components/shared/admin-table-footer'
 import { Table, TableBody } from '@/components/ui/table'
 import { routes } from '@/config/routes'
-import type { ClassifiedKeys, ParamsPromisedProps } from '@/types'
+import type { ClassifiedKeys, PromisedParams } from '@/types'
 
-export default async function ClassifiedsPage(props: ParamsPromisedProps) {
+export default async function ClassifiedsPage(props: PromisedParams) {
   const searchParams = await props.searchParams
 
   const { classifieds, totalPages, sort, order } =

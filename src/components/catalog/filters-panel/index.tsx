@@ -1,4 +1,4 @@
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { FiltersPanel1 } from './template-1'
 import { FiltersPanel2 } from './template-2'
 
@@ -10,7 +10,7 @@ export function FiltersPanel({
   template,
   searchParams,
   className,
-}: Template & ParamsAwaitedProps & { className?: string }) {
+}: Template & ResolvedParams & { className?: string }) {
   const props = { searchParams, className }
 
   switch (template) {

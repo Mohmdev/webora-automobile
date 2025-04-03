@@ -13,13 +13,13 @@ import {
   SidebarGroupLabel,
 } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { ChevronRight } from 'lucide-react'
 
 export function Block5({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <SidebarGroup>
       <Collapsible

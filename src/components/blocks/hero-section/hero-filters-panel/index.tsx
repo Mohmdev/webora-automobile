@@ -7,13 +7,13 @@ import { SearchButton } from '@/components/shared/search-button'
 import { Button } from '@/components/ui/button'
 import { routes } from '@/config/routes'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import Link from 'next/link'
 
 export function HeroFiltersPanel({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   const totalFiltersApplied = Object.keys(searchParams || {}).length
   const isFilterApplied = totalFiltersApplied > 0
 

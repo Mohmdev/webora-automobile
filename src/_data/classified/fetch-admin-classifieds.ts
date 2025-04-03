@@ -6,7 +6,7 @@ import {
   type ClassifiedsTableSortType,
   validateSortOrder,
 } from '@/schemas/table-sort.schema'
-import type { ClassifiedKeys, ParamsAwaitedProps } from '@/types'
+import type { ClassifiedKeys, ResolvedParams } from '@/types'
 import type { Prisma } from '@prisma/client'
 
 /**
@@ -22,7 +22,7 @@ import type { Prisma } from '@prisma/client'
  * @returns Object containing classified listings, total count, and pagination details
  */
 export async function fetchAdminClassifieds(
-  searchParams: ParamsAwaitedProps['searchParams']
+  searchParams: ResolvedParams['searchParams']
 ) {
   // Process pagination parameters
   const { page, itemsPerPage } = validatePagination({

@@ -2,14 +2,14 @@
 
 import { fetchRecordsCount } from '@/_data'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import { FiltersDialog } from './filters-dialog'
 
 export function Header({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   const {
     data: { count } = { count: 0 },
   } = useQuery({

@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/pagination'
 import { env } from '@/env'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryState } from 'nuqs'
 import { useEffect, useState } from 'react'
@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react'
 interface PaginationProps {
   baseURL: string
   maxVisiblePages?: number
-  searchParams: ParamsAwaitedProps['searchParams']
+  searchParams: ResolvedParams['searchParams']
   isFavouritesList?: boolean
   styles: {
     paginationRoot: string

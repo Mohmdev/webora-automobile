@@ -3,10 +3,10 @@
 import { SelectFilter } from '@/components/filters/ui/select-filter'
 import { useFilters } from '@/hooks/filters/use-filters'
 import { formatTransmission } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { Transmission } from '@prisma/client'
 
-export function TransmissionFilter({ searchParams }: ParamsAwaitedProps) {
+export function TransmissionFilter({ searchParams }: ResolvedParams) {
   const { queryStates, handleSelectChange } = useFilters(
     searchParams as Record<string, string>
   )

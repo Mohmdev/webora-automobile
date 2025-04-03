@@ -3,10 +3,10 @@ import { ListRecords } from '@/components/catalog/list'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { routes } from '@/config/routes'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
-import type { ParamsPromisedProps } from '@/types'
+import type { PromisedParams } from '@/types'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
-export default async function FavouritesPage(props: ParamsPromisedProps) {
+export default async function FavouritesPage(props: PromisedParams) {
   const searchParams = await props.searchParams
   const queryClient = getQueryClient()
 

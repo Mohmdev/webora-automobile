@@ -1,9 +1,12 @@
+'use client'
+
 import { fetchBrands } from '@/_data'
 import { IconCloud } from '@/components/motion/group/icon-cloud'
 import { routes } from '@/config/routes'
+import { useQuery } from '@tanstack/react-query'
 import { BrandIcon } from './brand-icon'
 
-export async function BrandsMotionSlider({
+export function BrandsMotionSlider({
   iconHeight = 'h-18',
   enableStaticText = true,
   staticText = 'Performance, Reliability, and Luxury',
@@ -14,7 +17,14 @@ export async function BrandsMotionSlider({
   staticText?: string
   className?: string
 }) {
-  const brands = await fetchBrands()
+  const { data: brands } = useQuery({
+    queryKey: ['brands'],
+    queryFn: fetchBrands,
+  })
+
+  if (!brands) {
+    return null
+  }
 
   return (
     <IconCloud

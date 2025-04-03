@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { useFilters } from '@/hooks/filters/use-filters'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { type VariantProps, cva } from 'class-variance-authority'
 import type { ButtonHTMLAttributes } from 'react'
 
@@ -21,7 +21,7 @@ const buttonVariants = cva('flex-1 py-1 text-sm', {
   },
 })
 
-type ClearFiltersProps = ParamsAwaitedProps &
+type ClearFiltersProps = ResolvedParams &
   VariantProps<typeof buttonVariants> &
   ButtonHTMLAttributes<HTMLButtonElement> & {
     label?: string

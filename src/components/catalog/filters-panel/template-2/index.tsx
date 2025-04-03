@@ -1,6 +1,6 @@
 import { Sidebar, SidebarRail } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import { PanelBody } from './body'
 import { PanelFooter } from './footer'
 import { PanelHeader } from './header'
@@ -8,7 +8,7 @@ import { PanelHeader } from './header'
 export function FiltersPanel2({
   searchParams,
   className,
-}: ParamsAwaitedProps & { className?: string }) {
+}: ResolvedParams & { className?: string }) {
   return (
     <Sidebar
       variant="sidebar"

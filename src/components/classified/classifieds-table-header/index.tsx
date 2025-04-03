@@ -1,7 +1,7 @@
 'use client'
 
 import { sortOrder } from '@/config/constants'
-import type { ClassifiedKeys, ParamsPromisedProps } from '@/types'
+import type { ClassifiedKeys, PromisedParams } from '@/types'
 import type { Classified } from '@prisma/client'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { TableHeader, TableRow } from '../../ui/table'
@@ -21,7 +21,7 @@ const classifiedKeys = [
   'createdAt',
 ] as const
 
-interface ClassifiedTableProps extends ParamsPromisedProps {
+interface ClassifiedTableProps extends PromisedParams {
   classifieds: Classified[]
   sort: ClassifiedKeys
   order: 'asc' | 'desc'

@@ -10,10 +10,10 @@ import {
 } from '@/components/ui/select'
 import { useFilters } from '@/hooks/filters/use-filters'
 import { useTaxonomyOptions } from '@/hooks/filters/use-taxonomy-options'
-import type { ParamsAwaitedProps } from '@/types'
+import type { ResolvedParams } from '@/types'
 import type React from 'react'
 
-export function ModelFilter({ searchParams }: ParamsAwaitedProps) {
+export function ModelFilter({ searchParams }: ResolvedParams) {
   const { models, isLoading } = useTaxonomyOptions(
     searchParams as Record<string, string> | undefined
   )
