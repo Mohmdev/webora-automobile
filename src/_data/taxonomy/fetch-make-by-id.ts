@@ -1,14 +1,14 @@
 import { prisma } from '@/lib/prisma'
 
 /**
- * Fetches a specific vehicle make by its ID
+ * Fetches a specific vehicle make by its ID.
  *
- * This function retrieves a unique make record from the database based on the provided ID.
- * Used for detailed make information in vehicle listings, filters, and catalog pages.
- * Returns null if no make is found with the specified ID.
+ * This function retrieves a unique `Make` record from the database based on the provided ID.
+ * Used for obtaining detailed make information for display in listings, filters, or catalog pages.
+ * Returns null if no `makeId` is provided or if no make is found with the specified ID.
  *
- * @param makeId - The unique identifier of the make to retrieve
- * @returns The make record if found, or null if not found
+ * @param {number} makeId - The unique numeric identifier of the make to retrieve.
+ * @returns {Promise<import('@prisma/client').Make | null>} A promise that resolves to the `Make` record if found, or null otherwise.
  */
 export async function fetchMakeById(makeId: number) {
   if (!makeId) {

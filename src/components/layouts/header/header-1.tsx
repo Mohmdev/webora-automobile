@@ -1,4 +1,12 @@
 import { auth } from '@/auth'
+import { SignOutForm } from '@/components/auth/sign-out-form'
+import { Button } from '@/components/ui/button'
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { navLinks } from '@/config/constants'
 import { routes } from '@/config/routes'
 import { redis } from '@/lib/redis-store'
@@ -7,9 +15,6 @@ import type { FavouritesProps } from '@/types'
 import { HeartIcon, MenuIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { SignOutForm } from '../../auth/sign-out-form'
-import { Button } from '../../ui/button'
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '../../ui/sheet'
 
 export const PublicHeader = async () => {
   const session = await auth()

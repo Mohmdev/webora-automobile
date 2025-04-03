@@ -1,15 +1,21 @@
 'use client'
 
-import { subscribeAction } from '@/app/_actions/subscribe'
+import { subscribeCustomer } from '@/_data'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { SubscribeSchema } from '@/schemas/subscribe.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CircleCheckIcon, CircleX, Loader2 } from 'lucide-react'
 import { useActionState, useEffect, useRef } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useForm } from 'react-hook-form'
-import { Button } from '../ui/button'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
-import { Input } from '../ui/input'
 
 const SubscribeButton = () => {
   const { pending } = useFormStatus()
@@ -28,7 +34,7 @@ const SubscribeButton = () => {
   )
 }
 export const NewsletterForm = () => {
-  const [state, formAction] = useActionState(subscribeAction, {
+  const [state, formAction] = useActionState(subscribeCustomer, {
     success: false,
     message: '',
   })

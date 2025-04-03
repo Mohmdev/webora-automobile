@@ -2,10 +2,14 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 
 /**
- * Fetches a customer by their ID including their classified and lifecycle information
+ * Fetches a customer by their ID, including their associated classified and lifecycle information.
  *
- * @param id - The customer ID to fetch
- * @returns The customer object with all related data, or null if not found or invalid ID
+ * This function retrieves a single customer record from the database based on the provided ID.
+ * It validates the ID to ensure it's a positive number before querying the database.
+ * The response includes related `classified` and `lifecycle` data.
+ *
+ * @param {string | number} id - The ID of the customer to fetch. Can be a string or a number, will be coerced to a number.
+ * @returns {Promise<(import('@prisma/client').Customer & { classified: import('@prisma/client').Classified | null; lifecycle: import('@prisma/client').Lifecycle | null; }) | null>} A promise that resolves to the customer object with related data, or null if the ID is invalid or the customer is not found.
  */
 export async function fetchCustomerById(id: string | number) {
   const idSchema = z.coerce.number().positive()

@@ -2,7 +2,18 @@ import { endpoints } from '@/config/endpoints'
 import { prisma } from '@/lib/prisma'
 import { redis } from '@/lib/redis-store'
 
-// Fetch taxonomy data for prefetching with server-side Redis caching
+/**
+ * Fetches taxonomy data (makes, models, model variants) with server-side Redis caching.
+ *
+ * This function attempts to fetch makes data from the Redis cache first.
+ * If the data is not found in the cache, it fetches the makes from the database,
+ * stores them in the cache with a 24-hour expiration, and then returns the data.
+ * If Redis or database operations fail, it falls back to fetching the data from the API endpoint.
+ *
+ * @returns {Promise<{ makes: any[], models: any[], modelVariants: any[] }>} A promise that resolves to the taxonomy data.
+ *          Initially, only 'makes' might be populated from cache/DB; 'models' and 'modelVariants' are empty.
+ *          In case of fallback, it returns the full response from the API.
+ */
 export async function fetchTaxonomiesDataFromRedis() {
   try {
     // Check Redis cache first

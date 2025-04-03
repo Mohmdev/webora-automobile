@@ -1,10 +1,10 @@
 'use client'
 
-import { logoutOfAllSessions } from '@/app/_actions/sign-out'
+import { signOutAllSessions } from '@/auth/actions'
+import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { Button } from '../ui/button'
 
 const LogoutButton = () => {
   const { pending } = useFormStatus()
@@ -24,8 +24,8 @@ const LogoutButton = () => {
   )
 }
 
-export const SettingsPageContent = () => {
-  const [_, formAction] = useActionState(logoutOfAllSessions, null)
+export const AdminSettingsClient = () => {
+  const [_, formAction] = useActionState(signOutAllSessions, null)
 
   return (
     <div className="divide-y divide-white/5 px-6">

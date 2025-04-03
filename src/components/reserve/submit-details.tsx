@@ -1,6 +1,17 @@
 'use client'
 
-import { createCustomerAction } from '@/app/_actions/customer'
+import { createCustomer } from '@/_data'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
 import { formatDate } from '@/lib/utils'
@@ -14,17 +25,6 @@ import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '../ui/button'
-import { Checkbox } from '../ui/checkbox'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form'
-import { Input } from '../ui/input'
 
 export const SubmitDetails = (props: MultiStepFormComponentProps) => {
   const { params, searchParams } = props
@@ -71,7 +71,7 @@ export const SubmitDetails = (props: MultiStepFormComponentProps) => {
 
       const date = formatDate(handoverDate, handoverTime)
 
-      const { success, message } = await createCustomerAction({
+      const { success, message } = await createCustomer({
         slug: params?.slug as string,
         date,
         ...data,

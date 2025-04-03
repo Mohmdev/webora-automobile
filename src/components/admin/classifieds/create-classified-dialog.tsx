@@ -1,6 +1,7 @@
 'use client'
 
 import { createClassified } from '@/_data'
+import type { AiClient } from '@/ai'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -13,7 +14,6 @@ import { Form } from '@/components/ui/form'
 import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
-import type { AiClient } from '@/providers/ai'
 import { ClassifiedAISchema } from '@/schemas/classified-ai.schema'
 import {
   SingleImageSchema,

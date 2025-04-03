@@ -8,6 +8,16 @@ export interface TaxonomyResponse {
   modelVariants: FilterOptions<string, string>
 }
 
+/**
+ * Fetches taxonomy data (makes, models, model variants) from the API based on provided search parameters.
+ *
+ * This function constructs a URL with the given search parameters and sends a GET request
+ * to the taxonomy endpoint. It returns the taxonomy data structured as FilterOptions.
+ * If no search parameters are provided, it returns empty arrays for makes, models, and model variants.
+ *
+ * @param {Record<string, string> | undefined} searchParams - The search parameters to filter the taxonomy data.
+ * @returns {Promise<TaxonomyResponse>} A promise that resolves to the taxonomy data.
+ */
 export async function fetchTaxonomyDataFromApi(
   searchParams: Record<string, string> | undefined
 ) {

@@ -1,9 +1,15 @@
 'use client'
 
+import { completeChallenge, issueChallenge } from '@/auth/challenge'
+import { OneTimePasswordInput } from '@/components/auth/otp-input'
+import { Button } from '@/components/ui/button'
 import {
-  completeChallengeAction,
-  resendChallengeAction,
-} from '@/app/_actions/challenge'
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
 import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
 import { OneTimePasswordSchema, type OtpSchemaType } from '@/schemas/otp.schema'
@@ -12,9 +18,6 @@ import { Loader2, RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState, useTransition } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '../ui/button'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
-import { OneTimePasswordInput } from './otp-input'
 
 export const OtpForm = () => {
   const [isCodePending, startCodeTransition] = useTransition()
@@ -27,7 +30,7 @@ export const OtpForm = () => {
 
   const onSubmit: SubmitHandler<OtpSchemaType> = (data) => {
     startSubmitTransition(async () => {
-      const result = await completeChallengeAction(data.code)
+      const result = await completeChallenge(data.code)
       // console.log('first', { result })
 
       if (result?.success) {
@@ -46,7 +49,7 @@ export const OtpForm = () => {
 
   const sendCode = () => {
     startCodeTransition(async () => {
-      const { success, message } = await resendChallengeAction()
+      const { success, message } = await issueChallenge()
       setSendButtonText('Resend code')
 
       if (!success) {

@@ -9,10 +9,24 @@ import {
 import type { CustomerKeys, ResolvedParams } from '@/types'
 
 /**
- * Fetches customers with pagination, sorting, and filtering capabilities
+ * Fetches paginated, sorted, and filtered customer records for the admin panel.
  *
- * @param searchParams - The search parameters from the URL
- * @returns An object containing the customers, total count, and pagination info
+ * This function processes search parameters to retrieve a customized list of customers
+ * based on pagination (page, itemsPerPage), sorting (sort, order), and filtering (q, status).
+ * It validates the input parameters and constructs the appropriate Prisma query.
+ * Includes the associated `classified` record for each customer.
+ *
+ * @param {ResolvedParams['searchParams']} [searchParams={}] - Search parameters from the request, potentially including `page`, `itemsPerPage`, `sort`, `order`, `q`, and `status`. Defaults to an empty object.
+ * @returns {Promise<{
+ *   customers: Array<import('@prisma/client').Customer & { classified: import('@prisma/client').Classified | null }>;
+ *   count: number;
+ *   pagination: {
+ *     page: number;
+ *     itemsPerPage: number;
+ *     totalPages: number;
+ *   };
+ * }>} A promise that resolves to an object containing the fetched customer records (with associated classified),
+ *          the total count of matching records, and pagination details (current page, items per page, total pages).
  */
 export async function fetchCustomers(
   searchParams: ResolvedParams['searchParams'] = {}

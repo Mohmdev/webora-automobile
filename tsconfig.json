@@ -24,7 +24,7 @@
       "@/*": ["./src/*"],
       "@/emails/*": ["./emails/*"],
       "@/env": ["./env.mjs"],
-      "@/auth": ["./auth"]
+      "@/auth": ["./src/auth"]
     }
   },
   "include": [

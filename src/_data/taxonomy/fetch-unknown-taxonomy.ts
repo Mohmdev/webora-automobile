@@ -1,17 +1,19 @@
 import { prisma } from '@/lib/prisma'
 
 /**
- * Fetches the UNKNOWN make and model for fallback in vehicle classification
+ * Fetches the special 'UNKNOWN' make and associated 'UNKNOWN' model records.
  *
- * This utility function retrieves the special "UNKNOWN" make and model records
- * that are used as fallbacks when vehicle classification cannot determine
- * the actual make and model. This is important for maintaining data integrity
- * by avoiding null references in the database.
+ * This utility function retrieves the specific make and model records designated as 'UNKNOWN'
+ * in the database. These are crucial as fallbacks in processes like AI vehicle classification
+ * or data imports where the actual make/model cannot be determined, ensuring data integrity
+ * by preventing null foreign key references.
  *
- * Used in AI classification workflows and data import processes when
- * vehicle makes and models cannot be properly identified.
+ * It first finds the 'UNKNOWN' make, then finds the 'UNKNOWN' model specifically linked to that make.
+ * Logs errors if either the 'UNKNOWN' make or its associated 'UNKNOWN' model cannot be found.
  *
- * @returns Object containing UNKNOWN make and model, or null values if not found
+ * @returns {Promise<{ make: import('@prisma/client').Make | null; model: import('@prisma/client').Model | null; }>} A promise resolving to an object containing:
+ *   - `make`: The 'UNKNOWN' Make record, or null if not found.
+ *   - `model`: The 'UNKNOWN' Model record associated with the 'UNKNOWN' make, or null if the make or model is not found.
  */
 export async function fetchUnknownTaxonomy() {
   try {

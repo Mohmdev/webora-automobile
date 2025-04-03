@@ -1,6 +1,6 @@
 'use client'
 
-import { signInAction } from '@/app/_actions/sign-in'
+import { signIn } from '@/auth/actions'
 import { CircleCheckIcon, CircleX, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useActionState, useEffect, useRef } from 'react'
@@ -27,7 +27,7 @@ const SubmitButton = () => {
 }
 
 export const SignInForm = () => {
-  const [state, formAction] = useActionState(signInAction, {
+  const [state, formAction] = useActionState(signIn, {
     success: false,
     message: '',
   })

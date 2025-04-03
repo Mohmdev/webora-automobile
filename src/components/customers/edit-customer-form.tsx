@@ -1,5 +1,21 @@
 'use client'
-import { updateCustomerAction } from '@/app/_actions/customer'
+
+import { updateCustomer } from '@/_data'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { toast } from '@/hooks/use-toast'
 import { formatCustomerStatus } from '@/lib/utils'
 import {
@@ -10,21 +26,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { type Customer, CustomerStatus } from '@prisma/client'
 import { useTransition } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select'
 
 export const EditCustomerForm = ({ customer }: { customer: Customer }) => {
   const form = useForm<EditCustomerType>({
@@ -38,7 +39,7 @@ export const EditCustomerForm = ({ customer }: { customer: Customer }) => {
 
   const onChangeHandler: SubmitHandler<EditCustomerType> = (data) => {
     startTransition(async () => {
-      const result = await updateCustomerAction({
+      const result = await updateCustomer({
         id: customer.id,
         status: data.status,
       })

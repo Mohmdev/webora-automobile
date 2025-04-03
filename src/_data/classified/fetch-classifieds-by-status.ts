@@ -2,15 +2,17 @@ import { prisma } from '@/lib/prisma'
 import type { ClassifiedStatus } from '@prisma/client'
 
 /**
- * Fetches classified listings by status with all image information
+ * Fetches the latest classified listings by their status, including all associated images.
  *
- * This function retrieves the latest classified records from the database based on their status,
- * including all related images. Used primarily on the homepage to display latest arrivals
- * and in the admin panel for listing management.
+ * This function retrieves a specified number of the most recent classified records from the database
+ * that match the given status. It includes all related images for each listing.
+ * Returns an empty array if no status is provided.
  *
- * @param status - The status of the classifieds to retrieve
- * @param howMany - Maximum number of records to return
- * @returns Array of classified records with images (empty array if none found)
+ * Used primarily on the homepage to display latest arrivals and in the admin panel for managing listings by status.
+ *
+ * @param {ClassifiedStatus} status - The status of the classified listings to retrieve.
+ * @param {number} howMany - The maximum number of records to return.
+ * @returns {Promise<Array<import('@prisma/client').Classified & { images: import('@prisma/client').Image[] }>>} A promise that resolves to an array of the latest classified records matching the status, including their images. Returns an empty array if no status is provided or no matching records are found.
  */
 export async function fetchClassifiedsByStatus(
   status: ClassifiedStatus,

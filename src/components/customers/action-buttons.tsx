@@ -1,5 +1,6 @@
 'use client'
-import { deleteCustomerAction } from '@/app/_actions/customer'
+
+import { deleteCustomer as deleteCustomerMutation } from '@/_data'
 import { toast } from '@/hooks/use-toast'
 import type { CustomerWithClassified } from '@/types'
 import { Loader2, PencilIcon, Trash } from 'lucide-react'
@@ -15,15 +16,15 @@ export const ActionButtons = ({
   const [isPending, startTransition] = useTransition()
   const deleteCustomer = (id: number) => {
     startTransition(async () => {
-      const result = await deleteCustomerAction(id)
+      const result = await deleteCustomerMutation(id)
       if (result.success) {
         toast({
-          title: 'Classified Deleted',
+          title: 'Customer Deleted',
           description: result.message,
         })
       } else {
         toast({
-          title: 'Error Deleting Classified',
+          title: 'Error Deleting Customer',
           description: result.message,
           variant: 'destructive',
         })

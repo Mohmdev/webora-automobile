@@ -7,7 +7,7 @@ import { prisma } from '@/lib/prisma'
  * Used in the brands slider component to showcase featured manufacturers on the website.
  * The brands are filtered case-insensitively by name to ensure consistent results.
  *
- * @returns Array of Make objects containing id, image, and name
+ * @returns {Promise<Array<import('@prisma/client').Make>>} A promise that resolves to an array of Make objects, each containing id, image, and name.
  */
 export async function fetchBrands() {
   const brands = await prisma.make.findMany({

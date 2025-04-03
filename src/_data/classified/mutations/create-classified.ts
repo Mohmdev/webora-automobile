@@ -55,10 +55,15 @@ export type FindResult<_T> = {
 }
 
 /**
- * Finds a vehicle make by ID with fallback to UNKNOWN
+ * Finds a vehicle make by its ID, with a fallback to an 'UNKNOWN' make.
  *
- * @param makeId - The ID of the make to find
- * @returns Object with success status and make data if found
+ * Queries the database for a make with the given ID. If not found or ID is null/undefined,
+ * it attempts to find a make named 'UNKNOWN'.
+ *
+ * @param {number | null | undefined} makeId - The ID of the make to find.
+ * @returns {Promise<FindResult<Make>>} A promise resolving to an object indicating success or failure.
+ *          On success, contains the found `Make` object (either the specific one or 'UNKNOWN').
+ *          On failure, includes an error message.
  */
 export async function findMake(
   makeId: number | null | undefined
@@ -82,11 +87,16 @@ export async function findMake(
 }
 
 /**
- * Finds a vehicle model by ID with fallback to UNKNOWN
+ * Finds a vehicle model by its ID within a specific make, with a fallback to an 'UNKNOWN' model.
  *
- * @param modelId - The ID of the model to find
- * @param makeId - The ID of the make the model belongs to
- * @returns Object with success status and model data if found
+ * Queries the database for a model with the given ID. If not found or ID is null/undefined,
+ * it attempts to find a model named 'UNKNOWN' associated with the specified `makeId`.
+ *
+ * @param {number | null | undefined} modelId - The ID of the model to find.
+ * @param {number} makeId - The ID of the make the model belongs to.
+ * @returns {Promise<FindResult<Model>>} A promise resolving to an object indicating success or failure.
+ *          On success, contains the found `Model` object (either the specific one or 'UNKNOWN').
+ *          On failure, includes an error message.
  */
 export async function findModel(
   modelId: number | null | undefined,
@@ -116,10 +126,13 @@ export async function findModel(
 }
 
 /**
- * Finds a vehicle model variant by ID
+ * Finds a vehicle model variant by its ID.
  *
- * @param modelVariantId - The ID of the model variant to find
- * @returns The model variant record or null if not found
+ * Queries the database for a model variant with the given ID. Returns null if the ID is null/undefined
+ * or if the variant is not found.
+ *
+ * @param {number | null | undefined} modelVariantId - The ID of the model variant to find.
+ * @returns {Promise<ModelVariant | null>} A promise resolving to the found `ModelVariant` object or null.
  */
 export async function getModelVariant(
   modelVariantId: number | null | undefined
@@ -134,13 +147,16 @@ export async function getModelVariant(
 }
 
 /**
- * Generates a title for a classified listing
+ * Generates a formatted title string for a classified listing based on vehicle details.
  *
- * @param year - The vehicle year
- * @param make - The vehicle make
- * @param model - The vehicle model
- * @param modelVariant - The vehicle model variant
- * @returns A formatted title string
+ * Combines the year, make name, and model name. Appends the model variant name if it's
+ * available and not a placeholder ('-' or 'UNKNOWN'). Ensures parts are trimmed and joined correctly.
+ *
+ * @param {number | undefined} year - The vehicle manufacturing year.
+ * @param {Make} make - The vehicle make object.
+ * @param {Model} model - The vehicle model object.
+ * @param {ModelVariant | null} modelVariant - The vehicle model variant object, or null if not applicable.
+ * @returns {Promise<string>} A promise resolving to the generated title string.
  */
 export async function generateTitle(
   year: number | undefined,
@@ -168,11 +184,15 @@ export async function generateTitle(
 }
 
 /**
- * Generates a unique URL-friendly slug for a classified listing
+ * Generates a unique, URL-friendly slug for a classified listing.
  *
- * @param title - The listing title
- * @param vrm - The vehicle registration mark
- * @returns A URL-friendly slug string
+ * Creates a slug based on the title and Vehicle Registration Mark (VRM). If no VRM is provided,
+ * a random number is appended. Checks for existing slugs containing the base slug and appends
+ * a counter if duplicates are found to ensure uniqueness.
+ *
+ * @param {string} title - The listing title.
+ * @param {string | undefined} vrm - The vehicle registration mark (optional).
+ * @returns {Promise<string>} A promise resolving to the generated unique slug string.
  */
 export async function generateSlug(
   title: string,
@@ -192,16 +212,20 @@ export async function generateSlug(
 }
 
 /**
- * Creates a new classified listing
+ * Creates a new classified listing record in the database.
  *
- * @param data - The classified data
- * @param slug - The generated URL-friendly slug
- * @param title - The generated title
- * @param make - The vehicle make
- * @param model - The vehicle model
- * @param modelVariant - The vehicle model variant
- * @param thumbhashUri - The thumbhash URI for the main image
- * @returns The created classified record
+ * Constructs the database record using the provided generative data, generated slug/title,
+ * make/model/variant objects, and thumbhash URI. Sets default values for fields like price,
+ * currency, etc., if not provided in the input data.
+ *
+ * @param {GenerativeClassifiedData} data - The core data for the classified listing.
+ * @param {string} slug - The generated unique URL-friendly slug.
+ * @param {string} title - The generated listing title.
+ * @param {Make} make - The associated vehicle make object.
+ * @param {Model} model - The associated vehicle model object.
+ * @param {ModelVariant | null} modelVariant - The associated vehicle model variant object, or null.
+ * @param {string} thumbhashUri - The Data URI for the image's thumbhash placeholder.
+ * @returns {Promise<import('@prisma/client').Classified>} A promise resolving to the newly created `Classified` database record.
  */
 export async function createClassifiedRecord(
   data: GenerativeClassifiedData,
@@ -248,20 +272,29 @@ export async function createClassifiedRecord(
 }
 
 /**
- * Creates a new classified advertisement
+ * Creates a new classified advertisement listing.
  *
- * This is the main function for creating a classified listing. It coordinates
- * the creation process by:
- * 1. Finding the necessary taxonomy data (make, model, variant)
- * 2. Generating title and slug
- * 3. Processing the image
- * 4. Creating the classified record
- * 5. Revalidating affected routes
+ * This is the main server action for creating a classified listing. It performs the following steps:
+ * 1. Verifies user authentication.
+ * 2. Finds the necessary taxonomy data (make, model, variant) using helper functions, with fallbacks.
+ * 3. Generates a unique title and slug for the listing.
+ * 4. Generates a ThumbHash Data URI for the primary image.
+ * 5. Creates the classified record in the database using `createClassifiedRecord`.
+ * 6. Revalidates the admin classifieds path cache (`routes.admin.classifieds`).
  *
- * Used in admin dashboard for vehicle listing creation.
+ * Handles errors during the process and returns a structured response indicating success or failure.
+ * Used primarily in the admin dashboard for vehicle listing creation.
  *
- * @param data - The generative classified data
- * @returns Object with success status, optional message, and created ID
+ * @param {GenerativeClassifiedData} data - An object containing the initial data for the classified listing (year, makeId, modelId, image, etc.).
+ * @returns {Promise<{
+ *   success: boolean;
+ *   classifiedId?: number | null;
+ *   data?: import('@prisma/client').Classified | null;
+ *   message?: string;
+ *   error?: string;
+ * }>} A promise resolving to an object indicating the outcome:
+ *   - On success: `{ success: true, classifiedId: number, data: Classified }`
+ *   - On failure (e.g., auth error, DB error, missing taxonomy): `{ success: false, error: string, message?: string }`
  */
 export async function createClassified(data: GenerativeClassifiedData) {
   let success = false

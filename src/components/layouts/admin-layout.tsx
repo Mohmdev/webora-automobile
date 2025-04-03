@@ -1,6 +1,6 @@
+import { AiClient } from '@/ai'
 import { AdminHeader } from '@/components/layouts/header/admin-header'
 import { AdminSidebar } from '@/components/layouts/sidebar/admin-sidebar'
-import { AiClient } from '@/providers/ai'
 import type { PropsWithChildren } from 'react'
 
 export function AdminLayout({ children }: PropsWithChildren) {

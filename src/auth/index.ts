@@ -1,5 +1,5 @@
 import NextAuth from 'next-auth'
-import { config } from './auth.config'
+import { config } from './config'
 
 export const {
   handlers: { GET, POST },

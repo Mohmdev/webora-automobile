@@ -4,10 +4,22 @@ import { ClassifiedStatus, CustomerStatus } from '@prisma/client'
 import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns'
 
 /**
- * Fetches KPI dashboard data for the current and previous month
- * Includes data about sales, customers, conversions and their percentage changes
+ * Fetches Key Performance Indicator (KPI) data for the dashboard, comparing the current and previous months.
  *
- * @returns Dashboard KPI metrics with percentage changes
+ * This function calculates various metrics such as total sales, number of cars sold, new customers,
+ * and conversion rate for the current month. It then compares these metrics with the data from
+ * the previous month to calculate percentage changes.
+ *
+ * @returns {Promise<{
+ *   totalSales: number;
+ *   carsSoldThisMonth: number;
+ *   newCustomersThisMonth: number;
+ *   conversionRate: number;
+ *   conversionRatePercentageChange: number;
+ *   salesPercentageChange: number;
+ *   carsSoldPercentageChange: number;
+ *   newCustomersPercentageChange: number;
+ * }>} A promise that resolves to an object containing the calculated dashboard metrics and their percentage changes.
  */
 export async function fetchDashboardData() {
   const now = new Date()
@@ -152,9 +164,13 @@ export async function fetchDashboardData() {
 }
 
 /**
- * Fetches sales data for charting over the last 12 months
+ * Fetches sales data aggregated by month for the last 12 months, suitable for charting.
  *
- * @returns Monthly sales data for the last 12 months
+ * This function iterates through the last 12 months, calculating the total sales for each month.
+ * The data is formatted for use in charts, with each element containing the month abbreviation and the total sales amount.
+ *
+ * @returns {Promise<Array<{ month: string; sales: number }>>} A promise that resolves to an array of objects,
+ *          each representing a month's sales data with 'month' (abbreviated name) and 'sales' (total amount).
  */
 export async function fetchChartData() {
   const now = new Date()

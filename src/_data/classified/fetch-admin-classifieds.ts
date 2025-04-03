@@ -10,16 +10,25 @@ import type { ClassifiedKeys, ResolvedParams } from '@/types'
 import type { Prisma } from '@prisma/client'
 
 /**
- * Fetches paginated, sorted, and filtered classified listings for the admin panel
+ * Fetches paginated, sorted, and filtered classified listings for the admin panel.
  *
- * This function processes search params to retrieve a customized view of classified listings
- * based on pagination, sorting, and filtering requirements. It handles all the necessary
- * validation and processing of search parameters to construct the database query.
+ * This function processes search parameters to retrieve a customized view of classified listings
+ * based on pagination (page, itemsPerPage), sorting (sort, order), and filtering (q, status).
+ * It validates the input parameters and constructs the appropriate Prisma query.
  *
- * Used in the admin classifieds table to display and manage listings with advanced filtering.
+ * Used in the admin classifieds table to display and manage listings with advanced controls.
  *
- * @param searchParams - Search parameters from the request containing pagination, sorting, and filtering options
- * @returns Object containing classified listings, total count, and pagination details
+ * @param {ResolvedParams['searchParams']} searchParams - Search parameters from the request, potentially including `page`, `itemsPerPage`, `sort`, `order`, `q`, and `status`.
+ * @returns {Promise<{
+ *   classifieds: Array<import('@prisma/client').Classified & { images: import('@prisma/client').Image[] }>;
+ *   count: number;
+ *   totalPages: number;
+ *   page: number;
+ *   itemsPerPage: number;
+ *   sort: ClassifiedsTableSortType;
+ *   order: 'asc' | 'desc';
+ * }>} A promise that resolves to an object containing the fetched classified listings (with the first image included),
+ *          the total count of matching records, total pages, and the current pagination/sorting state.
  */
 export async function fetchAdminClassifieds(
   searchParams: ResolvedParams['searchParams']
