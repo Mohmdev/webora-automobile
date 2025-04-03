@@ -1,4 +1,4 @@
-import { AnimatedGroup } from '@/components/motion-primitives/animated-group'
+import { AnimatedGroup } from '@/components/motion/group/animated-group'
 import { imageSources } from '@/config/constants'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'

@@ -1,7 +1,6 @@
 'use client'
 
 import { createClassified } from '@/_data'
-import type { AI } from '@/app/_actions/ai'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -14,6 +13,7 @@ import { Form } from '@/components/ui/form'
 import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
+import type { AiClient } from '@/providers/ai'
 import { ClassifiedAISchema } from '@/schemas/classified-ai.schema'
 import {
   SingleImageSchema,
@@ -34,8 +34,8 @@ export const CreateClassifiedDialog = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isUploading, startUploadTransition] = useTransition()
   const [isCreating, startCreateTransition] = useTransition()
-  const { generateClassified } = useActions<typeof AI>()
-  const [messages, setMessages] = useUIState<typeof AI>()
+  const { generateClassified } = useActions<typeof AiClient>()
+  const [messages, setMessages] = useUIState<typeof AiClient>()
 
   const imageForm = useForm<SingleImageType>({
     resolver: zodResolver(SingleImageSchema),

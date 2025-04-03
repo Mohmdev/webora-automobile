@@ -9,21 +9,15 @@ import {
   GenerativeStream,
   type GenerativeStreamProps,
 } from '@/components/admin/classifieds/generative-stream'
-import { env } from '@/env'
+import { openai } from '@/providers/ai/openai'
 import {
   ClassifiedDetailsAISchema,
   ClassifiedTaxonomyAISchema,
 } from '@/schemas/classified-ai.schema'
-import { createOpenAI } from '@ai-sdk/openai'
 import { type CoreMessage, generateObject } from 'ai'
 import { createStreamableUI, createStreamableValue } from 'ai/rsc'
 import type { z } from 'zod'
 import type { ClientMessage } from './types'
-
-const openai = createOpenAI({
-  apiKey: env.OPENAI_API_KEY,
-  compatibility: 'strict',
-})
 
 export async function generateClassified(
   image: string

@@ -1,6 +1,6 @@
 import { fetchBrands } from '@/_data'
+import { IconCloud } from '@/components/motion/group/icon-cloud'
 import { routes } from '@/config/routes'
-import { LogoCloud } from '../logo-cloud'
 import { BrandIcon } from './brand-icon'
 
 export async function BrandsMotionSlider({
@@ -17,7 +17,7 @@ export async function BrandsMotionSlider({
   const brands = await fetchBrands()
 
   return (
-    <LogoCloud
+    <IconCloud
       enableStaticText={enableStaticText}
       staticText={staticText}
       className={className}
@@ -32,6 +32,6 @@ export async function BrandsMotionSlider({
           height={iconHeight}
         />
       ))}
-    </LogoCloud>
+    </IconCloud>
   )
 }

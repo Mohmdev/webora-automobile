@@ -1,5 +1,7 @@
 import { Toaster } from '@/components/ui/toaster'
 import { cn } from '@/lib/utils'
+import { ReactQueryProvider } from '@/providers/react-query'
+import { ThemeProvider } from '@/providers/theme'
 import type { Metadata } from 'next'
 import { Mulish, Roboto } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
@@ -7,8 +9,6 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import type React from 'react'
 
 import '@/styles/globals.css'
-import { ThemeProvider } from '@/components/theme-provider'
-import ReactQueryProvider from '@/providers/react-query'
 
 const mulish = Mulish({
   weight: 'variable',
@@ -37,6 +37,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          preventHydrationMismatch={false}
         >
           <NextTopLoader showSpinner={false} />
           <ReactQueryProvider>

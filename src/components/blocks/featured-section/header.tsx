@@ -1,5 +1,5 @@
-import { AnimatedGroup } from '@/components/motion-primitives/animated-group'
-import { TextEffect } from '@/components/motion-primitives/text-effect'
+import { AnimatedGroup } from '@/components/motion/group/animated-group'
+import { TextEffect } from '@/components/motion/ui/text-effect'
 import { routes } from '@/config/routes'
 import { cn } from '@/lib/utils'
 import { CTAButton } from './cta-button'
