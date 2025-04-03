@@ -11,7 +11,7 @@ import * as SliderPrimitive from '@radix-ui/react-slider'
 import * as React from 'react'
 
 const Slider = React.forwardRef<
-  React.ElementRef<typeof SliderPrimitive.Root>,
+  React.ComponentRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & {
     showTooltip?: boolean
     tooltipContent?: (value: number) => React.ReactNode

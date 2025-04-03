@@ -19,6 +19,7 @@ export async function fetchRecordsWithPriceSelect(
     where: buildClassifiedFilterQuery(searchParams),
     select: {
       price: true,
+      id: true,
     },
   })
 

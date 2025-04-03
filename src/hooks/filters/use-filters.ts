@@ -92,6 +92,7 @@ export function useFilters(searchParams: Record<string, string> | undefined) {
 
   return {
     queryStates,
+    setQueryStates,
     filterCount,
     clearFilters,
     handleChange,

@@ -1,10 +1,7 @@
 'use client'
 
-import {
-  fetchMinMaxValues,
-  fetchRecordsCount,
-  fetchRecordsWithPriceSelect,
-} from '@/_data'
+import { fetchMinMaxValues, fetchRecordsWithPriceSelect } from '@/_data'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
@@ -14,40 +11,34 @@ import { cn } from '@/lib/utils'
 import type { ResolvedParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import type React from 'react'
-import { useId } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useId } from 'react'
 
 export function PriceRangeSliderWithInput({
   searchParams,
   className,
-}: ResolvedParams & { className?: string }) {
-  const { data: minMaxValues } = useQuery({
-    queryKey: ['minMaxValues'],
-    queryFn: fetchMinMaxValues,
-  })
-
+  enableResultsButton = false,
+}: ResolvedParams & { className?: string; enableResultsButton?: boolean }) {
+  const id = useId()
   const { data: recordsWithPrice } = useQuery({
     queryKey: ['recordsWithPrice', searchParams],
     queryFn: () => fetchRecordsWithPriceSelect(searchParams),
   })
-
-  const {
-    data: { count } = { count: 0 },
-  } = useQuery({
-    queryKey: ['recordsCount', searchParams],
-    queryFn: () => fetchRecordsCount(searchParams),
+  const { data: minMaxValues } = useQuery({
+    queryKey: ['minMaxValues'],
+    queryFn: fetchMinMaxValues,
   })
+  if (!recordsWithPrice) {
+    return null
+  }
 
-  const id = useId()
-  const { handleChange } = useFilters(searchParams as Record<string, string>)
+  ///// USER INTERFACE LOGIC /////
 
-  // Use actual min/max values from props instead of demo data
-  const minValue = (minMaxValues?._min.price ?? 0) / 100
-  const maxValue = (minMaxValues?._max.price ?? 100000000) / 100
+  const { _min, _max } = minMaxValues ?? {}
+  const initialMin = _min?.price ?? 0
+  const initialMax = _max?.price ?? 1000000
 
-  // Get initial values from searchParams or use defaults
-  // const initialMin = Number(searchParams?.minPrice) || minValue
-  // const initialMax = Number(searchParams?.maxPrice) || maxValue
+  const minValue = initialMin
+  const maxValue = initialMax
 
   const {
     sliderValue,
@@ -58,69 +49,26 @@ export function PriceRangeSliderWithInput({
   } = useSliderWithInput({
     minValue,
     maxValue,
-    initialValue: [minValue, maxValue],
+    initialValue: [initialMin, initialMax],
   })
 
-  const tick_count = count ?? 0
-  // const tick_count = 40
+  const tick_count = 100
   const priceStep = (maxValue - minValue) / tick_count
 
-  // Still using demo data for histogram visualization
-  // Could be replaced with actual data distribution in the future
-  const recordsCounts = new Array(tick_count).fill(0).map((_, tick) => {
+  const recordCounts = new Array(tick_count).fill(0).map((_, tick) => {
     const rangeMin = minValue + tick * priceStep
     const rangeMax = minValue + (tick + 1) * priceStep
-    return (
-      recordsWithPrice?.filter(
-        (record) => record.price >= rangeMin && record.price < rangeMax
-      ).length ?? 0
-    )
+    return recordsWithPrice.filter(
+      (record) => record.price >= rangeMin && record.price < rangeMax
+    ).length
   })
 
-  const maxCount = Math.max(...recordsCounts)
+  const maxCount = Math.max(...recordCounts)
 
-  const handleSliderValueChange = (values: number[]) => {
-    handleSliderChange(values)
-
-    // Update searchParams when slider changes
-    setTimeout(() => {
-      handleChange({
-        target: {
-          name: 'minPrice',
-          value: values[0].toString(),
-        },
-      } as React.ChangeEvent<HTMLInputElement>)
-
-      handleChange({
-        target: {
-          name: 'maxPrice',
-          value: values[1].toString(),
-        },
-      } as React.ChangeEvent<HTMLInputElement>)
-    }, 0)
-  }
-
-  // Update searchParams when input values change and are validated
-  const handleInputValueChange = (value: string, index: number) => {
-    validateAndUpdateValue(value, index)
-
-    setTimeout(() => {
-      const paramName = index === 0 ? 'minPrice' : 'maxPrice'
-      handleChange({
-        target: {
-          name: paramName,
-          value: sliderValue[index].toString(),
-        },
-      } as React.ChangeEvent<HTMLInputElement>)
-    }, 0)
-  }
-
-  const countItemsInRange = (min: number, max: number) => {
-    return (
-      recordsWithPrice?.filter(
-        (record) => record.price >= min && record.price <= max
-      ).length ?? 0
-    )
+  const countRecordsInRange = (min: number, max: number) => {
+    return recordsWithPrice.filter(
+      (record) => record.price >= min && record.price <= max
+    ).length
   }
 
   const isBarInSelectedRange = (
@@ -132,27 +80,63 @@ export function PriceRangeSliderWithInput({
     const rangeMin = minValue + index * priceStep
     const rangeMax = minValue + (index + 1) * priceStep
     return (
-      countItemsInRange(sliderValue[0], sliderValue[1]) > 0 &&
+      countRecordsInRange(sliderValue[0], sliderValue[1]) > 0 &&
       rangeMin <= sliderValue[1] &&
       rangeMax >= sliderValue[0]
     )
   }
 
-  // Sync with searchParams changes from external sources
-  useEffect(() => {
-    const newMinPrice = Number(searchParams?.minPrice) || minValue
-    const newMaxPrice = Number(searchParams?.maxPrice) || maxValue
+  ///// FILTERING LOGIC /////
 
-    if (newMinPrice !== sliderValue[0] || newMaxPrice !== sliderValue[1]) {
-      handleSliderChange([newMinPrice, newMaxPrice])
+  const { setQueryStates } = useFilters(searchParams as Record<string, string>)
+
+  // Add effect to detect when filters are cleared
+  useEffect(() => {
+    // If minPrice and maxPrice params are removed or empty, reset slider to initial values
+    if (!searchParams?.minPrice && !searchParams?.maxPrice) {
+      handleSliderChange([initialMin, initialMax])
     }
-  }, [searchParams?.minPrice, searchParams?.maxPrice])
+  }, [
+    searchParams?.minPrice,
+    searchParams?.maxPrice,
+    initialMin,
+    initialMax,
+    handleSliderChange,
+  ])
+
+  // Sync slider changes with URL
+  const handleSliderValueChange = (values: number[]) => {
+    handleSliderChange(values)
+
+    // Update URL params when slider changes
+    setQueryStates({
+      minPrice: values[0].toString(),
+      maxPrice: values[1].toString(),
+    })
+  }
+
+  // Sync input field changes with URL
+  const handleInputValueChange = (value: string, index: number) => {
+    handleInputChange(
+      { target: { value } } as React.ChangeEvent<HTMLInputElement>,
+      index
+    )
+  }
+
+  const handleInputValidation = (value: string, index: number) => {
+    validateAndUpdateValue(value, index)
+
+    // Update URL params when input is validated
+    setQueryStates({
+      [index === 0 ? 'minPrice' : 'maxPrice']: sliderValue[index].toString(),
+    })
+  }
 
   return (
     <div className={cn('flex-1 space-y-4', className)}>
       <div>
         <div className="flex h-12 w-full items-end px-3" aria-hidden="true">
-          {recordsCounts.map((count, i) => (
+          {recordCounts.map((count, i) => (
             <div
               key={i}
               className="flex flex-1 justify-center"
@@ -173,6 +157,7 @@ export function PriceRangeSliderWithInput({
           ))}
         </div>
         <Slider
+          showTooltip
           value={sliderValue}
           onValueChange={handleSliderValueChange}
           min={minValue}
@@ -191,11 +176,12 @@ export function PriceRangeSliderWithInput({
               type="text"
               inputMode="decimal"
               value={inputValues[0]}
-              onChange={(e) => handleInputChange(e, 0)}
-              onBlur={() => handleInputValueChange(inputValues[0], 0)}
+              name="minPrice"
+              onChange={(e) => handleInputValueChange(e.target.value, 0)}
+              onBlur={() => handleInputValidation(inputValues[0], 0)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleInputValueChange(inputValues[0], 0)
+                  handleInputValidation(inputValues[0], 0)
                 }
               }}
               aria-label="Enter minimum price"
@@ -214,11 +200,12 @@ export function PriceRangeSliderWithInput({
               type="text"
               inputMode="decimal"
               value={inputValues[1]}
-              onChange={(e) => handleInputChange(e, 1)}
-              onBlur={() => handleInputValueChange(inputValues[1], 1)}
+              name="maxPrice"
+              onChange={(e) => handleInputValueChange(e.target.value, 1)}
+              onBlur={() => handleInputValidation(inputValues[1], 1)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleInputValueChange(inputValues[1], 1)
+                  handleInputValidation(inputValues[1], 1)
                 }
               }}
               aria-label="Enter maximum price"
@@ -230,24 +217,40 @@ export function PriceRangeSliderWithInput({
         </div>
       </div>
 
-      {/* <ShowResultsButton
-        countItemsInRange={countItemsInRange}
-        sliderValue={sliderValue}
-      /> */}
+      {enableResultsButton && (
+        <ShowResultsButton
+          count={countRecordsInRange}
+          sliderValue={sliderValue}
+          setQueryStates={setQueryStates}
+        />
+      )}
     </div>
   )
 }
 
-// function ShowResultsButton({
-//   countItemsInRange,
-//   sliderValue,
-// }: {
-//   countItemsInRange: (min: number, max: number) => number
-//   sliderValue: number[]
-// }) {
-//   return (
-//     <Button className="w-full" variant="outline">
-//       Show {countItemsInRange(sliderValue[0], sliderValue[1])} items
-//     </Button>
-//   )
-// }
+function ShowResultsButton({
+  count,
+  sliderValue,
+  setQueryStates,
+  className,
+}: {
+  count: (min: number, max: number) => number
+  sliderValue: number[]
+  setQueryStates: (params: Record<string, string | null>) => void
+  className?: string
+}) {
+  return (
+    <Button
+      className={cn('w-full flex-1 rounded-sm', className)}
+      variant="outline"
+      onClick={() => {
+        setQueryStates({
+          minPrice: sliderValue[0].toString(),
+          maxPrice: sliderValue[1].toString(),
+        })
+      }}
+    >
+      Show {count(sliderValue[0], sliderValue[1])} items
+    </Button>
+  )
+}
