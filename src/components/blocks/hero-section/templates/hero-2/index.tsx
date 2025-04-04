@@ -1,8 +1,8 @@
-import { Header5 } from '@/components/layouts/header/header-5'
 import { AnimatedGroup } from '@/components/motion/group/animated-group'
 import { TextEffect } from '@/components/motion/ui/text-effect'
 import { Button } from '@/components/ui/button'
 import { imageSources } from '@/config/constants'
+import type { ResolvedParams } from '@/types'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -27,10 +27,9 @@ const transitionVariants = {
   },
 }
 
-export default function HeroSection() {
+export function HeroSection({ searchParams }: ResolvedParams) {
   return (
     <>
-      <Header5 />
       <main className="overflow-hidden">
         <div
           aria-hidden

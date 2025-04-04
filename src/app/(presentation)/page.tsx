@@ -7,7 +7,7 @@ import {
 } from '@/_data'
 import { BrandsMotionSlider } from '@/components/blocks/brands-section/brands-motion-slider'
 import { FeaturedSection } from '@/components/blocks/featured-section'
-import { HeroSection } from '@/components/blocks/hero-section/templates/hero-1'
+import { HeroSection } from '@/components/blocks/hero-section/templates/hero-2'
 import { LatestRecordsCarousel } from '@/components/blocks/latest-records-section'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
 import type { PromisedParams } from '@/types'

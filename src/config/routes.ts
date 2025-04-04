@@ -10,6 +10,7 @@ export const routes = {
   catalog: '/catalog',
   notAvailable: (slug: string) => `/catalog/${slug}/not-available`,
   signIn: '/auth/sign-in',
+  signUp: '/auth/sign-up',
   challenge: '/auth/challenge',
   admin: {
     dashboard: '/admin/dashboard',
@@ -20,4 +21,5 @@ export const routes = {
     settings: '/admin/settings',
   },
   contact: '/contact',
+  about: '/about',
 }

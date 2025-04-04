@@ -29,7 +29,9 @@ export const RECORDS_PER_PAGE = 12
 
 export const navLinks = [
   { id: 1, href: routes.home, label: 'Home' },
-  { id: 2, href: routes.catalog, label: 'Catalog' },
+  { id: 2, href: routes.catalog, label: 'Inventory' },
+  { id: 3, href: routes.about, label: 'About' },
+  { id: 4, href: routes.contact, label: 'Contact' },
 ]
 
 export const SESSION_MAX_AGE = 7 * 24 * 60 * 60 * 1000 // 7 days in seconds
