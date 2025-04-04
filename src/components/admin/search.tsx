@@ -1,6 +1,6 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { SearchInput } from '../shared/search-input'
+import { SearchInput } from '../filters/input/search'
 
 export const AdminSearch = () => {
   const pathname = usePathname()

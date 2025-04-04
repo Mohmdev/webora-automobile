@@ -1,8 +1,5 @@
-import {
-  PriceFilter,
-  TaxonomyFiltersBlock,
-  YearFilter,
-} from '@/components/filters/render-filters'
+import { TaxonomySelectFiltersStack } from '@/components/filters/_stack'
+import { PriceRangeSelect, YearRangeSelect } from '@/components/filters/range'
 import { SearchButton } from '@/components/shared/search-button'
 import { Button } from '@/components/ui/button'
 import { routes } from '@/config/routes'
@@ -26,10 +23,9 @@ export function HeroFiltersPanel({
     >
       <div className="space-y-4">
         <div className="flex w-full flex-col gap-x-4 space-y-2 text-white">
-          <TaxonomyFiltersBlock searchParams={searchParams} />
-          <YearFilter searchParams={searchParams} />
-
-          <PriceFilter searchParams={searchParams} />
+          <TaxonomySelectFiltersStack searchParams={searchParams} />
+          <YearRangeSelect searchParams={searchParams} />
+          <PriceRangeSelect searchParams={searchParams} />
         </div>
         <SearchButton searchParams={searchParams} />
         {isFilterApplied && (

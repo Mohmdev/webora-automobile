@@ -1,6 +1,7 @@
 import {
   fetchBrands,
   fetchFavourites,
+  fetchMinMaxValues,
   fetchRecords,
   fetchRecordsCount,
 } from '@/_data'
@@ -16,6 +17,10 @@ export default async function Home(props: PromisedParams) {
   const searchParams = await props.searchParams
   const queryClient = getQueryClient()
 
+  await queryClient.prefetchQuery({
+    queryKey: ['minMaxValues'],
+    queryFn: fetchMinMaxValues,
+  })
   await queryClient.prefetchQuery({
     queryKey: ['records', searchParams],
     queryFn: () => fetchRecords(searchParams),

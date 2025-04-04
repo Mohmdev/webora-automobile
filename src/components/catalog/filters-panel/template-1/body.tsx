@@ -1,19 +1,21 @@
+import { TaxonomySelectFiltersStack } from '@/components/filters/_stack'
+import { SearchInput } from '@/components/filters/input'
 import {
-  BodyTypeFilter,
-  ColourFilter,
-  CurrencyFilter,
-  DoorsFilter,
-  FuelTypeFilter,
-  OdometerFilter,
-  OdometerUnitFilter,
-  PriceFilter,
-  SeatsFilter,
-  TaxonomyFiltersBlock,
-  TransmissionFilter,
-  UlezComplianceFilter,
-  YearFilter,
-} from '@/components/filters/render-filters'
-import { SearchInput } from '@/components/shared/search-input'
+  OdometerRangeSelect,
+  PriceRangeSelect,
+  YearRangeSelect,
+} from '@/components/filters/range'
+import {
+  BodyTypeSelect,
+  ColourSelect,
+  CurrencySelect,
+  DoorsSelect,
+  FuelTypeSelect,
+  OdometerUnitSelect,
+  SeatsSelect,
+  TransmissionSelect,
+  UlezComplianceSelect,
+} from '@/components/filters/select'
 import { cn } from '@/lib/utils'
 import type { ResolvedParams } from '@/types'
 
@@ -31,31 +33,31 @@ export function PanelBody({
       </div>
 
       <div className="space-y-2 p-4">
-        <TaxonomyFiltersBlock searchParams={searchParams} />
+        <TaxonomySelectFiltersStack searchParams={searchParams} />
 
-        <YearFilter searchParams={searchParams} />
+        <YearRangeSelect searchParams={searchParams} />
 
-        <PriceFilter searchParams={searchParams} />
+        <PriceRangeSelect searchParams={searchParams} />
 
-        <OdometerFilter searchParams={searchParams} />
+        <OdometerRangeSelect searchParams={searchParams} />
 
-        <CurrencyFilter searchParams={searchParams} />
+        <CurrencySelect searchParams={searchParams} />
 
-        <OdometerUnitFilter searchParams={searchParams} />
+        <OdometerUnitSelect searchParams={searchParams} />
 
-        <TransmissionFilter searchParams={searchParams} />
+        <TransmissionSelect searchParams={searchParams} />
 
-        <FuelTypeFilter searchParams={searchParams} />
+        <FuelTypeSelect searchParams={searchParams} />
 
-        <BodyTypeFilter searchParams={searchParams} />
+        <BodyTypeSelect searchParams={searchParams} />
 
-        <ColourFilter searchParams={searchParams} />
+        <ColourSelect searchParams={searchParams} />
 
-        <UlezComplianceFilter searchParams={searchParams} />
+        <UlezComplianceSelect searchParams={searchParams} />
 
-        <DoorsFilter searchParams={searchParams} />
+        <DoorsSelect searchParams={searchParams} />
 
-        <SeatsFilter searchParams={searchParams} />
+        <SeatsSelect searchParams={searchParams} />
       </div>
     </div>
   )

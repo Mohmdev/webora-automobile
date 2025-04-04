@@ -35,7 +35,7 @@ export function SelectFilter({
           handleSelectChange(name, value === '_empty' ? '' : value)
         }
       >
-        <SelectTrigger className="w-full">
+        <SelectTrigger className="w-full rounded-sm">
           <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
         </SelectTrigger>
         <SelectContent>

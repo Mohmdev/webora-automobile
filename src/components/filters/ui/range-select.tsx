@@ -42,7 +42,7 @@ export const RangeSelect = (props: RangeSelectProps) => {
           }}
           disabled={minSelect.disabled ?? false}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full rounded-sm">
             <SelectValue placeholder="Min" />
           </SelectTrigger>
           <SelectContent>
@@ -67,7 +67,7 @@ export const RangeSelect = (props: RangeSelectProps) => {
           }}
           disabled={maxSelect.disabled ?? false}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full rounded-sm">
             <SelectValue placeholder="Max" />
           </SelectTrigger>
           <SelectContent>
