@@ -3,7 +3,7 @@ import { TextEffect } from '@/components/motion/ui/text-effect'
 import { Button } from '@/components/ui/button'
 import { imageSources } from '@/config/constants'
 import type { ResolvedParams } from '@/types'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, BotIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -86,11 +86,9 @@ export function HeroSection({ searchParams }: ResolvedParams) {
                     className="group mx-auto flex w-fit items-center gap-4 rounded-full border bg-muted p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 hover:bg-background dark:border-t-white/5 dark:shadow-zinc-950 dark:hover:border-t-border"
                   >
                     <span className="text-foreground text-sm">
-                      Introducing Support for AI Models
+                      Introducing AI-Powered Vehicle Matching
                     </span>
-                    <span className="block h-4 w-0.5 border-l bg-white dark:border-background dark:bg-zinc-700">
-                      Testing
-                    </span>
+                    <span className="block h-4 w-0.5 border-l bg-white dark:border-background dark:bg-zinc-700" />
 
                     <div className="size-6 overflow-hidden rounded-full bg-background duration-500 group-hover:bg-muted">
                       <div className="-translate-x-1/2 flex w-12 duration-500 ease-in-out group-hover:translate-x-0">
@@ -111,7 +109,7 @@ export function HeroSection({ searchParams }: ResolvedParams) {
                   as="h1"
                   className="mt-8 text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
-                  Modern Solutions for Customer Engagement
+                  Find Your Perfect Vehicle with Webora Motors
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -121,8 +119,9 @@ export function HeroSection({ searchParams }: ResolvedParams) {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Highly customizable components for building modern websites
-                  and applications that look and feel the way you mean it.
+                  Discover our extensive inventory of premium vehicles with
+                  AI-powered search and personalized recommendations that match
+                  your unique preferences and lifestyle.
                 </TextEffect>
 
                 <AnimatedGroup
@@ -149,7 +148,7 @@ export function HeroSection({ searchParams }: ResolvedParams) {
                       className="rounded-xl px-5 text-base"
                     >
                       <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
+                        <span className="text-nowrap">Browse Vehicles</span>
                       </Link>
                     </Button>
                   </div>
@@ -161,7 +160,10 @@ export function HeroSection({ searchParams }: ResolvedParams) {
                     className="h-10.5 rounded-xl px-5"
                   >
                     <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
+                      <span className="flex items-center text-nowrap">
+                        or Ask our AI
+                        <BotIcon className="ml-2 inline-block size-4" />
+                      </span>
                     </Link>
                   </Button>
                 </AnimatedGroup>
@@ -186,20 +188,18 @@ export function HeroSection({ searchParams }: ResolvedParams) {
                   aria-hidden
                   className="absolute inset-0 z-10 bg-linear-to-b from-35% from-transparent to-background"
                 />
-                <div className="relative inset-shadow-2xs mx-auto max-w-6xl overflow-hidden rounded-2xl border bg-background p-4 shadow-lg shadow-zinc-950/15 ring-1 ring-background dark:inset-shadow-white/20">
+                <div className="relative inset-shadow-2xs mx-auto aspect-15/8 max-w-6xl overflow-hidden rounded-2xl border bg-background p-4 shadow-lg shadow-zinc-950/15 ring-1 ring-background dark:inset-shadow-white/20">
                   <Image
-                    className="relative hidden aspect-15/8 rounded-2xl bg-background dark:block"
-                    src={imageSources.gClass14}
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
+                    src={imageSources.gClass3}
+                    alt="image of a Mercedes-Benz G-Class"
+                    fill
+                    className="relative hidden rounded-2xl bg-background object-cover dark:block"
                   />
                   <Image
-                    className="relative z-2 aspect-15/8 rounded-2xl border border-border/25 dark:hidden"
-                    src={imageSources.gClass15}
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
+                    src={imageSources.gClass3}
+                    alt="image of a Mercedes-Benz G-Class"
+                    fill
+                    className="relative z-2 rounded-2xl border border-border/25 object-cover dark:hidden"
                   />
                 </div>
               </div>
