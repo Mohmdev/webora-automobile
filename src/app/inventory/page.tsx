@@ -7,12 +7,12 @@ import {
   fetchTaxonomiesDataFromRedis,
   fetchUserData,
 } from '@/_data'
-import { Catalog } from '@/components/catalog'
+import { Inventory } from '@/components/inventory'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
 import type { PromisedParams } from '@/types'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
-export default async function CatalogPage(props: PromisedParams) {
+export default async function InventoryPage(props: PromisedParams) {
   const searchParams = await props.searchParams
   const queryClient = getQueryClient()
 
@@ -48,7 +48,7 @@ export default async function CatalogPage(props: PromisedParams) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Catalog template="catalog-2" searchParams={searchParams} />
+      <Inventory template="inventory-2" searchParams={searchParams} />
     </HydrationBoundary>
   )
 }

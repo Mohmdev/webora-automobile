@@ -101,7 +101,7 @@ export function HeaderButtons({
           size="sm"
           className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}
         >
-          <Link href={routes.catalog}>
+          <Link href={routes.inventory}>
             <span>Get Started</span>
           </Link>
         </Button>

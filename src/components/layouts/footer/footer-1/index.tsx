@@ -3,8 +3,8 @@ import { routes } from '@/config/routes'
 import { SiInstagram, SiMeta, SiX } from '@icons-pack/react-simple-icons'
 import Image from 'next/image'
 import Link from 'next/link'
-import { NewsletterForm } from '../../shared/newsletter-form'
-import { ThemeToggle } from '../../ui/theme-toggle'
+import { NewsletterForm } from '../../../shared/newsletter-form'
+import { ThemeToggle } from '../../../ui/theme-toggle'
 
 const socialLinks = [
   {

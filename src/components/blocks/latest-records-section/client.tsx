@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { Navigation } from 'swiper/modules'
 import { SwiperSlide } from 'swiper/react'
-import { Record } from '../../catalog/record'
+import { Record } from '../../inventory/record'
 import { SwiperButtons } from '../../shared/swiper-button'
 
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {

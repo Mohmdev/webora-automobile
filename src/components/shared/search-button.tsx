@@ -55,7 +55,7 @@ export const SearchButton = ({ searchParams }: ResolvedParams) => {
     queryParams.append('maxPrice', maxPrice)
   }
 
-  const url = new URL(routes.catalog, env.NEXT_PUBLIC_APP_URL)
+  const url = new URL(routes.inventory, env.NEXT_PUBLIC_APP_URL)
   url.search = queryParams.toString()
 
   return (

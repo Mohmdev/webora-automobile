@@ -1,4 +1,4 @@
-import { ListRecords } from '@/components/catalog/list'
+import { ListRecords } from '@/components/inventory/list'
 
 export default function FavouritesLoadingPage() {
   return (

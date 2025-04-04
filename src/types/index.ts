@@ -30,7 +30,7 @@ export type {
   RecordDataProps,
   ClassifiedData,
   ClassifiedImages,
-} from './catalog'
+} from './inventory'
 
 // Enums
 export { MultiStepFormEnum } from './form'

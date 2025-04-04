@@ -46,7 +46,7 @@ export function Header({ className }: { className?: string }) {
           <CTAButton
             key={1}
             label="Browse our collection"
-            href={routes.catalog}
+            href={routes.inventory}
             variant="shine"
             radius="sm"
           />

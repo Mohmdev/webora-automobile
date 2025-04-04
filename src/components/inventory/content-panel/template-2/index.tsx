@@ -1,4 +1,4 @@
-import { ListRecords } from '@/components/catalog/list'
+import { ListRecords } from '@/components/inventory/list'
 import { SidebarInset } from '@/components/ui/sidebar'
 import type { ResolvedParams } from '@/types'
 import { Header } from './header'

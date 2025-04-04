@@ -16,7 +16,7 @@ export const EndButtons = () => {
         </Link>
       </Button>
       <Button asChild>
-        <Link href={routes.catalog}>
+        <Link href={routes.inventory}>
           <CarIcon className="mr-2 h-5 w-5" /> View Classifieds
         </Link>
       </Button>

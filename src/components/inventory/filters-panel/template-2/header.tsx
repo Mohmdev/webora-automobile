@@ -1,4 +1,4 @@
-import { NavUser } from '@/components/catalog/_sub/nav-user'
+import { NavUser } from '@/components/inventory/_sub/nav-user'
 import { SidebarHeader } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
 

@@ -1,9 +1,9 @@
-import { FiltersPanel } from '@/components/catalog/filters-panel'
+import { FiltersPanel } from '@/components/inventory/filters-panel'
 import { cn } from '@/lib/utils'
 import type { ResolvedParams } from '@/types'
 import { ContentPanel } from '../content-panel'
 
-export function Catalog1({
+export function Inventory1({
   searchParams,
   className,
 }: ResolvedParams & { className?: string }) {

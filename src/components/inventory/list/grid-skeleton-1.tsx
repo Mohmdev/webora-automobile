@@ -1,4 +1,4 @@
-import { Record } from '@/components/catalog/record'
+import { Record } from '@/components/inventory/record'
 
 export const GridSkeleton1 = () => {
   return (

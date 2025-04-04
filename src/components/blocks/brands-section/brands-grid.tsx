@@ -20,7 +20,7 @@ export async function BrandsGrid({
         <BrandIcon
           key={id}
           enableLink={true}
-          href={`${routes.catalog}?make=${id}`}
+          href={`${routes.inventory}?make=${id}`}
           iconSrc={image}
           alt={name}
           height={iconHeight}

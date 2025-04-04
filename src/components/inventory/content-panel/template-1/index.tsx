@@ -1,4 +1,4 @@
-import { ListRecords } from '@/components/catalog/list'
+import { ListRecords } from '@/components/inventory/list'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { routes } from '@/config/routes'
 import { cn } from '@/lib/utils'
@@ -14,7 +14,7 @@ export function ContentPanel1({
       <div className="-mt-1 flex items-center justify-between space-y-2 pb-4">
         <Header searchParams={searchParams} />
         <CustomPagination
-          baseURL={routes.catalog}
+          baseURL={routes.inventory}
           searchParams={searchParams}
           styles={{
             paginationRoot: 'justify-end hidden lg:flex',
@@ -29,7 +29,7 @@ export function ContentPanel1({
       <ListRecords template="grid-1" searchParams={searchParams} />
 
       <CustomPagination
-        baseURL={routes.catalog}
+        baseURL={routes.inventory}
         searchParams={searchParams}
         styles={{
           paginationRoot: 'justify-center lg:hidden pt-12',

@@ -1,5 +1,5 @@
 import { fetchFavourites, fetchRecords, fetchRecordsCount } from '@/_data'
-import { ListRecords } from '@/components/catalog/list'
+import { ListRecords } from '@/components/inventory/list'
 import { CustomPagination } from '@/components/shared/custom-pagination'
 import { routes } from '@/config/routes'
 import { getQueryClient } from '@/providers/react-query/get-query-client'
@@ -25,7 +25,7 @@ export default async function FavouritesPage(props: PromisedParams) {
     queryFn: () => fetchRecordsCount(searchParams, { favouriteIds }),
   })
 
-  // Prefetch the records using the same query key structure as catalog page
+  // Prefetch the records using the same query key structure as inventory page
   await queryClient.prefetchQuery({
     queryKey: ['records', searchParams],
     queryFn: () => fetchRecords(searchParams, { favouriteIds }),

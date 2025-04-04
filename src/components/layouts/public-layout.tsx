@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { PublicFooter } from './footer/footer'
+import { Footer3 } from './footer/footer-3'
 import { Header5 } from './header/header-5'
 
 export function PublicLayout({ children }: PropsWithChildren) {
@@ -7,7 +7,10 @@ export function PublicLayout({ children }: PropsWithChildren) {
     <>
       <Header5 />
       <main>{children}</main>
-      <PublicFooter />
+
+      <Footer3 />
+      {/* <Footer4 /> */}
+      {/* <PublicFooter /> */}
     </>
   )
 }
