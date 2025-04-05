@@ -60,7 +60,8 @@
         "YoavBls.pretty-ts-errors",
         "MylesMurphy.prettify-ts",
         "wix.vscode-import-cost",
-        "saber2pr.file-git-history"
+        "saber2pr.file-git-history",
+        "formulahendry.auto-rename-tag"
       ],
 
       "settings": {
