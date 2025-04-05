@@ -25,7 +25,9 @@ const LogoutButton = () => {
 }
 
 export const AdminSettingsClient = () => {
-  const [_, formAction] = useActionState(signOutAllSessions, null)
+  // Create a wrapper function that doesn't take parameters
+  const signOutWrapper = () => signOutAllSessions()
+  const [_, formAction] = useActionState(signOutWrapper, null)
 
   return (
     <div className="divide-y divide-white/5 px-6">

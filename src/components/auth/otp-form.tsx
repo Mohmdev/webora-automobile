@@ -10,7 +10,6 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import { routes } from '@/config/routes'
 import { toast } from '@/hooks/use-toast'
 import { OneTimePasswordSchema, type OtpSchemaType } from '@/schemas/otp.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -34,7 +33,8 @@ export const OtpForm = () => {
       // console.log('first', { result })
 
       if (result?.success) {
-        router.push(routes.admin.dashboard)
+        // Let the middleware handle the redirection based on user role
+        router.refresh()
       } else {
         toast({
           title: 'Error',

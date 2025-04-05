@@ -30,35 +30,58 @@ export default auth((req) => {
   const requestHeaders = new Headers(req.headers)
   setRequestHeaders(requestHeaders)
 
+  // Get current path for potential redirect after auth operations
+  const currentPath = new URL(
+    req.headers.get('referer') || routes.home,
+    req.url
+  ).pathname
+
   if (req.auth) {
+    // Handle 2FA requirement
     if (req.auth.requires2FA) {
       if (nextUrl.pathname === routes.challenge) {
         return NextResponse.next()
       }
-
-      const challengeUrl = new URL(routes.challenge, req.url)
-      return NextResponse.redirect(challengeUrl)
+      return NextResponse.redirect(new URL(routes.challenge, req.url))
     }
 
+    // Redirect users who have completed 2FA from the challenge page
+    if (nextUrl.pathname === routes.challenge && !req.auth.requires2FA) {
+      // If the current path is the challenge page, we need to redirect to the previous page
+      // or home if no previous page exists
+      const redirectPath =
+        currentPath === routes.challenge ? routes.home : currentPath
+      return NextResponse.redirect(new URL(redirectPath, req.url))
+    }
+
+    // Handle sign-out redirects
+    if (nextUrl.pathname === '/auth/sign-out') {
+      return NextResponse.redirect(new URL(currentPath, req.url))
+    }
+
+    // Simple redirect for authenticated users on auth pages
+    if ([routes.signIn, routes.signUp].includes(nextUrl.pathname)) {
+      return NextResponse.redirect(new URL(currentPath, req.url))
+    }
+
+    // Protect admin routes
     if (
-      nextUrl.pathname === routes.challenge ||
-      nextUrl.pathname === routes.signIn
+      nextUrl.pathname.startsWith('/admin') &&
+      req.auth.user?.role !== 'ADMIN'
     ) {
-      const adminUrl = new URL(routes.admin.dashboard, req.url)
-      return NextResponse.redirect(adminUrl)
+      return NextResponse.redirect(new URL(routes.home, req.url))
     }
-  } else if (
-    nextUrl.pathname.startsWith('/admin') ||
-    nextUrl.pathname === routes.challenge
-  ) {
-    const signInUrl = new URL(routes.signIn, req.url)
-    return NextResponse.redirect(signInUrl)
+  } else {
+    // Redirect unauthenticated users from protected routes
+    if (
+      nextUrl.pathname.startsWith('/admin') ||
+      nextUrl.pathname === routes.challenge
+    ) {
+      return NextResponse.redirect(new URL(routes.signIn, req.url))
+    }
   }
 
   return NextResponse.next({
-    // !-- IMPORTANT: do not do this, it will break server actions
-    // !-- headers: requestHeaders - this interferes with server action requests
-    // instead, do this
     request: {
       headers: requestHeaders,
     },

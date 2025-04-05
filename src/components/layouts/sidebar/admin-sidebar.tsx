@@ -5,6 +5,7 @@ import {
   CarFrontIcon,
   LayoutDashboardIcon,
   SettingsIcon,
+  UserRoundCog,
   UsersIcon,
 } from 'lucide-react'
 import type { Variants } from 'motion/react'
@@ -34,6 +35,11 @@ const navigation = [
     name: 'Settings',
     href: routes.admin.settings,
     icon: SettingsIcon,
+  },
+  {
+    name: 'User Management',
+    href: routes.admin.userManagement,
+    icon: UserRoundCog,
   },
 ]
 

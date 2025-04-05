@@ -1,13 +1,13 @@
 'use client'
 
-import { signIn } from '@/auth/actions'
+import { signIn } from '@/auth/actions/sign-in'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { CircleCheckIcon, CircleX, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useActionState, useEffect, useRef } from 'react'
 import { useFormStatus } from 'react-dom'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
 
 const SubmitButton = () => {
   const { pending } = useFormStatus()
@@ -16,12 +16,13 @@ const SubmitButton = () => {
     <Button
       disabled={pending}
       type="submit"
-      className="w-full font-bold uppercase"
+      className="w-full cursor-pointer font-bold uppercase"
+      size="sm"
     >
       {pending && (
         <Loader2 className="h-4 w-4 shrink-0 animate-spin" aria-hidden="true" />
       )}{' '}
-      Sign In
+      {pending ? 'Signing in...' : 'Sign In'}
     </Button>
   )
 }
@@ -31,14 +32,12 @@ export const SignInForm = () => {
     success: false,
     message: '',
   })
-
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
     if (state.success && formRef.current) {
       router.refresh()
-      // router.push(routes.challenge);
     }
   }, [state, router])
 
@@ -51,7 +50,7 @@ export const SignInForm = () => {
           className="rounded-md border border-muted bg-white p-10 shadow-lg"
         >
           <div className="mb-6 flex items-center justify-center">
-            <h2 className="font-bold text-2xl uppercase">Admin Sign In</h2>
+            <h2 className="font-bold text-2xl uppercase">Sign In</h2>
           </div>
           <div className="space-y-4">
             <div className="space-y-2">
@@ -62,7 +61,7 @@ export const SignInForm = () => {
                 name="email"
                 autoComplete="email"
                 className="placeholder:text-gray-500"
-                placeholder="Enter your administrator email address"
+                placeholder="Enter your email address"
                 required
               />
             </div>
@@ -81,10 +80,16 @@ export const SignInForm = () => {
 
             <div className="my-6">
               <p className="mb-2 text-center text-gray-600 text-sm">
-                <b>This is for admin only.</b>
+                Don't have an account?{' '}
+                <a
+                  href="/auth/sign-up"
+                  className="text-blue-600 hover:underline"
+                >
+                  Sign up here
+                </a>
               </p>
             </div>
-            <div className="space-y-4">
+            <div className="cursor-pointer space-y-4">
               <SubmitButton />
               {state.success && (
                 <div className="flex items-center gap-2 rounded-md bg-green-500 p-3 text-white">

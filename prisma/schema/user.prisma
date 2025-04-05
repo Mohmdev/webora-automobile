@@ -1,8 +1,16 @@
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
 model User {
   id             String    @id @default(cuid())
   email          String    @unique
   hashedPassword String    @map("hashed_password")
+  role           UserRole  @default(CUSTOMER)
+  requires2FA    Boolean   @default(false)
   sessions       Session[]
+  customer       Customer?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 

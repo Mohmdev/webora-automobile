@@ -19,6 +19,7 @@ export const routes = {
     customers: '/admin/customers',
     editCustomer: (id: number) => `/admin/customers/edit/${id}`,
     settings: '/admin/settings',
+    userManagement: '/admin/user-management',
   },
   contact: '/contact',
   about: '/about',

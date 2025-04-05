@@ -1,6 +1,5 @@
 'use client'
-
-import { signOut } from '@/auth/actions'
+import { SignOutForm } from '@/components/auth/sign-out-form'
 import { Button } from '@/components/ui/button'
 import { routes } from '@/config/routes'
 import { useIsTablet } from '@/hooks/use-mobile'
@@ -24,21 +23,18 @@ export function HeaderButtons({
   if (session) {
     return (
       <div className="flex w-full flex-col items-center gap-3 lg:mb-0 lg:w-fit lg:flex-row lg:space-y-0">
-        <Button
-          variant={isTablet ? 'outline' : 'ghost'}
-          asChild
-          size="sm"
-          className="w-full text-muted-foreground hover:text-foreground lg:w-max"
-        >
-          <Link href={routes.admin.dashboard}>Backoffice</Link>
-        </Button>
-        <form action={signOut} className="w-full lg:w-max">
-          <Button type="submit" asChild size="sm" className="w-full">
-            <Link href={routes.signIn}>
-              <span>Sign out</span>
-            </Link>
+        {(session.user as { role: string })?.role === 'ADMIN' && (
+          <Button
+            variant={isTablet ? 'outline' : 'ghost'}
+            // asChild
+            size="sm"
+            className="w-full text-muted-foreground hover:text-foreground lg:w-max"
+          >
+            <Link href={routes.admin.dashboard}>Backoffice</Link>
           </Button>
-        </form>
+        )}
+        {/* <SignOutAllSessionsForm /> */}
+        <SignOutForm />
       </div>
     )
   }

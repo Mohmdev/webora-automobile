@@ -40,7 +40,6 @@ export const config = {
 
           const user = await prisma.user.findUnique({
             where: { email: validatedFields.data.email },
-            select: { id: true, email: true, hashedPassword: true },
           })
 
           if (!user) {
@@ -56,15 +55,20 @@ export const config = {
             return null
           }
 
-          await issueChallenge(user.id, user.email)
+          // Only issue challenge for admin users or users with requires2FA set to true
+          if (user.role === 'ADMIN' || user.requires2FA) {
+            await issueChallenge(user.id, user.email)
+          }
 
-          const dbUser = await prisma.user.findUnique({
-            where: { id: user.id },
-            omit: { hashedPassword: true },
-          })
-
-          return { ...dbUser, requires2FA: true }
+          // Set requires2FA based on user role or existing setting
+          return {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            requires2FA: user.role === 'ADMIN' || user.requires2FA,
+          }
         } catch (_error) {
+          console.error('Auth error:', _error)
           return null
         }
       },
@@ -102,10 +106,15 @@ export const config = {
     },
 
     session({ session, user }) {
+      // Cast to unknown first to avoid type errors
       session.user = {
-        id: session.userId,
+        id: user.id,
         email: user.email,
-      } as AdapterUser
+        role: user.role,
+        requires2FA: user.requires2FA,
+        // Add required emailVerified property for AdapterUser
+        emailVerified: null,
+      } as unknown as AdapterUser
       return session
     },
   },
